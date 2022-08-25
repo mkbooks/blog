@@ -1,0 +1,1226 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on 我的空间</title><link>https://mkbooks.github.io/blog/tags/linux/</link><description>Recent content in Linux on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 25 Aug 2022 01:38:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>ip-netns</title><link>https://mkbooks.github.io/blog/p/ip-netns/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ip-netns/</guid><description>&lt;p>A B C
+192.168.10.1 192.168.10.10 192.168.50.10 192.168.50.1&lt;/p>
+&lt;p>ip netns exec A ip addr add 192.168.30.246/24 dev A-To-br-A-B
+ip netns exec B ip addr add 192.168.30.1/24 dev B-To-br-A-B
+ip netns exec B ip addr add 192.168.40.1/24 dev B-To-br-B-C
+ip netns exec C ip addr add 192.168.40.133/24 dev C-To-br-B-C&lt;/p>
+&lt;p>ip netns exec B ping 192.168.30.246 -c1
+ip netns exec B ping 192.168.40.133 -c1&lt;/p>
+&lt;p>ip netns exec A ping 192.168.30.246 -c1
+ip netns exec A ping 192.168.40.133 -c1&lt;/p>
+&lt;p>ip netns exec C ping 192.168.30.246 -c1
+ip netns exec C ping 192.168.40.133 -c1&lt;/p>
+&lt;p>ip netns exec A ip route add 192.168.50.0/24 via 192.168.10.10 dev A-To-br-A-B
+ip netns exec A ip route add 192.168.40.0/24 via 192.168.30.1 dev A-To-br-A-B&lt;/p>
+&lt;p>ip netns exec C ip route add 192.168.10.0/24 via 192.168.50.10 dev C-To-br-B-C
+ip netns exec C ip route add 192.168.30.0/24 via 192.168.40.1 dev C-To-br-B-C&lt;/p>
+&lt;p>ip netns exec A ping 192.168.40.133 -c 1&lt;/p></description></item><item><title>ip-netns-ling</title><link>https://mkbooks.github.io/blog/p/ip-netns-ling/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ip-netns-ling/</guid><description>&lt;h1 id="namespace-route-lab">Namespace Route LAB&lt;/h1>
+&lt;p>&lt;img src="https://mkbooks.github.io/blog/blog/images/ip-netns.png"
+loading="lazy"
+>
+&lt;img src="https://secure2.wostatic.cn/static/j4AbdddxE4eoMBrknWnXcx/image.png"
+loading="lazy"
+>&lt;/p>
+&lt;h1 id="target">Target&lt;/h1>
+&lt;p>三个NS中网卡地址都可以相互访问。&lt;/p>
+&lt;p>关键在创建恰当的路由，使其路由可达。&lt;/p>
+&lt;h1 id="follow-me">Follow Me&lt;/h1>
+&lt;h2 id="check-env-status">Check Env Status&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Bash" data-lang="Bash">root@network-lab:~# ip netns list
+root@network-lab:~# brctl show
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="create-bridge">Create Bridge&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Bash" data-lang="Bash">brctl addbr br-A-B &lt;span class="c1"># add bridge&lt;/span>
+ip link &lt;span class="nb">set&lt;/span> br-A-B up &lt;span class="c1"># enable bridge&lt;/span>
+brctl addbr br-B-C &lt;span class="c1"># add bridge&lt;/span>
+ip link &lt;span class="nb">set&lt;/span> br-B-C up &lt;span class="c1"># enable bridge&lt;/span>
+root@network-lab:~# brctl show
+bridge name bridge id STP enabled interfaces
+br-A-B 8000.000000000000 no
+br-B-C 8000.000000000000 no
+root@network-lab:~# ip link
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN mode DEFAULT group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: ens192: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc mq state UP mode DEFAULT group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 00:50:56:ac:a4:9b brd ff:ff:ff:ff:ff:ff
+3: br-A-B: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UNKNOWN mode DEFAULT group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 76:8b:e0:6a:27:f8 brd ff:ff:ff:ff:ff:ff
+4: br-B-C: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UNKNOWN mode DEFAULT group default qlen &lt;span class="m">1000&lt;/span>
+link/ether a6:64:8b:a7:4c:2c brd ff:ff:ff:ff:ff:ff
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="create-net-namespace">Create Net Namespace&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Bash" data-lang="Bash">root@network-lab:~# ip netns list
+ip netns add A
+ip netns add B
+ip netns add C
+root@network-lab:~# ip netns list
+C
+B
+A
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="ns-status--enable-lo-dev">NS Status &amp;amp;&amp;amp; Enable lo dev&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Bash" data-lang="Bash">root@network-lab:~# ip -c -all netns &lt;span class="nb">exec&lt;/span> ip a
+netns: C
+1: lo: &amp;lt;LOOPBACK&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noop state DOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+netns: B
+1: lo: &amp;lt;LOOPBACK&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noop state DOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+netns: A
+1: lo: &amp;lt;LOOPBACK&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noop state DOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+root@network-lab:~# ip -c -all netns &lt;span class="nb">exec&lt;/span> ip link &lt;span class="nb">set&lt;/span> dev lo up
+netns: C
+netns: B
+netns: A
+root@network-lab:~# ip -c -all netns &lt;span class="nb">exec&lt;/span> ip a
+netns: C
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+netns: B
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+netns: A
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="create-veth-pair--connect-bridge-netns-via-veth-pair">Create Veth Pair &amp;amp;&amp;amp; Connect Bridge NetNS via Veth Pair&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Bash" data-lang="Bash">&lt;span class="c1"># NS A =&amp;gt; br-A-B&lt;/span>
+ip link add A-To-br-A-B &lt;span class="nb">type&lt;/span> veth peer name br-A-B-To-A
+ip link &lt;span class="nb">set&lt;/span> dev A-To-br-A-B netns A
+ip netns &lt;span class="nb">exec&lt;/span> A ip link &lt;span class="nb">set&lt;/span> A-To-br-A-B up
+ip link &lt;span class="nb">set&lt;/span> dev br-A-B-To-A master br-A-B
+ip link &lt;span class="nb">set&lt;/span> br-A-B-To-A up
+&lt;span class="c1"># NS B =&amp;gt; br-A-B&lt;/span>
+ip link add B-To-br-A-B &lt;span class="nb">type&lt;/span> veth peer name br-A-B-To-B
+ip link &lt;span class="nb">set&lt;/span> dev B-To-br-A-B netns B
+ip netns &lt;span class="nb">exec&lt;/span> B ip link &lt;span class="nb">set&lt;/span> B-To-br-A-B up
+ip link &lt;span class="nb">set&lt;/span> dev br-A-B-To-B master br-A-B
+ip link &lt;span class="nb">set&lt;/span> br-A-B-To-B up
+&lt;span class="c1"># NS B =&amp;gt; br-B-C&lt;/span>
+ip link add B-To-br-B-C &lt;span class="nb">type&lt;/span> veth peer name br-B-C-To-B
+ip link &lt;span class="nb">set&lt;/span> dev B-To-br-B-C netns B
+ip netns &lt;span class="nb">exec&lt;/span> B ip link &lt;span class="nb">set&lt;/span> B-To-br-B-C up
+ip link &lt;span class="nb">set&lt;/span> dev br-B-C-To-B master br-B-C
+ip link &lt;span class="nb">set&lt;/span> br-B-C-To-B up
+&lt;span class="c1"># NS C =&amp;gt; br-B-C&lt;/span>
+ip link add C-To-br-B-C &lt;span class="nb">type&lt;/span> veth peer name br-B-C-To-C
+ip link &lt;span class="nb">set&lt;/span> dev C-To-br-B-C netns C
+ip netns &lt;span class="nb">exec&lt;/span> C ip link &lt;span class="nb">set&lt;/span> C-To-br-B-C up
+ip link &lt;span class="nb">set&lt;/span> dev br-B-C-To-C master br-B-C
+ip link &lt;span class="nb">set&lt;/span> br-B-C-To-C up
+root@network-lab:~# brctl show
+bridge name bridge id STP enabled interfaces
+br-A-B 8000.4e3feeec3e7c no br-A-B-To-A
+br-A-B-To-B
+br-B-C 8000.06c767a60064 no br-B-C-To-B
+br-B-C-To-C
+root@network-lab:~# ip a
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+2: ens192: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc mq state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 00:50:56:ac:a4:9b brd ff:ff:ff:ff:ff:ff
+inet 192.168.31.133/24 brd 192.168.31.255 scope global dynamic ens192
+valid_lft 36981sec preferred_lft 36981sec
+inet6 fe80::250:56ff:feac:a49b/64 scope link
+valid_lft forever preferred_lft forever
+3: br-A-B: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 4e:3f:ee:ec:3e:7c brd ff:ff:ff:ff:ff:ff
+inet6 fe80::748b:e0ff:fe6a:27f8/64 scope link
+valid_lft forever preferred_lft forever
+4: br-B-C: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 06:c7:67:a6:00:64 brd ff:ff:ff:ff:ff:ff
+inet6 fe80::a464:8bff:fea7:4c2c/64 scope link
+valid_lft forever preferred_lft forever
+19: br-A-B-To-A@if20: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue master br-A-B state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 4e:3f:ee:ec:3e:7c brd ff:ff:ff:ff:ff:ff link-netns A
+inet6 fe80::4c3f:eeff:feec:3e7c/64 scope link
+valid_lft forever preferred_lft forever
+21: br-A-B-To-B@if22: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue master br-A-B state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether be:e7:ef:32:94:6a brd ff:ff:ff:ff:ff:ff link-netns B
+inet6 fe80::bce7:efff:fe32:946a/64 scope link
+valid_lft forever preferred_lft forever
+23: br-B-C-To-B@if24: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue master br-B-C state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 06:c7:67:a6:00:64 brd ff:ff:ff:ff:ff:ff link-netns B
+inet6 fe80::4c7:67ff:fea6:64/64 scope link
+valid_lft forever preferred_lft forever
+25: br-B-C-To-C@if26: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue master br-B-C state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 32:e7:67:9e:8a:9b brd ff:ff:ff:ff:ff:ff link-netns C
+inet6 fe80::30e7:67ff:fe9e:8a9b/64 scope link
+valid_lft forever preferred_lft forever
+root@network-lab:~# ip -all netns &lt;span class="nb">exec&lt;/span> ip -c a
+netns: C
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+26: C-To-br-B-C@if25: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 6e:5f:b1:c9:3c:09 brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span class="m">0&lt;/span>
+inet6 fe80::6c5f:b1ff:fec9:3c09/64 scope link
+valid_lft forever preferred_lft forever
+netns: B
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+22: B-To-br-A-B@if21: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 7a:4e:72:0a:0c:99 brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span class="m">0&lt;/span>
+inet6 fe80::784e:72ff:fe0a:c99/64 scope link
+valid_lft forever preferred_lft forever
+24: B-To-br-B-C@if23: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 32:ac:2b:9c:82:3f brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span class="m">0&lt;/span>
+inet6 fe80::30ac:2bff:fe9c:823f/64 scope link
+valid_lft forever preferred_lft forever
+netns: A
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+20: A-To-br-A-B@if19: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 3e:6a:83:aa:96:23 brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span class="m">0&lt;/span>
+inet6 fe80::3c6a:83ff:feaa:9623/64 scope link
+valid_lft forever preferred_lft forever
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="eable-ip-forword">Eable IP Forword&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Bash" data-lang="Bash">ip netns &lt;span class="nb">exec&lt;/span> B sysctl -w net.ipv4.conf.all.forwarding&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="assign-ip">Assign IP&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;span class="lnt">76
+&lt;/span>&lt;span class="lnt">77
+&lt;/span>&lt;span class="lnt">78
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Bash" data-lang="Bash">ip netns &lt;span class="nb">exec&lt;/span> A ip addr add 192.168.10.1/24 dev A-To-br-A-B
+ip netns &lt;span class="nb">exec&lt;/span> B ip addr add 192.168.10.10/24 dev B-To-br-A-B
+ip netns &lt;span class="nb">exec&lt;/span> B ip addr add 192.168.50.10/24 dev B-To-br-B-C
+ip netns &lt;span class="nb">exec&lt;/span> C ip addr add 192.168.50.1/24 dev C-To-br-B-C
+root@network-lab:~# ip -all netns &lt;span class="nb">exec&lt;/span> ip -c a
+netns: C
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+26: C-To-br-B-C@if25: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 6e:5f:b1:c9:3c:09 brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span class="m">0&lt;/span>
+inet 192.168.50.1/24 scope global C-To-br-B-C
+valid_lft forever preferred_lft forever
+inet6 fe80::6c5f:b1ff:fec9:3c09/64 scope link
+valid_lft forever preferred_lft forever
+netns: B
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+22: B-To-br-A-B@if21: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 7a:4e:72:0a:0c:99 brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span class="m">0&lt;/span>
+inet 192.168.10.10/24 scope global B-To-br-A-B
+valid_lft forever preferred_lft forever
+inet6 fe80::784e:72ff:fe0a:c99/64 scope link
+valid_lft forever preferred_lft forever
+24: B-To-br-B-C@if23: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 32:ac:2b:9c:82:3f brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span class="m">0&lt;/span>
+inet 192.168.50.10/24 scope global B-To-br-B-C
+valid_lft forever preferred_lft forever
+inet6 fe80::30ac:2bff:fe9c:823f/64 scope link
+valid_lft forever preferred_lft forever
+netns: A
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">65536&lt;/span> qdisc noqueue state UNKNOWN group default qlen &lt;span class="m">1000&lt;/span>
+link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+inet 127.0.0.1/8 scope host lo
+valid_lft forever preferred_lft forever
+inet6 ::1/128 scope host
+valid_lft forever preferred_lft forever
+20: A-To-br-A-B@if19: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu &lt;span class="m">1500&lt;/span> qdisc noqueue state UP group default qlen &lt;span class="m">1000&lt;/span>
+link/ether 3e:6a:83:aa:96:23 brd ff:ff:ff:ff:ff:ff link-netnsid &lt;span class="m">0&lt;/span>
+inet 192.168.10.1/24 scope global A-To-br-A-B
+valid_lft forever preferred_lft forever
+inet6 fe80::3c6a:83ff:feaa:9623/64 scope link
+valid_lft forever preferred_lft forever
+&lt;span class="c1"># check ip address &lt;/span>
+root@network-lab:~# ip netns &lt;span class="nb">exec&lt;/span> B ping 192.168.10.1 -c1
+PING 192.168.10.1 &lt;span class="o">(&lt;/span>192.168.10.1&lt;span class="o">)&lt;/span> 56&lt;span class="o">(&lt;/span>84&lt;span class="o">)&lt;/span> bytes of data.
+&lt;span class="m">64&lt;/span> bytes from 192.168.10.1: &lt;span class="nv">icmp_seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">64&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.030 ms
+--- 192.168.10.1 ping statistics ---
+&lt;span class="m">1&lt;/span> packets transmitted, &lt;span class="m">1&lt;/span> received, 0% packet loss, &lt;span class="nb">time&lt;/span> 0ms
+rtt min/avg/max/mdev &lt;span class="o">=&lt;/span> 0.030/0.030/0.030/0.000 ms
+root@network-lab:~# ip netns &lt;span class="nb">exec&lt;/span> B ping 192.168.50.1 -c1
+PING 192.168.50.1 &lt;span class="o">(&lt;/span>192.168.50.1&lt;span class="o">)&lt;/span> 56&lt;span class="o">(&lt;/span>84&lt;span class="o">)&lt;/span> bytes of data.
+&lt;span class="m">64&lt;/span> bytes from 192.168.50.1: &lt;span class="nv">icmp_seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">64&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.118 ms
+--- 192.168.50.1 ping statistics ---
+&lt;span class="m">1&lt;/span> packets transmitted, &lt;span class="m">1&lt;/span> received, 0% packet loss, &lt;span class="nb">time&lt;/span> 0ms
+rtt min/avg/max/mdev &lt;span class="o">=&lt;/span> 0.118/0.118/0.118/0.000 ms
+&lt;span class="c1"># A access C - BAD&lt;/span>
+root@network-lab:~# ip netns &lt;span class="nb">exec&lt;/span> A ping 192.168.50.1 -c1
+ping: connect: Network is unreachable
+root@network-lab:~# ip netns &lt;span class="nb">exec&lt;/span> A ip r
+192.168.10.0/24 dev A-To-br-A-B proto kernel scope link src 192.168.10.1
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="check-route">Check Route&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Bash" data-lang="Bash">root@network-lab:~# ip --all netns &lt;span class="nb">exec&lt;/span> ip r
+netns: C
+192.168.50.0/24 dev C-To-br-B-C proto kernel scope link src 192.168.50.1
+netns: B
+192.168.10.0/24 dev B-To-br-A-B proto kernel scope link src 192.168.10.10
+192.168.50.0/24 dev B-To-br-B-C proto kernel scope link src 192.168.50.10
+netns: A
+192.168.10.0/24 dev A-To-br-A-B proto kernel scope link src 192.168.10.1
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="add-route-make-a-access-c">Add Route Make A access C&lt;/h2>
+&lt;p>如何新增路由？&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-Bash" data-lang="Bash">&lt;span class="c1"># Tell A how to access C&lt;/span>
+ip netns &lt;span class="nb">exec&lt;/span> A ip route add 192.168.50.0/24 via 192.168.10.10 dev A-To-br-A-B
+&lt;span class="c1"># Tell C how to access A&lt;/span>
+ip netns &lt;span class="nb">exec&lt;/span> C ip route add 192.168.10.0/24 via 192.168.50.10 dev C-To-br-B-C
+root@network-lab:~# ip --all netns &lt;span class="nb">exec&lt;/span> ip r
+netns: C
+192.168.10.0/24 via 192.168.50.10 dev C-To-br-B-C
+192.168.50.0/24 dev C-To-br-B-C proto kernel scope link src 192.168.50.1
+netns: B
+192.168.10.0/24 dev B-To-br-A-B proto kernel scope link src 192.168.10.10
+192.168.50.0/24 dev B-To-br-B-C proto kernel scope link src 192.168.50.10
+netns: A
+192.168.10.0/24 dev A-To-br-A-B proto kernel scope link src 192.168.10.1
+192.168.50.0/24 via 192.168.10.10 dev A-To-br-A-B
+&lt;span class="c1"># succeed&lt;/span>
+root@network-lab:~# ip netns &lt;span class="nb">exec&lt;/span> A ping 192.168.50.1 -c &lt;span class="m">1&lt;/span>
+PING 192.168.50.1 &lt;span class="o">(&lt;/span>192.168.50.1&lt;span class="o">)&lt;/span> 56&lt;span class="o">(&lt;/span>84&lt;span class="o">)&lt;/span> bytes of data.
+&lt;span class="m">64&lt;/span> bytes from 192.168.50.1: &lt;span class="nv">icmp_seq&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="nv">ttl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">63&lt;/span> &lt;span class="nv">time&lt;/span>&lt;span class="o">=&lt;/span>0.054 ms
+--- 192.168.50.1 ping statistics ---
+&lt;span class="m">1&lt;/span> packets transmitted, &lt;span class="m">1&lt;/span> received, 0% packet loss, &lt;span class="nb">time&lt;/span> 0ms
+rtt min/avg/max/mdev &lt;span class="o">=&lt;/span> 0.054/0.054/0.054/0.000 ms
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>iptables</title><link>https://mkbooks.github.io/blog/p/iptables/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/iptables/</guid><description>&lt;p>sysctl -w net.ipv4.ip_forward=1
+iptables -t nat -A PREROUTING -p tcp &amp;ndash;dport 80 -j DNAT &amp;ndash;to-destination 192.168.3.63:80
+iptables -t nat -A POSTROUTING -p tcp -d 192.168.3.63 &amp;ndash;dport 80 -j SNAT &amp;ndash;to-source 192.168.3.243&lt;/p>
+&lt;p>sysctl -w net.ipv4.ip_forward=1
+iptables -t nat -A PREROUTING -p tcp &amp;ndash;dport 80 -j DNAT &amp;ndash;to-destination 172.17.0.2:80
+iptables -t nat -A POSTROUTING -p tcp -d 172.17.0.2 &amp;ndash;dport 80 -j SNAT &amp;ndash;to-source 192.168.3.63&lt;/p>
+&lt;p>iptables -t nat -A PREROUTING -d 192.168.3.63 -p tcp &amp;ndash;dport 80 -j DNAT &amp;ndash;to-destination 172.17.0.2:80
+iptables -t nat -A POSTROUTING -d 172.17.0.2 -p tcp &amp;ndash;dport 80 -j SNAT &amp;ndash;to 192.168.3.63&lt;/p>
+&lt;p>B:
+iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -d 172.17.0.0/24 -o docker0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 172.17.0.0/24 -d 192.168.3.0/24 -o enp0s3 -j MASQUERADE&lt;/p>
+&lt;p>A:
+route add -net 172.17.0.0 netmask 255.255.255.0 gw 192.168.3.63&lt;/p>
+&lt;p>C:
+route add -net 192.168.5.0 netmask 255.255.255.0 gw 192.168.3.63&lt;/p>
+&lt;p>echo 1 &amp;gt; /proc/sys/net/ipv4/ip_forward
+B:
+iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -d 192.168.122.0/24 -o virbr0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.122.0/24 -d 192.168.100.0/24 -o virbr1 -j MASQUERADE&lt;/p>
+&lt;p>A:
+iptables -t nat -A POSTROUTING -s 192.168.122.0/24 -d 192.168.100.0/24 -o enp1s0 -j MASQUERADE&lt;/p>
+&lt;p>route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.122.1 enp1s0&lt;/p>
+&lt;p>C:
+route add -net 192.168.122.0 netmask 255.255.255.0 gw 192.168.100.1 enp1s0&lt;/p>
+&lt;p>A:
+route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.100.1&lt;/p>
+&lt;p>C:
+route add -net 192.168.122.0 netmask 255.255.255.0 gw 192.168.122.1&lt;/p>
+&lt;p>iptables -A FORWARD -i virbr1 -o virbr0 -j ACCEPT
+iptables -A FORWARD -i virbr0 -o virbr1 -m state &amp;ndash;state ESTABLISHED,RELATED -j ACCEPT
+iptables -t nat -A POSTROUTING -o virbr0 -j MASQUERADE&lt;/p>
+&lt;p>iptables -t nat -vnL POSTROUTING &amp;ndash;line-number
+iptables -t nat -D POSTROUTING 20
+iptables-save
+route
+route del -net 192.168.40.0 netmask 255.255.255.0
+route del -net 192.168.30.0 netmask 255.255.255.0&lt;/p>
+&lt;p>route del -net 192.169.30.0 netmask 255.255.255.0 dev virbr0
+route del -net 192.169.40.0 netmask 255.255.255.0 dev virbr1&lt;/p>
+&lt;p>B:
+echo 1 &amp;gt; /proc/sys/net/ipv4/ip_forward
+wlo1
+iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -d 192.168.40.0/24 -o wlo1 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -d 192.168.40.0/24 -o virbr1 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.30.0/24 -d 192.168.40.0/24 -o virbr1 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.40.0/24 -d 192.168.30.0/24 -o virbr0 -j MASQUERADE&lt;/p>
+&lt;p>route add -net 192.168.40.0 netmask 255.255.255.0 gw 192.168.40.205
+route add -net 192.168.30.0 netmask 255.255.255.0 gw 192.168.30.235&lt;/p>
+&lt;p>route add -net 192.169.30.0 netmask 255.255.255.0 dev virbr0
+route add -net 192.169.40.0 netmask 255.255.255.0 dev virbr1&lt;/p>
+&lt;p>A:
+route add -net 192.168.40.0 netmask 255.255.255.0 gw 192.168.30.1&lt;/p>
+&lt;p>route del -net 192.168.40.0 netmask 255.255.255.0
+route add -net 192.168.40.0 netmask 255.255.0.0 gw 192.168.3.34 dev enp1s0&lt;/p>
+&lt;p>C:
+route add -net 192.168.30.0 netmask 255.255.255.0 gw 192.168.40.1&lt;/p>
+&lt;p>route del -net 192.168.30.0 netmask 255.255.255.0
+route add -net 192.168.30.0 netmask 255.255.0.0 gw 192.168.3.34&lt;/p>
+&lt;h1 id="linux一块网卡添加多个ip地址">Linux一块网卡添加多个IP地址&lt;/h1>
+&lt;p>&lt;a class="link" href="https://cloud.tencent.com/developer/article/1431717" target="_blank" rel="noopener"
+>https://cloud.tencent.com/developer/article/1431717&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://virt-manager.org/" target="_blank" rel="noopener"
+>https://virt-manager.org/&lt;/a>&lt;/p>
+&lt;h1 id="黄总">黄总&lt;/h1>
+&lt;p>sudo ip addr add 10.252.3.88/29 dev ens1f1
+sudo route add 88.88.43.8 gw 10.246.1.173&lt;/p>
+&lt;h1 id="sudo-ip-route-add-888843024-via-102461173">sudo ip route add 88.88.43.0/24 via 10.246.1.173&lt;/h1>
+&lt;p>sudo iptables -t nat -A PREROUTING -i ens1f1 -d 10.252.3.88 -j DNAT &amp;ndash;to 88.88.43.8
+sudo iptables -t nat -A POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT &amp;ndash;to-source 10.252.3.88&lt;/p>
+&lt;h1 id="查看登录日志">查看登录日志&lt;/h1>
+&lt;p>sudo tail /var/log/auth.log&lt;/p></description></item><item><title>远程传输文件-rsync</title><link>https://mkbooks.github.io/blog/p/%E8%BF%9C%E7%A8%8B%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6-rsync/</link><pubDate>Fri, 19 Aug 2022 17:03:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E8%BF%9C%E7%A8%8B%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6-rsync/</guid><description>&lt;p>参考链接&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.ruanyifeng.com/blog/2020/08/rsync.html" target="_blank" rel="noopener"
+>https://www.ruanyifeng.com/blog/2020/08/rsync.html&lt;/a>&lt;/li>
+&lt;li>How To Use Rsync to Sync Local and Remote Directories on a VPS, Justin Ellingwood&lt;/li>
+&lt;li>Mirror Your Web Site With rsync, Falko Timme&lt;/li>
+&lt;li>Examples on how to use Rsync, Egidio Docile&lt;/li>
+&lt;li>How to create incremental backups using rsync on Linux, Egidio Docile&lt;/li>
+&lt;/ul>
+&lt;h1 id="一简介">一、简介&lt;/h1>
+&lt;p>rsync 是一个常用的 Linux 应用程序，用于文件同步。&lt;/p>
+&lt;p>它可以在本地计算机与远程计算机之间，或者两个本地目录之间同步文件（但不支持两台远程计算机之间的同步）。它也可以当作文件复制工具，替代cp和mv命令。&lt;/p>
+&lt;p>它名称里面的r指的是 remote，rsync 其实就是&amp;quot;远程同步&amp;quot;（remote sync）的意思。与其他文件传输工具（如 FTP 或 scp）不同，rsync 的最大特点是会检查发送方和接收方已有的文件，仅传输有变动的部分（默认规则是文件大小或修改时间有变动）。&lt;/p>
+&lt;h1 id="二安装">二、安装&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># Ubuntu/Debian
+$ sudo apt-get install rsync
+# CentOS/Red Hat
+$ sudo yum install rsync
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>注意，传输的双方都必须安装 rsync。&lt;/p>
+&lt;h2 id="三基本用法">三、基本用法&lt;/h2>
+&lt;h2 id="31--r-参数">3.1 -r 参数&lt;/h2>
+&lt;p>本机使用 rsync 命令时，可以作为cp和mv命令的替代方法，将源目录同步到目标目录。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -r source destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面命令中，-r表示递归，即包含子目录。注意，-r是必须的，否则 rsync 运行不会成功。source目录表示源目录，destination表示目标目录。&lt;/p>
+&lt;p>如果有多个文件或目录需要同步，可以写成下面这样。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -r source1 source2 destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面命令中，source1、source2都会被同步到destination目录。&lt;/p>
+&lt;h2 id="32--a-参数">3.2 -a 参数&lt;/h2>
+&lt;p>-a参数可以替代-r，除了可以递归同步以外，还可以同步元信息（比如修改时间、权限等）。由于 rsync 默认使用文件大小和修改时间决定文件是否需要更新，所以-a比-r更有用。下面的用法才是常见的写法。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -a source destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>目标目录destination如果不存在，rsync 会自动创建。执行上面的命令后，源目录source被完整地复制到了目标目录destination下面，即形成了destination/source的目录结构。&lt;/p>
+&lt;p>如果只想同步源目录source里面的内容到目标目录destination，则需要在源目录后面加上斜杠。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -a source/ destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面命令执行后，source目录里面的内容，就都被复制到了destination目录里面，并不会在destination下面创建一个source子目录。&lt;/p>
+&lt;h2 id="33--n-参数">3.3 -n 参数&lt;/h2>
+&lt;p>如果不确定 rsync 执行后会产生什么结果，可以先用-n或&amp;ndash;dry-run参数模拟执行的结果。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -anv source/ destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面命令中，-n参数模拟命令执行的结果，并不真的执行命令。-v参数则是将结果输出到终端，这样就可以看到哪些内容会被同步。&lt;/p>
+&lt;h2 id="34---delete-参数">3.4 &amp;ndash;delete 参数&lt;/h2>
+&lt;p>默认情况下，rsync 只确保源目录的所有内容（明确排除的文件除外）都复制到目标目录。它不会使两个目录保持相同，并且不会删除文件。如果要使得目标目录成为源目录的镜像副本，则必须使用&amp;ndash;delete参数，这将删除只存在于目标目录、不存在于源目录的文件。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av --delete source/ destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面命令中，&amp;ndash;delete参数会使得destination成为source的一个镜像。&lt;/p>
+&lt;h1 id="四排除文件">四、排除文件&lt;/h1>
+&lt;h2 id="41---exclude-参数">4.1 &amp;ndash;exclude 参数&lt;/h2>
+&lt;p>有时，我们希望同步时排除某些文件或目录，这时可以用&amp;ndash;exclude参数指定排除模式。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av --exclude=&amp;#39;*.txt&amp;#39; source/ destination
+# 或者
+$ rsync -av --exclude &amp;#39;*.txt&amp;#39; source/ destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面命令排除了所有 TXT 文件。&lt;/p>
+&lt;p>注意，rsync 会同步以&amp;quot;点&amp;quot;开头的隐藏文件，如果要排除隐藏文件，可以这样写&amp;ndash;exclude=&amp;quot;.*&amp;quot;。&lt;/p>
+&lt;p>如果要排除某个目录里面的所有文件，但不希望排除目录本身，可以写成下面这样。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av --exclude &amp;#39;dir1/*&amp;#39; source/ destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>多个排除模式，可以用多个&amp;ndash;exclude参数。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av --exclude &amp;#39;file1.txt&amp;#39; --exclude &amp;#39;dir1/*&amp;#39; source/ destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>多个排除模式也可以利用 Bash 的大扩号的扩展功能，只用一个&amp;ndash;exclude参数。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av --exclude={&amp;#39;file1.txt&amp;#39;,&amp;#39;dir1/*&amp;#39;} source/ destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果排除模式很多，可以将它们写入一个文件，每个模式一行，然后用&amp;ndash;exclude-from参数指定这个文件。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av --exclude-from=&amp;#39;exclude-file.txt&amp;#39; source/ destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="42---include-参数">4.2 &amp;ndash;include 参数&lt;/h2>
+&lt;p>&amp;ndash;include参数用来指定必须同步的文件模式，往往与&amp;ndash;exclude结合使用。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av --include=&amp;#34;*.txt&amp;#34; --exclude=&amp;#39;*&amp;#39; source/ destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面命令指定同步时，排除所有文件，但是会包括 TXT 文件。&lt;/p>
+&lt;h1 id="五远程同步">五、远程同步&lt;/h1>
+&lt;h2 id="51-ssh-协议">5.1 SSH 协议&lt;/h2>
+&lt;p>rsync 除了支持本地两个目录之间的同步，也支持远程同步。它可以将本地内容，同步到远程服务器。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av source/ username@remote_host:destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>也可以将远程内容同步到本地。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av username@remote_host:source/ destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>rsync 默认使用 SSH 进行远程登录和数据传输。&lt;/p>
+&lt;p>由于早期 rsync 不使用 SSH 协议，需要用-e参数指定协议，后来才改的。所以，下面-e ssh可以省略。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av -e ssh source/ user@remote_host:/destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>但是，如果 ssh 命令有附加的参数，则必须使用-e参数指定所要执行的 SSH 命令。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av -e &amp;#39;ssh -p 2234&amp;#39; source/ user@remote_host:/destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面命令中，-e参数指定 SSH 使用2234端口。&lt;/p>
+&lt;h2 id="52-rsync-协议">5.2 rsync 协议&lt;/h2>
+&lt;p>除了使用 SSH，如果另一台服务器安装并运行了 rsync 守护程序，则也可以用rsync://协议（默认端口873）进行传输。具体写法是服务器与目标目录之间使用双冒号分隔::。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av source/ 192.168.122.32::module/destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>注意，上面地址中的module并不是实际路径名，而是 rsync 守护程序指定的一个资源名，由管理员分配。&lt;/p>
+&lt;p>如果想知道 rsync 守护程序分配的所有 module 列表，可以执行下面命令。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync rsync://192.168.122.32
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>rsync 协议除了使用双冒号，也可以直接用rsync://协议指定地址。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -av source/ rsync://192.168.122.32/module/destination
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="六增量备份">六、增量备份&lt;/h1>
+&lt;p>rsync 的最大特点就是它可以完成增量备份，也就是默认只复制有变动的文件。&lt;/p>
+&lt;p>除了源目录与目标目录直接比较，rsync 还支持使用基准目录，即将源目录与基准目录之间变动的部分，同步到目标目录。&lt;/p>
+&lt;p>具体做法是，第一次同步是全量备份，所有文件在基准目录里面同步一份。以后每一次同步都是增量备份，只同步源目录与基准目录之间有变动的部分，将这部分保存在一个新的目标目录。这个新的目标目录之中，也是包含所有文件，但实际上，只有那些变动过的文件是存在于该目录，其他没有变动的文件都是指向基准目录文件的硬链接。&lt;/p>
+&lt;p>&amp;ndash;link-dest参数用来指定同步时的基准目录。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ rsync -a --delete --link-dest /compare/path /source/path /target/path
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面命令中，&amp;ndash;link-dest参数指定基准目录/compare/path，然后源目录/source/path跟基准目录进行比较，找出变动的文件，将它们拷贝到目标目录/target/path。那些没变动的文件则会生成硬链接。这个命令的第一次备份时是全量备份，后面就都是增量备份了。&lt;/p>
+&lt;p>下面是一个脚本示例，备份用户的主目录。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="c1"># A script to perform incremental backups using rsync&lt;/span>
+&lt;span class="nb">set&lt;/span> -o errexit
+&lt;span class="nb">set&lt;/span> -o nounset
+&lt;span class="nb">set&lt;/span> -o pipefail
+&lt;span class="nb">readonly&lt;/span> &lt;span class="nv">SOURCE_DIR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">HOME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="nb">readonly&lt;/span> &lt;span class="nv">BACKUP_DIR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/mnt/data/backups&amp;#34;&lt;/span>
+&lt;span class="nb">readonly&lt;/span> &lt;span class="nv">DATETIME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>date &lt;span class="s1">&amp;#39;+%Y-%m-%d_%H:%M:%S&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="nb">readonly&lt;/span> &lt;span class="nv">BACKUP_PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BACKUP_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DATETIME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="nb">readonly&lt;/span> &lt;span class="nv">LATEST_LINK&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BACKUP_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/latest&amp;#34;&lt;/span>
+mkdir -p &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BACKUP_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+rsync -av --delete &lt;span class="se">\
+&lt;/span>&lt;span class="se">&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SOURCE_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;span class="se">&lt;/span> --link-dest &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LATEST_LINK&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;span class="se">&lt;/span> --exclude&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;.cache&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;span class="se">&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BACKUP_PATH&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+rm -rf &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LATEST_LINK&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+ln -s &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BACKUP_PATH&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LATEST_LINK&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>上面脚本中，每一次同步都会生成一个新目录${BACKUP_DIR}/${DATETIME}，并将软链接${BACKUP_DIR}/latest指向这个目录。下一次备份时，就将${BACKUP_DIR}/latest作为基准目录，生成新的备份目录。最后，再将软链接${BACKUP_DIR}/latest指向新的备份目录。&lt;/p>
+&lt;h1 id="七配置项">七、配置项&lt;/h1>
+&lt;p>-a、&amp;ndash;archive参数表示存档模式，保存所有的元数据，比如修改时间（modification time）、权限、所有者等，并且软链接也会同步过去。&lt;/p>
+&lt;p>&amp;ndash;append参数指定文件接着上次中断的地方，继续传输。&lt;/p>
+&lt;p>&amp;ndash;append-verify参数跟&amp;ndash;append参数类似，但会对传输完成后的文件进行一次校验。如果校验失败，将重新发送整个文件。&lt;/p>
+&lt;p>-b、&amp;ndash;backup参数指定在删除或更新目标目录已经存在的文件时，将该文件更名后进行备份，默认行为是删除。更名规则是添加由&amp;ndash;suffix参数指定的文件后缀名，默认是~。&lt;/p>
+&lt;p>&amp;ndash;backup-dir参数指定文件备份时存放的目录，比如&amp;ndash;backup-dir=/path/to/backups。&lt;/p>
+&lt;p>&amp;ndash;bwlimit参数指定带宽限制，默认单位是 KB/s，比如&amp;ndash;bwlimit=100。&lt;/p>
+&lt;p>-c、&amp;ndash;checksum参数改变rsync的校验方式。默认情况下，rsync 只检查文件的大小和最后修改日期是否发生变化，如果发生变化，就重新传输；使用这个参数以后，则通过判断文件内容的校验和，决定是否重新传输。&lt;/p>
+&lt;p>&amp;ndash;delete参数删除只存在于目标目录、不存在于源目标的文件，即保证目标目录是源目标的镜像。&lt;/p>
+&lt;p>-e参数指定使用 SSH 协议传输数据。&lt;/p>
+&lt;p>&amp;ndash;exclude参数指定排除不进行同步的文件，比如&amp;ndash;exclude=&amp;quot;*.iso&amp;quot;。&lt;/p>
+&lt;p>&amp;ndash;exclude-from参数指定一个本地文件，里面是需要排除的文件模式，每个模式一行。&lt;/p>
+&lt;p>&amp;ndash;existing、&amp;ndash;ignore-non-existing参数表示不同步目标目录中不存在的文件和目录。&lt;/p>
+&lt;p>-h参数表示以人类可读的格式输出。&lt;/p>
+&lt;p>-h、&amp;ndash;help参数返回帮助信息。&lt;/p>
+&lt;p>-i参数表示输出源目录与目标目录之间文件差异的详细情况。&lt;/p>
+&lt;p>&amp;ndash;ignore-existing参数表示只要该文件在目标目录中已经存在，就跳过去，不再同步这些文件。&lt;/p>
+&lt;p>&amp;ndash;include参数指定同步时要包括的文件，一般与&amp;ndash;exclude结合使用。&lt;/p>
+&lt;p>&amp;ndash;link-dest参数指定增量备份的基准目录。&lt;/p>
+&lt;p>-m参数指定不同步空目录。&lt;/p>
+&lt;p>&amp;ndash;max-size参数设置传输的最大文件的大小限制，比如不超过200KB（&amp;ndash;max-size=&amp;lsquo;200k&amp;rsquo;）。&lt;/p>
+&lt;p>&amp;ndash;min-size参数设置传输的最小文件的大小限制，比如不小于10KB（&amp;ndash;min-size=10k）。&lt;/p>
+&lt;p>-n参数或&amp;ndash;dry-run参数模拟将要执行的操作，而并不真的执行。配合-v参数使用，可以看到哪些内容会被同步过去。&lt;/p>
+&lt;p>-P参数是&amp;ndash;progress和&amp;ndash;partial这两个参数的结合。&lt;/p>
+&lt;p>&amp;ndash;partial参数允许恢复中断的传输。不使用该参数时，rsync会删除传输到一半被打断的文件；使用该参数后，传输到一半的文件也会同步到目标目录，下次同步时再恢复中断的传输。一般需要与&amp;ndash;append或&amp;ndash;append-verify配合使用。&lt;/p>
+&lt;p>&amp;ndash;partial-dir参数指定将传输到一半的文件保存到一个临时目录，比如&amp;ndash;partial-dir=.rsync-partial。一般需要与&amp;ndash;append或&amp;ndash;append-verify配合使用。&lt;/p>
+&lt;p>&amp;ndash;progress参数表示显示进展。&lt;/p>
+&lt;p>-r参数表示递归，即包含子目录。&lt;/p>
+&lt;p>&amp;ndash;remove-source-files参数表示传输成功后，删除发送方的文件。&lt;/p>
+&lt;p>&amp;ndash;size-only参数表示只同步大小有变化的文件，不考虑文件修改时间的差异。&lt;/p>
+&lt;p>&amp;ndash;suffix参数指定文件名备份时，对文件名添加的后缀，默认是~。&lt;/p>
+&lt;p>-u、&amp;ndash;update参数表示同步时跳过目标目录中修改时间更新的文件，即不同步这些有更新的时间戳的文件。&lt;/p>
+&lt;p>-v参数表示输出细节。-vv表示输出更详细的信息，-vvv表示输出最详细的信息。&lt;/p>
+&lt;p>&amp;ndash;version参数返回 rsync 的版本。&lt;/p>
+&lt;p>-z参数指定同步时压缩数据。&lt;/p></description></item><item><title>替换文件夹中所有文件内容的特定字符串</title><link>https://mkbooks.github.io/blog/p/%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E7%89%B9%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2/</link><pubDate>Wed, 17 Aug 2022 17:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E7%89%B9%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">find . -type f -name &amp;#34;*.yaml&amp;#34; | xargs sed -i &amp;#34;s#host_path#$host_path#g&amp;#34;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Linux 下使用 awk 操作文件内容</title><link>https://mkbooks.github.io/blog/p/linux-%E4%B8%8B%E4%BD%BF%E7%94%A8-awk-%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9/</link><pubDate>Wed, 17 Aug 2022 10:03:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/linux-%E4%B8%8B%E4%BD%BF%E7%94%A8-awk-%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9/</guid><description>&lt;p>参考: &lt;a class="link" href="https://blog.csdn.net/laobai1015/article/details/98628860" target="_blank" rel="noopener"
+>https://blog.csdn.net/laobai1015/article/details/98628860&lt;/a>&lt;/p>
+&lt;h2 id="需求">需求&lt;/h2>
+&lt;ol>
+&lt;li>把 /etc/rancher/k3s/k3s.yaml 文件的内容，每行前面加 4 个空格，追加到 ai-service-platform/yamls/config/kube-config.yaml 文件中；&lt;/li>
+&lt;li>把 ai-service-platform/yamls/config/kube-config.yaml 文件中的 127.0.0.1 替换成 $master_host_ip。&lt;/li>
+&lt;/ol>
+&lt;p>脚本：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">function fix_kube_config(){
+sudo awk &amp;#39;{print &amp;#34; &amp;#34; $0 &amp;gt;&amp;gt; &amp;#34;ai-service-platform/yamls/config/kube-config.yaml&amp;#34;}&amp;#39; /etc/rancher/k3s/k3s.yaml
+sed -i &amp;#34;s/127.0.0.1/$master_host_ip/g&amp;#34; ai-service-platform/yamls/config/kube-config.yaml
+}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="扩展">扩展&lt;/h2>
+&lt;p>在前面、后面、指定列添加相同字符&lt;/p>
+&lt;ol>
+&lt;li>给一个文件中的每一行开头插入字符的方法：awk &amp;lsquo;{print &amp;ldquo;需要添加的字符&amp;rdquo; $0}&amp;rsquo; fileName&lt;/li>
+&lt;li>给一个文件中的每一行结尾插入字符的方法：awk &amp;lsquo;{print $0 &amp;ldquo;需要添加的字符&amp;rdquo;}&amp;rsquo; fileName&lt;/li>
+&lt;li>给一个文件中的每一行的指定列插入字符的方法：awk &amp;lsquo;$0=$0 X&amp;quot;&amp;rsquo; fileName&lt;/li>
+&lt;/ol>
+&lt;p>删除某一个列&lt;/p>
+&lt;ol>
+&lt;li>删除文件中的第一列：awk &amp;lsquo;{$1=&amp;quot;&amp;quot;;print $0}&amp;rsquo; fileName 或者另一种方法 sed -e &amp;rsquo;s/[^ ]* //' text&lt;/li>
+&lt;li>删除指定列：awk &amp;lsquo;{$Num=&amp;quot;&amp;quot;;print $0}&amp;rsquo; fileName&lt;/li>
+&lt;/ol>
+&lt;p>把Num换成要删除的列数即可&lt;/p>
+&lt;h2 id="练习">练习&lt;/h2>
+&lt;p>给文件中的每一行开头添加drop tables&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">awk &amp;#39;{print &amp;#34;drop table &amp;#34;$0}&amp;#39; aa.txt &amp;gt; bb.txt
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>给文件中的每一行结尾添加分号&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">awk &amp;#39;{print $0&amp;#34;;&amp;#34;}&amp;#39; bb.txt &amp;gt; cc.txt
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>Python 实现 Linux 的 'df -h' 命令</title><link>https://mkbooks.github.io/blog/p/python-%E5%AE%9E%E7%8E%B0-linux-%E7%9A%84-df-h-%E5%91%BD%E4%BB%A4/</link><pubDate>Mon, 15 Aug 2022 17:03:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/python-%E5%AE%9E%E7%8E%B0-linux-%E7%9A%84-df-h-%E5%91%BD%E4%BB%A4/</guid><description>&lt;p>参考: &lt;a class="link" href="https://developer.aliyun.com/article/53579" target="_blank" rel="noopener"
+>https://developer.aliyun.com/article/53579&lt;/a>&lt;/p>
+&lt;p>mycode&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">import os
+import math
+if __name__ == &amp;#39;__main__&amp;#39;:
+vfs = os.statvfs(&amp;#34;/home/manager&amp;#34;)
+g = 1024 * 1024 * 1024
+# 总容量
+k_blocks = vfs.f_bsize * vfs.f_blocks / g
+# Used,使用量，总容量减去空闲容量
+used = vfs.f_bsize * (vfs.f_blocks - vfs.f_bfree) / g
+# Available，有效容量
+available = vfs.f_bsize * vfs.f_bavail / g
+# use%,使用量，%,round(浮点数，精确到小数点后的位数）
+use = round(used / (used + available) * 100, 2)
+print({
+&amp;#34;容量&amp;#34;: k_blocks,
+&amp;#34;已用&amp;#34;: used,
+&amp;#34;可用&amp;#34;: available,
+&amp;#34;已用%&amp;#34;: use,
+})
+print({
+&amp;#34;容量&amp;#34;: f&amp;#39;{math.ceil(k_blocks)}G&amp;#39;,
+&amp;#34;已用&amp;#34;: f&amp;#39;{math.ceil(used)}G&amp;#39;,
+&amp;#34;可用&amp;#34;: f&amp;#39;{math.ceil(available)}G&amp;#39;,
+&amp;#34;已用%&amp;#34;: f&amp;#39;{math.ceil(use)}%&amp;#39;,
+})
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>运行测试&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ df -h /home/manager
+文件系统 容量 已用 可用 已用% 挂载点
+/dev/nvme0n1p2 457G 325G 110G 75% /
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">python test.py
+{&amp;#39;容量&amp;#39;: 456.8854446411133, &amp;#39;已用&amp;#39;: 324.40053939819336, &amp;#39;可用&amp;#39;: 109.20629501342773, &amp;#39;已用%&amp;#39;: 74.81}
+{&amp;#39;容量&amp;#39;: &amp;#39;457G&amp;#39;, &amp;#39;已用&amp;#39;: &amp;#39;325G&amp;#39;, &amp;#39;可用&amp;#39;: &amp;#39;110G&amp;#39;, &amp;#39;已用%&amp;#39;: &amp;#39;75%&amp;#39;}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>
