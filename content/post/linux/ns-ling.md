@@ -21,7 +21,7 @@ next: http://changxiangyu.cn/2022/08/%E4%BF%AE%E6%94%B9%E5%8D%9A%E5%AE%A2%E4%B8%
 prev: http://changxiangyu.cn/2020/08/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/  # 上一篇博客地址
 ---
 # Namespace Route LAB
-![](/images/ip-netns.png)
+![](https://changxiangyu.cn/images/ip-netns.png)
 ![](https://secure2.wostatic.cn/static/j4AbdddxE4eoMBrknWnXcx/image.png)
 # Target
 
