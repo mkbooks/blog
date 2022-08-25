@@ -1,9 +1,6 @@
-public
 resources
 assets/jsconfig.json
 .hugo_build.lock
 
-themes/fokus/
-themes/sahat/
 .vscode/
 kubevious-deploy.git/
