@@ -47,28 +47,19 @@
     <loc>https://example.com/tags/%E5%A9%9A%E7%BA%B1%E7%85%A7/</loc>
     <lastmod>2020-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/%E5%A9%9A%E7%BA%B1%E7%85%A7/</loc>
-    <lastmod>2020-08-06T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://example.com/p/%E5%A9%9A%E7%BA%B1%E7%85%A7-15x15-%E7%9B%B8%E5%86%8C/</loc>
     <lastmod>2020-08-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://example.com/tags/%E5%9B%BE%E7%89%87/</loc>
     <lastmod>2020-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/%E5%9B%BE%E7%89%87/</loc>
-    <lastmod>2020-08-06T00:00:00+00:00</lastmod>
-  </url><url>
     <loc>https://example.com/tags/%E7%9B%B8%E5%86%8C/</loc>
     <lastmod>2020-08-06T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/%E7%9B%B8%E5%86%8C/</loc>
+    <loc>https://example.com/categories/%E7%85%A7%E7%89%87/</loc>
     <lastmod>2020-08-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://example.com/tags/%E6%91%86%E4%BB%B6/</loc>
-    <lastmod>2020-08-06T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>https://example.com/categories/%E6%91%86%E4%BB%B6/</loc>
     <lastmod>2020-08-06T00:00:00+00:00</lastmod>
   </url><url>
     <loc>https://example.com/p/%E5%A9%9A%E7%BA%B1%E7%85%A7-12x12-%E7%9B%B8%E5%86%8C/</loc>
