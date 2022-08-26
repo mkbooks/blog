@@ -12,6 +12,7 @@ links:
 menu:
     main: 
         weight: -50
+        url: "/links"
         params:
             icon: link
 

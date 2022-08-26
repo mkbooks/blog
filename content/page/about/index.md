@@ -11,6 +11,7 @@ lastmod: '2020-10-09'
 menu:
     main: 
         weight: -90
+        url: "/about"
         params:
             icon: user
 ---

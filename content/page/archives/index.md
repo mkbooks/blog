@@ -6,6 +6,7 @@ slug: "archives"
 menu:
     main:
         weight: -70
+        url: "/archives"
         params: 
             icon: archives
 ---
