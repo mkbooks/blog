@@ -1,14 +1,14 @@
 <!doctype html><html lang=en-us dir=ltr>
 <head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="替换文件夹中所有文件内容的特定字符串"><title>替换文件夹中所有文件内容的特定字符串</title>
-<link rel=canonical href=https://mkbooks.github.io/blog/p/%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E7%89%B9%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2/>
-<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="替换文件夹中所有文件内容的特定字符串">
-<meta property="og:description" content="替换文件夹中所有文件内容的特定字符串">
-<meta property="og:url" content="https://mkbooks.github.io/blog/p/%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E7%89%B9%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="安装多版本 Python，但是有些版本没有合适的安装包"><title>linux 系统，使用源码安装 Python</title>
+<link rel=canonical href=https://mkbooks.github.io/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/>
+<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="linux 系统，使用源码安装 Python">
+<meta property="og:description" content="安装多版本 Python，但是有些版本没有合适的安装包">
+<meta property="og:url" content="https://mkbooks.github.io/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/">
 <meta property="og:site_name" content="我的空间">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Linux"><meta property="article:tag" content="Shell"><meta property="article:published_time" content="2022-08-17T17:38:18+08:00"><meta property="article:modified_time" content="2020-08-17T00:00:00+00:00">
-<meta name=twitter:title content="替换文件夹中所有文件内容的特定字符串">
-<meta name=twitter:description content="替换文件夹中所有文件内容的特定字符串">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Python"><meta property="article:tag" content="Linux"><meta property="article:published_time" content="2022-08-26T16:27:18+08:00"><meta property="article:modified_time" content="2022-08-26T00:00:00+00:00">
+<meta name=twitter:title content="linux 系统，使用源码安装 Python">
+<meta name=twitter:description content="安装多版本 Python，但是有些版本没有合适的安装包">
 </head>
 <body class=article-page>
 <script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
@@ -79,24 +79,21 @@
 <header class=article-header>
 <div class=article-details>
 <header class=article-category>
-<a href=/blog/categories/linux/ style=background-color:#2a9d8f;color:#fff>
-Linux(Ubuntu, CentOS)
-</a>
-<a href=/blog/categories/shell/>
-Shell
+<a href=/blog/categories/python/>
+Python
 </a>
 </header>
 <div class=article-title-wrapper>
 <h2 class=article-title>
-<a href=/blog/p/%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E7%89%B9%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2/>替换文件夹中所有文件内容的特定字符串</a>
+<a href=/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/>linux 系统，使用源码安装 Python</a>
 </h2>
 <h3 class=article-subtitle>
-替换文件夹中所有文件内容的特定字符串
+安装多版本 Python，但是有些版本没有合适的安装包
 </h3>
 </div>
 <footer class=article-time>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Aug 17, 2022</time>
+<time class=article-time--published>Aug 26, 2022</time>
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
@@ -107,27 +104,73 @@ Shell
 </div>
 </header>
 <section class=article-content>
+<ol>
+<li>下载安装文件</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 链接从官方找
+wget https://www.python.org/ftp/python/3.6.8/Python-3.6.8.tar.xz
+</code></pre></td></tr></table>
+</div>
+</div><ol start=2>
+<li>解压</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>export d_path=&#39;&#39;
+tar xf Python-3.6.8.tar.xz -C $d_path
+</code></pre></td></tr></table>
+</div>
+</div><ol start=3>
+<li>安装</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>cd $d_path
+./configure --prefix=$d_path/python3.6.8
+make all
+make install
+</code></pre></td></tr></table>
+</div>
+</div><ol start=4>
+<li>测试</li>
+</ol>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>find . -type f -name &#34;*.yaml&#34; | xargs sed -i &#34;s#host_path#$host_path#g&#34;
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$d_path/python3.6.8/python -V
 </code></pre></td></tr></table>
 </div>
 </div>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
+<a href=/blog/tags/python/>Python</a>
 <a href=/blog/tags/linux/>Linux</a>
-<a href=/blog/tags/shell/>Shell</a>
 </section>
 <section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
 <span>Licensed under CC BY-NC-SA 4.0</span>
 </section>
 <section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <span>
-最后更新于 Aug 17, 2020 00:00 UTC
+最后更新于 Aug 26, 2022 00:00 UTC
 </span>
 </section></footer>
 </article>
@@ -136,37 +179,16 @@ Shell
 <div class=related-content>
 <div class="flex article-list--tile">
 <article>
-<a href=/blog/p/ip-netns/>
+<a href=/blog/p/python-%E5%AE%9E%E7%8E%B0-linux-%E7%9A%84-df-h-%E5%91%BD%E4%BB%A4/>
 <div class=article-details>
-<h2 class=article-title>ip-netns</h2>
+<h2 class=article-title>Python 实现 Linux 的 'df -h' 命令</h2>
 </div>
 </a>
 </article>
 <article>
-<a href=/blog/p/iptables/>
+<a href=/blog/p/python-%E6%B8%85%E7%90%86%E5%8C%85/>
 <div class=article-details>
-<h2 class=article-title>iptables</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/blog/p/ip-netns-ling/>
-<div class=article-details>
-<h2 class=article-title>ip-netns-ling</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/blog/p/%E8%BF%9C%E7%A8%8B%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6-rsync/>
-<div class=article-details>
-<h2 class=article-title>远程传输文件-rsync</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/blog/p/linux-%E4%B8%8B%E4%BD%BF%E7%94%A8-awk-%E6%93%8D%E4%BD%9C%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9/>
-<div class=article-details>
-<h2 class=article-title>Linux 下使用 awk 操作文件内容</h2>
+<h2 class=article-title>python 清理包</h2>
 </div>
 </a>
 </article>
