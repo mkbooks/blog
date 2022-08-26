@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>网络 on 我的空间</title><link>/categories/%E7%BD%91%E7%BB%9C/</link><description>Recent content in 网络 on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 25 Aug 2022 01:38:18 +0800</lastBuildDate><atom:link href="/categories/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml"/><item><title>ip-netns</title><link>/p/ip-netns/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>/p/ip-netns/</guid><description>&lt;p>A B C
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>网络 on 我的空间</title><link>https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/</link><description>Recent content in 网络 on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 25 Aug 2022 01:38:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml"/><item><title>ip-netns</title><link>https://mkbooks.github.io/blog/p/ip-netns/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ip-netns/</guid><description>&lt;p>A B C
 192.168.10.1 192.168.10.10 192.168.50.10 192.168.50.1&lt;/p>
 &lt;p>ip netns exec A ip addr add 192.168.30.246/24 dev A-To-br-A-B
 ip netns exec B ip addr add 192.168.30.1/24 dev B-To-br-A-B
@@ -14,11 +14,11 @@ ip netns exec C ping 192.168.40.133 -c1&lt;/p>
 ip netns exec A ip route add 192.168.40.0/24 via 192.168.30.1 dev A-To-br-A-B&lt;/p>
 &lt;p>ip netns exec C ip route add 192.168.10.0/24 via 192.168.50.10 dev C-To-br-B-C
 ip netns exec C ip route add 192.168.30.0/24 via 192.168.40.1 dev C-To-br-B-C&lt;/p>
-&lt;p>ip netns exec A ping 192.168.40.133 -c 1&lt;/p></description></item><item><title>ip-netns-ling</title><link>/p/ip-netns-ling/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>/p/ip-netns-ling/</guid><description>&lt;h1 id="namespace-route-lab">Namespace Route LAB&lt;/h1>
-&lt;p>&lt;img src="/https:/changxiangyu.cn/images/ip-netns.png"
+&lt;p>ip netns exec A ping 192.168.40.133 -c 1&lt;/p></description></item><item><title>ip-netns-ling</title><link>https://mkbooks.github.io/blog/p/ip-netns-ling/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ip-netns-ling/</guid><description>&lt;h1 id="namespace-route-lab">Namespace Route LAB&lt;/h1>
+&lt;p>&lt;img src="https://changxiangyu.cn/images/ip-netns.png"
 loading="lazy"
 >
-&lt;img src="/https:/secure2.wostatic.cn/static/j4AbdddxE4eoMBrknWnXcx/image.png"
+&lt;img src="https://secure2.wostatic.cn/static/j4AbdddxE4eoMBrknWnXcx/image.png"
 loading="lazy"
 >&lt;/p>
 &lt;h1 id="target">Target&lt;/h1>
@@ -676,7 +676,7 @@ PING 192.168.50.1 &lt;span class="o">(&lt;/span>192.168.50.1&lt;span class="o">)
 rtt min/avg/max/mdev &lt;span class="o">=&lt;/span> 0.054/0.054/0.054/0.000 ms
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>iptables</title><link>/p/iptables/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>/p/iptables/</guid><description>&lt;p>sysctl -w net.ipv4.ip_forward=1
+&lt;/div></description></item><item><title>iptables</title><link>https://mkbooks.github.io/blog/p/iptables/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/iptables/</guid><description>&lt;p>sysctl -w net.ipv4.ip_forward=1
 iptables -t nat -A PREROUTING -p tcp &amp;ndash;dport 80 -j DNAT &amp;ndash;to-destination 192.168.3.63:80
 iptables -t nat -A POSTROUTING -p tcp -d 192.168.3.63 &amp;ndash;dport 80 -j SNAT &amp;ndash;to-source 192.168.3.243&lt;/p>
 &lt;p>sysctl -w net.ipv4.ip_forward=1
@@ -746,7 +746,7 @@ sudo route add 88.88.43.8 gw 10.246.1.173&lt;/p>
 &lt;p>sudo iptables -t nat -A PREROUTING -i ens1f1 -d 10.252.3.88 -j DNAT &amp;ndash;to 88.88.43.8
 sudo iptables -t nat -A POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT &amp;ndash;to-source 10.252.3.88&lt;/p>
 &lt;h1 id="查看登录日志">查看登录日志&lt;/h1>
-&lt;p>sudo tail /var/log/auth.log&lt;/p></description></item><item><title>在 Ubuntu20.04 建设 openVPN</title><link>/p/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/</link><pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate><guid>/p/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/</guid><description>&lt;h1 id="openvpn">openvpn&lt;/h1>
+&lt;p>sudo tail /var/log/auth.log&lt;/p></description></item><item><title>在 Ubuntu20.04 建设 openVPN</title><link>https://mkbooks.github.io/blog/p/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/</link><pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/</guid><description>&lt;h1 id="openvpn">openvpn&lt;/h1>
 &lt;p>操作系统: Ubuntu 20.04&lt;/p>
 &lt;p>参考文档：&lt;/p>
 &lt;p>&lt;a class="link" href="https://openvpn.net/community-resources/" target="_blank" rel="noopener"

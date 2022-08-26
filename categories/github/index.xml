@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GitHub on 我的空间</title><link>/categories/github/</link><description>Recent content in GitHub on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 01 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="/categories/github/index.xml" rel="self" type="application/rss+xml"/><item><title>将博客部署在GitHub上</title><link>/p/%E5%B0%86%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%9C%A8github%E4%B8%8A/</link><pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate><guid>/p/%E5%B0%86%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%9C%A8github%E4%B8%8A/</guid><description>&lt;h1 id="准备要部署的内容">准备要部署的内容&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GitHub on 我的空间</title><link>https://mkbooks.github.io/blog/categories/github/</link><description>Recent content in GitHub on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 01 Aug 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/github/index.xml" rel="self" type="application/rss+xml"/><item><title>将博客部署在GitHub上</title><link>https://mkbooks.github.io/blog/p/%E5%B0%86%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%9C%A8github%E4%B8%8A/</link><pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%B0%86%E5%8D%9A%E5%AE%A2%E9%83%A8%E7%BD%B2%E5%9C%A8github%E4%B8%8A/</guid><description>&lt;h1 id="准备要部署的内容">准备要部署的内容&lt;/h1>
 &lt;p>在github 上创建一个仓库: chenjinxin.github.io&lt;/p>
 &lt;p>要向仓库中存放的内容，使用 hugo 命令生成的。在当前目录下，运行 hugo 命令：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -74,7 +74,7 @@ git remote add origin git@github.com:chenjinxin1124/chenjinxin.github.io.git
 git push --set-upstream origin master
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>推送到GitHub</title><link>/p/%E6%8E%A8%E9%80%81%E5%88%B0github/</link><pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate><guid>/p/%E6%8E%A8%E9%80%81%E5%88%B0github/</guid><description>&lt;h1 id="初始化本地仓库">初始化本地仓库&lt;/h1>
+&lt;/div></description></item><item><title>推送到GitHub</title><link>https://mkbooks.github.io/blog/p/%E6%8E%A8%E9%80%81%E5%88%B0github/</link><pubDate>Mon, 01 Aug 2022 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/%E6%8E%A8%E9%80%81%E5%88%B0github/</guid><description>&lt;h1 id="初始化本地仓库">初始化本地仓库&lt;/h1>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
