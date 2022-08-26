@@ -1,4 +1,72 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>我的空间</title><link>https://mkbooks.github.io/blog/</link><description>Recent content on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 25 Aug 2022 01:38:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>ip-netns</title><link>https://mkbooks.github.io/blog/p/ip-netns/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ip-netns/</guid><description>&lt;p>A B C
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>我的空间</title><link>https://mkbooks.github.io/blog/</link><description>Recent content on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 26 Aug 2022 14:36:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>git http方式免密提交</title><link>https://mkbooks.github.io/blog/p/git-http%E6%96%B9%E5%BC%8F%E5%85%8D%E5%AF%86%E6%8F%90%E4%BA%A4/</link><pubDate>Fri, 26 Aug 2022 14:36:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/git-http%E6%96%B9%E5%BC%8F%E5%85%8D%E5%AF%86%E6%8F%90%E4%BA%A4/</guid><description>&lt;p>转载：https://juejin.cn/post/6844903602968854542&lt;/p>
+&lt;h2 id="设置记住密码默认15分钟">设置记住密码（默认15分钟）&lt;/h2>
+&lt;p>可以将你的密码缓存下来，只用输一次密码，以后都可以不用输入了。缺点就是密码都明文保存在 &lt;code>~/.git-credential&lt;/code> 文件中。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">git config --global credential.helper cache
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果想自己设置时间，可以使用以下命令：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">git config credential.helper &amp;#39;cache --timeout=3600&amp;#39;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这样就设置一个小时之后失效&lt;/p>
+&lt;h2 id="长期存储密码">长期存储密码：&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">git config --global credential.helper store
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>增加远程地址的时候带上密码也是可以的。(推荐)&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">http://yourname:password@git.oschina.net/name/project.git
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>补充：使用客户端也可以存储密码。&lt;/p>
+&lt;h2 id="如果你正在使用ssh而且想体验https带来的高速那么你可以这样做">如果你正在使用ssh而且想体验https带来的高速，那么你可以这样做：&lt;/h2>
+&lt;p>切换到项目目录下 ：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cd project/
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>移除远程ssh方式的仓库地址&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">git remote rm origin
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>复制代码增加https远程仓库地址&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">git remote add origin http://yourname:password@git.oschina.net/name/project.git
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>ip-netns</title><link>https://mkbooks.github.io/blog/p/ip-netns/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ip-netns/</guid><description>&lt;p>A B C
 192.168.10.1 192.168.10.10 192.168.50.10 192.168.50.1&lt;/p>
 &lt;p>ip netns exec A ip addr add 192.168.30.246/24 dev A-To-br-A-B
 ip netns exec B ip addr add 192.168.30.1/24 dev B-To-br-A-B
