@@ -1,4 +1,118 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>网络 on 我的空间</title><link>https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/</link><description>Recent content in 网络 on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 25 Aug 2022 01:38:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml"/><item><title>ip-netns</title><link>https://mkbooks.github.io/blog/p/ip-netns/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ip-netns/</guid><description>&lt;p>A B C
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>网络 on 我的空间</title><link>https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/</link><description>Recent content in 网络 on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 28 Aug 2022 16:38:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml"/><item><title>网络学习-0001</title><link>https://mkbooks.github.io/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/</link><pubDate>Sun, 28 Aug 2022 16:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/</guid><description>&lt;h1 id="1-使两台机器通过交换机连通">1. 使两台机器通过交换机连通&lt;/h1>
+&lt;p>1.1 网络结构：&lt;/p>
+&lt;p>&lt;img src="https://mkbooks.github.io/blog/blog/0001.png"
+loading="lazy"
+alt="网络拓扑-0001"
+>&lt;/p>
+&lt;p>1.2 网络现状：机器一和机器二不通。&lt;/p>
+&lt;p>1.3 原因分析：当前两台机器都是自动获取IP模式，但是交换机不分配IP。&lt;/p>
+&lt;p>1.4 目标：机器一和机器二连通。&lt;/p>
+&lt;p>1.5 操作：&lt;/p>
+&lt;p>给机器一设置 IP 和子网掩码(不设置网关)：&lt;/p>
+&lt;ul>
+&lt;li>address: 192.168.0.10&lt;/li>
+&lt;li>netmask: 255.255.255.0&lt;/li>
+&lt;/ul>
+&lt;p>给机器二设置 IP 和子网掩码(不设置网关)：&lt;/p>
+&lt;ul>
+&lt;li>address: 192.168.0.11&lt;/li>
+&lt;li>netmask: 255.255.255.0&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># 临时修改
+# ifconfig 网卡名称 IP地址 netmask 子网掩码
+sudo ifconfig eno2 192.168.0.11 netmask 255.255.255.0
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>1.6 测试连通:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># 机器一
+ping 192.168.0.11
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># 机器二
+ping 192.168.0.10
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>测试连通成功&lt;/p>
+&lt;h1 id="2-使机器一-1921680024-的网段可以跟机器二的-1921683024-的网段互通">2. 使机器一 192.168.0.0/24 的网段，可以跟机器二的 192.168.3.0/24 的网段互通&lt;/h1>
+&lt;p>1.2 网络结构：&lt;/p>
+&lt;p>&lt;img src="https://mkbooks.github.io/blog/blog/0002.png"
+loading="lazy"
+alt="网络拓扑-0002"
+>&lt;/p>
+&lt;p>1.2 网络现状：机器一和机器二 192.168.0.11 的 IP 互相连通，机器一和机器二 192.168.3.34 的 IP 互相不通。&lt;/p>
+&lt;p>1.3 原因分析：两个网段不通。&lt;/p>
+&lt;p>1.4 目标：使机器一 192.168.0.0/24 的网段，可以跟机器二的 192.168.3.0/24 的网段互通。&lt;/p>
+&lt;p>1.5 操作：&lt;/p>
+&lt;p>机器一&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo route add -net 192.168.3.0 netmask 255.255.255.0 gw 192.168.0.11
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>机器二&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -d 192.168.3.0/24 -o wlo1 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -d 192.168.0.0/24 -o eno2 -j MASQUERADE
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>机器三&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo route add -net 192.168.0.0 netmask 255.255.255.0 gw 192.168.3.34
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>1.6 测试连通:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># 机器一
+ping 192.168.3.102
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># 机器三
+ping 192.168.0.10
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>测试连通成功&lt;/p></description></item><item><title>ip-netns</title><link>https://mkbooks.github.io/blog/p/ip-netns/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ip-netns/</guid><description>&lt;p>A B C
 192.168.10.1 192.168.10.10 192.168.50.10 192.168.50.1&lt;/p>
 &lt;p>ip netns exec A ip addr add 192.168.30.246/24 dev A-To-br-A-B
 ip netns exec B ip addr add 192.168.30.1/24 dev B-To-br-A-B

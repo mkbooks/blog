@@ -1,14 +1,14 @@
 <!doctype html><html lang=en-us dir=ltr>
 <head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="ip-netns"><title>ip-netns</title>
-<link rel=canonical href=https://mkbooks.github.io/blog/p/ip-netns/>
-<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="ip-netns">
-<meta property="og:description" content="ip-netns">
-<meta property="og:url" content="https://mkbooks.github.io/blog/p/ip-netns/">
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="网络学习"><title>网络学习-0001</title>
+<link rel=canonical href=https://mkbooks.github.io/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>
+<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="网络学习-0001">
+<meta property="og:description" content="网络学习">
+<meta property="og:url" content="https://mkbooks.github.io/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/">
 <meta property="og:site_name" content="我的空间">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Linux"><meta property="article:tag" content="网络"><meta property="article:published_time" content="2022-08-25T01:38:18+08:00"><meta property="article:modified_time" content="2022-08-25T00:00:00+00:00">
-<meta name=twitter:title content="ip-netns">
-<meta name=twitter:description content="ip-netns">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Linux"><meta property="article:tag" content="网络"><meta property="article:published_time" content="2022-08-28T16:38:18+08:00"><meta property="article:modified_time" content="2022-08-28T00:00:00+00:00">
+<meta name=twitter:title content="网络学习-0001">
+<meta name=twitter:description content="网络学习">
 </head>
 <body class=article-page>
 <script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
@@ -88,15 +88,15 @@ Linux(Ubuntu, CentOS)
 </header>
 <div class=article-title-wrapper>
 <h2 class=article-title>
-<a href=/blog/p/ip-netns/>ip-netns</a>
+<a href=/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>网络学习-0001</a>
 </h2>
 <h3 class=article-subtitle>
-ip-netns
+网络学习
 </h3>
 </div>
 <footer class=article-time>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Aug 25, 2022</time>
+<time class=article-time--published>Aug 28, 2022</time>
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
@@ -107,23 +107,115 @@ ip-netns
 </div>
 </header>
 <section class=article-content>
-<p>A B C
-192.168.10.1 192.168.10.10 192.168.50.10 192.168.50.1</p>
-<p>ip netns exec A ip addr add 192.168.30.246/24 dev A-To-br-A-B
-ip netns exec B ip addr add 192.168.30.1/24 dev B-To-br-A-B
-ip netns exec B ip addr add 192.168.40.1/24 dev B-To-br-B-C
-ip netns exec C ip addr add 192.168.40.133/24 dev C-To-br-B-C</p>
-<p>ip netns exec B ping 192.168.30.246 -c1
-ip netns exec B ping 192.168.40.133 -c1</p>
-<p>ip netns exec A ping 192.168.30.246 -c1
-ip netns exec A ping 192.168.40.133 -c1</p>
-<p>ip netns exec C ping 192.168.30.246 -c1
-ip netns exec C ping 192.168.40.133 -c1</p>
-<p>ip netns exec A ip route add 192.168.50.0/24 via 192.168.10.10 dev A-To-br-A-B
-ip netns exec A ip route add 192.168.40.0/24 via 192.168.30.1 dev A-To-br-A-B</p>
-<p>ip netns exec C ip route add 192.168.10.0/24 via 192.168.50.10 dev C-To-br-B-C
-ip netns exec C ip route add 192.168.30.0/24 via 192.168.40.1 dev C-To-br-B-C</p>
-<p>ip netns exec A ping 192.168.40.133 -c 1</p>
+<h1 id=1-使两台机器通过交换机连通>1. 使两台机器通过交换机连通</h1>
+<p>1.1 网络结构：</p>
+<p><img src=/blog/0001.png loading=lazy alt=网络拓扑-0001></p>
+<p>1.2 网络现状：机器一和机器二不通。</p>
+<p>1.3 原因分析：当前两台机器都是自动获取IP模式，但是交换机不分配IP。</p>
+<p>1.4 目标：机器一和机器二连通。</p>
+<p>1.5 操作：</p>
+<p>给机器一设置 IP 和子网掩码(不设置网关)：</p>
+<ul>
+<li>address: 192.168.0.10</li>
+<li>netmask: 255.255.255.0</li>
+</ul>
+<p>给机器二设置 IP 和子网掩码(不设置网关)：</p>
+<ul>
+<li>address: 192.168.0.11</li>
+<li>netmask: 255.255.255.0</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 临时修改
+# ifconfig 网卡名称 IP地址 netmask 子网掩码
+sudo ifconfig eno2 192.168.0.11 netmask 255.255.255.0
+</code></pre></td></tr></table>
+</div>
+</div><p>1.6 测试连通:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 机器一
+ping 192.168.0.11
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 机器二
+ping 192.168.0.10
+</code></pre></td></tr></table>
+</div>
+</div><p>测试连通成功</p>
+<h1 id=2-使机器一-1921680024-的网段可以跟机器二的-1921683024-的网段互通>2. 使机器一 192.168.0.0/24 的网段，可以跟机器二的 192.168.3.0/24 的网段互通</h1>
+<p>1.2 网络结构：</p>
+<p><img src=/blog/0002.png loading=lazy alt=网络拓扑-0002></p>
+<p>1.2 网络现状：机器一和机器二 192.168.0.11 的 IP 互相连通，机器一和机器二 192.168.3.34 的 IP 互相不通。</p>
+<p>1.3 原因分析：两个网段不通。</p>
+<p>1.4 目标：使机器一 192.168.0.0/24 的网段，可以跟机器二的 192.168.3.0/24 的网段互通。</p>
+<p>1.5 操作：</p>
+<p>机器一</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo route add -net 192.168.3.0 netmask 255.255.255.0 gw 192.168.0.11
+</code></pre></td></tr></table>
+</div>
+</div><p>机器二</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -d 192.168.3.0/24 -o wlo1 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -d 192.168.0.0/24 -o eno2 -j MASQUERADE
+</code></pre></td></tr></table>
+</div>
+</div><p>机器三</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo route add -net 192.168.0.0 netmask 255.255.255.0 gw 192.168.3.34
+</code></pre></td></tr></table>
+</div>
+</div><p>1.6 测试连通:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 机器一
+ping 192.168.3.102
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 机器三
+ping 192.168.0.10
+</code></pre></td></tr></table>
+</div>
+</div><p>测试连通成功</p>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
@@ -135,7 +227,7 @@ ip netns exec C ip route add 192.168.30.0/24 via 192.168.40.1 dev C-To-br-B-C</p
 </section>
 <section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <span>
-最后更新于 Aug 25, 2022 00:00 UTC
+最后更新于 Aug 28, 2022 00:00 UTC
 </span>
 </section></footer>
 </article>
@@ -144,9 +236,9 @@ ip netns exec C ip route add 192.168.30.0/24 via 192.168.40.1 dev C-To-br-B-C</p
 <div class=related-content>
 <div class="flex article-list--tile">
 <article>
-<a href=/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>
+<a href=/blog/p/ip-netns/>
 <div class=article-details>
-<h2 class=article-title>网络学习-0001</h2>
+<h2 class=article-title>ip-netns</h2>
 </div>
 </a>
 </article>
