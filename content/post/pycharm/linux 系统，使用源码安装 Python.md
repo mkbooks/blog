@@ -12,6 +12,7 @@ tags : [
     "Linux"
 ]
 ---
+参考：https://blog.csdn.net/wxhcyy/article/details/107718794
 1. 下载安装文件
 ```
 # 链接从官方找
