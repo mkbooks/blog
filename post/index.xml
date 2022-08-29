@@ -190,7 +190,8 @@ default via 192.168.3.1 dev enp6s0 proto static metric 20100
 DNS=8.8.8.8
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>重启即可&lt;/p></description></item><item><title>linux 系统，使用源码安装 Python</title><link>https://mkbooks.github.io/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/</link><pubDate>Fri, 26 Aug 2022 16:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/</guid><description>&lt;ol>
+&lt;/div>&lt;p>重启即可&lt;/p></description></item><item><title>linux 系统，使用源码安装 Python</title><link>https://mkbooks.github.io/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/</link><pubDate>Fri, 26 Aug 2022 16:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/</guid><description>&lt;p>参考：https://blog.csdn.net/wxhcyy/article/details/107718794&lt;/p>
+&lt;ol>
 &lt;li>下载安装文件&lt;/li>
 &lt;/ol>
 &lt;div class="highlight">&lt;div class="chroma">
