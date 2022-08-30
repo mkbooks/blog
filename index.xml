@@ -190,7 +190,134 @@ default via 192.168.3.1 dev enp6s0 proto static metric 20100
 DNS=8.8.8.8
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>重启即可&lt;/p></description></item><item><title>linux 系统，使用源码安装 Python</title><link>https://mkbooks.github.io/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/</link><pubDate>Fri, 26 Aug 2022 16:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/</guid><description>&lt;p>参考：https://blog.csdn.net/wxhcyy/article/details/107718794&lt;/p>
+&lt;/div>&lt;p>重启即可&lt;/p></description></item><item><title>kubefate api</title><link>https://mkbooks.github.io/blog/p/kubefate-api/</link><pubDate>Sun, 28 Aug 2022 16:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/kubefate-api/</guid><description>&lt;h1 id="master-测试">master 测试&lt;/h1>
+&lt;p>获取服务 IP 和端口&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">k -n kube-fate get svc
+NAME TYPE CLUSTER-IP EXTERNAL-IP PORT(S) AGE
+mariadb ClusterIP 10.43.102.139 &amp;lt;none&amp;gt; 3306/TCP 113d
+kubefate ClusterIP 10.43.147.93 &amp;lt;none&amp;gt; 8080/TCP 113d
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>查看集群状态&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl 10.43.147.93:8080
+{&amp;#34;msg&amp;#34;:&amp;#34;kubefate run Success&amp;#34;}
+curl sh.com(域名)
+{&amp;#34;msg&amp;#34;:&amp;#34;kubefate run Success&amp;#34;}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>获取 token&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl -X POST -H &amp;#39;Content-Type: application/json&amp;#39; -i &amp;#39;http://10.43.147.93:8080/v1/user/login&amp;#39; --data &amp;#39;{
+&amp;#34;username&amp;#34;: &amp;#34;admin&amp;#34;,
+&amp;#34;password&amp;#34;: &amp;#34;admin&amp;#34;
+}&amp;#39;
+{&amp;#34;code&amp;#34;:200,&amp;#34;expire&amp;#34;:&amp;#34;2022-08-29T07:34:13Z&amp;#34;,&amp;#34;token&amp;#34;:&amp;#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjE3NTg0NTMsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTY2MTc1NjY1M30.HIlE-j-RxufqOgS2G0n9zLnsNVWK-GdGyX1rJeX4ons&amp;#34;}
+curl -X POST -H &amp;#39;Content-Type: application/json&amp;#39; -i &amp;#39;http://sh.com/v1/user/login&amp;#39; --data &amp;#39;{
+&amp;#34;username&amp;#34;: &amp;#34;admin&amp;#34;,
+&amp;#34;password&amp;#34;: &amp;#34;admin&amp;#34;
+}&amp;#39;
+{&amp;#34;code&amp;#34;:200,&amp;#34;expire&amp;#34;:&amp;#34;2022-08-29T08:10:55Z&amp;#34;,&amp;#34;token&amp;#34;:&amp;#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjE3NjA2NTUsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTY2MTc1ODg1NX0.UqBvGxFnP2OgRE1t73_OBUlE-_aTaCEn99GNtAGX-2o&amp;#34;}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>获取集群详情&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl -XGET -i 10.43.147.93:8080/v1/cluster/\?all\=false -H &amp;#39;Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjE3NjA2NTUsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTY2MTc1ODg1NX0.UqBvGxFnP2OgRE1t73_OBUlE-_aTaCEn99GNtAGX-2o&amp;#39;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="在容器内访问通过完全限定域名访问">在容器内访问(通过完全限定域名访问)&lt;/h1>
+&lt;p>查看集群状态&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl kubefate.kube-fate:8080
+{&amp;#34;msg&amp;#34;:&amp;#34;kubefate run Success&amp;#34;}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>获取 token&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl -X POST -H &amp;#39;Content-Type: application/json&amp;#39; -i &amp;#39;kubefate.kube-fate:8080/v1/user/login&amp;#39; --data &amp;#39;{
+&amp;#34;username&amp;#34;: &amp;#34;admin&amp;#34;,
+&amp;#34;password&amp;#34;: &amp;#34;admin&amp;#34;
+}&amp;#39;
+{&amp;#34;code&amp;#34;:200,&amp;#34;expire&amp;#34;:&amp;#34;2022-08-29T08:58:55Z&amp;#34;,&amp;#34;token&amp;#34;:&amp;#34;eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjE3NjM1MzUsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTY2MTc2MTczNX0.T7tRQvbzVCbZfOzZZx3d00xKNbPs2_8_cUwEFAWJPUo&amp;#34;}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>获取集群详情&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl -XGET -i kubefate.kube-fate:8080/v1/cluster/\?all\=false -H &amp;#39;Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjE3NjM1MzUsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTY2MTc2MTczNX0.T7tRQvbzVCbZfOzZZx3d00xKNbPs2_8_cUwEFAWJPUo&amp;#39;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>获取集群详情&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl -XGET -i kubefate.kube-fate:8080/v1/cluster/\?all\=false -H &amp;#39;Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjE3NjM1MzUsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTY2MTc2MTczNX0.T7tRQvbzVCbZfOzZZx3d00xKNbPs2_8_cUwEFAWJPUo&amp;#39;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>获取集群详情&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl -XGET -i kubefate.kube-fate:8080/v1/cluster/c610796c-e2a4-48cc-b7b3-e911cc4bb7dc -H &amp;#39;Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjE3NjYwMDMsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTY2MTc2NDIwM30.S5bcFEL9HURx8R9tB1A1JQFe8ggVy7vnWkzjCaSp-n0&amp;#39;
+curl -XGET -i kubefate.kube-fate:8080/v1/cluster/566f37e0-ca8b-4627-b48c-239e494ffaec -H &amp;#39;Authorization:Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2NjE3NjYwMDMsImlkIjoiYWRtaW4iLCJvcmlnX2lhdCI6MTY2MTc2NDIwM30.S5bcFEL9HURx8R9tB1A1JQFe8ggVy7vnWkzjCaSp-n0&amp;#39;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>linux 系统，使用源码安装 Python</title><link>https://mkbooks.github.io/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/</link><pubDate>Fri, 26 Aug 2022 16:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/linux-%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85-python/</guid><description>&lt;p>参考：https://blog.csdn.net/wxhcyy/article/details/107718794&lt;/p>
 &lt;ol>
 &lt;li>下载安装文件&lt;/li>
 &lt;/ol>
@@ -4795,30 +4922,4 @@ ping 10.10.0.1
 &lt;p>Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.&lt;/p>
 &lt;p>Websites built with Hugo are extremelly fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.&lt;/p>
 &lt;p>Learn more and contribute on &lt;a class="link" href="https://github.com/gohugoio" target="_blank" rel="noopener"
->GitHub&lt;/a>.&lt;/p></description></item><item><title>Links</title><link>https://mkbooks.github.io/blog/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/links/</guid><description>&lt;p>To use this feature, add &lt;code>links&lt;/code> section to frontmatter.&lt;/p>
-&lt;p>This page&amp;rsquo;s frontmatter:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;span class="lnt">9
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="nt">links&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="nt">title&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">GitHub&lt;/span>&lt;span class="w">
-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">GitHub is the world&amp;#39;s largest software development platform.&lt;/span>&lt;span class="w">
-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">website&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.com&lt;/span>&lt;span class="w">
-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png&lt;/span>&lt;span class="w">
-&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="nt">title&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">TypeScript&lt;/span>&lt;span class="w">
-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">description&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.&lt;/span>&lt;span class="w">
-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">website&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://www.typescriptlang.org&lt;/span>&lt;span class="w">
-&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ts-logo-128.jpg&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>&lt;code>image&lt;/code> field accepts both local and external images.&lt;/p></description></item><item><title>Search</title><link>https://mkbooks.github.io/blog/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/search/</guid><description/></item></channel></rss>
+>GitHub&lt;/a>.&lt;/p></description></item><item><title>Links</title><link>https://mkbooks.github.io/blog/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/links/</guid><description/></item><item><title>Search</title><link>https://mkbooks.github.io/blog/search/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/search/</guid><description/></item></channel></rss>
