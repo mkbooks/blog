@@ -12,6 +12,7 @@ menu:
 - 手机: 17137621499
 - 邮箱: chenjinxin@chenjinxin.cn　
 - 毕业院校及专业: 黑河学院本科19届-计算机科学与技术专业
+- 我的博客: https://changxiangyu.cn
 
 ## 个人能力
 - 编程语言: Go、Scala、Kotlin、Python、Java、SQL、Shell。
@@ -21,7 +22,6 @@ menu:
 - 数据库: HBase、Hive、Redis、MySQL、PostgreSQL、ElasticSearch、MSSQL。
 - 云原生: Docker、Kubernetes（K8s）。
 - 团队协作: Git、GitHub、GitLab。
-- 我的主页：https://chenjinxin.cn、https://github.com/chenjinxin1124。
 - 能够独立从0到1搭建企业大数据平台及云原生平台。
 
 ## 工作经历
