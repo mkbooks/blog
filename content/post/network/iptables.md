@@ -119,7 +119,13 @@ sudo ip addr add 10.252.3.88/29 dev ens1f1
 sudo route add 88.88.43.8 gw 10.246.1.173
 # sudo ip route add 88.88.43.0/24 via 10.246.1.173
 sudo iptables -t nat -A PREROUTING -i ens1f1 -d 10.252.3.88 -j DNAT --to 88.88.43.8
-sudo iptables -t nat -A POSTROUTING -d 88.88.43.8 -o ens1f1  -j SNAT --to-source 10.252.3.88
+sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1  -j SNAT --to-source 10.252.3.88
+
+sudo iptables -t nat -A POSTROUTING -d 88.88.43.8 -o cni0 -j SNAT --to-source 10.252.3.88
+
+## 源地址 10.23.80.228 转换为 88.88.44.3，添加此地址回程路由
+sudo route add 88.88.44.3 gw 10.246.1.173
 
 # 查看登录日志
 sudo tail /var/log/auth.log
+
