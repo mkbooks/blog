@@ -1,4 +1,874 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kubefate on 我的空间</title><link>https://mkbooks.github.io/blog/categories/kubefate/</link><description>Recent content in kubefate on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 28 Aug 2022 16:27:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/kubefate/index.xml" rel="self" type="application/rss+xml"/><item><title>kubefate api</title><link>https://mkbooks.github.io/blog/p/kubefate-api/</link><pubDate>Sun, 28 Aug 2022 16:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/kubefate-api/</guid><description>&lt;h1 id="master-测试">master 测试&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kubefate on 我的空间</title><link>https://mkbooks.github.io/blog/categories/kubefate/</link><description>Recent content in kubefate on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 31 Aug 2022 15:27:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/kubefate/index.xml" rel="self" type="application/rss+xml"/><item><title>kubefate训练测试</title><link>https://mkbooks.github.io/blog/p/kubefate%E8%AE%AD%E7%BB%83%E6%B5%8B%E8%AF%95/</link><pubDate>Wed, 31 Aug 2022 15:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/kubefate%E8%AE%AD%E7%BB%83%E6%B5%8B%E8%AF%95/</guid><description>&lt;h1 id="多方连接测试">多方连接测试&lt;/h1>
+&lt;p>1: Party-9999和Party-10000&lt;/p>
+&lt;p>在A集群的Master机器操作&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl get pods -n fate-9999 | grep client
+返回
+client-5fcd4fdcfd-nqvrz 1/1 Running 0 2d1h
+获取client容器ID
+kubectl exec -it client-5fcd4fdcfd-nqvrz -n fate-9999 bash
+flow test toy -gid 9999 -hid 10000
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>3: Party-10000和Party-9999&lt;/p>
+&lt;p>在C集群的Master机器操作&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl get pods -n fate-10000 | grep client
+返回
+client-845c4df74-xbf89 1/1 Running 0 47h
+获取client容器ID
+kubectl exec -it client-845c4df74-xbf89 -n fate-10001 bash
+flow test toy -gid 10000 -hid 9999
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>成功显示结果&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">toy test job 202205090852477671460 is waiting
+toy test job 202205090852477671460 is waiting
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is running
+toy test job 202205090852477671460 is success
+[INFO] [2022-05-09 08:52:53,088] [202205090852477671460] [1339:139984863901504] - [secure_add_guest.run] [line:96]: begin to init parameters of secure add example guest
+[INFO] [2022-05-09 08:52:53,088] [202205090852477671460] [1339:139984863901504] - [secure_add_guest.run] [line:100]: begin to make guest data
+[INFO] [2022-05-09 08:52:53,136] [202205090852477671460] [1339:139984863901504] - [secure_add_guest.run] [line:103]: split data into two random parts
+[INFO] [2022-05-09 08:52:54,031] [202205090852477671460] [1339:139984863901504] - [secure_add_guest.run] [line:106]: share one random part data to host
+[INFO] [2022-05-09 08:52:54,035] [202205090852477671460] [1339:139984863901504] - [secure_add_guest.run] [line:109]: get share of one random part data from host
+[INFO] [2022-05-09 08:52:54,573] [202205090852477671460] [1339:139984863901504] - [secure_add_guest.run] [line:112]: begin to get sum of guest and host
+[INFO] [2022-05-09 08:52:54,645] [202205090852477671460] [1339:139984863901504] - [secure_add_guest.run] [line:115]: receive host sum from guest
+[INFO] [2022-05-09 08:52:54,721] [202205090852477671460] [1339:139984863901504] - [secure_add_guest.run] [line:122]: success to calculate secure_sum, it is 2000.0000000000002
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="6952-多方训练测试">6.9.5.2 多方训练测试&lt;/h4>
+&lt;p>如何两两之间互通测试通过，我们就可以跑一个三方的test_hetero_lr来测试多方的任务训练。&lt;/p>
+&lt;p>test_hetero_lr的任务需要三方参与，Guest，Host和Arbiter。我们将Party-9999作为Guest，Party-10000作为Host和Arbiter。&lt;/p>
+&lt;p>1：在Party-10000上传 host 方数据集&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl get pods -n fate-10000 | grep client
+返回
+client-64f7959ff5-7hvt9 1/1 Running 0 2d
+获取client容器ID
+kubectl exec -it client-64f7959ff5-7hvt9 -n fate-10000 bash
+上传数据
+flow data upload -c fateflow/examples/upload/upload_host.json
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>2：在Party-9999上传 guest 方数据集&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl get pods -n fate-9999 | grep client
+返回
+client-5fcd4fdcfd-nqvrz 1/1 Running 0 2d1h
+获取client容器ID
+kubectl exec -it client-5fcd4fdcfd-nqvrz -n fate-9999 bash
+上传数据
+flow data upload -c fateflow/examples/upload/upload_guest.json
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>3：在Party-9999发起训练任务&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl get pods -n fate-9999 | grep client
+返回
+client-5fcd4fdcfd-nqvrz 1/1 Running 0 2d1h
+获取client容器ID
+kubectl exec -it client-5fcd4fdcfd-nqvrz -n fate-9999 bash
+修改文件
+cat &amp;gt; fateflow/examples/lr/test_hetero_lr_job_conf.json &amp;lt;&amp;lt;EOF
+{
+&amp;#34;dsl_version&amp;#34;: &amp;#34;2&amp;#34;,
+&amp;#34;initiator&amp;#34;: {
+&amp;#34;role&amp;#34;: &amp;#34;guest&amp;#34;,
+&amp;#34;party_id&amp;#34;: 10001
+},
+&amp;#34;role&amp;#34;: {
+&amp;#34;guest&amp;#34;: [
+10001
+],
+&amp;#34;host&amp;#34;: [
+9006
+],
+&amp;#34;arbiter&amp;#34;: [
+9006
+]
+},
+&amp;#34;job_parameters&amp;#34;: {
+&amp;#34;common&amp;#34;: {
+&amp;#34;task_parallelism&amp;#34;: 2,
+&amp;#34;computing_partitions&amp;#34;: 8,
+&amp;#34;task_cores&amp;#34;: 4,
+&amp;#34;auto_retries&amp;#34;: 1
+}
+},
+&amp;#34;component_parameters&amp;#34;: {
+&amp;#34;common&amp;#34;: {
+&amp;#34;intersection_0&amp;#34;: {
+&amp;#34;intersect_method&amp;#34;: &amp;#34;raw&amp;#34;,
+&amp;#34;sync_intersect_ids&amp;#34;: true,
+&amp;#34;only_output_key&amp;#34;: false
+},
+&amp;#34;hetero_lr_0&amp;#34;: {
+&amp;#34;penalty&amp;#34;: &amp;#34;L2&amp;#34;,
+&amp;#34;optimizer&amp;#34;: &amp;#34;rmsprop&amp;#34;,
+&amp;#34;alpha&amp;#34;: 0.01,
+&amp;#34;max_iter&amp;#34;: 3,
+&amp;#34;batch_size&amp;#34;: 320,
+&amp;#34;learning_rate&amp;#34;: 0.15,
+&amp;#34;init_param&amp;#34;: {
+&amp;#34;init_method&amp;#34;: &amp;#34;random_uniform&amp;#34;
+}
+}
+},
+&amp;#34;role&amp;#34;: {
+&amp;#34;guest&amp;#34;: {
+&amp;#34;0&amp;#34;: {
+&amp;#34;reader_0&amp;#34;: {
+&amp;#34;table&amp;#34;: {
+&amp;#34;name&amp;#34;: &amp;#34;breast_hetero_guest&amp;#34;,
+&amp;#34;namespace&amp;#34;: &amp;#34;experiment&amp;#34;
+}
+},
+&amp;#34;dataio_0&amp;#34;: {
+&amp;#34;with_label&amp;#34;: true,
+&amp;#34;label_name&amp;#34;: &amp;#34;y&amp;#34;,
+&amp;#34;label_type&amp;#34;: &amp;#34;int&amp;#34;,
+&amp;#34;output_format&amp;#34;: &amp;#34;dense&amp;#34;
+}
+}
+},
+&amp;#34;host&amp;#34;: {
+&amp;#34;0&amp;#34;: {
+&amp;#34;reader_0&amp;#34;: {
+&amp;#34;table&amp;#34;: {
+&amp;#34;name&amp;#34;: &amp;#34;breast_hetero_host&amp;#34;,
+&amp;#34;namespace&amp;#34;: &amp;#34;experiment&amp;#34;
+}
+},
+&amp;#34;dataio_0&amp;#34;: {
+&amp;#34;with_label&amp;#34;: false,
+&amp;#34;output_format&amp;#34;: &amp;#34;dense&amp;#34;
+},
+&amp;#34;evaluation_0&amp;#34;: {
+&amp;#34;need_run&amp;#34;: false
+}
+}
+}
+}
+}
+}
+EOF
+发起训练任务
+flow job submit -d fateflow/examples/lr/test_hetero_lr_job_dsl.json -c fateflow/examples/lr/test_hetero_lr_job_conf.json
+返回结果
+{
+&amp;#34;data&amp;#34;: {
+&amp;#34;board_url&amp;#34;: &amp;#34;http://fateboard:8080/index.html#/dashboard?job_id=202208310748436341990&amp;amp;role=guest&amp;amp;party_id=10001&amp;#34;,
+&amp;#34;code&amp;#34;: 0,
+&amp;#34;dsl_path&amp;#34;: &amp;#34;/data/projects/fate/fateflow/jobs/202208310748436341990/job_dsl.json&amp;#34;,
+&amp;#34;job_id&amp;#34;: &amp;#34;202208310748436341990&amp;#34;,
+&amp;#34;logs_directory&amp;#34;: &amp;#34;/data/projects/fate/fateflow/logs/202208310748436341990&amp;#34;,
+&amp;#34;message&amp;#34;: &amp;#34;success&amp;#34;,
+&amp;#34;model_info&amp;#34;: {
+&amp;#34;model_id&amp;#34;: &amp;#34;arbiter-9006#guest-10001#host-9006#model&amp;#34;,
+&amp;#34;model_version&amp;#34;: &amp;#34;202208310748436341990&amp;#34;
+},
+&amp;#34;pipeline_dsl_path&amp;#34;: &amp;#34;/data/projects/fate/fateflow/jobs/202208310748436341990/pipeline_dsl.json&amp;#34;,
+&amp;#34;runtime_conf_on_party_path&amp;#34;: &amp;#34;/data/projects/fate/fateflow/jobs/202208310748436341990/guest/10001/job_runtime_on_party_conf.json&amp;#34;,
+&amp;#34;runtime_conf_path&amp;#34;: &amp;#34;/data/projects/fate/fateflow/jobs/202208310748436341990/job_runtime_conf.json&amp;#34;,
+&amp;#34;train_runtime_conf_path&amp;#34;: &amp;#34;/data/projects/fate/fateflow/jobs/202208310748436341990/train_runtime_conf.json&amp;#34;
+},
+&amp;#34;jobId&amp;#34;: &amp;#34;202208310748436341990&amp;#34;,
+&amp;#34;retcode&amp;#34;: 0,
+&amp;#34;retmsg&amp;#34;: &amp;#34;success&amp;#34;
+}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>4：命令查看任务结果&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">flow task query -r guest -j 202208310748436341990 | grep -w f_status
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="696-联邦推理测试">6.9.6 联邦推理测试&lt;/h3>
+&lt;p>上面已经基于hetero_lr进行多方训练，训练出模型，下面基于上面的多方训练后部署模型、加载模型、绑定模型、模型推理&lt;/p>
+&lt;h4 id="6961-部署模型">6.9.6.1 部署模型&lt;/h4>
+&lt;p>进入party-9999容器内&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl get pods -n fate-9999 | grep client
+返回
+client-5fcd4fdcfd-nqvrz 1/1 Running 0 2d1h
+获取client容器ID
+kubectl exec -it client-5fcd4fdcfd-nqvrz -n fate-9999 bash
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>部署模型&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">flow model deploy --model-id arbiter-10000#guest-9999#host-10000#model --model-version 202205180944078730290(任务ID)
+返回
+{
+&amp;#34;data&amp;#34;: {
+&amp;#34;arbiter&amp;#34;: {
+&amp;#34;9006&amp;#34;: 0
+},
+&amp;#34;detail&amp;#34;: {
+&amp;#34;arbiter&amp;#34;: {
+&amp;#34;9006&amp;#34;: {
+&amp;#34;retcode&amp;#34;: 0,
+&amp;#34;retmsg&amp;#34;: &amp;#34;deploy model of role arbiter 9006 success&amp;#34;
+}
+},
+&amp;#34;guest&amp;#34;: {
+&amp;#34;10001&amp;#34;: {
+&amp;#34;retcode&amp;#34;: 0,
+&amp;#34;retmsg&amp;#34;: &amp;#34;deploy model of role guest 10001 success&amp;#34;
+}
+},
+&amp;#34;host&amp;#34;: {
+&amp;#34;9006&amp;#34;: {
+&amp;#34;retcode&amp;#34;: 0,
+&amp;#34;retmsg&amp;#34;: &amp;#34;deploy model of role host 9006 success&amp;#34;
+}
+}
+},
+&amp;#34;guest&amp;#34;: {
+&amp;#34;10001&amp;#34;: 0
+},
+&amp;#34;host&amp;#34;: {
+&amp;#34;9006&amp;#34;: 0
+},
+&amp;#34;model_id&amp;#34;: &amp;#34;arbiter-9006#guest-10001#host-9006#model&amp;#34;,
+&amp;#34;model_version&amp;#34;: &amp;#34;202208310755426963170&amp;#34;
+},
+&amp;#34;retcode&amp;#34;: 0,
+&amp;#34;retmsg&amp;#34;: &amp;#34;success&amp;#34;
+}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>获取到的信息是&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"> &amp;#34;model_id&amp;#34;: &amp;#34;arbiter-9006#guest-10001#host-9006#model&amp;#34;,
+&amp;#34;model_version&amp;#34;: &amp;#34;202208310755426963170&amp;#34;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="6962-加载模型">6.9.6.2 加载模型&lt;/h4>
+&lt;p>修改publish_load_model.json如下&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cat &amp;gt; fateflow/examples/model/publish_load_model.json &amp;lt;&amp;lt;EOF
+{
+&amp;#34;initiator&amp;#34;: {
+&amp;#34;party_id&amp;#34;: &amp;#34;10001&amp;#34;,
+&amp;#34;role&amp;#34;: &amp;#34;guest&amp;#34;
+},
+&amp;#34;role&amp;#34;: {
+&amp;#34;guest&amp;#34;: [
+&amp;#34;10001&amp;#34;
+],
+&amp;#34;host&amp;#34;: [
+&amp;#34;9006&amp;#34;
+],
+&amp;#34;arbiter&amp;#34;: [
+&amp;#34;9006&amp;#34;
+]
+},
+&amp;#34;job_parameters&amp;#34;: {
+&amp;#34;model_id&amp;#34;: &amp;#34;arbiter-9006#guest-10001#host-9006#model&amp;#34;,
+&amp;#34;model_version&amp;#34;: &amp;#34;202208310755426963170&amp;#34;
+}
+}
+EOF
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>加载模型&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">flow model load -c fateflow/examples/model/publish_load_model.json
+返回信息
+{
+&amp;#34;data&amp;#34;: {
+&amp;#34;detail&amp;#34;: {
+&amp;#34;guest&amp;#34;: {
+&amp;#34;10001&amp;#34;: {
+&amp;#34;retcode&amp;#34;: 0,
+&amp;#34;retmsg&amp;#34;: &amp;#34;success&amp;#34;
+}
+},
+&amp;#34;host&amp;#34;: {
+&amp;#34;9006&amp;#34;: {
+&amp;#34;retcode&amp;#34;: 0,
+&amp;#34;retmsg&amp;#34;: &amp;#34;success&amp;#34;
+}
+}
+},
+&amp;#34;guest&amp;#34;: {
+&amp;#34;10001&amp;#34;: 0
+},
+&amp;#34;host&amp;#34;: {
+&amp;#34;9006&amp;#34;: 0
+}
+},
+&amp;#34;jobId&amp;#34;: &amp;#34;202208310757075993710&amp;#34;,
+&amp;#34;retcode&amp;#34;: 0,
+&amp;#34;retmsg&amp;#34;: &amp;#34;success&amp;#34;
+}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="6963-绑定模型">6.9.6.3 绑定模型&lt;/h4>
+&lt;p>修改版定模型配置&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cat &amp;gt; fateflow/examples/model/bind_model_service.json &amp;lt;&amp;lt;EOF
+{
+&amp;#34;service_id&amp;#34;: &amp;#34;test03&amp;#34;,
+&amp;#34;initiator&amp;#34;: {
+&amp;#34;party_id&amp;#34;: &amp;#34;10001&amp;#34;,
+&amp;#34;role&amp;#34;: &amp;#34;guest&amp;#34;
+},
+&amp;#34;role&amp;#34;: {
+&amp;#34;guest&amp;#34;: [&amp;#34;10001&amp;#34;],
+&amp;#34;host&amp;#34;: [&amp;#34;9006&amp;#34;],
+&amp;#34;arbiter&amp;#34;: [&amp;#34;9006&amp;#34;]
+},
+&amp;#34;job_parameters&amp;#34;: {
+&amp;#34;work_mode&amp;#34;: 1,
+&amp;#34;model_id&amp;#34;: &amp;#34;arbiter-9006#guest-10001#host-9006#model&amp;#34;,
+&amp;#34;model_version&amp;#34;: &amp;#34;202208310755426963170&amp;#34;
+}
+}
+EOF
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>绑定模型&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">flow model bind -c fateflow/examples/model/bind_model_service.json
+返回信息
+{
+&amp;#34;retcode&amp;#34;: 0,
+&amp;#34;retmsg&amp;#34;: &amp;#34;service id is test03&amp;#34;
+}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="6964-联邦推理">6.9.6.4 联邦推理&lt;/h4>
+&lt;p>配置party-10000的ingressHost&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo vi /etc/hosts
+增加一行
+10.0.1.199 9999.serving-proxy.sj.pclab
+10.0.1.199 为partry-9999所在集群的Master节点IP，请根据集群IP进行修改
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h5 id="69641-单笔推理">6.9.6.4.1 单笔推理&lt;/h5>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl -X POST -H &amp;#39;Content-Type: application/json&amp;#39; -i &amp;#39;http://10001.serving-proxy.sh.com/federation/v1/inference&amp;#39; --data &amp;#39;{
+&amp;#34;head&amp;#34;: {
+&amp;#34;serviceId&amp;#34;: &amp;#34;test03&amp;#34;
+},
+&amp;#34;body&amp;#34;: {
+&amp;#34;featureData&amp;#34;: {
+&amp;#34;x0&amp;#34;: 1.88669,
+&amp;#34;x1&amp;#34;: -1.359293,
+&amp;#34;x2&amp;#34;: 2.303601,
+&amp;#34;x3&amp;#34;: 2.00137,
+&amp;#34;x4&amp;#34;: 1.307686
+},
+&amp;#34;sendToRemoteFeatureData&amp;#34;: {
+&amp;#34;phone_num&amp;#34;: &amp;#34;122222222&amp;#34;
+}
+}
+}&amp;#39;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>返回&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">{&amp;#34;retcode&amp;#34;:0,&amp;#34;retmsg&amp;#34;:&amp;#34;&amp;#34;,&amp;#34;data&amp;#34;:{&amp;#34;score&amp;#34;:0.9983544928940998,&amp;#34;modelId&amp;#34;:&amp;#34;guest#9999#arbiter-10000#guest-9999#host-10000#model&amp;#34;,&amp;#34;modelVersion&amp;#34;:&amp;#34;202205090912483804370&amp;#34;,&amp;#34;timestamp&amp;#34;:1652087899953},&amp;#34;flag&amp;#34;:0}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h5 id="69642-批量推理">6.9.6.4.2 批量推理&lt;/h5>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"> curl -X POST -H &amp;#39;Content-Type: application/json&amp;#39; -i &amp;#39;http://9999.serving-proxy.klb.com/federation/v1/batchInference&amp;#39; --data &amp;#39;{
+&amp;#34;head&amp;#34;: {
+&amp;#34;serviceId&amp;#34;: &amp;#34;test02&amp;#34;
+},
+&amp;#34;body&amp;#34;: {
+&amp;#34;batchDataList&amp;#34;: [
+{
+&amp;#34;index&amp;#34;: 0,
+&amp;#34;featureData&amp;#34;: {
+&amp;#34;x0&amp;#34;: 1.88669,
+&amp;#34;x1&amp;#34;: -1.359293,
+&amp;#34;x2&amp;#34;: 2.303601,
+&amp;#34;x3&amp;#34;: 2.00137,
+&amp;#34;x4&amp;#34;: 1.307686
+},
+&amp;#34;sendToRemoteFeatureData&amp;#34;: {
+&amp;#34;device_id&amp;#34;: &amp;#34;aaaaa&amp;#34;,
+&amp;#34;phone_num&amp;#34;: &amp;#34;122222222&amp;#34;
+}
+},
+{
+&amp;#34;index&amp;#34;: 1,
+&amp;#34;featureData&amp;#34;: {
+&amp;#34;x0&amp;#34;: 1.88669,
+&amp;#34;x1&amp;#34;: -1.359293,
+&amp;#34;x2&amp;#34;: 2.303601,
+&amp;#34;x3&amp;#34;: 2.00137,
+&amp;#34;x4&amp;#34;: 1.307686
+},
+&amp;#34;sendToRemoteFeatureData&amp;#34;: {
+&amp;#34;device_id&amp;#34;: &amp;#34;aaaaa&amp;#34;,
+&amp;#34;phone_num&amp;#34;: &amp;#34;122222222&amp;#34;
+}
+}
+]
+}
+}&amp;#39;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>返回&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">{&amp;#34;retcode&amp;#34;:0,&amp;#34;retmsg&amp;#34;:&amp;#34;&amp;#34;,&amp;#34;data&amp;#34;:{&amp;#34;modelId&amp;#34;:&amp;#34;guest#9999#arbiter-10000#guest-9999#host-10000#model&amp;#34;,&amp;#34;modelVersion&amp;#34;:&amp;#34;202205110759591171670&amp;#34;,&amp;#34;timestamp&amp;#34;:1652256064349},&amp;#34;flag&amp;#34;:0,&amp;#34;batchDataList&amp;#34;:[{&amp;#34;index&amp;#34;:0,&amp;#34;retcode&amp;#34;:0,&amp;#34;retmsg&amp;#34;:&amp;#34;&amp;#34;,&amp;#34;data&amp;#34;:{&amp;#34;score&amp;#34;:0.3813935132948826}},{&amp;#34;index&amp;#34;:1,&amp;#34;retcode&amp;#34;:0,&amp;#34;retmsg&amp;#34;:&amp;#34;&amp;#34;,&amp;#34;data&amp;#34;:{&amp;#34;score&amp;#34;:0.3813935132948826}}],&amp;#34;singleInferenceResultMap&amp;#34;:{&amp;#34;0&amp;#34;:{&amp;#34;index&amp;#34;:0,&amp;#34;retcode&amp;#34;:0,&amp;#34;retmsg&amp;#34;:&amp;#34;&amp;#34;,&amp;#34;data&amp;#34;:{&amp;#34;score&amp;#34;:0.3813935132948826}},&amp;#34;1&amp;#34;:{&amp;#34;index&amp;#34;:1,&amp;#34;retcode&amp;#34;:0,&amp;#34;retmsg&amp;#34;:&amp;#34;&amp;#34;,&amp;#34;data&amp;#34;:{&amp;#34;score&amp;#34;:0.3813935132948826}}}}%
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>kubefate api</title><link>https://mkbooks.github.io/blog/p/kubefate-api/</link><pubDate>Sun, 28 Aug 2022 16:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/kubefate-api/</guid><description>&lt;h1 id="master-测试">master 测试&lt;/h1>
 &lt;p>获取服务 IP 和端口&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">

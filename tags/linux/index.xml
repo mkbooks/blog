@@ -991,7 +991,10 @@ route add -net 192.168.30.0 netmask 255.255.0.0 gw 192.168.3.34&lt;/p>
 sudo route add 88.88.43.8 gw 10.246.1.173&lt;/p>
 &lt;h1 id="sudo-ip-route-add-888843024-via-102461173">sudo ip route add 88.88.43.0/24 via 10.246.1.173&lt;/h1>
 &lt;p>sudo iptables -t nat -A PREROUTING -i ens1f1 -d 10.252.3.88 -j DNAT &amp;ndash;to 88.88.43.8
-sudo iptables -t nat -A POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT &amp;ndash;to-source 10.252.3.88&lt;/p>
+sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT &amp;ndash;to-source 10.252.3.88&lt;/p>
+&lt;p>sudo iptables -t nat -A POSTROUTING -d 88.88.43.8 -o cni0 -j SNAT &amp;ndash;to-source 10.252.3.88&lt;/p>
+&lt;h2 id="源地址-102380228-转换为-8888443添加此地址回程路由">源地址 10.23.80.228 转换为 88.88.44.3，添加此地址回程路由&lt;/h2>
+&lt;p>sudo route add 88.88.44.3 gw 10.246.1.173&lt;/p>
 &lt;h1 id="查看登录日志">查看登录日志&lt;/h1>
 &lt;p>sudo tail /var/log/auth.log&lt;/p></description></item><item><title>远程传输文件-rsync</title><link>https://mkbooks.github.io/blog/p/%E8%BF%9C%E7%A8%8B%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6-rsync/</link><pubDate>Fri, 19 Aug 2022 17:03:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E8%BF%9C%E7%A8%8B%E4%BC%A0%E8%BE%93%E6%96%87%E4%BB%B6-rsync/</guid><description>&lt;p>参考链接&lt;/p>
 &lt;ul>
