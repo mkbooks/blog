@@ -414,17 +414,17 @@ cat &gt; fateflow/examples/lr/test_hetero_lr_job_conf.json &lt;&lt;EOF
   &#34;dsl_version&#34;: &#34;2&#34;,
   &#34;initiator&#34;: {
     &#34;role&#34;: &#34;guest&#34;,
-    &#34;party_id&#34;: 10001
+    &#34;party_id&#34;: 10004
   },
   &#34;role&#34;: {
     &#34;guest&#34;: [
-      10001
+      10004
     ],
     &#34;host&#34;: [
-      9006
+      10001
     ],
     &#34;arbiter&#34;: [
-      9006
+      10001
     ]
   },
   &#34;job_parameters&#34;: {
@@ -691,15 +691,15 @@ kubectl exec -it client-5fcd4fdcfd-nqvrz -n fate-9999 bash
       &#34;10001&#34;
     ],
     &#34;host&#34;: [
-      &#34;9006&#34;
+      &#34;10004&#34;
     ],
     &#34;arbiter&#34;: [
-      &#34;9006&#34;
+      &#34;10004&#34;
     ]
   },
   &#34;job_parameters&#34;: {
-    &#34;model_id&#34;: &#34;arbiter-9006#guest-10001#host-9006#model&#34;,
-    &#34;model_version&#34;: &#34;202208310755426963170&#34;
+    &#34;model_id&#34;: &#34;arbiter-10004#guest-10001#host-10004#model&#34;,
+    &#34;model_version&#34;: &#34;202209010444329886110&#34;
   }
 }
 EOF
@@ -799,20 +799,20 @@ EOF
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>cat &gt; fateflow/examples/model/bind_model_service.json &lt;&lt;EOF
 {
-    &#34;service_id&#34;: &#34;test03&#34;,
+    &#34;service_id&#34;: &#34;201&#34;,
     &#34;initiator&#34;: {
         &#34;party_id&#34;: &#34;10001&#34;,
         &#34;role&#34;: &#34;guest&#34;
     },
     &#34;role&#34;: {
         &#34;guest&#34;: [&#34;10001&#34;],
-        &#34;host&#34;: [&#34;9006&#34;],
-        &#34;arbiter&#34;: [&#34;9006&#34;]
+        &#34;host&#34;: [&#34;10004&#34;],
+        &#34;arbiter&#34;: [&#34;10004&#34;]
     },
     &#34;job_parameters&#34;: {
         &#34;work_mode&#34;: 1,
-        &#34;model_id&#34;: &#34;arbiter-9006#guest-10001#host-9006#model&#34;,
-        &#34;model_version&#34;: &#34;202208310755426963170&#34;
+        &#34;model_id&#34;: &#34;arbiter-10004#guest-10001#host-10004#model&#34;,
+        &#34;model_version&#34;: &#34;202209010444329886110&#34;
     }
 }
 EOF
@@ -881,9 +881,49 @@ EOF
 </span><span class=lnt>17
 </span></code></pre></td>
 <td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>curl -X POST -H &#39;Content-Type: application/json&#39; -i &#39;http://10004.serving-proxy.204.pclab/federation/v1/inference&#39; --data &#39;{
+  &#34;head&#34;: {
+    &#34;serviceId&#34;: &#34;204&#34;
+  },
+  &#34;body&#34;: {
+    &#34;featureData&#34;: {
+        &#34;x0&#34;: 1.88669,
+        &#34;x1&#34;: -1.359293,
+        &#34;x2&#34;: 2.303601,
+        &#34;x3&#34;: 2.00137,
+        &#34;x4&#34;: 1.307686
+    },
+    &#34;sendToRemoteFeatureData&#34;: {
+        &#34;phone_num&#34;: &#34;122222222&#34;
+    }
+  }
+}&#39;
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td>
+<td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>curl -X POST -H &#39;Content-Type: application/json&#39; -i &#39;http://10001.serving-proxy.sh.com/federation/v1/inference&#39; --data &#39;{
   &#34;head&#34;: {
-    &#34;serviceId&#34;: &#34;test03&#34;
+    &#34;serviceId&#34;: &#34;201&#34;
   },
   &#34;body&#34;: {
     &#34;featureData&#34;: {
@@ -951,43 +991,43 @@ EOF
 </span><span class=lnt>37
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>  curl -X POST -H &#39;Content-Type: application/json&#39; -i &#39;http://9999.serving-proxy.klb.com/federation/v1/batchInference&#39; --data &#39;{
-    &#34;head&#34;: {
-      &#34;serviceId&#34;: &#34;test02&#34;
-    },
-    &#34;body&#34;: {
-        &#34;batchDataList&#34;: [
-            {
-                &#34;index&#34;: 0,
-                &#34;featureData&#34;: {
-                    &#34;x0&#34;: 1.88669,
-                    &#34;x1&#34;: -1.359293,
-                    &#34;x2&#34;: 2.303601,
-                    &#34;x3&#34;: 2.00137,
-                    &#34;x4&#34;: 1.307686
-                },
-                &#34;sendToRemoteFeatureData&#34;: {
-                    &#34;device_id&#34;: &#34;aaaaa&#34;,
-                    &#34;phone_num&#34;: &#34;122222222&#34;
-                }
-            },
-            {
-                &#34;index&#34;: 1,
-                &#34;featureData&#34;: {
-                    &#34;x0&#34;: 1.88669,
-                    &#34;x1&#34;: -1.359293,
-                    &#34;x2&#34;: 2.303601,
-                    &#34;x3&#34;: 2.00137,
-                    &#34;x4&#34;: 1.307686
-                },
-                &#34;sendToRemoteFeatureData&#34;: {
-                    &#34;device_id&#34;: &#34;aaaaa&#34;,
-                    &#34;phone_num&#34;: &#34;122222222&#34;
-                }
-            }
-        ]
-    }
-  }&#39;
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>curl -X POST -H &#39;Content-Type: application/json&#39; -i &#39;http://10004.serving-proxy.204.pclab/federation/v1/batchInference&#39; --data &#39;{
+  &#34;head&#34;: {
+    &#34;serviceId&#34;: &#34;204&#34;
+  },
+  &#34;body&#34;: {
+      &#34;batchDataList&#34;: [
+          {
+              &#34;index&#34;: 0,
+              &#34;featureData&#34;: {
+                  &#34;x0&#34;: 1.88669,
+                  &#34;x1&#34;: -1.359293,
+                  &#34;x2&#34;: 2.303601,
+                  &#34;x3&#34;: 2.00137,
+                  &#34;x4&#34;: 1.307686
+              },
+              &#34;sendToRemoteFeatureData&#34;: {
+                  &#34;device_id&#34;: &#34;aaaaa&#34;,
+                  &#34;phone_num&#34;: &#34;122222222&#34;
+              }
+          },
+          {
+              &#34;index&#34;: 1,
+              &#34;featureData&#34;: {
+                  &#34;x0&#34;: 1.88669,
+                  &#34;x1&#34;: -1.359293,
+                  &#34;x2&#34;: 2.303601,
+                  &#34;x3&#34;: 2.00137,
+                  &#34;x4&#34;: 1.307686
+              },
+              &#34;sendToRemoteFeatureData&#34;: {
+                  &#34;device_id&#34;: &#34;aaaaa&#34;,
+                  &#34;phone_num&#34;: &#34;122222222&#34;
+              }
+          }
+      ]
+  }
+}&#39;
 </code></pre></td></tr></table>
 </div>
 </div><p>返回</p>

@@ -292,17 +292,17 @@ cat &amp;gt; fateflow/examples/lr/test_hetero_lr_job_conf.json &amp;lt;&amp;lt;E
 &amp;#34;dsl_version&amp;#34;: &amp;#34;2&amp;#34;,
 &amp;#34;initiator&amp;#34;: {
 &amp;#34;role&amp;#34;: &amp;#34;guest&amp;#34;,
-&amp;#34;party_id&amp;#34;: 10001
+&amp;#34;party_id&amp;#34;: 10004
 },
 &amp;#34;role&amp;#34;: {
 &amp;#34;guest&amp;#34;: [
-10001
+10004
 ],
 &amp;#34;host&amp;#34;: [
-9006
+10001
 ],
 &amp;#34;arbiter&amp;#34;: [
-9006
+10001
 ]
 },
 &amp;#34;job_parameters&amp;#34;: {
@@ -564,15 +564,15 @@ kubectl exec -it client-5fcd4fdcfd-nqvrz -n fate-9999 bash
 &amp;#34;10001&amp;#34;
 ],
 &amp;#34;host&amp;#34;: [
-&amp;#34;9006&amp;#34;
+&amp;#34;10004&amp;#34;
 ],
 &amp;#34;arbiter&amp;#34;: [
-&amp;#34;9006&amp;#34;
+&amp;#34;10004&amp;#34;
 ]
 },
 &amp;#34;job_parameters&amp;#34;: {
-&amp;#34;model_id&amp;#34;: &amp;#34;arbiter-9006#guest-10001#host-9006#model&amp;#34;,
-&amp;#34;model_version&amp;#34;: &amp;#34;202208310755426963170&amp;#34;
+&amp;#34;model_id&amp;#34;: &amp;#34;arbiter-10004#guest-10001#host-10004#model&amp;#34;,
+&amp;#34;model_version&amp;#34;: &amp;#34;202209010444329886110&amp;#34;
 }
 }
 EOF
@@ -671,20 +671,20 @@ EOF
 &lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cat &amp;gt; fateflow/examples/model/bind_model_service.json &amp;lt;&amp;lt;EOF
 {
-&amp;#34;service_id&amp;#34;: &amp;#34;test03&amp;#34;,
+&amp;#34;service_id&amp;#34;: &amp;#34;201&amp;#34;,
 &amp;#34;initiator&amp;#34;: {
 &amp;#34;party_id&amp;#34;: &amp;#34;10001&amp;#34;,
 &amp;#34;role&amp;#34;: &amp;#34;guest&amp;#34;
 },
 &amp;#34;role&amp;#34;: {
 &amp;#34;guest&amp;#34;: [&amp;#34;10001&amp;#34;],
-&amp;#34;host&amp;#34;: [&amp;#34;9006&amp;#34;],
-&amp;#34;arbiter&amp;#34;: [&amp;#34;9006&amp;#34;]
+&amp;#34;host&amp;#34;: [&amp;#34;10004&amp;#34;],
+&amp;#34;arbiter&amp;#34;: [&amp;#34;10004&amp;#34;]
 },
 &amp;#34;job_parameters&amp;#34;: {
 &amp;#34;work_mode&amp;#34;: 1,
-&amp;#34;model_id&amp;#34;: &amp;#34;arbiter-9006#guest-10001#host-9006#model&amp;#34;,
-&amp;#34;model_version&amp;#34;: &amp;#34;202208310755426963170&amp;#34;
+&amp;#34;model_id&amp;#34;: &amp;#34;arbiter-10004#guest-10001#host-10004#model&amp;#34;,
+&amp;#34;model_version&amp;#34;: &amp;#34;202209010444329886110&amp;#34;
 }
 }
 EOF
@@ -750,9 +750,49 @@ EOF
 &lt;/span>&lt;span class="lnt">17
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl -X POST -H &amp;#39;Content-Type: application/json&amp;#39; -i &amp;#39;http://10004.serving-proxy.204.pclab/federation/v1/inference&amp;#39; --data &amp;#39;{
+&amp;#34;head&amp;#34;: {
+&amp;#34;serviceId&amp;#34;: &amp;#34;204&amp;#34;
+},
+&amp;#34;body&amp;#34;: {
+&amp;#34;featureData&amp;#34;: {
+&amp;#34;x0&amp;#34;: 1.88669,
+&amp;#34;x1&amp;#34;: -1.359293,
+&amp;#34;x2&amp;#34;: 2.303601,
+&amp;#34;x3&amp;#34;: 2.00137,
+&amp;#34;x4&amp;#34;: 1.307686
+},
+&amp;#34;sendToRemoteFeatureData&amp;#34;: {
+&amp;#34;phone_num&amp;#34;: &amp;#34;122222222&amp;#34;
+}
+}
+}&amp;#39;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl -X POST -H &amp;#39;Content-Type: application/json&amp;#39; -i &amp;#39;http://10001.serving-proxy.sh.com/federation/v1/inference&amp;#39; --data &amp;#39;{
 &amp;#34;head&amp;#34;: {
-&amp;#34;serviceId&amp;#34;: &amp;#34;test03&amp;#34;
+&amp;#34;serviceId&amp;#34;: &amp;#34;201&amp;#34;
 },
 &amp;#34;body&amp;#34;: {
 &amp;#34;featureData&amp;#34;: {
@@ -820,9 +860,9 @@ EOF
 &lt;/span>&lt;span class="lnt">37
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"> curl -X POST -H &amp;#39;Content-Type: application/json&amp;#39; -i &amp;#39;http://9999.serving-proxy.klb.com/federation/v1/batchInference&amp;#39; --data &amp;#39;{
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">curl -X POST -H &amp;#39;Content-Type: application/json&amp;#39; -i &amp;#39;http://10004.serving-proxy.204.pclab/federation/v1/batchInference&amp;#39; --data &amp;#39;{
 &amp;#34;head&amp;#34;: {
-&amp;#34;serviceId&amp;#34;: &amp;#34;test02&amp;#34;
+&amp;#34;serviceId&amp;#34;: &amp;#34;204&amp;#34;
 },
 &amp;#34;body&amp;#34;: {
 &amp;#34;batchDataList&amp;#34;: [
