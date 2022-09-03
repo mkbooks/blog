@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>iptables on 我的空间</title><link>https://mkbooks.github.io/blog/tags/iptables/</link><description>Recent content in iptables on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 25 Aug 2022 01:38:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/tags/iptables/index.xml" rel="self" type="application/rss+xml"/><item><title>iptables</title><link>https://mkbooks.github.io/blog/p/iptables/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/iptables/</guid><description>&lt;p>sysctl -w net.ipv4.ip_forward=1
+iptables -t nat -A PREROUTING -p tcp &amp;ndash;dport 80 -j DNAT &amp;ndash;to-destination 192.168.3.63:80
+iptables -t nat -A POSTROUTING -p tcp -d 192.168.3.63 &amp;ndash;dport 80 -j SNAT &amp;ndash;to-source 192.168.3.243&lt;/p>
+&lt;p>sysctl -w net.ipv4.ip_forward=1
+iptables -t nat -A PREROUTING -p tcp &amp;ndash;dport 80 -j DNAT &amp;ndash;to-destination 172.17.0.2:80
+iptables -t nat -A POSTROUTING -p tcp -d 172.17.0.2 &amp;ndash;dport 80 -j SNAT &amp;ndash;to-source 192.168.3.63&lt;/p>
+&lt;p>iptables -t nat -A PREROUTING -d 192.168.3.63 -p tcp &amp;ndash;dport 80 -j DNAT &amp;ndash;to-destination 172.17.0.2:80
+iptables -t nat -A POSTROUTING -d 172.17.0.2 -p tcp &amp;ndash;dport 80 -j SNAT &amp;ndash;to 192.168.3.63&lt;/p>
+&lt;p>B:
+iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -d 172.17.0.0/24 -o docker0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 172.17.0.0/24 -d 192.168.3.0/24 -o enp0s3 -j MASQUERADE&lt;/p>
+&lt;p>A:
+route add -net 172.17.0.0 netmask 255.255.255.0 gw 192.168.3.63&lt;/p>
+&lt;p>C:
+route add -net 192.168.5.0 netmask 255.255.255.0 gw 192.168.3.63&lt;/p>
+&lt;p>echo 1 &amp;gt; /proc/sys/net/ipv4/ip_forward
+B:
+iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -d 192.168.122.0/24 -o virbr0 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.122.0/24 -d 192.168.100.0/24 -o virbr1 -j MASQUERADE&lt;/p>
+&lt;p>A:
+iptables -t nat -A POSTROUTING -s 192.168.122.0/24 -d 192.168.100.0/24 -o enp1s0 -j MASQUERADE&lt;/p>
+&lt;p>route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.122.1 enp1s0&lt;/p>
+&lt;p>C:
+route add -net 192.168.122.0 netmask 255.255.255.0 gw 192.168.100.1 enp1s0&lt;/p>
+&lt;p>A:
+route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.100.1&lt;/p>
+&lt;p>C:
+route add -net 192.168.122.0 netmask 255.255.255.0 gw 192.168.122.1&lt;/p>
+&lt;p>iptables -A FORWARD -i virbr1 -o virbr0 -j ACCEPT
+iptables -A FORWARD -i virbr0 -o virbr1 -m state &amp;ndash;state ESTABLISHED,RELATED -j ACCEPT
+iptables -t nat -A POSTROUTING -o virbr0 -j MASQUERADE&lt;/p>
+&lt;p>iptables -t nat -vnL POSTROUTING &amp;ndash;line-number
+iptables -t nat -D POSTROUTING 20
+iptables-save
+route
+route del -net 192.168.40.0 netmask 255.255.255.0
+route del -net 192.168.30.0 netmask 255.255.255.0&lt;/p>
+&lt;p>route del -net 192.169.30.0 netmask 255.255.255.0 dev virbr0
+route del -net 192.169.40.0 netmask 255.255.255.0 dev virbr1&lt;/p>
+&lt;p>B:
+echo 1 &amp;gt; /proc/sys/net/ipv4/ip_forward
+wlo1
+iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -d 192.168.40.0/24 -o wlo1 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -d 192.168.40.0/24 -o virbr1 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.30.0/24 -d 192.168.40.0/24 -o virbr1 -j MASQUERADE
+iptables -t nat -A POSTROUTING -s 192.168.40.0/24 -d 192.168.30.0/24 -o virbr0 -j MASQUERADE&lt;/p>
+&lt;p>route add -net 192.168.40.0 netmask 255.255.255.0 gw 192.168.40.205
+route add -net 192.168.30.0 netmask 255.255.255.0 gw 192.168.30.235&lt;/p>
+&lt;p>route add -net 192.169.30.0 netmask 255.255.255.0 dev virbr0
+route add -net 192.169.40.0 netmask 255.255.255.0 dev virbr1&lt;/p>
+&lt;p>A:
+route add -net 192.168.40.0 netmask 255.255.255.0 gw 192.168.30.1&lt;/p>
+&lt;p>route del -net 192.168.40.0 netmask 255.255.255.0
+route add -net 192.168.40.0 netmask 255.255.0.0 gw 192.168.3.34 dev enp1s0&lt;/p>
+&lt;p>C:
+route add -net 192.168.30.0 netmask 255.255.255.0 gw 192.168.40.1&lt;/p>
+&lt;p>route del -net 192.168.30.0 netmask 255.255.255.0
+route add -net 192.168.30.0 netmask 255.255.0.0 gw 192.168.3.34&lt;/p>
+&lt;h1 id="linux一块网卡添加多个ip地址">Linux一块网卡添加多个IP地址&lt;/h1>
+&lt;p>&lt;a class="link" href="https://cloud.tencent.com/developer/article/1431717" target="_blank" rel="noopener"
+>https://cloud.tencent.com/developer/article/1431717&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://virt-manager.org/" target="_blank" rel="noopener"
+>https://virt-manager.org/&lt;/a>&lt;/p>
+&lt;h1 id="黄总">黄总&lt;/h1>
+&lt;p>sudo ip addr add 10.252.3.88/29 dev ens1f1
+sudo route add 88.88.43.8 gw 10.246.1.173&lt;/p>
+&lt;h1 id="sudo-ip-route-add-888843024-via-102461173">sudo ip route add 88.88.43.0/24 via 10.246.1.173&lt;/h1>
+&lt;p>sudo iptables -t nat -A PREROUTING -i ens1f1 -d 10.252.3.88 -j DNAT &amp;ndash;to 88.88.43.8
+sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT &amp;ndash;to-source 10.252.3.88&lt;/p>
+&lt;p>sudo iptables -t nat -A POSTROUTING -d 88.88.43.8 -o cni0 -j SNAT &amp;ndash;to-source 10.252.3.88&lt;/p>
+&lt;h2 id="源地址-102380228-转换为-8888443添加此地址回程路由">源地址 10.23.80.228 转换为 88.88.44.3，添加此地址回程路由&lt;/h2>
+&lt;p>sudo route add 88.88.44.3 gw 10.246.1.173&lt;/p>
+&lt;h1 id="查看登录日志">查看登录日志&lt;/h1>
+&lt;p>sudo tail /var/log/auth.log&lt;/p></description></item></channel></rss>
