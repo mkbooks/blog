@@ -10,9 +10,6 @@ tags : [                    # 文章所属标签
 categories : [              # 文章所属标签
     "git",
 ]
-keywords : [                # 文章关键词
-    "git",
-]
 
 ---
 转载：https://juejin.cn/post/6844903602968854542

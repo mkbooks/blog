@@ -10,16 +10,9 @@ tags : [                    # 文章所属标签
     "GitHub"
 ]
 categories : [              # 文章所属标签
-    "博客",
-    "GitHub",
-]
-keywords : [                # 文章关键词
-    "博客",
     "GitHub",
 ]
 
-next: my-first-post.md    # 下一篇博客地址
-prev: 推送到GitHub.md  # 上一篇博客地址
 ---
 # 准备要部署的内容
 在github 上创建一个仓库: chenjinxin.github.io

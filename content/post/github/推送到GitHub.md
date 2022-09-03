@@ -10,11 +10,6 @@ tags : [                    # 文章所属标签
     "GitHub"
 ]
 categories : [              # 文章所属标签
-    "博客",
-    "GitHub",
-]
-keywords : [                # 文章关键词
-    "博客",
     "GitHub",
 ]
 ---

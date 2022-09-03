@@ -11,16 +11,8 @@ tags : [                    # 文章所属标签
 ]
 categories : [              # 文章所属标签
     "网络",
-    "openVPN",
-]
-keywords : [                # 文章关键词
-    "openVPN",
-    "Ubuntu",
-    "服务器",
 ]
 
-next: /tutorials/github-pages-blog      # 下一篇博客地址
-prev: /tutorials/automated-deployments  # 上一篇博客地址
 ---
 # openvpn
 
