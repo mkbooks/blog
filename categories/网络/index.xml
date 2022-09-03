@@ -941,7 +941,42 @@ sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT &amp;ndash;t
 &lt;h2 id="源地址-102380228-转换为-8888443添加此地址回程路由">源地址 10.23.80.228 转换为 88.88.44.3，添加此地址回程路由&lt;/h2>
 &lt;p>sudo route add 88.88.44.3 gw 10.246.1.173&lt;/p>
 &lt;h1 id="查看登录日志">查看登录日志&lt;/h1>
-&lt;p>sudo tail /var/log/auth.log&lt;/p></description></item><item><title>在 Ubuntu20.04 建设 openVPN</title><link>https://mkbooks.github.io/blog/p/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/</link><pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/</guid><description>&lt;h1 id="openvpn">openvpn&lt;/h1>
+&lt;p>sudo tail /var/log/auth.log&lt;/p></description></item><item><title>iptables</title><link>https://mkbooks.github.io/blog/p/iptables/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/iptables/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">专线两端IP：
+A：10.246.1.173
+B：10.246.1.174
+A出口伪IP：88.88.44.3（回程IP）
+A入口伪IP：88.88.43.8
+ANAT内部IP：10.23.80.228-230
+B中心服务器伪NAT内部IP：10.252.3.88/29
+配置方法：
+sudo ip addr add 10.252.3.88/29 dev ens1f1 #添加伪NATIP
+sudo route add 88.88.43.8 gw 10.246.1.173 #出口网关
+sudo route add 88.88.44.3 gw 10.246.1.173 #入口网关
+sudo iptables -t nat -A PREROUTING -i ens1f1 -d 10.252.3.88 -j DNAT --to 88.88.44.3
+sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT --to-source 10.252.3.88
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>在 Ubuntu20.04 建设 openVPN</title><link>https://mkbooks.github.io/blog/p/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/</link><pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/</guid><description>&lt;h1 id="openvpn">openvpn&lt;/h1>
 &lt;p>操作系统: Ubuntu 20.04&lt;/p>
 &lt;p>参考文档：&lt;/p>
 &lt;p>&lt;a class="link" href="https://openvpn.net/community-resources/" target="_blank" rel="noopener"

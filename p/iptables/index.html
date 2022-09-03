@@ -107,78 +107,45 @@ iptables
 </div>
 </header>
 <section class=article-content>
-<p>sysctl -w net.ipv4.ip_forward=1
-iptables -t nat -A PREROUTING -p tcp &ndash;dport 80 -j DNAT &ndash;to-destination 192.168.3.63:80
-iptables -t nat -A POSTROUTING -p tcp -d 192.168.3.63 &ndash;dport 80 -j SNAT &ndash;to-source 192.168.3.243</p>
-<p>sysctl -w net.ipv4.ip_forward=1
-iptables -t nat -A PREROUTING -p tcp &ndash;dport 80 -j DNAT &ndash;to-destination 172.17.0.2:80
-iptables -t nat -A POSTROUTING -p tcp -d 172.17.0.2 &ndash;dport 80 -j SNAT &ndash;to-source 192.168.3.63</p>
-<p>iptables -t nat -A PREROUTING -d 192.168.3.63 -p tcp &ndash;dport 80 -j DNAT &ndash;to-destination 172.17.0.2:80
-iptables -t nat -A POSTROUTING -d 172.17.0.2 -p tcp &ndash;dport 80 -j SNAT &ndash;to 192.168.3.63</p>
-<p>B:
-iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -d 172.17.0.0/24 -o docker0 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 172.17.0.0/24 -d 192.168.3.0/24 -o enp0s3 -j MASQUERADE</p>
-<p>A:
-route add -net 172.17.0.0 netmask 255.255.255.0 gw 192.168.3.63</p>
-<p>C:
-route add -net 192.168.5.0 netmask 255.255.255.0 gw 192.168.3.63</p>
-<p>echo 1 > /proc/sys/net/ipv4/ip_forward
-B:
-iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -d 192.168.122.0/24 -o virbr0 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 192.168.122.0/24 -d 192.168.100.0/24 -o virbr1 -j MASQUERADE</p>
-<p>A:
-iptables -t nat -A POSTROUTING -s 192.168.122.0/24 -d 192.168.100.0/24 -o enp1s0 -j MASQUERADE</p>
-<p>route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.122.1 enp1s0</p>
-<p>C:
-route add -net 192.168.122.0 netmask 255.255.255.0 gw 192.168.100.1 enp1s0</p>
-<p>A:
-route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.100.1</p>
-<p>C:
-route add -net 192.168.122.0 netmask 255.255.255.0 gw 192.168.122.1</p>
-<p>iptables -A FORWARD -i virbr1 -o virbr0 -j ACCEPT
-iptables -A FORWARD -i virbr0 -o virbr1 -m state &ndash;state ESTABLISHED,RELATED -j ACCEPT
-iptables -t nat -A POSTROUTING -o virbr0 -j MASQUERADE</p>
-<p>iptables -t nat -vnL POSTROUTING &ndash;line-number
-iptables -t nat -D POSTROUTING 20
-iptables-save
-route
-route del -net 192.168.40.0 netmask 255.255.255.0
-route del -net 192.168.30.0 netmask 255.255.255.0</p>
-<p>route del -net 192.169.30.0 netmask 255.255.255.0 dev virbr0
-route del -net 192.169.40.0 netmask 255.255.255.0 dev virbr1</p>
-<p>B:
-echo 1 > /proc/sys/net/ipv4/ip_forward
-wlo1
-iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -d 192.168.40.0/24 -o wlo1 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -d 192.168.40.0/24 -o virbr1 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 192.168.30.0/24 -d 192.168.40.0/24 -o virbr1 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 192.168.40.0/24 -d 192.168.30.0/24 -o virbr0 -j MASQUERADE</p>
-<p>route add -net 192.168.40.0 netmask 255.255.255.0 gw 192.168.40.205
-route add -net 192.168.30.0 netmask 255.255.255.0 gw 192.168.30.235</p>
-<p>route add -net 192.169.30.0 netmask 255.255.255.0 dev virbr0
-route add -net 192.169.40.0 netmask 255.255.255.0 dev virbr1</p>
-<p>A:
-route add -net 192.168.40.0 netmask 255.255.255.0 gw 192.168.30.1</p>
-<p>route del -net 192.168.40.0 netmask 255.255.255.0
-route add -net 192.168.40.0 netmask 255.255.0.0 gw 192.168.3.34 dev enp1s0</p>
-<p>C:
-route add -net 192.168.30.0 netmask 255.255.255.0 gw 192.168.40.1</p>
-<p>route del -net 192.168.30.0 netmask 255.255.255.0
-route add -net 192.168.30.0 netmask 255.255.0.0 gw 192.168.3.34</p>
-<h1 id=linux一块网卡添加多个ip地址>Linux一块网卡添加多个IP地址</h1>
-<p><a class=link href=https://cloud.tencent.com/developer/article/1431717 target=_blank rel=noopener>https://cloud.tencent.com/developer/article/1431717</a></p>
-<p><a class=link href=https://virt-manager.org/ target=_blank rel=noopener>https://virt-manager.org/</a></p>
-<h1 id=黄总>黄总</h1>
-<p>sudo ip addr add 10.252.3.88/29 dev ens1f1
-sudo route add 88.88.43.8 gw 10.246.1.173</p>
-<h1 id=sudo-ip-route-add-888843024-via-102461173>sudo ip route add 88.88.43.0/24 via 10.246.1.173</h1>
-<p>sudo iptables -t nat -A PREROUTING -i ens1f1 -d 10.252.3.88 -j DNAT &ndash;to 88.88.43.8
-sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT &ndash;to-source 10.252.3.88</p>
-<p>sudo iptables -t nat -A POSTROUTING -d 88.88.43.8 -o cni0 -j SNAT &ndash;to-source 10.252.3.88</p>
-<h2 id=源地址-102380228-转换为-8888443添加此地址回程路由>源地址 10.23.80.228 转换为 88.88.44.3，添加此地址回程路由</h2>
-<p>sudo route add 88.88.44.3 gw 10.246.1.173</p>
-<h1 id=查看登录日志>查看登录日志</h1>
-<p>sudo tail /var/log/auth.log</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>专线两端IP：
+A：10.246.1.173
+B：10.246.1.174
+
+A出口伪IP：88.88.44.3（回程IP）
+A入口伪IP：88.88.43.8
+ANAT内部IP：10.23.80.228-230
+
+B中心服务器伪NAT内部IP：10.252.3.88/29
+
+配置方法：
+sudo ip addr add 10.252.3.88/29 dev ens1f1 #添加伪NATIP
+sudo route add 88.88.43.8 gw 10.246.1.173 #出口网关
+sudo route add 88.88.44.3 gw 10.246.1.173 #入口网关
+sudo iptables -t nat -A PREROUTING -i ens1f1 -d 10.252.3.88 -j DNAT --to 88.88.44.3
+sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1  -j SNAT --to-source 10.252.3.88
+</code></pre></td></tr></table>
+</div>
+</div>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
@@ -199,16 +166,16 @@ sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT &ndash;to-so
 <div class=related-content>
 <div class="flex article-list--tile">
 <article>
-<a href=/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>
+<a href=/blog/p/%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/>
 <div class=article-details>
-<h2 class=article-title>网络学习-0001</h2>
+<h2 class=article-title>网络问题</h2>
 </div>
 </a>
 </article>
 <article>
-<a href=/blog/p/%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/>
+<a href=/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>
 <div class=article-details>
-<h2 class=article-title>网络问题</h2>
+<h2 class=article-title>网络学习-0001</h2>
 </div>
 </a>
 </article>
@@ -227,9 +194,9 @@ sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT &ndash;to-so
 </a>
 </article>
 <article>
-<a href=/blog/p/ip-netns/>
+<a href=/blog/p/iptables/>
 <div class=article-details>
-<h2 class=article-title>ip-netns</h2>
+<h2 class=article-title>iptables</h2>
 </div>
 </a>
 </article>
@@ -293,20 +260,6 @@ Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
 </div>
 </div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous>
 </main>
-<aside class="sidebar right-sidebar sticky">
-<section class="widget archives">
-<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
-</div>
-<h2 class="widget-title section-title">目录</h2>
-<div class=widget--toc>
-<nav id=TableOfContents>
-<ol>
-<li><a href=#源地址-102380228-转换为-8888443添加此地址回程路由>源地址 10.23.80.228 转换为 88.88.44.3，添加此地址回程路由</a></li>
-</ol>
-</nav>
-</div>
-</section>
-</aside>
 </div>
 <script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/blog/ts/main.js defer></script>
 <script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
