@@ -1,4 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>我的空间</title><link>https://mkbooks.github.io/blog/</link><description>Recent content on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 31 Aug 2022 15:27:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>kubefate训练测试</title><link>https://mkbooks.github.io/blog/p/kubefate%E8%AE%AD%E7%BB%83%E6%B5%8B%E8%AF%95/</link><pubDate>Wed, 31 Aug 2022 15:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/kubefate%E8%AE%AD%E7%BB%83%E6%B5%8B%E8%AF%95/</guid><description>&lt;h1 id="多方连接测试">多方连接测试&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>我的空间</title><link>https://mkbooks.github.io/blog/</link><description>Recent content on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 04 Sep 2022 16:25:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>VLC播放器快捷键</title><link>https://mkbooks.github.io/blog/p/vlc%E6%92%AD%E6%94%BE%E5%99%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</link><pubDate>Sun, 04 Sep 2022 16:25:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/vlc%E6%92%AD%E6%94%BE%E5%99%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/</guid><description>&lt;p>参考: &lt;a class="link" href="https://www.cnblogs.com/pandabang/p/10441242.html" target="_blank" rel="noopener"
+>https://www.cnblogs.com/pandabang/p/10441242.html&lt;/a>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>音量大/小：CTRL+上/下&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>静音开/关：M&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>回退/快进：ALT+左/右（步进10s），CTRL+左/右（步进1min）&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>跳到指定时间：CTRL+T&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>播放/暂停：空格&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>停止播放：S（与暂停不同，按下停止后播放进度条回到视频最开始，且窗口不显示视频；而暂停时，窗口显示暂停时的视频）&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>播放速度：{或- 减慢，最慢速度0.02倍正常速度；} 加速，最快速度31.25倍正常速度； = 正常速度&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>全屏开/关：F&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>纵横比切换：A（默认、16:9、4:3、1:1、16:10、2.21:1、2:35:1、2.39:1、5:4）&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>窗口尺寸切换：Z（¼、½、原始尺寸、2倍原始尺寸）&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>显示播放时间/总时长：T&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>播放控件显示/不显示：CTRL+H&lt;/p>
+&lt;/li>
+&lt;/ul></description></item><item><title>kubefate训练测试</title><link>https://mkbooks.github.io/blog/p/kubefate%E8%AE%AD%E7%BB%83%E6%B5%8B%E8%AF%95/</link><pubDate>Wed, 31 Aug 2022 15:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/kubefate%E8%AE%AD%E7%BB%83%E6%B5%8B%E8%AF%95/</guid><description>&lt;h1 id="多方连接测试">多方连接测试&lt;/h1>
 &lt;p>1: Party-9999和Party-10000&lt;/p>
 &lt;p>在A集群的Master机器操作&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
