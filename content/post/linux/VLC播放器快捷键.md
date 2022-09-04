@@ -15,7 +15,7 @@ categories : [              # 文章所属标签
 ---
 参考: https://www.cnblogs.com/pandabang/p/10441242.html
 
-- 音量大/小：CTRL+上/下
+- 音量大/小：上/下
 
 - 静音开/关：M
 
