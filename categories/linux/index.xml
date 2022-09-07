@@ -90,7 +90,7 @@ Used: 5.497TB
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">bypy compare
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>SSH远程执行脚本报错command not found和环境变量问题</title><link>https://mkbooks.github.io/blog/p/ssh%E8%BF%9C%E7%A8%8B%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC%E6%8A%A5%E9%94%99command-not-found%E5%92%8C%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</link><pubDate>Tue, 06 Sep 2022 11:33:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ssh%E8%BF%9C%E7%A8%8B%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC%E6%8A%A5%E9%94%99command-not-found%E5%92%8C%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/</guid><description>&lt;h1 id="restart">restart&lt;/h1>
+&lt;/div></description></item><item><title>docker 镜像参数</title><link>https://mkbooks.github.io/blog/p/docker-%E9%95%9C%E5%83%8F%E5%8F%82%E6%95%B0/</link><pubDate>Tue, 06 Sep 2022 11:33:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/docker-%E9%95%9C%E5%83%8F%E5%8F%82%E6%95%B0/</guid><description>&lt;h1 id="restart">restart&lt;/h1>
 &lt;p>创建容器时没有添加参数 &amp;ndash;restart=always ，导致的后果是：当 Docker 重启时，容器未能自动启动。&lt;/p>
 &lt;p>添加该参数的方法：&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
