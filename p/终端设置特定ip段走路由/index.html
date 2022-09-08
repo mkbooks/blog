@@ -1,14 +1,14 @@
 <!doctype html><html lang=en-us dir=ltr>
 <head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="k8s 驱逐节点"><title>k8s 驱逐节点</title>
-<link rel=canonical href=https://mkbooks.github.io/blog/p/k8s-%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9/>
-<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="k8s 驱逐节点">
-<meta property="og:description" content="k8s 驱逐节点">
-<meta property="og:url" content="https://mkbooks.github.io/blog/p/k8s-%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9/">
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="终端设置特定IP段走路由"><title>终端设置特定IP段走路由</title>
+<link rel=canonical href=https://mkbooks.github.io/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/>
+<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="终端设置特定IP段走路由">
+<meta property="og:description" content="终端设置特定IP段走路由">
+<meta property="og:url" content="https://mkbooks.github.io/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/">
 <meta property="og:site_name" content="我的空间">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="K8S"><meta property="article:tag" content="云原生"><meta property="article:published_time" content="2022-08-18T10:03:18+08:00"><meta property="article:modified_time" content="2020-08-18T00:00:00+00:00">
-<meta name=twitter:title content="k8s 驱逐节点">
-<meta name=twitter:description content="k8s 驱逐节点">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Linux"><meta property="article:tag" content="网络"><meta property="article:tag" content="vpn"><meta property="article:published_time" content="2022-09-08T11:02:00+08:00"><meta property="article:modified_time" content="2022-09-08T11:02:00+08:00">
+<meta name=twitter:title content="终端设置特定IP段走路由">
+<meta name=twitter:description content="终端设置特定IP段走路由">
 </head>
 <body class=article-page>
 <script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
@@ -79,21 +79,21 @@
 <header class=article-header>
 <div class=article-details>
 <header class=article-category>
-<a href=/blog/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/>
-云原生
+<a href=/blog/categories/%E7%BD%91%E7%BB%9C/>
+网络
 </a>
 </header>
 <div class=article-title-wrapper>
 <h2 class=article-title>
-<a href=/blog/p/k8s-%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9/>k8s 驱逐节点</a>
+<a href=/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/>终端设置特定IP段走路由</a>
 </h2>
 <h3 class=article-subtitle>
-k8s 驱逐节点
+终端设置特定IP段走路由
 </h3>
 </div>
 <footer class=article-time>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Aug 18, 2022</time>
+<time class=article-time--published>Sep 08, 2022</time>
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
@@ -104,94 +104,95 @@ k8s 驱逐节点
 </div>
 </header>
 <section class=article-content>
-<p>转载: <a class=link href=https://docs.rancher.cn/docs/rke/upgrades/configuring-strategy/_index/#%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9 target=_blank rel=noopener>https://docs.rancher.cn/docs/rke/upgrades/configuring-strategy/_index/#%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9</a></p>
-<h1 id=驱逐节点>驱逐节点</h1>
-<p>默认情况下，升级节点前需要使用kubectl cordon命令将节点标记为“不可用”，这个标记的目的是防止在节点在升级的过程中因为被分配到新的 pods 或者流量而中断。完成升级后，您需要使用kubectl uncordon命令将节点重新标记为“可用”，此时可以将 pods 和流量分配到该节点上。该操作不会对节点上已有的 pods 造成影响。</p>
+<h2 id=create-config>create config</h2>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubectl cordon node_name
-kubectl uncordon node_name
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>pptpsetup --create vpn --server vpn.bjklb.com --username ai-lijinxin --password <span class=m>123</span>
+pptpsetup --create vpn --server 111.198.75.20 --username ai-lijinxin --password <span class=m>123</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>除了将节点标记为“不可用”外，您也可以使用kubectl drain命令，在升级节点前将节点内的所有 pod 驱逐到其他节点上，并且将其标记为“不可用”，确保这个节点内在升级完成之前不会有正在运行的 pods。kubectl drain命令会导致节点内所有的 pods 被驱逐。</p>
+</div><h2 id=connect>connect</h2>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubectl drain --ignore-daemonsets node_name  
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>pon vpn
 </code></pre></td></tr></table>
 </div>
-</div><p>请参考<a class=link href=https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/ target=_blank rel=noopener>Kubernetes 官方文档</a>，了解驱逐节点的注意事项。</p>
-<p>注意：drain的默认值是false，如果将它的值改为true，会导致 worker 节点在升级之前被驱逐，无法升级 worker 节点。</p>
+</div><p>then will create a network device named <code>ppp0</code></p>
+<h2 id=route>route</h2>
+<p>route for target like <code>10.0.1.0</code> to <code>ppp0</code></p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt> 1
-</span><span class=lnt> 2
-</span><span class=lnt> 3
-</span><span class=lnt> 4
-</span><span class=lnt> 5
-</span><span class=lnt> 6
-</span><span class=lnt> 7
-</span><span class=lnt> 8
-</span><span class=lnt> 9
-</span><span class=lnt>10
+<pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>upgrade_strategy:
-  max_unavailable_worker: 10%
-  max_unavailable_controlplane: 1
-  drain: false
-  node_drain_input:
-    force: false
-    ignore_daemonsets: true
-    delete_local_data: false
-    grace_period: -1 // grace period specified for each pod spec will be used
-    timeout: 60
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>ip route add 10.0.1.0/24 dev ppp0
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=disconnect>disconnect</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>poff vpn
 </code></pre></td></tr></table>
 </div>
 </div>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
-<a href=/blog/tags/k8s/>K8S</a>
-<a href=/blog/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/>云原生</a>
+<a href=/blog/tags/linux/>Linux</a>
+<a href=/blog/tags/%E7%BD%91%E7%BB%9C/>网络</a>
+<a href=/blog/tags/vpn/>vpn</a>
 </section>
 <section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
 <span>Licensed under CC BY-NC-SA 4.0</span>
 </section>
-<section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<span>
-最后更新于 Aug 18, 2020 00:00 UTC
-</span>
-</section></footer>
+</footer>
 </article>
 <aside class=related-content--wrapper>
 <h2 class=section-title>相关文章</h2>
 <div class=related-content>
 <div class="flex article-list--tile">
 <article>
-<a href=/blog/p/k8s%E7%9A%84namespace%E4%B8%80%E7%9B%B4terminating%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/>
+<a href=/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>
 <div class=article-details>
-<h2 class=article-title>k8s的namespace一直Terminating的完美解决方案</h2>
+<h2 class=article-title>网络学习-0001</h2>
 </div>
 </a>
 </article>
 <article>
-<a href=/blog/p/k8s%E5%BC%BA%E5%88%B6%E5%88%A0%E9%99%A4podpvpvc%E5%92%8Cnsnamespace%E6%96%B9%E6%B3%95/>
+<a href=/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>
 <div class=article-details>
-<h2 class=article-title>k8s强制删除pod&pv&pvc和ns&namespace方法</h2>
+<h2 class=article-title>网络学习-0001</h2>
 </div>
 </a>
 </article>
 <article>
-<a href=/blog/p/k3s%E6%89%8B%E5%8A%A8%E5%AF%BC%E5%85%A5%E9%95%9C%E5%83%8F/>
+<a href=/blog/p/%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/>
 <div class=article-details>
-<h2 class=article-title>k3s手动导入镜像</h2>
+<h2 class=article-title>网络问题</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/blog/p/ip-netns/>
+<div class=article-details>
+<h2 class=article-title>ip-netns</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/blog/p/iptables/>
+<div class=article-details>
+<h2 class=article-title>iptables</h2>
 </div>
 </a>
 </article>
@@ -255,6 +256,23 @@ Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
 </div>
 </div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous>
 </main>
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
+</div>
+<h2 class="widget-title section-title">目录</h2>
+<div class=widget--toc>
+<nav id=TableOfContents>
+<ol>
+<li><a href=#create-config>create config</a></li>
+<li><a href=#connect>connect</a></li>
+<li><a href=#route>route</a></li>
+<li><a href=#disconnect>disconnect</a></li>
+</ol>
+</nav>
+</div>
+</section>
+</aside>
 </div>
 <script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/blog/ts/main.js defer></script>
 <script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
