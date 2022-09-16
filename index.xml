@@ -1,4 +1,279 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>我的空间</title><link>https://mkbooks.github.io/blog/</link><description>Recent content on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Sep 2022 14:44:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>ssh服务</title><link>https://mkbooks.github.io/blog/p/ssh%E6%9C%8D%E5%8A%A1/</link><pubDate>Tue, 13 Sep 2022 14:44:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ssh%E6%9C%8D%E5%8A%A1/</guid><description>&lt;h2 id="更新源">更新源&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>我的空间</title><link>https://mkbooks.github.io/blog/</link><description>Recent content on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 16 Sep 2022 11:20:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Python操作hive</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8python%E6%93%8D%E4%BD%9Chive/</link><pubDate>Fri, 16 Sep 2022 11:20:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8python%E6%93%8D%E4%BD%9Chive/</guid><description>&lt;p>&lt;img src="https://github.com/dropbox/PyHive"
+loading="lazy"
+alt="PyHive"
+>&lt;/p>
+&lt;h1 id="安装依赖包">安装依赖包&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">pip install sasl
+pip install thrift
+pip install thrift-sasl
+pip install PyHive
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果安装 sasl 出现错误，尝试以下解决方法&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo apt-get install libsasl2-dev
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="代码样例">代码样例&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">from pyhive import hive
+conn = hive.Connection(host=&amp;#39;192.168.122.251&amp;#39;, port=10000, username=&amp;#39;root&amp;#39;, database=&amp;#39;default&amp;#39;, auth=&amp;#39;NOSASL&amp;#39;)
+cursor = conn.cursor()
+cursor.execute(&amp;#39;SELECT * FROM test LIMIT 10&amp;#39;)
+for i in cursor.fetchall():
+print(i)
+conn.close()
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="配置">配置&lt;/h1>
+&lt;h2 id="hadoop">hadoop&lt;/h2>
+&lt;p>/opt/modules/hadoop-2.7.0/etc/hadoop/core-site.xml&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&amp;lt;configuration&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;fs.defaultFS&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;hdfs://172.168.0.2:9000&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;配置NameNode的主机地址及其端口号&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hadoop.http.staticuser.user&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;kfk&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;HDFS Web UI 用户名&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hadoop.tmp.dir&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;/opt/modules/hadoop-2.7.0/tmp&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;其他临时目录的基础。（HDFS等相关文件的存储目录基础，很重要）&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;!--hive--&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hadoop.proxyuser.root.hosts&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;*&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;!--下面二选一--&amp;gt;
+&amp;lt;!--property&amp;gt;
+&amp;lt;name&amp;gt;hadoop.proxyuser.root.groups&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;*&amp;lt;/value&amp;gt;
+&amp;lt;/property--&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hadoop.proxyuser.root.groups&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;root&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;/configuration&amp;gt;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="hive">hive&lt;/h2>
+&lt;p>/opt/modules/hive-2.3.4-bin/conf/hive-site.xml&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;span class="lnt">76
+&lt;/span>&lt;span class="lnt">77
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&amp;lt;configuration&amp;gt;
+&amp;lt;!--Hive集成MySQL--&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;javax.jdo.option.ConnectionURL&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;jdbc:mysql://172.168.0.3/metastore?createDatabaseIfNotExist=true&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;JDBC connect string for a JDBC metastore&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;javax.jdo.option.ConnectionDriverName&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;com.mysql.jdbc.Driver&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;Driver class name for a JDBC metastore&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;javax.jdo.option.ConnectionUserName&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;root&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;username to use against metastore database&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;javax.jdo.option.ConnectionPassword&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;123456&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;password to use against metastore database&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;!--Hive显示设置--&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hive.cli.print.header&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;true&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;Whether to print the names of the columns in query output.&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hive.cli.print.current.db&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;true&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;Whether to include the current database in the Hive prompt.&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hive.metastore.schema.verification&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;false&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;
+Enforce metastore schema version consistency.
+True: Verify that version information stored in metastore matches with one from Hive jars. Also disable automatic
+schema migration attempt. Users are required to manully migrate schema after Hive upgrade which ensures
+proper metastore schema migration. (Default)
+False: Warn if the version information stored in metastore doesn&amp;#39;t match with one from in Hive jars.
+&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;datanucleus.schema.autoCreateAll&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;true&amp;lt;/value&amp;gt;
+&amp;lt;description&amp;gt;creates necessary schema on a startup if one doesn&amp;#39;t exist. set this to false, after creating it once&amp;lt;/description&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;!--hiveserver2 配置--&amp;gt;
+&amp;lt;!--property&amp;gt;
+&amp;lt;name&amp;gt;hive.server2.authentication&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;CUSTOM&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hive.server2.custom.authentication.class&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;org.apache.hadoop.hive.contrib.auth.CustomPasswdAuthenticator&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hive.jdbc_passwd.auth.root&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;123456&amp;lt;/value&amp;gt;
+&amp;lt;/property--&amp;gt;
+&amp;lt;property&amp;gt;
+&amp;lt;name&amp;gt;hive.server2.authentication&amp;lt;/name&amp;gt;
+&amp;lt;value&amp;gt;NOSASL&amp;lt;/value&amp;gt;
+&amp;lt;/property&amp;gt;
+&amp;lt;/configuration&amp;gt;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>ssh服务</title><link>https://mkbooks.github.io/blog/p/ssh%E6%9C%8D%E5%8A%A1/</link><pubDate>Tue, 13 Sep 2022 14:44:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ssh%E6%9C%8D%E5%8A%A1/</guid><description>&lt;h2 id="更新源">更新源&lt;/h2>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
