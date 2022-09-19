@@ -13,7 +13,7 @@ categories : [              # 文章所属标签
 ]
 
 ---
-![PyHive](https://github.com/dropbox/PyHive)
+[PyHive](https://github.com/dropbox/PyHive)
 # 安装依赖包
 ```
 pip install sasl
@@ -22,8 +22,14 @@ pip install thrift-sasl
 pip install PyHive
 ```
 如果安装 sasl 出现错误，尝试以下解决方法
+- ubuntu20.04
 ```
 sudo apt-get install libsasl2-dev
+```
+- windows
+```
+# 下载: https://www.lfd.uci.edu/~gohlke/pythonlibs/#sasl
+pip install xxx/sasl-0.3.1-cp38-cp38-win_amd64.whl
 ```
 # 代码样例
 ```
@@ -62,7 +68,7 @@ conn.close()
         <name>hadoop.proxyuser.root.hosts</name>
         <value>*</value>
     </property>
-    <!--下面二选一-->
+    <!--下面二选一，root 可以改为真实使用的用户，name 和 value 中的 root 都要改-->
     <!--property>
         <name>hadoop.proxyuser.root.groups</name>
         <value>*</value>
@@ -138,20 +144,78 @@ conn.close()
 		<name>hive.server2.authentication</name>
 		<value>CUSTOM</value>
 	</property>
- 
 	<property>
 		<name>hive.server2.custom.authentication.class</name>
 		<value>org.apache.hadoop.hive.contrib.auth.CustomPasswdAuthenticator</value>
+        <description>指定解析jar包 注意修改成自己的类，注意是全路径名即包名和类名</description>
 	</property>  
- 
 	<property>
 		<name>hive.jdbc_passwd.auth.root</name>
 		<value>123456</value>
+        <description>设置用户名和密码，如果有多个用户和密码，可以多写几个property。name: 用户名为最后一个:用户,value: 密码</description>
 	</property-->  
+
 	<property>
         <name>hive.server2.authentication</name>
         <value>NOSASL</value>
     </property>
 
 </configuration>
+```
+# 可能出现的问题
+```
+AccessControlException: Permission denied: user=anonymous, access=EXECUTE, inode="/tmp/hive":root:supergroup:d-wx-w
+类似于以上错误；可以对hdfs上的/tmp目录加权：
+[root@node1 ~]# hdfs dfs -chmod -R 777 /tmp
+```
+
+# hiveserver2 自定义验证账户类（未验证）
+将此自定义类打成jar包放入到 hive/lib 目录下。不然会报错找不到class。
+```Java
+package org.apache.hadoop.hive.contrib.auth;
+ 
+ 
+import javax.security.sasl.AuthenticationException;
+ 
+ 
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hive.conf.HiveConf;
+import org.slf4j.Logger;
+ 
+ 
+public class CustomPasswdAuthenticator implements org.apache.hive.service.auth.PasswdAuthenticationProvider{
+	
+	private Logger LOG = org.slf4j.LoggerFactory.getLogger(CustomPasswdAuthenticator.class);
+	
+	private static final String HIVE_JDBC_PASSWD_AUTH_PREFIX="hive.jdbc_passwd.auth.%s";
+	
+	private Configuration conf=null;
+	
+	@Override
+	public void Authenticate(String userName, String passwd) throws AuthenticationException {  
+        LOG.info("user: "+userName+" try login.");  
+        String passwdConf = getConf().get(String.format(HIVE_JDBC_PASSWD_AUTH_PREFIX, userName));  
+        if(passwdConf==null){  
+            String message = "user's ACL configration is not found. user:"+userName;  
+            LOG.info(message);  
+            throw new AuthenticationException(message);  
+        }   
+        if(!passwd.equals(passwdConf)){  
+            String message = "user name and password is mismatch. user:"+userName;  
+            throw new AuthenticationException(message);  
+        }  
+    }  
+	
+    public Configuration getConf() {  
+        if(conf==null){  
+            this.conf=new Configuration(new HiveConf());  
+        }  
+        return conf;  
+    }  
+    
+    public void setConf(Configuration conf) {  
+        this.conf=conf;  
+    }
+	
+}
 ```
