@@ -97,14 +97,14 @@
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
-阅读时长: 2 分钟
+阅读时长: 3 分钟
 </time>
 </div>
 </footer>
 </div>
 </header>
 <section class=article-content>
-<p><img src=https://github.com/dropbox/PyHive loading=lazy alt=PyHive></p>
+<p><a class=link href=https://github.com/dropbox/PyHive target=_blank rel=noopener>PyHive</a></p>
 <h1 id=安装依赖包>安装依赖包</h1>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
@@ -121,12 +121,28 @@ pip install PyHive
 </code></pre></td></tr></table>
 </div>
 </div><p>如果安装 sasl 出现错误，尝试以下解决方法</p>
+<ul>
+<li>ubuntu20.04</li>
+</ul>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo apt-get install libsasl2-dev
+</code></pre></td></tr></table>
+</div>
+</div><ul>
+<li>windows</li>
+</ul>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 下载: https://www.lfd.uci.edu/~gohlke/pythonlibs/#sasl
+pip install xxx/sasl-0.3.1-cp38-cp38-win_amd64.whl
 </code></pre></td></tr></table>
 </div>
 </div><h1 id=代码样例>代码样例</h1>
@@ -214,7 +230,7 @@ conn.close()
         &lt;name&gt;hadoop.proxyuser.root.hosts&lt;/name&gt;
         &lt;value&gt;*&lt;/value&gt;
     &lt;/property&gt;
-    &lt;!--下面二选一--&gt;
+    &lt;!--下面二选一，root 可以改为真实使用的用户，name 和 value 中的 root 都要改--&gt;
     &lt;!--property&gt;
         &lt;name&gt;hadoop.proxyuser.root.groups&lt;/name&gt;
         &lt;value&gt;*&lt;/value&gt;
@@ -308,6 +324,7 @@ conn.close()
 </span><span class=lnt>75
 </span><span class=lnt>76
 </span><span class=lnt>77
+</span><span class=lnt>78
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>&lt;configuration&gt;
@@ -371,22 +388,136 @@ conn.close()
 		&lt;name&gt;hive.server2.authentication&lt;/name&gt;
 		&lt;value&gt;CUSTOM&lt;/value&gt;
 	&lt;/property&gt;
- 
 	&lt;property&gt;
 		&lt;name&gt;hive.server2.custom.authentication.class&lt;/name&gt;
 		&lt;value&gt;org.apache.hadoop.hive.contrib.auth.CustomPasswdAuthenticator&lt;/value&gt;
+        &lt;description&gt;指定解析jar包 注意修改成自己的类，注意是全路径名即包名和类名&lt;/description&gt;
 	&lt;/property&gt;  
- 
 	&lt;property&gt;
 		&lt;name&gt;hive.jdbc_passwd.auth.root&lt;/name&gt;
 		&lt;value&gt;123456&lt;/value&gt;
+        &lt;description&gt;设置用户名和密码，如果有多个用户和密码，可以多写几个property。name: 用户名为最后一个:用户,value: 密码&lt;/description&gt;
 	&lt;/property--&gt;  
+
 	&lt;property&gt;
         &lt;name&gt;hive.server2.authentication&lt;/name&gt;
         &lt;value&gt;NOSASL&lt;/value&gt;
     &lt;/property&gt;
 
 &lt;/configuration&gt;
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=可能出现的问题>可能出现的问题</h1>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>AccessControlException: Permission denied: user=anonymous, access=EXECUTE, inode=&#34;/tmp/hive&#34;:root:supergroup:d-wx-w
+类似于以上错误；可以对hdfs上的/tmp目录加权：
+[root@node1 ~]# hdfs dfs -chmod -R 777 /tmp
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=hiveserver2-自定义验证账户类未验证>hiveserver2 自定义验证账户类（未验证）</h1>
+<p>将此自定义类打成jar包放入到 hive/lib 目录下。不然会报错找不到class。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-Java data-lang=Java><span class=kn>package</span> <span class=nn>org.apache.hadoop.hive.contrib.auth</span><span class=o>;</span>
+ 
+ 
+<span class=kn>import</span> <span class=nn>javax.security.sasl.AuthenticationException</span><span class=o>;</span>
+ 
+ 
+<span class=kn>import</span> <span class=nn>org.apache.hadoop.conf.Configuration</span><span class=o>;</span>
+<span class=kn>import</span> <span class=nn>org.apache.hadoop.hive.conf.HiveConf</span><span class=o>;</span>
+<span class=kn>import</span> <span class=nn>org.slf4j.Logger</span><span class=o>;</span>
+ 
+ 
+<span class=kd>public</span> <span class=kd>class</span> <span class=nc>CustomPasswdAuthenticator</span> <span class=kd>implements</span> <span class=n>org</span><span class=o>.</span><span class=na>apache</span><span class=o>.</span><span class=na>hive</span><span class=o>.</span><span class=na>service</span><span class=o>.</span><span class=na>auth</span><span class=o>.</span><span class=na>PasswdAuthenticationProvider</span><span class=o>{</span>
+	
+	<span class=kd>private</span> <span class=n>Logger</span> <span class=n>LOG</span> <span class=o>=</span> <span class=n>org</span><span class=o>.</span><span class=na>slf4j</span><span class=o>.</span><span class=na>LoggerFactory</span><span class=o>.</span><span class=na>getLogger</span><span class=o>(</span><span class=n>CustomPasswdAuthenticator</span><span class=o>.</span><span class=na>class</span><span class=o>);</span>
+	
+	<span class=kd>private</span> <span class=kd>static</span> <span class=kd>final</span> <span class=n>String</span> <span class=n>HIVE_JDBC_PASSWD_AUTH_PREFIX</span><span class=o>=</span><span class=s>&#34;hive.jdbc_passwd.auth.%s&#34;</span><span class=o>;</span>
+	
+	<span class=kd>private</span> <span class=n>Configuration</span> <span class=n>conf</span><span class=o>=</span><span class=kc>null</span><span class=o>;</span>
+	
+	<span class=nd>@Override</span>
+	<span class=kd>public</span> <span class=kt>void</span> <span class=nf>Authenticate</span><span class=o>(</span><span class=n>String</span> <span class=n>userName</span><span class=o>,</span> <span class=n>String</span> <span class=n>passwd</span><span class=o>)</span> <span class=kd>throws</span> <span class=n>AuthenticationException</span> <span class=o>{</span>  
+        <span class=n>LOG</span><span class=o>.</span><span class=na>info</span><span class=o>(</span><span class=s>&#34;user: &#34;</span><span class=o>+</span><span class=n>userName</span><span class=o>+</span><span class=s>&#34; try login.&#34;</span><span class=o>);</span>  
+        <span class=n>String</span> <span class=n>passwdConf</span> <span class=o>=</span> <span class=n>getConf</span><span class=o>().</span><span class=na>get</span><span class=o>(</span><span class=n>String</span><span class=o>.</span><span class=na>format</span><span class=o>(</span><span class=n>HIVE_JDBC_PASSWD_AUTH_PREFIX</span><span class=o>,</span> <span class=n>userName</span><span class=o>));</span>  
+        <span class=k>if</span><span class=o>(</span><span class=n>passwdConf</span><span class=o>==</span><span class=kc>null</span><span class=o>){</span>  
+            <span class=n>String</span> <span class=n>message</span> <span class=o>=</span> <span class=s>&#34;user&#39;s ACL configration is not found. user:&#34;</span><span class=o>+</span><span class=n>userName</span><span class=o>;</span>  
+            <span class=n>LOG</span><span class=o>.</span><span class=na>info</span><span class=o>(</span><span class=n>message</span><span class=o>);</span>  
+            <span class=k>throw</span> <span class=k>new</span> <span class=n>AuthenticationException</span><span class=o>(</span><span class=n>message</span><span class=o>);</span>  
+        <span class=o>}</span>   
+        <span class=k>if</span><span class=o>(!</span><span class=n>passwd</span><span class=o>.</span><span class=na>equals</span><span class=o>(</span><span class=n>passwdConf</span><span class=o>)){</span>  
+            <span class=n>String</span> <span class=n>message</span> <span class=o>=</span> <span class=s>&#34;user name and password is mismatch. user:&#34;</span><span class=o>+</span><span class=n>userName</span><span class=o>;</span>  
+            <span class=k>throw</span> <span class=k>new</span> <span class=n>AuthenticationException</span><span class=o>(</span><span class=n>message</span><span class=o>);</span>  
+        <span class=o>}</span>  
+    <span class=o>}</span>  
+	
+    <span class=kd>public</span> <span class=n>Configuration</span> <span class=nf>getConf</span><span class=o>()</span> <span class=o>{</span>  
+        <span class=k>if</span><span class=o>(</span><span class=n>conf</span><span class=o>==</span><span class=kc>null</span><span class=o>){</span>  
+            <span class=k>this</span><span class=o>.</span><span class=na>conf</span><span class=o>=</span><span class=k>new</span> <span class=n>Configuration</span><span class=o>(</span><span class=k>new</span> <span class=n>HiveConf</span><span class=o>());</span>  
+        <span class=o>}</span>  
+        <span class=k>return</span> <span class=n>conf</span><span class=o>;</span>  
+    <span class=o>}</span>  
+    
+    <span class=kd>public</span> <span class=kt>void</span> <span class=nf>setConf</span><span class=o>(</span><span class=n>Configuration</span> <span class=n>conf</span><span class=o>)</span> <span class=o>{</span>  
+        <span class=k>this</span><span class=o>.</span><span class=na>conf</span><span class=o>=</span><span class=n>conf</span><span class=o>;</span>  
+    <span class=o>}</span>
+	
+<span class=o>}</span>
 </code></pre></td></tr></table>
 </div>
 </div>
