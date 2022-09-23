@@ -1754,7 +1754,8 @@ default via 192.168.3.1 dev enp6s0 proto static metric 20100
 DNS=8.8.8.8
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;p>重启即可&lt;/p></description></item><item><title>kubefate api</title><link>https://mkbooks.github.io/blog/p/kubefate-api/</link><pubDate>Sun, 28 Aug 2022 16:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/kubefate-api/</guid><description>&lt;h1 id="master-测试">master 测试&lt;/h1>
+&lt;/div>&lt;p>重启即可&lt;/p></description></item><item><title>kubefate api</title><link>https://mkbooks.github.io/blog/p/kubefate-api/</link><pubDate>Sun, 28 Aug 2022 16:27:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/kubefate-api/</guid><description>&lt;p>参考：https://github.com/FederatedAI/KubeFATE/blob/master/k8s-deploy/docs/swagger.json&lt;/p>
+&lt;h1 id="master-测试">master 测试&lt;/h1>
 &lt;p>获取服务 IP 和端口&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
