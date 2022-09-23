@@ -12,6 +12,7 @@ tags : [
     "api"
 ]
 ---
+参考：https://github.com/FederatedAI/KubeFATE/blob/master/k8s-deploy/docs/swagger.json
 # master 测试
 获取服务 IP 和端口
 ```
