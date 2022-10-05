@@ -1,4 +1,332 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我的空间</title><link>https://mkbooks.github.io/blog/post/</link><description>Recent content in Posts on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 16 Sep 2022 11:20:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/post/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Python操作hive</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8python%E6%93%8D%E4%BD%9Chive/</link><pubDate>Fri, 16 Sep 2022 11:20:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8python%E6%93%8D%E4%BD%9Chive/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/dropbox/PyHive" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我的空间</title><link>https://mkbooks.github.io/blog/post/</link><description>Recent content in Posts on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 05 Oct 2022 20:46:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/post/index.xml" rel="self" type="application/rss+xml"/><item><title>单服务器绑定多个域名</title><link>https://mkbooks.github.io/blog/p/%E5%8D%95%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BB%91%E5%AE%9A%E5%A4%9A%E4%B8%AA%E5%9F%9F%E5%90%8D/</link><pubDate>Wed, 05 Oct 2022 20:46:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%8D%95%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%BB%91%E5%AE%9A%E5%A4%9A%E4%B8%AA%E5%9F%9F%E5%90%8D/</guid><description>&lt;blockquote>
+&lt;p>参考: &lt;a class="link" href="https://cloud.tencent.com/document/product/400/35244" target="_blank" rel="noopener"
+>https://cloud.tencent.com/document/product/400/35244&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h1 id="环境">环境&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">~$ nginx -v
+nginx version: nginx/1.18.0 (Ubuntu)
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="申请-ssl-证书">申请 SSL 证书&lt;/h1>
+&lt;p>&lt;a class="link" href="https://console.cloud.tencent.com/ssl" target="_blank" rel="noopener"
+>腾讯云&lt;/a>&lt;/p>
+&lt;p>下载 Nginx 服务器类型&lt;/p>
+&lt;p>解压发送&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">scp {chenjinxin.cn_bundle.crt,chenjinxin.cn.key} root@changxiangyu.cn:/usr/share/nginx/
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="编辑服务器-nginx-配置文件-etcnginxnginxconf">编辑服务器 Nginx 配置文件 /etc/nginx/nginx.conf&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;span class="lnt">129
+&lt;/span>&lt;span class="lnt">130
+&lt;/span>&lt;span class="lnt">131
+&lt;/span>&lt;span class="lnt">132
+&lt;/span>&lt;span class="lnt">133
+&lt;/span>&lt;span class="lnt">134
+&lt;/span>&lt;span class="lnt">135
+&lt;/span>&lt;span class="lnt">136
+&lt;/span>&lt;span class="lnt">137
+&lt;/span>&lt;span class="lnt">138
+&lt;/span>&lt;span class="lnt">139
+&lt;/span>&lt;span class="lnt">140
+&lt;/span>&lt;span class="lnt">141
+&lt;/span>&lt;span class="lnt">142
+&lt;/span>&lt;span class="lnt">143
+&lt;/span>&lt;span class="lnt">144
+&lt;/span>&lt;span class="lnt">145
+&lt;/span>&lt;span class="lnt">146
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+include /etc/nginx/modules-enabled/*.conf;
+events {
+worker_connections 768;
+# multi_accept on;
+}
+http {
+# changxiangyu.cn
+server {
+listen 80;
+listen [::]:80;
+server_name changxiangyu.cn www.changxiangyu.cn;
+#把http的域名请求转成https
+return 301 https://$host$request_uri;
+#location / {
+# root /home/sammy/blog/public;
+#}
+#location /images {
+# root /home/sammy/data/;
+# autoindex on;
+#}
+}
+server {
+listen 443 ssl;
+ssl_certificate /usr/share/nginx/changxiangyu.cn_bundle.crt;
+ssl_certificate_key /usr/share/nginx/changxiangyu.cn.key;
+ssl_session_timeout 5m;
+#请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。
+ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+#请按照以下协议配置
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_prefer_server_ciphers on;
+server_name changxiangyu.cn www.changxiangyu.cn;
+location / {
+root /home/sammy/blog/public;
+}
+location /images {
+root /home/sammy/data/;
+autoindex on;
+}
+}
+# chenjinxin.cn
+server {
+listen 80;
+listen [::]:80;
+server_name chenjinxin.cn www.chenjinxin.cn;
+#把http的域名请求转成https
+return 301 https://$host$request_uri;
+}
+server {
+listen 443 ssl;
+ssl_certificate /usr/share/nginx/chenjinxin.cn_bundle.crt;
+ssl_certificate_key /usr/share/nginx/chenjinxin.cn.key;
+ssl_session_timeout 5m;
+#请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。
+ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+#请按照以下协议配置
+ssl_protocols TLSv1.2 TLSv1.3;
+ssl_prefer_server_ciphers on;
+server_name chenjinxin.cn www.chenjinxin.cn;
+location / {
+root /home/sammy/cjx_blog/public;
+}
+location /images {
+root /home/sammy/data/;
+autoindex on;
+}
+}
+##
+# Basic Settings
+##
+sendfile on;
+tcp_nopush on;
+tcp_nodelay on;
+keepalive_timeout 65;
+types_hash_max_size 2048;
+# server_tokens off;
+# server_names_hash_bucket_size 64;
+# server_name_in_redirect off;
+include /etc/nginx/mime.types;
+default_type application/octet-stream;
+##
+# SSL Settings
+##
+ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+ssl_prefer_server_ciphers on;
+##
+# Logging Settings
+##
+access_log /var/log/nginx/access.log;
+error_log /var/log/nginx/error.log;
+##
+# Gzip Settings
+##
+gzip on;
+# gzip_vary on;
+# gzip_proxied any;
+# gzip_comp_level 6;
+# gzip_buffers 16 8k;
+# gzip_http_version 1.1;
+# gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+##
+# Virtual Host Configs
+##
+include /etc/nginx/conf.d/*.conf;
+include /etc/nginx/sites-enabled/*;
+}
+#mail {
+# # See sample authentication script at:
+# # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+#
+# # auth_http localhost/auth.php;
+# # pop3_capabilities &amp;#34;TOP&amp;#34; &amp;#34;USER&amp;#34;;
+# # imap_capabilities &amp;#34;IMAP4rev1&amp;#34; &amp;#34;UIDPLUS&amp;#34;;
+#
+# server {
+# listen localhost:110;
+# protocol pop3;
+# proxy on;
+# }
+#
+# server {
+# listen localhost:143;
+# protocol imap;
+# proxy on;
+# }
+#}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="验证配置文件问题">验证配置文件问题&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo /usr/sbin/nginx -t
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="重载-nginx">重载 Nginx&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo /usr/sbin/nginx -s reload
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>成功后即可使用 &lt;code>chenjinxin.cn&lt;/code> 进行访问&lt;/p></description></item><item><title>使用Python操作hive</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8python%E6%93%8D%E4%BD%9Chive/</link><pubDate>Fri, 16 Sep 2022 11:20:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8python%E6%93%8D%E4%BD%9Chive/</guid><description>&lt;p>&lt;a class="link" href="https://github.com/dropbox/PyHive" target="_blank" rel="noopener"
 >PyHive&lt;/a>&lt;/p>
 &lt;h1 id="安装依赖包">安装依赖包&lt;/h1>
 &lt;div class="highlight">&lt;div class="chroma">
