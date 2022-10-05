@@ -12,7 +12,7 @@ menu:
 - 手机: 17137621499
 - 邮箱: chenjinxin@chenjinxin.cn　
 - 毕业院校及专业: 黑河学院本科19届-计算机科学与技术专业
-- 我的博客: https://changxiangyu.cn
+- 我的博客: https://chenjinxin.cn
 
 ## 个人能力
 - 编程语言: Go、Scala、Kotlin、Python、Java、SQL、Shell。
