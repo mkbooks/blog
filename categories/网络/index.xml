@@ -1,4 +1,22 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>网络 on 我的空间</title><link>https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/</link><description>Recent content in 网络 on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 30 Oct 2022 16:38:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml"/><item><title>安装openVPN客户端</title><link>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85openvpn%E5%AE%A2%E6%88%B7%E7%AB%AF/</link><pubDate>Sun, 30 Oct 2022 16:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85openvpn%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid><description/></item><item><title>终端设置特定IP段走路由</title><link>https://mkbooks.github.io/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/</link><pubDate>Thu, 08 Sep 2022 11:02:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/</guid><description>&lt;h2 id="create-config">create config&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>网络 on 我的空间</title><link>https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/</link><description>Recent content in 网络 on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 30 Oct 2022 16:38:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml"/><item><title>安装openVPN客户端</title><link>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85openvpn%E5%AE%A2%E6%88%B7%E7%AB%AF/</link><pubDate>Sun, 30 Oct 2022 16:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85openvpn%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid><description>&lt;h1 id="windows平台">Windows平台&lt;/h1>
+&lt;h2 id="下载客户端">下载客户端&lt;/h2>
+&lt;p>&lt;a class="link" href="https://openvpn.net/community-downloads/" target="_blank" rel="noopener"
+>官方下载地址页面&lt;/a>&lt;/p>
+&lt;p>客户端选择&lt;/p>
+&lt;p>官网提供两种Windows的客户端，根据自己的Windows版本安装即可&lt;/p>
+&lt;p>&lt;a class="link" href="https://swupdate.openvpn.org/community/releases/openvpn-install-2.4.8-I602-Win7.exe" target="_blank" rel="noopener"
+>openvpn-install-2.4.8-I602-Win7.exe&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://swupdate.openvpn.org/community/releases/openvpn-install-2.4.8-I602-Win10.exe" target="_blank" rel="noopener"
+>openvpn-install-2.4.8-I602-Win10.exe&lt;/a>&lt;/p>
+&lt;h2 id="安装openvpn">安装OpenVPN&lt;/h2>
+&lt;p>双击下载好的exe文件&lt;/p>
+&lt;p>一路下一步直至安装完成&lt;/p>
+&lt;h2 id="使用">使用&lt;/h2>
+&lt;ul>
+&lt;li>将 *.ovpn 文件放到安装目录的 conf 目录下&lt;/li>
+&lt;li>使用管理员权限启动 bin 下的 openvpn-gui 程序&lt;/li>
+&lt;li>在任务栏中连接服务&lt;/li>
+&lt;/ul></description></item><item><title>终端设置特定IP段走路由</title><link>https://mkbooks.github.io/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/</link><pubDate>Thu, 08 Sep 2022 11:02:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/</guid><description>&lt;h2 id="create-config">create config&lt;/h2>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
