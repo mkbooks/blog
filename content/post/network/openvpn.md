@@ -1495,3 +1495,15 @@ ping 10.10.0.1
 ```
 sudo tail -f /var/log/openvpn/openvpn-status.log
 ```
+# 允许客户端直接互通
+```
+sudo vim /etc/openvpn/server/server.conf
+
+# Uncomment this directive to allow different
+# clients to be able to "see" each other.
+# By default, clients will only see the server.
+# To force clients to only see the server, you
+# will also need to appropriately firewall the
+# server's TUN/TAP interface.
+client-to-client
+```
