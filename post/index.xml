@@ -6836,7 +6836,8 @@ systemctl stop openvpn-client@client
 ping 10.10.0.1
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h1 id="服务器查看已连接客户端">服务器查看已连接客户端&lt;/h1>
+&lt;/div>&lt;h2 id="其它配置">其它配置&lt;/h2>
+&lt;h3 id="服务器查看已连接客户端">服务器查看已连接客户端&lt;/h3>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -6845,7 +6846,7 @@ ping 10.10.0.1
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo tail -f /var/log/openvpn/openvpn-status.log
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h1 id="允许客户端直接互通">允许客户端直接互通&lt;/h1>
+&lt;/div>&lt;h3 id="允许客户端直接互通">允许客户端直接互通&lt;/h3>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
