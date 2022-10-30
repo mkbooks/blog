@@ -323,7 +323,7 @@ sudo cp /tmp/{server.crt,ca.crt} /etc/openvpn/server
 
 ```
 cd ~/easy-rsa
-openvpn --genkey secret ta.key
+openvpn --genkey --secret ta.key
 ```
 
 结果将是一个名为ta.key. 复制到/etc/openvpn/server/目录：
@@ -821,24 +821,24 @@ nano ~/client-configs/make_config.sh
 
 ```
 #!/bin/bash
-
+ 
 # First argument: Client identifier
-
+ 
 KEY_DIR=~/client-configs/keys
 OUTPUT_DIR=~/client-configs/files
 BASE_CONFIG=~/client-configs/base.conf
-
+ 
 cat ${BASE_CONFIG} \
     <(echo -e '<ca>') \
     ${KEY_DIR}/ca.crt \
     <(echo -e '</ca>\n<cert>') \
-    ${KEY_DIR}/.crt \
+    ${KEY_DIR}/${1}.crt \
     <(echo -e '</cert>\n<key>') \
-    ${KEY_DIR}/.key \
+    ${KEY_DIR}/${1}.key \
     <(echo -e '</key>\n<tls-crypt>') \
     ${KEY_DIR}/ta.key \
     <(echo -e '</tls-crypt>') \
-    > ${OUTPUT_DIR}/.ovpn
+    > ${OUTPUT_DIR}/${1}.ovpn
 ```
 
 完成后保存并关闭文件。
@@ -1489,4 +1489,9 @@ systemctl stop openvpn-client@client
 ```
 systemctl status openvpn-client@client
 ping 10.10.0.1
+```
+
+# 服务器查看已连接客户端
+```
+sudo tail -f /var/log/openvpn/openvpn-status.log
 ```
