@@ -97,7 +97,7 @@
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
-阅读时长: 15 分钟
+阅读时长: 16 分钟
 </time>
 </div>
 </footer>
@@ -2275,6 +2275,31 @@ ping 10.10.0.1
 <pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo tail -f /var/log/openvpn/openvpn-status.log
 </code></pre></td></tr></table>
 </div>
+</div><h1 id=允许客户端直接互通>允许客户端直接互通</h1>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo vim /etc/openvpn/server/server.conf
+
+# Uncomment this directive to allow different
+# clients to be able to &#34;see&#34; each other.
+# By default, clients will only see the server.
+# To force clients to only see the server, you
+# will also need to appropriately firewall the
+# server&#39;s TUN/TAP interface.
+client-to-client
+</code></pre></td></tr></table>
+</div>
 </div>
 </section>
 <footer class=article-footer>
@@ -2320,9 +2345,9 @@ ping 10.10.0.1
 </a>
 </article>
 <article>
-<a href=/blog/p/ip-netns/>
+<a href=/blog/p/ip-netns-ling/>
 <div class=article-details>
-<h2 class=article-title>ip-netns</h2>
+<h2 class=article-title>ip-netns-ling</h2>
 </div>
 </a>
 </article>
