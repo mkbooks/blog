@@ -1491,11 +1491,12 @@ systemctl status openvpn-client@client
 ping 10.10.0.1
 ```
 
-# 服务器查看已连接客户端
+## 其它配置
+### 服务器查看已连接客户端
 ```
 sudo tail -f /var/log/openvpn/openvpn-status.log
 ```
-# 允许客户端直接互通
+### 允许客户端直接互通
 ```
 sudo vim /etc/openvpn/server/server.conf
 
