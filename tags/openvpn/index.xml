@@ -449,7 +449,7 @@ scp pki/ca.crt sammy@123.125.32.26:/tmp
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cd ~/easy-rsa
-openvpn --genkey secret ta.key
+openvpn --genkey --secret ta.key
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>结果将是一个名为ta.key. 复制到/etc/openvpn/server/目录：&lt;/p>
@@ -1163,13 +1163,13 @@ cat &lt;span class="si">${&lt;/span>&lt;span class="nv">BASE_CONFIG&lt;/span>&lt
 &lt;/span>&lt;span class="se">&lt;/span> &amp;lt;&lt;span class="o">(&lt;/span>&lt;span class="nb">echo&lt;/span> -e &lt;span class="s1">&amp;#39;&amp;lt;ca&amp;gt;&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="se">\
 &lt;/span>&lt;span class="se">&lt;/span> &lt;span class="si">${&lt;/span>&lt;span class="nv">KEY_DIR&lt;/span>&lt;span class="si">}&lt;/span>/ca.crt &lt;span class="se">\
 &lt;/span>&lt;span class="se">&lt;/span> &amp;lt;&lt;span class="o">(&lt;/span>&lt;span class="nb">echo&lt;/span> -e &lt;span class="s1">&amp;#39;&amp;lt;/ca&amp;gt;\n&amp;lt;cert&amp;gt;&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="se">\
-&lt;/span>&lt;span class="se">&lt;/span> &lt;span class="si">${&lt;/span>&lt;span class="nv">KEY_DIR&lt;/span>&lt;span class="si">}&lt;/span>/.crt &lt;span class="se">\
+&lt;/span>&lt;span class="se">&lt;/span> &lt;span class="si">${&lt;/span>&lt;span class="nv">KEY_DIR&lt;/span>&lt;span class="si">}&lt;/span>/&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="si">}&lt;/span>.crt &lt;span class="se">\
 &lt;/span>&lt;span class="se">&lt;/span> &amp;lt;&lt;span class="o">(&lt;/span>&lt;span class="nb">echo&lt;/span> -e &lt;span class="s1">&amp;#39;&amp;lt;/cert&amp;gt;\n&amp;lt;key&amp;gt;&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="se">\
-&lt;/span>&lt;span class="se">&lt;/span> &lt;span class="si">${&lt;/span>&lt;span class="nv">KEY_DIR&lt;/span>&lt;span class="si">}&lt;/span>/.key &lt;span class="se">\
+&lt;/span>&lt;span class="se">&lt;/span> &lt;span class="si">${&lt;/span>&lt;span class="nv">KEY_DIR&lt;/span>&lt;span class="si">}&lt;/span>/&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="si">}&lt;/span>.key &lt;span class="se">\
 &lt;/span>&lt;span class="se">&lt;/span> &amp;lt;&lt;span class="o">(&lt;/span>&lt;span class="nb">echo&lt;/span> -e &lt;span class="s1">&amp;#39;&amp;lt;/key&amp;gt;\n&amp;lt;tls-crypt&amp;gt;&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="se">\
 &lt;/span>&lt;span class="se">&lt;/span> &lt;span class="si">${&lt;/span>&lt;span class="nv">KEY_DIR&lt;/span>&lt;span class="si">}&lt;/span>/ta.key &lt;span class="se">\
 &lt;/span>&lt;span class="se">&lt;/span> &amp;lt;&lt;span class="o">(&lt;/span>&lt;span class="nb">echo&lt;/span> -e &lt;span class="s1">&amp;#39;&amp;lt;/tls-crypt&amp;gt;&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="se">\
-&lt;/span>&lt;span class="se">&lt;/span> &amp;gt; &lt;span class="si">${&lt;/span>&lt;span class="nv">OUTPUT_DIR&lt;/span>&lt;span class="si">}&lt;/span>/.ovpn
+&lt;/span>&lt;span class="se">&lt;/span> &amp;gt; &lt;span class="si">${&lt;/span>&lt;span class="nv">OUTPUT_DIR&lt;/span>&lt;span class="si">}&lt;/span>/&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="si">}&lt;/span>.ovpn
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>完成后保存并关闭文件。&lt;/p>
@@ -2106,6 +2106,15 @@ systemctl stop openvpn-client@client
 &lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">systemctl status openvpn-client@client
 ping 10.10.0.1
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="服务器查看已连接客户端">服务器查看已连接客户端&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo tail -f /var/log/openvpn/openvpn-status.log
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div></description></item></channel></rss>
