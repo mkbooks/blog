@@ -29,3 +29,37 @@ sudo systemctl status ssh
 ```
 ssh-keygen 
 ```
+## 修改ssh登录端口
+```
+$ vi /etc/ssh/sshd_config
+
+#Port 22
+#修改为：
+Port 8848 #这里修改为你想要设置的端口,以 8848 为例
+```
+### 修改防火墙配置
+```
+$ vi /etc/sysconfig/iptabels
+```
+添加以下规则
+```
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 60022 -j ACCEPT
+```
+刷新iptables并重启ssh服务
+```
+$ systemctl restart iptables.service
+$ systemctl restart sshd.service
+```
+## 禁止 ssh 口令登录
+更改ssh配置
+```
+$ vi /etc/ssh/sshd_config
+```
+```
+#PasswordAuthentication yes 改为
+PasswordAuthentication no
+```
+编辑保存完成后，重启ssh服务使得新配置生效，然后就无法使用口令来登录ssh了
+```
+$ systemctl restart sshd.service
+```
