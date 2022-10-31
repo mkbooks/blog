@@ -1,4 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>git on 我的空间</title><link>https://mkbooks.github.io/blog/categories/git/</link><description>Recent content in git on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 26 Aug 2022 14:36:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/git/index.xml" rel="self" type="application/rss+xml"/><item><title>git http方式免密提交</title><link>https://mkbooks.github.io/blog/p/git-http%E6%96%B9%E5%BC%8F%E5%85%8D%E5%AF%86%E6%8F%90%E4%BA%A4/</link><pubDate>Fri, 26 Aug 2022 14:36:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/git-http%E6%96%B9%E5%BC%8F%E5%85%8D%E5%AF%86%E6%8F%90%E4%BA%A4/</guid><description>&lt;p>转载：https://juejin.cn/post/6844903602968854542&lt;/p>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>git on 我的空间</title><link>https://mkbooks.github.io/blog/categories/git/</link><description>Recent content in git on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 31 Oct 2022 10:24:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/git/index.xml" rel="self" type="application/rss+xml"/><item><title>git 问题</title><link>https://mkbooks.github.io/blog/p/git-%E9%97%AE%E9%A2%98/</link><pubDate>Mon, 31 Oct 2022 10:24:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/git-%E9%97%AE%E9%A2%98/</guid><description>&lt;h1 id="问题-1">问题 1&lt;/h1>
+&lt;h2 id="问题描述">问题描述&lt;/h2>
+&lt;p>Failed to connect to 127.0.0.1 port 8889: Connection refused&lt;/p>
+&lt;h2 id="解决步骤">解决步骤&lt;/h2>
+&lt;p>查看代理使用情况&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">env | grep -i proxy
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>取消代理端口为 8889 的设置&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">unset HTTPS_PROXY
+unset HTTP_PROXY
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>git http方式免密提交</title><link>https://mkbooks.github.io/blog/p/git-http%E6%96%B9%E5%BC%8F%E5%85%8D%E5%AF%86%E6%8F%90%E4%BA%A4/</link><pubDate>Fri, 26 Aug 2022 14:36:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/git-http%E6%96%B9%E5%BC%8F%E5%85%8D%E5%AF%86%E6%8F%90%E4%BA%A4/</guid><description>&lt;p>转载：https://juejin.cn/post/6844903602968854542&lt;/p>
 &lt;h2 id="设置记住密码默认15分钟">设置记住密码（默认15分钟）&lt;/h2>
 &lt;p>可以将你的密码缓存下来，只用输一次密码，以后都可以不用输入了。缺点就是密码都明文保存在 &lt;code>~/.git-credential&lt;/code> 文件中。&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">

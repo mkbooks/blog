@@ -1,4 +1,28 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我的空间</title><link>https://mkbooks.github.io/blog/post/</link><description>Recent content in Posts on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 30 Oct 2022 16:38:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/post/index.xml" rel="self" type="application/rss+xml"/><item><title>NAIFU 使用</title><link>https://mkbooks.github.io/blog/p/naifu-%E4%BD%BF%E7%94%A8/</link><pubDate>Sun, 30 Oct 2022 16:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/naifu-%E4%BD%BF%E7%94%A8/</guid><description>&lt;h1 id="进入网站">进入网站&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我的空间</title><link>https://mkbooks.github.io/blog/post/</link><description>Recent content in Posts on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 31 Oct 2022 10:24:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/post/index.xml" rel="self" type="application/rss+xml"/><item><title>git 问题</title><link>https://mkbooks.github.io/blog/p/git-%E9%97%AE%E9%A2%98/</link><pubDate>Mon, 31 Oct 2022 10:24:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/git-%E9%97%AE%E9%A2%98/</guid><description>&lt;h1 id="问题-1">问题 1&lt;/h1>
+&lt;h2 id="问题描述">问题描述&lt;/h2>
+&lt;p>Failed to connect to 127.0.0.1 port 8889: Connection refused&lt;/p>
+&lt;h2 id="解决步骤">解决步骤&lt;/h2>
+&lt;p>查看代理使用情况&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">env | grep -i proxy
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>取消代理端口为 8889 的设置&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">unset HTTPS_PROXY
+unset HTTP_PROXY
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>NAIFU 使用</title><link>https://mkbooks.github.io/blog/p/naifu-%E4%BD%BF%E7%94%A8/</link><pubDate>Sun, 30 Oct 2022 16:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/naifu-%E4%BD%BF%E7%94%A8/</guid><description>&lt;h1 id="进入网站">进入网站&lt;/h1>
 &lt;p>http://10.8.0.10:6969/&lt;/p></description></item><item><title>安装openVPN客户端</title><link>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85openvpn%E5%AE%A2%E6%88%B7%E7%AB%AF/</link><pubDate>Sun, 30 Oct 2022 16:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85openvpn%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid><description>&lt;h1 id="windows平台">Windows平台&lt;/h1>
 &lt;h2 id="下载客户端">下载客户端&lt;/h2>
 &lt;p>&lt;a class="link" href="https://openvpn.net/community-downloads/" target="_blank" rel="noopener"
