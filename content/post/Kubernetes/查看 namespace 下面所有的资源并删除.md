@@ -30,6 +30,13 @@ kubectl api-resources -o name --verbs=list --namespaced | xargs -n 1 kubectl get
 kubectl delete all --all -n {namespace}
 ```
 
+删除 namespace 下面某种的资源
+```
+kubectl delete --all pods -n {namespace}
+kubectl delete --all deploy -n {namespace}
+kubectl delete --all sts -n {namespace}
+```
+
 有时候删除资源会出现长时间处于 terminating 状态，可以使用 --force --grace-period=0
 ```
 kubectl delete po xxx --force --grace-period=0 
