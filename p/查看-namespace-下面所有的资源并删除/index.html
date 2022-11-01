@@ -1,14 +1,14 @@
 <!doctype html><html lang=en-us dir=ltr>
 <head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="替换文件夹中所有文件内容的特定字符串"><title>替换文件夹中所有文件内容的特定字符串</title>
-<link rel=canonical href=https://mkbooks.github.io/blog/p/%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E7%89%B9%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2/>
-<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="替换文件夹中所有文件内容的特定字符串">
-<meta property="og:description" content="替换文件夹中所有文件内容的特定字符串">
-<meta property="og:url" content="https://mkbooks.github.io/blog/p/%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E7%89%B9%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2/">
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="查看 namespace 下面所有的资源并删除"><title>查看 namespace 下面所有的资源并删除</title>
+<link rel=canonical href=https://mkbooks.github.io/blog/p/%E6%9F%A5%E7%9C%8B-namespace-%E4%B8%8B%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E8%B5%84%E6%BA%90%E5%B9%B6%E5%88%A0%E9%99%A4/>
+<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="查看 namespace 下面所有的资源并删除">
+<meta property="og:description" content="查看 namespace 下面所有的资源并删除">
+<meta property="og:url" content="https://mkbooks.github.io/blog/p/%E6%9F%A5%E7%9C%8B-namespace-%E4%B8%8B%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E8%B5%84%E6%BA%90%E5%B9%B6%E5%88%A0%E9%99%A4/">
 <meta property="og:site_name" content="我的空间">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Linux"><meta property="article:tag" content="Shell"><meta property="article:published_time" content="2022-08-17T17:38:18+08:00"><meta property="article:modified_time" content="2020-08-17T00:00:00+00:00">
-<meta name=twitter:title content="替换文件夹中所有文件内容的特定字符串">
-<meta name=twitter:description content="替换文件夹中所有文件内容的特定字符串">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="K8S"><meta property="article:tag" content="云原生">
+<meta name=twitter:title content="查看 namespace 下面所有的资源并删除">
+<meta name=twitter:description content="查看 namespace 下面所有的资源并删除">
 </head>
 <body class=article-page>
 <script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
@@ -79,91 +79,230 @@
 <header class=article-header>
 <div class=article-details>
 <header class=article-category>
-<a href=/blog/categories/linux/ style=background-color:#2a9d8f;color:#fff>
-Linux(Ubuntu, CentOS)
+<a href=/blog/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/>
+云原生
 </a>
 </header>
 <div class=article-title-wrapper>
 <h2 class=article-title>
-<a href=/blog/p/%E6%9B%BF%E6%8D%A2%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E6%89%80%E6%9C%89%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E7%9A%84%E7%89%B9%E5%AE%9A%E5%AD%97%E7%AC%A6%E4%B8%B2/>替换文件夹中所有文件内容的特定字符串</a>
+<a href=/blog/p/%E6%9F%A5%E7%9C%8B-namespace-%E4%B8%8B%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E8%B5%84%E6%BA%90%E5%B9%B6%E5%88%A0%E9%99%A4/>查看 namespace 下面所有的资源并删除</a>
 </h2>
 <h3 class=article-subtitle>
-替换文件夹中所有文件内容的特定字符串
+查看 namespace 下面所有的资源并删除
 </h3>
 </div>
 <footer class=article-time>
-<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Aug 17, 2022</time>
-</div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
-阅读时长: 1 分钟
+阅读时长: 2 分钟
 </time>
 </div>
 </footer>
 </div>
 </header>
 <section class=article-content>
+<p>转载: <a class=link href=https://blog.csdn.net/Man_In_The_Night/article/details/109184175 target=_blank rel=noopener>https://blog.csdn.net/Man_In_The_Night/article/details/109184175</a></p>
+<p>查看 namespace 下面所有的资源</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>find . -type f -name &#34;*.yaml&#34; | xargs sed -i &#34;s#host_path#$host_path#g&#34;
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubectl api-resources -o name --verbs=list --namespaced | xargs -n 1 kubectl get --show-kind --ignore-not-found -n {namespace}
+</code></pre></td></tr></table>
+</div>
+</div><p>删除 namespace 下面所有的资源</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubectl delete all --all -n {namespace}
+</code></pre></td></tr></table>
+</div>
+</div><p>有时候删除资源会出现长时间处于 terminating 状态，可以使用 &ndash;force &ndash;grace-period=0</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubectl delete po xxx --force --grace-period=0 
+</code></pre></td></tr></table>
+</div>
+</div><p>有时候删除 namespace ，会出现长时间处于 terminating 状态，即使使用 &ndash;force &ndash;grace-period=0 ，仍然处于 terminating 状态，可以使用原生接口删除</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 获取namespace的详情信息
+$ kubectl  get ns rdbms  -o json &gt; rdbms.json
+
+# 查看napespace定义的json配置
+## 删除掉spec部分即可
+$ cat rdbms.json
+{
+    &#34;apiVersion&#34;: &#34;v1&#34;,
+    &#34;kind&#34;: &#34;Namespace&#34;,
+    &#34;metadata&#34;: {
+        &#34;annotations&#34;: {
+            &#34;kubectl.kubernetes.io/last-applied-configuration&#34;: &#34;{\&#34;apiVersion\&#34;:\&#34;v1\&#34;,\&#34;kind\&#34;:\&#34;Namespace\&#34;,\&#34;metadata\&#34;:{\&#34;annotations\&#34;:{},\&#34;name\&#34;:\&#34;rdbms\&#34;}}\n&#34;
+        },
+        &#34;creationTimestamp&#34;: &#34;2019-10-14T12:17:44Z&#34;,
+        &#34;deletionTimestamp&#34;: &#34;2019-10-14T12:30:27Z&#34;,
+        &#34;name&#34;: &#34;rdbms&#34;,
+        &#34;resourceVersion&#34;: &#34;8844754&#34;,
+        &#34;selfLink&#34;: &#34;/api/v1/namespaces/rdbms&#34;,
+        &#34;uid&#34;: &#34;29067ddf-56d7-4cce-afa3-1fbdbb221ab1&#34;
+    },
+    &#34;spec&#34;: {
+        &#34;finalizers&#34;: [
+            &#34;kubernetes&#34;
+        ]
+    },
+    &#34;status&#34;: {
+        &#34;phase&#34;: &#34;Terminating&#34;
+    }
+}
+
+# 使用http接口进行删除
+$ curl -k -H &#34;Content-Type:application/json&#34; -X PUT --data-binary @rdbms.json https://x.x.x.x:6443/api/v1/namespaces/rdbms/finalize
+{
+  &#34;kind&#34;: &#34;Namespace&#34;,
+  &#34;apiVersion&#34;: &#34;v1&#34;,
+  &#34;metadata&#34;: {
+    &#34;name&#34;: &#34;rdbms&#34;,
+    &#34;selfLink&#34;: &#34;/api/v1/namespaces/rdbms/finalize&#34;,
+    &#34;uid&#34;: &#34;29067ddf-56d7-4cce-afa3-1fbdbb221ab1&#34;,
+    &#34;resourceVersion&#34;: &#34;8844754&#34;,
+    &#34;creationTimestamp&#34;: &#34;2019-10-14T12:17:44Z&#34;,
+    &#34;deletionTimestamp&#34;: &#34;2019-10-14T12:30:27Z&#34;,
+    &#34;annotations&#34;: {
+      &#34;kubectl.kubernetes.io/last-applied-configuration&#34;: &#34;{\&#34;apiVersion\&#34;:\&#34;v1\&#34;,\&#34;kind\&#34;:\&#34;Namespace\&#34;,\&#34;metadata\&#34;:{\&#34;annotations\&#34;:{},\&#34;name\&#34;:\&#34;rdbms\&#34;}}\n&#34;
+    }
+  },
+  &#34;spec&#34;: {
+
+  },
+  &#34;status&#34;: {
+    &#34;phase&#34;: &#34;Terminating&#34;
+  }
+
+# 再次查看namespace发现已经被删除了
+$ kubectl  get ns  | grep rdb
+</code></pre></td></tr></table>
+</div>
+</div><p>如果在这些命令后 Pod 仍处于 Unknown 状态，请使用以下命令从集群中删除 Pod:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubectl patch pod &lt;pod&gt; -p &#39;{&#34;metadata&#34;:{&#34;finalizers&#34;:null}}&#39;
 </code></pre></td></tr></table>
 </div>
 </div>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
-<a href=/blog/tags/linux/>Linux</a>
-<a href=/blog/tags/shell/>Shell</a>
+<a href=/blog/tags/k8s/>K8S</a>
+<a href=/blog/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/>云原生</a>
 </section>
 <section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
 <span>Licensed under CC BY-NC-SA 4.0</span>
 </section>
-<section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<span>
-最后更新于 Aug 17, 2020 00:00 UTC
-</span>
-</section></footer>
+</footer>
 </article>
 <aside class=related-content--wrapper>
 <h2 class=section-title>相关文章</h2>
 <div class=related-content>
 <div class="flex article-list--tile">
 <article>
-<a href=/blog/p/ssh%E6%9C%8D%E5%8A%A1/>
+<a href=/blog/p/k8s-%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9/>
 <div class=article-details>
-<h2 class=article-title>ssh服务</h2>
+<h2 class=article-title>k8s 驱逐节点</h2>
 </div>
 </a>
 </article>
 <article>
-<a href=/blog/p/linux%E5%91%BD%E4%BB%A4%E8%A1%8C%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6%E5%88%B0%E7%99%BE%E5%BA%A6%E7%BD%91%E7%9B%98/>
+<a href=/blog/p/k8s%E5%BC%BA%E5%88%B6%E5%88%A0%E9%99%A4podpvpvc%E5%92%8Cnsnamespace%E6%96%B9%E6%B3%95/>
 <div class=article-details>
-<h2 class=article-title>Linux命令行上传文件到百度网盘</h2>
+<h2 class=article-title>k8s强制删除pod&pv&pvc和ns&namespace方法</h2>
 </div>
 </a>
 </article>
 <article>
-<a href=/blog/p/docker-%E9%95%9C%E5%83%8F%E5%8F%82%E6%95%B0/>
+<a href=/blog/p/k8s%E7%9A%84namespace%E4%B8%80%E7%9B%B4terminating%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/>
 <div class=article-details>
-<h2 class=article-title>docker 镜像参数</h2>
+<h2 class=article-title>k8s的namespace一直Terminating的完美解决方案</h2>
 </div>
 </a>
 </article>
 <article>
-<a href=/blog/p/ssh%E8%BF%9C%E7%A8%8B%E6%89%A7%E8%A1%8C%E8%84%9A%E6%9C%AC%E6%8A%A5%E9%94%99command-not-found%E5%92%8C%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%97%AE%E9%A2%98/>
+<a href=/blog/p/k3s%E6%89%8B%E5%8A%A8%E5%AF%BC%E5%85%A5%E9%95%9C%E5%83%8F/>
 <div class=article-details>
-<h2 class=article-title>SSH远程执行脚本报错command not found和环境变量问题</h2>
+<h2 class=article-title>k3s手动导入镜像</h2>
 </div>
 </a>
 </article>
 <article>
-<a href=/blog/p/vlc%E6%92%AD%E6%94%BE%E5%99%A8%E5%BF%AB%E6%8D%B7%E9%94%AE/>
+<a href=/blog/p/%E4%BD%BF%E7%94%A8-kubernetes-api-%E8%AE%BF%E9%97%AE%E9%9B%86%E7%BE%A4/>
 <div class=article-details>
-<h2 class=article-title>VLC播放器快捷键</h2>
+<h2 class=article-title>使用 Kubernetes API 访问集群</h2>
 </div>
 </a>
 </article>
