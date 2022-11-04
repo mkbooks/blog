@@ -128,6 +128,29 @@ git 使用时遇到的问题
 unset HTTP_PROXY
 </code></pre></td></tr></table>
 </div>
+</div><p>设置代理</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>export HTTPS_PROXY=http://127.0.0.1:8889/
+export all_proxy=socks://127.0.0.1:1089/
+export ftp_proxy=http://127.0.0.1:8889/
+</code></pre></td></tr></table>
+</div>
+</div><p>如果设置了永久代理，比如在 ~/.bashrc, /etc/profile, 添加的代理，则需要修改文件并 source 一下。</p>
+<p>如果不知道在哪里添加了代理，只能全局搜索了</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo grep -r -i http_proxy=http://127.0.0.1:8889/
+</code></pre></td></tr></table>
+</div>
 </div>
 </section>
 <footer class=article-footer>
