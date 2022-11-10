@@ -142,8 +142,8 @@ merge了错误的分支，之后还有 commit
 ➜  git-test git:(master) ✗ echo master &gt; 3.txt
 ➜  git-test git:(master) ✗ echo master &gt; 4.txt
 ➜  git-test git:(master) ✗ git add .    
-➜  git-test git:(master) ✗ git commit -m&#39;master: commit&#39;
-[master （根提交） 6b0a805] master: commit
+➜  git-test git:(master) ✗  git commit -m&#39;master: commit&#39;
+[master （根提交） 9a14d41] master: commit
  4 files changed, 4 insertions(+)
  create mode 100644 1.txt
  create mode 100644 2.txt
@@ -185,11 +185,11 @@ merge了错误的分支，之后还有 commit
 <pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback> ➜  git-test git:(master) git checkout -b branch-a      
 切换到一个新分支 &#39;branch-a&#39;
 ➜  git-test git:(branch-a) echo branch-a &gt; 5.txt
-➜  git-test git:(branch-a) ✗ rm 1.txt 
-➜  git-test git:(branch-a) ✗ echo branch-a &gt; 2.txt 
-➜  git-test git:(branch-a) ✗ git add .    
+➜  git-test git:(branch-a) ✗ rm 1.txt  
+➜  git-test git:(branch-a) ✗ echo branch-a &gt; 2.txt  
+➜  git-test git:(branch-a) ✗ git add .
 ➜  git-test git:(branch-a) ✗ git commit -m&#39;branch-a: commit&#39;
-[branch-a 4317d1b] branch-a: commit
+[branch-a 1c2ae82] branch-a: commit
  3 files changed, 2 insertions(+), 2 deletions(-)
  delete mode 100644 1.txt
  create mode 100644 5.txt
@@ -440,7 +440,7 @@ branch-a
 </div><h2 id=消除-merge-操作>消除 merge 操作</h2>
 <h3 id=方法一>方法一</h3>
 <ol>
-<li>首先 <code>git log</code> 查看提交记录，找到出错的前一笔提交的 commit_id: <code>310f23a070195b57e245ccbfc67f8a6226154568</code></li>
+<li>首先 <code>git log</code> 查看提交记录，找到出错的前一笔提交的 commit_id: <code>1c2ae824d8b9e2a7870345654c90c1d6cd72f0bf</code></li>
 </ol>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
@@ -474,48 +474,36 @@ branch-a
 </span><span class=lnt>28
 </span><span class=lnt>29
 </span><span class=lnt>30
-</span><span class=lnt>31
-</span><span class=lnt>32
-</span><span class=lnt>33
-</span><span class=lnt>34
-</span><span class=lnt>35
-</span><span class=lnt>36
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>commit 6d7ee8056cbac6443d07791ccff9231bffb8e73e (HEAD -&gt; branch-a)
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>commit 67d371b5e4c11e57709c22a03e23eed92856c986 (HEAD -&gt; branch-a)
 Author: cjx &lt;1067446576@qq.com&gt;
-Date:   Thu Nov 10 22:52:50 2022 +0800
+Date:   Thu Nov 10 23:38:45 2022 +0800
 
     branch-a: commit-2
 
-commit 89c0c259852b912c2fbbcd5c3c7f49157203dc91
-Merge: 310f23a c43e460
+commit 60d5af4cd95166bdb8c7fba3787c93ec2c75f012
+Merge: 1c2ae82 1869c6f
 Author: cjx &lt;1067446576@qq.com&gt;
-Date:   Thu Nov 10 22:50:01 2022 +0800
+Date:   Thu Nov 10 23:37:55 2022 +0800
 
     Merge branch &#39;master&#39; into branch-a
 
-commit c43e460cf928e79b5e209a63eb211f99ef2702c7 (master)
+commit 1869c6f758fe8b6a001fa13444aa6b1881fb48a9 (master)
 Author: cjx &lt;1067446576@qq.com&gt;
-Date:   Thu Nov 10 22:45:26 2022 +0800
+Date:   Thu Nov 10 23:37:01 2022 +0800
 
     master: commit -2
 
-commit 310f23a070195b57e245ccbfc67f8a6226154568
+commit 1c2ae824d8b9e2a7870345654c90c1d6cd72f0bf
 Author: cjx &lt;1067446576@qq.com&gt;
-Date:   Thu Nov 10 22:42:41 2022 +0800
+Date:   Thu Nov 10 23:35:31 2022 +0800
 
     branch-a: commit
 
-commit b1bf9ae33762d9b7a15eeee2c8b088a13e48ee75
+commit 9a14d41905fc3283137dd582df816de8d5578445
 Author: cjx &lt;1067446576@qq.com&gt;
-Date:   Thu Nov 10 22:40:12 2022 +0800
-
-    branch-a: commit
-
-commit 6b0a805936af34e903f9ebf003f5c729ff6afb12
-Author: cjx &lt;1067446576@qq.com&gt;
-Date:   Thu Nov 10 22:38:21 2022 +0800
+Date:   Thu Nov 10 23:34:48 2022 +0800
 
     master: commit
 </code></pre></td></tr></table>
@@ -528,7 +516,7 @@ Date:   Thu Nov 10 22:38:21 2022 +0800
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>➜  git-test git:(branch-a) git rebase -i 310f23a070195b57e245ccbfc67f8a6226154568
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>➜  git-test git:(branch-a) git rebase -i 1c2ae824d8b9e2a7870345654c90c1d6cd72f0bf
 </code></pre></td></tr></table>
 </div>
 </div><ol start=3>
@@ -568,8 +556,8 @@ Date:   Thu Nov 10 22:38:21 2022 +0800
 </span></code></pre></td>
 <td class=lntd>
 <pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>  GNU nano 4.8                                                       /home/cjx/git-test/.git/rebase-merge/git-rebase-todo                                                        已更改  
-drop c43e460 master: commit -2
-pick 6d7ee80 branch-a: commit-2
+drop 1869c6f master: commit -2
+pick 67d371b branch-a: commit-2
 
 # 变基 310f23a..6d7ee80 到 310f23a（2 个提交）
 #
@@ -648,6 +636,47 @@ master
 branch-a-2
 ➜  git-test git:(branch-a) cat 6.txt
 branch-a
+</code></pre></td></tr></table>
+</div>
+</div><p><code>git log</code></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>commit 7639dc395eb07aa01909a2e4fca686a25a58e107 (HEAD -&gt; branch-a)
+Author: cjx &lt;1067446576@qq.com&gt;
+Date:   Thu Nov 10 23:38:45 2022 +0800
+
+    branch-a: commit-2
+
+commit 1c2ae824d8b9e2a7870345654c90c1d6cd72f0bf
+Author: cjx &lt;1067446576@qq.com&gt;
+Date:   Thu Nov 10 23:35:31 2022 +0800
+
+    branch-a: commit
+
+commit 9a14d41905fc3283137dd582df816de8d5578445
+Author: cjx &lt;1067446576@qq.com&gt;
+Date:   Thu Nov 10 23:34:48 2022 +0800
+
+    master: commit
 </code></pre></td></tr></table>
 </div>
 </div><h3 id=方法二>方法二</h3>
