@@ -1,4 +1,525 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我的空间</title><link>https://mkbooks.github.io/blog/post/</link><description>Recent content in Posts on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 31 Oct 2022 10:24:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/post/index.xml" rel="self" type="application/rss+xml"/><item><title>git 问题</title><link>https://mkbooks.github.io/blog/p/git-%E9%97%AE%E9%A2%98/</link><pubDate>Mon, 31 Oct 2022 10:24:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/git-%E9%97%AE%E9%A2%98/</guid><description>&lt;h1 id="问题-1">问题 1&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我的空间</title><link>https://mkbooks.github.io/blog/post/</link><description>Recent content in Posts on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 08 Nov 2022 20:36:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/post/index.xml" rel="self" type="application/rss+xml"/><item><title>error merge</title><link>https://mkbooks.github.io/blog/p/error-merge/</link><pubDate>Tue, 08 Nov 2022 20:36:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/error-merge/</guid><description>&lt;h1 id="测试准备">测试准备&lt;/h1>
+&lt;h2 id="初始化仓库">初始化仓库&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">➜ ~ mkdir git-test
+➜ ~ cd git-test/
+➜ git-test git init
+已初始化空的 Git 仓库于 /home/cjx/git-test/.git/
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="初始化文件">初始化文件&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">➜ git-test git:(master) echo master &amp;gt; 1.txt
+➜ git-test git:(master) ✗ echo master &amp;gt; 2.txt
+➜ git-test git:(master) ✗ echo master &amp;gt; 3.txt
+➜ git-test git:(master) ✗ echo master &amp;gt; 4.txt
+➜ git-test git:(master) ✗ git add .
+➜ git-test git:(master) ✗ git commit -m&amp;#39;master: commit&amp;#39;
+[master （根提交） 6b0a805] master: commit
+4 files changed, 4 insertions(+)
+create mode 100644 1.txt
+create mode 100644 2.txt
+create mode 100644 3.txt
+create mode 100644 4.txt
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="新建分支">新建分支&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"> ➜ git-test git:(master) git checkout -b branch-a
+切换到一个新分支 &amp;#39;branch-a&amp;#39;
+➜ git-test git:(branch-a) echo branch-a &amp;gt; 5.txt
+➜ git-test git:(branch-a) ✗ rm 1.txt
+➜ git-test git:(branch-a) ✗ echo branch-a &amp;gt; 2.txt
+➜ git-test git:(branch-a) ✗ git add .
+➜ git-test git:(branch-a) ✗ git commit -m&amp;#39;branch-a: commit&amp;#39;
+➜ git-test git:(branch-a) ll
+总用量 16K
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:45 2.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:45 3.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:37 4.txt
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:45 5.txt
+➜ git-test git:(branch-a) cat 2.txt
+branch-a
+➜ git-test git:(branch-a) cat 3.txt
+master
+➜ git-test git:(branch-a) cat 4.txt
+master
+➜ git-test git:(branch-a) cat 5.txt
+branch-a
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="修改-master-分支">修改 master 分支&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">➜ git-test git:(branch-a) git checkout master
+切换到分支 &amp;#39;master&amp;#39;
+➜ git-test git:(master) echo master &amp;gt; 5.txt
+➜ git-test git:(master) ✗ rm 3.txt
+➜ git-test git:(master) ✗ echo master-2 &amp;gt; 2.txt
+➜ git-test git:(master) ✗ ll
+总用量 16K
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:43 1.txt
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:43 2.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:37 4.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:43 5.txt
+➜ git-test git:(master) ✗ cat 1.txt
+master
+➜ git-test git:(master) ✗ cat 2.txt
+master-2
+➜ git-test git:(master) ✗ cat 4.txt
+master
+➜ git-test git:(master) ✗ cat 5.txt
+master
+➜ git-test git:(master) ✗ git add .
+➜ git-test git:(master) ✗ git commit -m&amp;#39;master: commit -2&amp;#39;
+[master c43e460] master: commit -2
+2 files changed, 1 insertion(+), 1 deletion(-)
+rename 3.txt =&amp;gt; 5.txt (100%)
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="错误的-merge">错误的 merge&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">➜ git-test git:(master) git checkout branch-a
+切换到分支 &amp;#39;branch-a&amp;#39;
+➜ git-test git:(branch-a) git merge master
+冲突（重命名/添加）：在 master 中重命名 3.txt-&amp;gt;5.txt。在 HEAD 中添加 5.txt
+自动合并 5.txt
+自动合并 2.txt
+冲突（内容）：合并冲突于 2.txt
+自动合并失败，修正冲突然后提交修正的结果。
+➜ git-test git:(branch-a) ✗ vim 2.txt
+➜ git-test git:(branch-a) ✗ ll
+总用量 12K
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:47 2.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:37 4.txt
+-rw-rw-r-- 1 cjx cjx 52 11月 10 22:46 5.txt
+➜ git-test git:(branch-a) ✗ cat 2.txt
+branch-a
+➜ git-test git:(branch-a) ✗ cat 4.txt
+master
+➜ git-test git:(branch-a) ✗ cat 5.txt
+&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD
+branch-a
+=======
+master
+&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt; master
+➜ git-test git:(branch-a) ✗ vim 5.txt
+➜ git-test git:(branch-a) ✗ cat 5.txt
+branch-a
+➜ git-test git:(branch-a) ✗ git add .
+➜ git-test git:(branch-a) ✗ git commit
+[branch-a 89c0c25] Merge branch &amp;#39;master&amp;#39; into branch-a
+➜ git-test git:(branch-a) git status
+位于分支 branch-a
+无文件要提交，干净的工作区
+➜ git-test git:(branch-a) ll
+总用量 12K
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:47 2.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:37 4.txt
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:48 5.txt
+➜ git-test git:(branch-a) cat 2.txt
+branch-a
+➜ git-test git:(branch-a) cat 4.txt
+master
+➜ git-test git:(branch-a) cat 5.txt
+branch-a
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="正常提交">正常提交&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">➜ git-test git:(branch-a) echo branch-a &amp;gt; 6.txt
+➜ git-test git:(branch-a) ✗ rm 4.txt
+➜ git-test git:(branch-a) ✗ echo branch-a-2 &amp;gt; 5.txt
+➜ git-test git:(branch-a) ✗ ll
+总用量 12K
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:47 2.txt
+-rw-rw-r-- 1 cjx cjx 11 11月 10 22:52 5.txt
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:51 6.txt
+➜ git-test git:(branch-a) ✗ cat 2.txt
+branch-a
+➜ git-test git:(branch-a) ✗ cat 5.txt
+branch-a-2
+➜ git-test git:(branch-a) ✗ cat 6.txt
+branch-a
+➜ git-test git:(branch-a) ✗ git status
+位于分支 branch-a
+尚未暂存以备提交的变更：
+（使用 &amp;#34;git add/rm &amp;lt;文件&amp;gt;...&amp;#34; 更新要提交的内容）
+（使用 &amp;#34;git restore &amp;lt;文件&amp;gt;...&amp;#34; 丢弃工作区的改动）
+删除： 4.txt
+修改： 5.txt
+未跟踪的文件:
+（使用 &amp;#34;git add &amp;lt;文件&amp;gt;...&amp;#34; 以包含要提交的内容）
+6.txt
+修改尚未加入提交（使用 &amp;#34;git add&amp;#34; 和/或 &amp;#34;git commit -a&amp;#34;）
+➜ git-test git:(branch-a) ✗ git add .
+➜ git-test git:(branch-a) ✗ git commit -m&amp;#39;branch-a: commit-2&amp;#39;
+[branch-a 6d7ee80] branch-a: commit-2
+3 files changed, 2 insertions(+), 2 deletions(-)
+delete mode 100644 4.txt
+create mode 100644 6.txt
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="查看-log">查看 log&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">commit 6d7ee8056cbac6443d07791ccff9231bffb8e73e (HEAD -&amp;gt; branch-a)
+Author: cjx &amp;lt;1067446576@qq.com&amp;gt;
+Date: Thu Nov 10 22:52:50 2022 +0800
+branch-a: commit-2
+commit 89c0c259852b912c2fbbcd5c3c7f49157203dc91
+Merge: 310f23a c43e460
+Author: cjx &amp;lt;1067446576@qq.com&amp;gt;
+Date: Thu Nov 10 22:50:01 2022 +0800
+Merge branch &amp;#39;master&amp;#39; into branch-a
+commit c43e460cf928e79b5e209a63eb211f99ef2702c7 (master)
+Author: cjx &amp;lt;1067446576@qq.com&amp;gt;
+Date: Thu Nov 10 22:45:26 2022 +0800
+master: commit -2
+commit 310f23a070195b57e245ccbfc67f8a6226154568
+Author: cjx &amp;lt;1067446576@qq.com&amp;gt;
+Date: Thu Nov 10 22:42:41 2022 +0800
+branch-a: commit
+commit b1bf9ae33762d9b7a15eeee2c8b088a13e48ee75
+Author: cjx &amp;lt;1067446576@qq.com&amp;gt;
+Date: Thu Nov 10 22:40:12 2022 +0800
+branch-a: commit
+commit 6b0a805936af34e903f9ebf003f5c729ff6afb12
+Author: cjx &amp;lt;1067446576@qq.com&amp;gt;
+Date: Thu Nov 10 22:38:21 2022 +0800
+master: commit
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="消除-merge-操作">消除 merge 操作&lt;/h2>
+&lt;h3 id="方法一">方法一&lt;/h3>
+&lt;ol>
+&lt;li>首先 &lt;code>git log&lt;/code> 查看提交记录，找到出错的前一笔提交的 commit_id: &lt;code>310f23a070195b57e245ccbfc67f8a6226154568&lt;/code>&lt;/li>
+&lt;li>用命令 &lt;code>git rebase -i commit_id&lt;/code>，查找提交记录&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">➜ git-test git:(branch-a) git rebase -i 310f23a070195b57e245ccbfc67f8a6226154568
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>将出错那笔提交的 pick 改为 drop&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"> GNU nano 4.8 /home/cjx/git-test/.git/rebase-merge/git-rebase-todo 已更改
+drop c43e460 master: commit -2
+pick 6d7ee80 branch-a: commit-2
+# 变基 310f23a..6d7ee80 到 310f23a（2 个提交）
+#
+# 命令:
+# p, pick &amp;lt;提交&amp;gt; = 使用提交
+# r, reword &amp;lt;提交&amp;gt; = 使用提交，但修改提交说明
+# e, edit &amp;lt;提交&amp;gt; = 使用提交，进入 shell 以便进行提交修补
+# s, squash &amp;lt;提交&amp;gt; = 使用提交，但融合到前一个提交
+# f, fixup &amp;lt;提交&amp;gt; = 类似于 &amp;#34;squash&amp;#34;，但丢弃提交说明日志
+# x, exec &amp;lt;命令&amp;gt; = 使用 shell 运行命令（此行剩余部分）
+# b, break = 在此处停止（使用 &amp;#39;git rebase --continue&amp;#39; 继续变基）
+# d, drop &amp;lt;提交&amp;gt; = 删除提交
+# l, label &amp;lt;label&amp;gt; = 为当前 HEAD 打上标记
+# t, reset &amp;lt;label&amp;gt; = 重置 HEAD 到该标记
+# m, merge [-C &amp;lt;commit&amp;gt; | -c &amp;lt;commit&amp;gt;] &amp;lt;label&amp;gt; [# &amp;lt;oneline&amp;gt;]
+# . 创建一个合并提交，并使用原始的合并提交说明（如果没有指定
+# . 原始提交，使用注释部分的 oneline 作为提交说明）。使用
+# . -c &amp;lt;提交&amp;gt; 可以编辑提交说明。
+#
+# 可以对这些行重新排序，将从上至下执行。
+#
+# 如果您在这里删除一行，对应的提交将会丢失。
+#
+# 然而，如果您删除全部内容，变基操作将会终止。
+#
+# 注意空提交已被注释掉
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="4">
+&lt;li>保存修改&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">Successfully rebased and updated refs/heads/branch-a.
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>查看状态&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">➜ git-test git:(branch-a) git status
+位于分支 branch-a
+无文件要提交，干净的工作区
+➜ git-test git:(branch-a) ll
+总用量 16K
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:47 2.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 23:01 3.txt
+-rw-rw-r-- 1 cjx cjx 11 11月 10 23:01 5.txt
+-rw-rw-r-- 1 cjx cjx 9 11月 10 23:01 6.txt
+➜ git-test git:(branch-a) cat 2.txt
+branch-a
+➜ git-test git:(branch-a) cat 3.txt
+master
+➜ git-test git:(branch-a) cat 5.txt
+branch-a-2
+➜ git-test git:(branch-a) cat 6.txt
+branch-a
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="方法二">方法二&lt;/h3>
+&lt;h3 id="方法三">方法三&lt;/h3></description></item><item><title>git 问题</title><link>https://mkbooks.github.io/blog/p/git-%E9%97%AE%E9%A2%98/</link><pubDate>Mon, 31 Oct 2022 10:24:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/git-%E9%97%AE%E9%A2%98/</guid><description>&lt;h1 id="问题-1">问题 1&lt;/h1>
 &lt;h2 id="问题描述">问题描述&lt;/h2>
 &lt;p>Failed to connect to 127.0.0.1 port 8889: Connection refused&lt;/p>
 &lt;h2 id="解决步骤">解决步骤&lt;/h2>

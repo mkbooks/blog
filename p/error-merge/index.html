@@ -1,0 +1,765 @@
+<!doctype html><html lang=en-us dir=ltr>
+<head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="merge了错误的分支，之后还有 commit"><title>error merge</title>
+<link rel=canonical href=https://mkbooks.github.io/blog/p/error-merge/>
+<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="error merge">
+<meta property="og:description" content="merge了错误的分支，之后还有 commit">
+<meta property="og:url" content="https://mkbooks.github.io/blog/p/error-merge/">
+<meta property="og:site_name" content="我的空间">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="git"><meta property="article:published_time" content="2022-11-08T20:36:18+08:00"><meta property="article:modified_time" content="2022-11-08T20:36:18+08:00">
+<meta name=twitter:title content="error merge">
+<meta name=twitter:description content="merge了错误的分支，之后还有 commit">
+</head>
+<body class=article-page>
+<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky">
+<button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box>
+<span class=hamburger-inner></span>
+</span>
+</button>
+<header>
+<figure class=site-avatar>
+<a href=/blog/>
+<img src=/blog/img/1_hu8b5a3db4a21c8e092ed8817bbbdf793a_61250_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a>
+<span class=emoji>🍥</span>
+</figure>
+<div class=site-meta>
+<h1 class=site-name><a href=/blog>我的空间</a></h1>
+<h2 class=site-description>常香玉&陈金鑫.</h2>
+</div>
+</header><ol class=social-menu>
+<li>
+<a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+</a>
+</li>
+<li>
+<a href=https://twitter.com target=_blank title=Twitter><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg>
+</a>
+</li>
+</ol><ol class=menu id=main-menu>
+<li>
+<a href=/blog/blog/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span>
+</a>
+</li>
+<li>
+<a href=/blog/blog/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span>
+</a>
+</li>
+<li>
+<a href=/blog/blog/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span>
+</a>
+</li>
+<li>
+<a href=/blog/blog/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span>
+</a>
+</li>
+<li>
+<a href=/blog/blog/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span>
+</a>
+</li>
+<div class=menu-bottom-section>
+<li id=i18n-switch><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://mkbooks.github.io/blog/en/>English</option><option value=https://mkbooks.github.io/blog/ selected>中文</option></select>
+</li>
+<li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span>
+</li>
+</div>
+</ol>
+</aside>
+<main class="main full-width">
+<article class=main-article>
+<header class=article-header>
+<div class=article-details>
+<header class=article-category>
+<a href=/blog/categories/git/>
+git
+</a>
+</header>
+<div class=article-title-wrapper>
+<h2 class=article-title>
+<a href=/blog/p/error-merge/>error merge</a>
+</h2>
+<h3 class=article-subtitle>
+merge了错误的分支，之后还有 commit
+</h3>
+</div>
+<footer class=article-time>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Nov 08, 2022</time>
+</div>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>
+阅读时长: 6 分钟
+</time>
+</div>
+</footer>
+</div>
+</header>
+<section class=article-content>
+<h1 id=测试准备>测试准备</h1>
+<h2 id=初始化仓库>初始化仓库</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>➜  ~ mkdir git-test
+➜  ~ cd git-test/
+➜  git-test git init 
+已初始化空的 Git 仓库于 /home/cjx/git-test/.git/
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=初始化文件>初始化文件</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>➜  git-test git:(master) echo master &gt; 1.txt
+➜  git-test git:(master) ✗ echo master &gt; 2.txt
+➜  git-test git:(master) ✗ echo master &gt; 3.txt
+➜  git-test git:(master) ✗ echo master &gt; 4.txt
+➜  git-test git:(master) ✗ git add .    
+➜  git-test git:(master) ✗ git commit -m&#39;master: commit&#39;
+[master （根提交） 6b0a805] master: commit
+ 4 files changed, 4 insertions(+)
+ create mode 100644 1.txt
+ create mode 100644 2.txt
+ create mode 100644 3.txt
+ create mode 100644 4.txt
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=新建分支>新建分支</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback> ➜  git-test git:(master) git checkout -b branch-a      
+切换到一个新分支 &#39;branch-a&#39;
+➜  git-test git:(branch-a) echo branch-a &gt; 5.txt
+➜  git-test git:(branch-a) ✗ rm 1.txt 
+➜  git-test git:(branch-a) ✗ echo branch-a &gt; 2.txt 
+➜  git-test git:(branch-a) ✗ git add .    
+➜  git-test git:(branch-a) ✗ git commit -m&#39;branch-a: commit&#39;
+
+➜  git-test git:(branch-a) ll 
+总用量 16K
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:45 2.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:45 3.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:37 4.txt
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:45 5.txt
+➜  git-test git:(branch-a) cat 2.txt  
+branch-a
+➜  git-test git:(branch-a) cat 3.txt  
+master
+➜  git-test git:(branch-a) cat 4.txt  
+master
+➜  git-test git:(branch-a) cat 5.txt  
+branch-a
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=修改-master-分支>修改 master 分支</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>➜  git-test git:(branch-a) git checkout master 
+切换到分支 &#39;master&#39;
+➜  git-test git:(master) echo master &gt; 5.txt 
+➜  git-test git:(master) ✗ rm 3.txt 
+➜  git-test git:(master) ✗ echo master-2 &gt; 2.txt 
+➜  git-test git:(master) ✗ ll 
+总用量 16K
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:43 1.txt
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:43 2.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:37 4.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:43 5.txt
+➜  git-test git:(master) ✗ cat 1.txt
+master
+➜  git-test git:(master) ✗ cat 2.txt  
+master-2
+➜  git-test git:(master) ✗ cat 4.txt  
+master
+➜  git-test git:(master) ✗ cat 5.txt  
+master
+➜  git-test git:(master) ✗ git add .    
+➜  git-test git:(master) ✗ git commit -m&#39;master: commit -2&#39;
+[master c43e460] master: commit -2
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ rename 3.txt =&gt; 5.txt (100%)
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=错误的-merge>错误的 merge</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>➜  git-test git:(master) git checkout branch-a 
+切换到分支 &#39;branch-a&#39;
+➜  git-test git:(branch-a) git merge master 
+冲突（重命名/添加）：在 master 中重命名 3.txt-&gt;5.txt。在 HEAD 中添加 5.txt
+自动合并 5.txt
+自动合并 2.txt
+冲突（内容）：合并冲突于 2.txt
+自动合并失败，修正冲突然后提交修正的结果。
+➜  git-test git:(branch-a) ✗ vim 2.txt
+➜  git-test git:(branch-a) ✗ ll 
+总用量 12K
+-rw-rw-r-- 1 cjx cjx  9 11月 10 22:47 2.txt
+-rw-rw-r-- 1 cjx cjx  7 11月 10 22:37 4.txt
+-rw-rw-r-- 1 cjx cjx 52 11月 10 22:46 5.txt
+➜  git-test git:(branch-a) ✗ cat 2.txt  
+branch-a
+➜  git-test git:(branch-a) ✗ cat 4.txt  
+master
+➜  git-test git:(branch-a) ✗ cat 5.txt  
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+branch-a
+=======
+master
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; master
+➜  git-test git:(branch-a) ✗ vim 5.txt
+➜  git-test git:(branch-a) ✗ cat 5.txt  
+branch-a
+
+➜  git-test git:(branch-a) ✗ git add .    
+➜  git-test git:(branch-a) ✗ git commit
+[branch-a 89c0c25] Merge branch &#39;master&#39; into branch-a
+➜  git-test git:(branch-a) git status 
+位于分支 branch-a
+无文件要提交，干净的工作区
+
+➜  git-test git:(branch-a) ll 
+总用量 12K
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:47 2.txt
+-rw-rw-r-- 1 cjx cjx 7 11月 10 22:37 4.txt
+-rw-rw-r-- 1 cjx cjx 9 11月 10 22:48 5.txt
+➜  git-test git:(branch-a) cat 2.txt
+branch-a
+➜  git-test git:(branch-a) cat 4.txt  
+master
+➜  git-test git:(branch-a) cat 5.txt  
+branch-a
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=正常提交>正常提交</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>➜  git-test git:(branch-a) echo branch-a &gt; 6.txt
+➜  git-test git:(branch-a) ✗ rm 4.txt
+➜  git-test git:(branch-a) ✗ echo branch-a-2 &gt; 5.txt   
+➜  git-test git:(branch-a) ✗ ll 
+总用量 12K
+-rw-rw-r-- 1 cjx cjx  9 11月 10 22:47 2.txt
+-rw-rw-r-- 1 cjx cjx 11 11月 10 22:52 5.txt
+-rw-rw-r-- 1 cjx cjx  9 11月 10 22:51 6.txt
+➜  git-test git:(branch-a) ✗ cat 2.txt
+branch-a
+➜  git-test git:(branch-a) ✗ cat 5.txt
+branch-a-2
+➜  git-test git:(branch-a) ✗ cat 6.txt
+branch-a
+➜  git-test git:(branch-a) ✗ git status  
+位于分支 branch-a
+尚未暂存以备提交的变更：
+  （使用 &#34;git add/rm &lt;文件&gt;...&#34; 更新要提交的内容）
+  （使用 &#34;git restore &lt;文件&gt;...&#34; 丢弃工作区的改动）
+        删除：     4.txt
+        修改：     5.txt
+
+未跟踪的文件:
+  （使用 &#34;git add &lt;文件&gt;...&#34; 以包含要提交的内容）
+        6.txt
+
+修改尚未加入提交（使用 &#34;git add&#34; 和/或 &#34;git commit -a&#34;）
+➜  git-test git:(branch-a) ✗ git add .    
+➜  git-test git:(branch-a) ✗ git commit -m&#39;branch-a: commit-2&#39;
+[branch-a 6d7ee80] branch-a: commit-2
+ 3 files changed, 2 insertions(+), 2 deletions(-)
+ delete mode 100644 4.txt
+ create mode 100644 6.txt
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=查看-log>查看 log</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>commit 6d7ee8056cbac6443d07791ccff9231bffb8e73e (HEAD -&gt; branch-a)
+Author: cjx &lt;1067446576@qq.com&gt;
+Date:   Thu Nov 10 22:52:50 2022 +0800
+
+    branch-a: commit-2
+
+commit 89c0c259852b912c2fbbcd5c3c7f49157203dc91
+Merge: 310f23a c43e460
+Author: cjx &lt;1067446576@qq.com&gt;
+Date:   Thu Nov 10 22:50:01 2022 +0800
+
+    Merge branch &#39;master&#39; into branch-a
+
+commit c43e460cf928e79b5e209a63eb211f99ef2702c7 (master)
+Author: cjx &lt;1067446576@qq.com&gt;
+Date:   Thu Nov 10 22:45:26 2022 +0800
+
+    master: commit -2
+
+commit 310f23a070195b57e245ccbfc67f8a6226154568
+Author: cjx &lt;1067446576@qq.com&gt;
+Date:   Thu Nov 10 22:42:41 2022 +0800
+
+    branch-a: commit
+
+commit b1bf9ae33762d9b7a15eeee2c8b088a13e48ee75
+Author: cjx &lt;1067446576@qq.com&gt;
+Date:   Thu Nov 10 22:40:12 2022 +0800
+
+    branch-a: commit
+
+commit 6b0a805936af34e903f9ebf003f5c729ff6afb12
+Author: cjx &lt;1067446576@qq.com&gt;
+Date:   Thu Nov 10 22:38:21 2022 +0800
+
+    master: commit
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=消除-merge-操作>消除 merge 操作</h2>
+<h3 id=方法一>方法一</h3>
+<ol>
+<li>首先 <code>git log</code> 查看提交记录，找到出错的前一笔提交的 commit_id: <code>310f23a070195b57e245ccbfc67f8a6226154568</code></li>
+<li>用命令 <code>git rebase -i commit_id</code>，查找提交记录</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>➜  git-test git:(branch-a) git rebase -i 310f23a070195b57e245ccbfc67f8a6226154568
+</code></pre></td></tr></table>
+</div>
+</div><ol start=3>
+<li>将出错那笔提交的 pick 改为 drop</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>  GNU nano 4.8                                                       /home/cjx/git-test/.git/rebase-merge/git-rebase-todo                                                        已更改  
+drop c43e460 master: commit -2
+pick 6d7ee80 branch-a: commit-2
+
+# 变基 310f23a..6d7ee80 到 310f23a（2 个提交）
+#
+# 命令:
+# p, pick &lt;提交&gt; = 使用提交
+# r, reword &lt;提交&gt; = 使用提交，但修改提交说明
+# e, edit &lt;提交&gt; = 使用提交，进入 shell 以便进行提交修补
+# s, squash &lt;提交&gt; = 使用提交，但融合到前一个提交
+# f, fixup &lt;提交&gt; = 类似于 &#34;squash&#34;，但丢弃提交说明日志
+# x, exec &lt;命令&gt; = 使用 shell 运行命令（此行剩余部分）
+# b, break = 在此处停止（使用 &#39;git rebase --continue&#39; 继续变基）
+# d, drop &lt;提交&gt; = 删除提交
+# l, label &lt;label&gt; = 为当前 HEAD 打上标记
+# t, reset &lt;label&gt; = 重置 HEAD 到该标记
+# m, merge [-C &lt;commit&gt; | -c &lt;commit&gt;] &lt;label&gt; [# &lt;oneline&gt;]
+# .       创建一个合并提交，并使用原始的合并提交说明（如果没有指定
+# .       原始提交，使用注释部分的 oneline 作为提交说明）。使用
+# .       -c &lt;提交&gt; 可以编辑提交说明。
+#
+# 可以对这些行重新排序，将从上至下执行。
+#
+# 如果您在这里删除一行，对应的提交将会丢失。
+#
+# 然而，如果您删除全部内容，变基操作将会终止。
+#
+# 注意空提交已被注释掉
+</code></pre></td></tr></table>
+</div>
+</div><ol start=4>
+<li>保存修改</li>
+</ol>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>Successfully rebased and updated refs/heads/branch-a.
+</code></pre></td></tr></table>
+</div>
+</div><p>查看状态</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>➜  git-test git:(branch-a) git status  
+位于分支 branch-a
+无文件要提交，干净的工作区
+➜  git-test git:(branch-a) ll 
+总用量 16K
+-rw-rw-r-- 1 cjx cjx  9 11月 10 22:47 2.txt
+-rw-rw-r-- 1 cjx cjx  7 11月 10 23:01 3.txt
+-rw-rw-r-- 1 cjx cjx 11 11月 10 23:01 5.txt
+-rw-rw-r-- 1 cjx cjx  9 11月 10 23:01 6.txt
+➜  git-test git:(branch-a) cat 2.txt
+branch-a
+➜  git-test git:(branch-a) cat 3.txt  
+master
+➜  git-test git:(branch-a) cat 5.txt
+branch-a-2
+➜  git-test git:(branch-a) cat 6.txt
+branch-a
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=方法二>方法二</h3>
+<h3 id=方法三>方法三</h3>
+</section>
+<footer class=article-footer>
+<section class=article-tags>
+<a href=/blog/tags/git/>git</a>
+</section>
+<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span>
+</section>
+</footer>
+</article>
+<aside class=related-content--wrapper>
+<h2 class=section-title>相关文章</h2>
+<div class=related-content>
+<div class="flex article-list--tile">
+<article>
+<a href=/blog/p/git-%E9%97%AE%E9%A2%98/>
+<div class=article-details>
+<h2 class=article-title>git 问题</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/blog/p/git-http%E6%96%B9%E5%BC%8F%E5%85%8D%E5%AF%86%E6%8F%90%E4%BA%A4/>
+<div class=article-details>
+<h2 class=article-title>git http方式免密提交</h2>
+</div>
+</a>
+</article>
+</div>
+</div>
+</aside>
+<div class=disqus-container>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//hugo-theme-stack.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+<style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style>
+<script>window.addEventListener('onColorSchemeChange',a=>{typeof DISQUS=='object'&&DISQUS.reset({reload:!0})})</script>
+<footer class=site-footer>
+<section class=copyright>
+&copy;
+2020 -
+2022 我的空间
+</section>
+<section class=powerby>
+Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
+主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.13.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计
+<br><a href=https://beian.miit.gov.cn/ target=_blank>粤ICP备19123935号</a>
+</section>
+</footer>
+<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
+<div class=pswp__bg></div>
+<div class=pswp__scroll-wrap>
+<div class=pswp__container>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class=pswp__top-bar>
+<div class=pswp__counter></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class=pswp__preloader>
+<div class=pswp__preloader__icn>
+<div class=pswp__preloader__cut>
+<div class=pswp__preloader__donut></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class=pswp__share-tooltip></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class=pswp__caption>
+<div class=pswp__caption__center></div>
+</div>
+</div>
+</div>
+</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous>
+</main>
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
+</div>
+<h2 class="widget-title section-title">目录</h2>
+<div class=widget--toc>
+<nav id=TableOfContents>
+<ol>
+<li><a href=#初始化仓库>初始化仓库</a></li>
+<li><a href=#初始化文件>初始化文件</a></li>
+<li><a href=#新建分支>新建分支</a></li>
+<li><a href=#修改-master-分支>修改 master 分支</a></li>
+<li><a href=#错误的-merge>错误的 merge</a></li>
+<li><a href=#正常提交>正常提交</a></li>
+<li><a href=#查看-log>查看 log</a></li>
+<li><a href=#消除-merge-操作>消除 merge 操作</a>
+<ol>
+<li><a href=#方法一>方法一</a></li>
+<li><a href=#方法二>方法二</a></li>
+<li><a href=#方法三>方法三</a></li>
+</ol>
+</li>
+</ol>
+</nav>
+</div>
+</section>
+</aside>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/blog/ts/main.js defer></script>
+<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
+</body>
+</html>
