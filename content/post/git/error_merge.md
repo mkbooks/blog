@@ -44,6 +44,10 @@ categories : [              # 文章所属标签
 ➜  git-test git:(branch-a) ✗ echo branch-a > 2.txt 
 ➜  git-test git:(branch-a) ✗ git add .    
 ➜  git-test git:(branch-a) ✗ git commit -m'branch-a: commit'
+[branch-a 4317d1b] branch-a: commit
+ 3 files changed, 2 insertions(+), 2 deletions(-)
+ delete mode 100644 1.txt
+ create mode 100644 5.txt
 
 ➜  git-test git:(branch-a) ll 
 总用量 16K
@@ -172,7 +176,9 @@ branch-a
  delete mode 100644 4.txt
  create mode 100644 6.txt
 ```
-## 查看 log
+## 消除 merge 操作
+### 方法一
+1. 首先 `git log` 查看提交记录，找到出错的前一笔提交的 commit_id: `310f23a070195b57e245ccbfc67f8a6226154568`
 ```
 commit 6d7ee8056cbac6443d07791ccff9231bffb8e73e (HEAD -> branch-a)
 Author: cjx <1067446576@qq.com>
@@ -211,9 +217,6 @@ Date:   Thu Nov 10 22:38:21 2022 +0800
 
     master: commit
 ```
-## 消除 merge 操作
-### 方法一
-1. 首先 `git log` 查看提交记录，找到出错的前一笔提交的 commit_id: `310f23a070195b57e245ccbfc67f8a6226154568`
 2. 用命令 `git rebase -i commit_id`，查找提交记录
 ```
 ➜  git-test git:(branch-a) git rebase -i 310f23a070195b57e245ccbfc67f8a6226154568
@@ -275,5 +278,175 @@ branch-a-2
 branch-a
 ```
 ### 方法二
+1. 首先 `git log` 查看提交记录，找到出错的前一笔提交的 commit_id: `b2cf7c92a2aec2dcbb60375a98956ebab77d4c7c`
+```
+commit 400d064b55cd378e3fa277a1d9f33b709e784d00 (HEAD -> branch-a)
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:13:43 2022 +0800
 
+    branch-a: commit-2
+
+commit 4b0a8fd90aebe5356915febb508dd7b0accde9a3
+Merge: b2cf7c9 fb7a14a
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:12:34 2022 +0800
+
+    Merge branch 'master' into branch-a
+
+commit fb7a14aabbc9a2431ccf591c247661d49b1e5ef9 (master)
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:11:08 2022 +0800
+
+    master: commit -2
+
+commit b2cf7c92a2aec2dcbb60375a98956ebab77d4c7c
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:09:49 2022 +0800
+
+    branch-a: commit
+
+commit 74fe787600665ce709fc1fc62c7f616015f628fb
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:09:12 2022 +0800
+
+    master: commit
+```
+2. `git reset --hard 回退到出错版本前一个commit`
+```
+➜  git-test git:(branch-a) git reset --hard b2cf7c92a2aec2dcbb60375a98956ebab77d4c7c  
+HEAD 现在位于 b2cf7c9 branch-a: commit
+```
+3. `git cherry-pick 626335 #将某次commit的更改应用到当前版本(将出错 cmmit 之后别人提交的代码合并到当前正常代码分支上)`
+```
+➜  git-test git:(branch-a) git cherry-pick 400d064b55cd378e3fa277a1d9f33b709e784d00 
+删除 4.txt
+[branch-a 6e82565] branch-a: commit-2
+ Date: Thu Nov 10 23:13:43 2022 +0800
+ 3 files changed, 2 insertions(+), 2 deletions(-)
+ delete mode 100644 4.txt
+ create mode 100644 6.txt
+ ```
+4. 查看状态
+```
+➜  git-test git:(branch-a) git status 
+位于分支 branch-a
+无文件要提交，干净的工作区
+➜  git-test git:(branch-a) ll 
+总用量 16K
+-rw-rw-r-- 1 cjx cjx  9 11月 10 23:11 2.txt
+-rw-rw-r-- 1 cjx cjx  7 11月 10 23:19 3.txt
+-rw-rw-r-- 1 cjx cjx 11 11月 10 23:20 5.txt
+-rw-rw-r-- 1 cjx cjx  9 11月 10 23:20 6.txt
+➜  git-test git:(branch-a) cat 2.txt
+branch-a
+➜  git-test git:(branch-a) cat 3.txt
+master
+➜  git-test git:(branch-a) cat 5.txt
+branch-a-2
+➜  git-test git:(branch-a) cat 6.txt
+branch-a
+```
 ### 方法三
+1. 首先 `git log` 查看提交记录，找到要撤销提交的 commit_id: `8c3a09c15a589e98449891f97de0192f351fe63c`
+```
+commit f5f80b21580443b191b3cc79a128e8334deca490 (HEAD -> branch-a)
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:26:49 2022 +0800
+
+    branch-a: commit-2
+
+commit 8c3a09c15a589e98449891f97de0192f351fe63c
+Merge: 4317d1b 72ef326
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:25:47 2022 +0800
+
+    Merge branch 'master' into branch-a
+
+commit 72ef326d304e9e78fb29137fd175329716bac68a (master)
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:25:01 2022 +0800
+
+    master: commit -2
+
+commit 4317d1bddc2bc02cf6155b9ac469a472a1b20eee
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:23:37 2022 +0800
+
+    branch-a: commit
+
+commit 2f344da767fc6334a3e73ade666d281bffc3a366
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:23:07 2022 +0800
+
+    master: commit
+```
+2. `git revert 8c3a09c15a589e98449891f97de0192f351fe63c -m 1`
+参数 -m 就是指定要撤销的那个提价，从左往右，从 1 开始数；也就是我撤销的是 72ef326d304e9e78fb29137fd175329716bac68a
+
+接着其把代码冲突，然后我就解决冲突，保留主分支的代码，去掉那个人的代码。
+```
+➜  git-test git:(branch-a) git revert 8c3a09c15a589e98449891f97de0192f351fe63c -m 1 
+[branch-a 95521f3] Revert "Merge branch 'master' into branch-a"
+ 1 file changed, 1 insertion(+)
+ create mode 100644 3.txt
+```
+3. 查看状态
+```
+➜  git-test git:(branch-a) git status 
+位于分支 branch-a
+无文件要提交，干净的工作区
+➜  git-test git:(branch-a) ll 
+总用量 16K
+-rw-rw-r-- 1 cjx cjx  9 11月 10 23:11 2.txt
+-rw-rw-r-- 1 cjx cjx  7 11月 10 23:19 3.txt
+-rw-rw-r-- 1 cjx cjx 11 11月 10 23:20 5.txt
+-rw-rw-r-- 1 cjx cjx  9 11月 10 23:20 6.txt
+➜  git-test git:(branch-a) cat 2.txt
+branch-a
+➜  git-test git:(branch-a) cat 3.txt
+master
+➜  git-test git:(branch-a) cat 5.txt
+branch-a-2
+➜  git-test git:(branch-a) cat 6.txt
+branch-a
+```
+`git log`
+```
+commit 95521f3a60269bbfb172d419d97366f8a23e0316 (HEAD -> branch-a)
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:29:06 2022 +0800
+
+    Revert "Merge branch 'master' into branch-a"
+    
+    This reverts commit 8c3a09c15a589e98449891f97de0192f351fe63c, reversing
+    changes made to 4317d1bddc2bc02cf6155b9ac469a472a1b20eee.
+
+commit f5f80b21580443b191b3cc79a128e8334deca490
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:26:49 2022 +0800
+
+    branch-a: commit-2
+
+commit 8c3a09c15a589e98449891f97de0192f351fe63c
+Merge: 4317d1b 72ef326
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:25:47 2022 +0800
+
+    Merge branch 'master' into branch-a
+
+commit 72ef326d304e9e78fb29137fd175329716bac68a (master)
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:25:01 2022 +0800
+
+    master: commit -2
+
+commit 4317d1bddc2bc02cf6155b9ac469a472a1b20eee
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:23:37 2022 +0800
+
+    branch-a: commit
+
+commit 2f344da767fc6334a3e73ade666d281bffc3a366
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:23:07 2022 +0800
+```
