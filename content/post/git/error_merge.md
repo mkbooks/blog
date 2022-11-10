@@ -27,8 +27,8 @@ categories : [              # 文章所属标签
 ➜  git-test git:(master) ✗ echo master > 3.txt
 ➜  git-test git:(master) ✗ echo master > 4.txt
 ➜  git-test git:(master) ✗ git add .    
-➜  git-test git:(master) ✗ git commit -m'master: commit'
-[master （根提交） 6b0a805] master: commit
+➜  git-test git:(master) ✗  git commit -m'master: commit'
+[master （根提交） 9a14d41] master: commit
  4 files changed, 4 insertions(+)
  create mode 100644 1.txt
  create mode 100644 2.txt
@@ -40,11 +40,11 @@ categories : [              # 文章所属标签
  ➜  git-test git:(master) git checkout -b branch-a      
 切换到一个新分支 'branch-a'
 ➜  git-test git:(branch-a) echo branch-a > 5.txt
-➜  git-test git:(branch-a) ✗ rm 1.txt 
-➜  git-test git:(branch-a) ✗ echo branch-a > 2.txt 
-➜  git-test git:(branch-a) ✗ git add .    
+➜  git-test git:(branch-a) ✗ rm 1.txt  
+➜  git-test git:(branch-a) ✗ echo branch-a > 2.txt  
+➜  git-test git:(branch-a) ✗ git add .
 ➜  git-test git:(branch-a) ✗ git commit -m'branch-a: commit'
-[branch-a 4317d1b] branch-a: commit
+[branch-a 1c2ae82] branch-a: commit
  3 files changed, 2 insertions(+), 2 deletions(-)
  delete mode 100644 1.txt
  create mode 100644 5.txt
@@ -178,54 +178,48 @@ branch-a
 ```
 ## 消除 merge 操作
 ### 方法一
-1. 首先 `git log` 查看提交记录，找到出错的前一笔提交的 commit_id: `310f23a070195b57e245ccbfc67f8a6226154568`
+1. 首先 `git log` 查看提交记录，找到出错的前一笔提交的 commit_id: `1c2ae824d8b9e2a7870345654c90c1d6cd72f0bf`
 ```
-commit 6d7ee8056cbac6443d07791ccff9231bffb8e73e (HEAD -> branch-a)
+commit 67d371b5e4c11e57709c22a03e23eed92856c986 (HEAD -> branch-a)
 Author: cjx <1067446576@qq.com>
-Date:   Thu Nov 10 22:52:50 2022 +0800
+Date:   Thu Nov 10 23:38:45 2022 +0800
 
     branch-a: commit-2
 
-commit 89c0c259852b912c2fbbcd5c3c7f49157203dc91
-Merge: 310f23a c43e460
+commit 60d5af4cd95166bdb8c7fba3787c93ec2c75f012
+Merge: 1c2ae82 1869c6f
 Author: cjx <1067446576@qq.com>
-Date:   Thu Nov 10 22:50:01 2022 +0800
+Date:   Thu Nov 10 23:37:55 2022 +0800
 
     Merge branch 'master' into branch-a
 
-commit c43e460cf928e79b5e209a63eb211f99ef2702c7 (master)
+commit 1869c6f758fe8b6a001fa13444aa6b1881fb48a9 (master)
 Author: cjx <1067446576@qq.com>
-Date:   Thu Nov 10 22:45:26 2022 +0800
+Date:   Thu Nov 10 23:37:01 2022 +0800
 
     master: commit -2
 
-commit 310f23a070195b57e245ccbfc67f8a6226154568
+commit 1c2ae824d8b9e2a7870345654c90c1d6cd72f0bf
 Author: cjx <1067446576@qq.com>
-Date:   Thu Nov 10 22:42:41 2022 +0800
+Date:   Thu Nov 10 23:35:31 2022 +0800
 
     branch-a: commit
 
-commit b1bf9ae33762d9b7a15eeee2c8b088a13e48ee75
+commit 9a14d41905fc3283137dd582df816de8d5578445
 Author: cjx <1067446576@qq.com>
-Date:   Thu Nov 10 22:40:12 2022 +0800
-
-    branch-a: commit
-
-commit 6b0a805936af34e903f9ebf003f5c729ff6afb12
-Author: cjx <1067446576@qq.com>
-Date:   Thu Nov 10 22:38:21 2022 +0800
+Date:   Thu Nov 10 23:34:48 2022 +0800
 
     master: commit
 ```
 2. 用命令 `git rebase -i commit_id`，查找提交记录
 ```
-➜  git-test git:(branch-a) git rebase -i 310f23a070195b57e245ccbfc67f8a6226154568
+➜  git-test git:(branch-a) git rebase -i 1c2ae824d8b9e2a7870345654c90c1d6cd72f0bf
 ```
 3. 将出错那笔提交的 pick 改为 drop
 ```
   GNU nano 4.8                                                       /home/cjx/git-test/.git/rebase-merge/git-rebase-todo                                                        已更改  
-drop c43e460 master: commit -2
-pick 6d7ee80 branch-a: commit-2
+drop 1869c6f master: commit -2
+pick 67d371b branch-a: commit-2
 
 # 变基 310f23a..6d7ee80 到 310f23a（2 个提交）
 #
@@ -276,6 +270,26 @@ master
 branch-a-2
 ➜  git-test git:(branch-a) cat 6.txt
 branch-a
+```
+`git log`
+```
+commit 7639dc395eb07aa01909a2e4fca686a25a58e107 (HEAD -> branch-a)
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:38:45 2022 +0800
+
+    branch-a: commit-2
+
+commit 1c2ae824d8b9e2a7870345654c90c1d6cd72f0bf
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:35:31 2022 +0800
+
+    branch-a: commit
+
+commit 9a14d41905fc3283137dd582df816de8d5578445
+Author: cjx <1067446576@qq.com>
+Date:   Thu Nov 10 23:34:48 2022 +0800
+
+    master: commit
 ```
 ### 方法二
 1. 首先 `git log` 查看提交记录，找到出错的前一笔提交的 commit_id: `b2cf7c92a2aec2dcbb60375a98956ebab77d4c7c`
