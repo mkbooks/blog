@@ -37,7 +37,7 @@ params:
         - post
     featuredImageField: image
     rssFullContent: true
-    favicon:
+    favicon: https://chenjinxin.cn/images/favicon.png
 
     footer:
         since: 2020
