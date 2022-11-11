@@ -1,4 +1,29 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我的空间</title><link>https://mkbooks.github.io/blog/post/</link><description>Recent content in Posts on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 11 Nov 2022 21:53:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/post/index.xml" rel="self" type="application/rss+xml"/><item><title>图片服务器</title><link>https://mkbooks.github.io/blog/p/%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8/</link><pubDate>Fri, 11 Nov 2022 21:53:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid><description>&lt;p>参考: &lt;a class="link" href="https://www.jianshu.com/p/a49eaabef205" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on 我的空间</title><link>https://mkbooks.github.io/blog/post/</link><description>Recent content in Posts on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 11 Nov 2022 22:24:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/post/index.xml" rel="self" type="application/rss+xml"/><item><title>设置 favicon 图标</title><link>https://mkbooks.github.io/blog/p/%E8%AE%BE%E7%BD%AE-favicon-%E5%9B%BE%E6%A0%87/</link><pubDate>Fri, 11 Nov 2022 22:24:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E8%AE%BE%E7%BD%AE-favicon-%E5%9B%BE%E6%A0%87/</guid><description>&lt;ol>
+&lt;li>修改 config.yaml&lt;/li>
+&lt;/ol>
+&lt;p>添加 favicon 的值，这里使用网络图片&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">params:
+mainSections:
+- post
+featuredImageField: image
+rssFullContent: true
+favicon: https://chenjinxin.cn/images/favicon.png
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="2">
+&lt;li>测试&lt;/li>
+&lt;/ol>
+&lt;p>访问博客&lt;/p></description></item><item><title>图片服务器</title><link>https://mkbooks.github.io/blog/p/%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8/</link><pubDate>Fri, 11 Nov 2022 21:53:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8/</guid><description>&lt;p>参考: &lt;a class="link" href="https://www.jianshu.com/p/a49eaabef205" target="_blank" rel="noopener"
 >https://www.jianshu.com/p/a49eaabef205&lt;/a>&lt;/p>
 &lt;ol>
 &lt;li>用 vi 编辑器打开 nginx 配置文件&lt;/li>
