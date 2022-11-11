@@ -1,14 +1,14 @@
 <!doctype html><html lang=en-us dir=ltr>
 <head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="网络学习"><title>网络学习-0001</title>
-<link rel=canonical href=https://mkbooks.github.io/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>
-<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="网络学习-0001">
-<meta property="og:description" content="网络学习">
-<meta property="og:url" content="https://mkbooks.github.io/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/">
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="在 Linux 系统中使用 Nginx 创建图片服务器"><title>图片服务器</title>
+<link rel=canonical href=https://mkbooks.github.io/blog/p/%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8/>
+<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="图片服务器">
+<meta property="og:description" content="在 Linux 系统中使用 Nginx 创建图片服务器">
+<meta property="og:url" content="https://mkbooks.github.io/blog/p/%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8/">
 <meta property="og:site_name" content="我的空间">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Linux"><meta property="article:tag" content="网络"><meta property="article:published_time" content="2022-08-28T16:38:18+08:00"><meta property="article:modified_time" content="2022-08-28T00:00:00+00:00">
-<meta name=twitter:title content="网络学习-0001">
-<meta name=twitter:description content="网络学习">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="图片"><meta property="article:published_time" content="2022-11-11T21:53:00+08:00"><meta property="article:modified_time" content="2022-11-11T21:53:00+08:00">
+<meta name=twitter:title content="图片服务器">
+<meta name=twitter:description content="在 Linux 系统中使用 Nginx 创建图片服务器">
 <link rel="shortcut icon" href=https://chenjinxin.cn/images/favicon.png>
 </head>
 <body class=article-page>
@@ -80,21 +80,21 @@
 <header class=article-header>
 <div class=article-details>
 <header class=article-category>
-<a href=/blog/categories/%E7%BD%91%E7%BB%9C/>
-网络
+<a href=/blog/categories/%E5%9B%BE%E7%89%87/>
+图片
 </a>
 </header>
 <div class=article-title-wrapper>
 <h2 class=article-title>
-<a href=/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>网络学习-0001</a>
+<a href=/blog/p/%E5%9B%BE%E7%89%87%E6%9C%8D%E5%8A%A1%E5%99%A8/>图片服务器</a>
 </h2>
 <h3 class=article-subtitle>
-网络学习
+在 Linux 系统中使用 Nginx 创建图片服务器
 </h3>
 </div>
 <footer class=article-time>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Aug 28, 2022</time>
+<time class=article-time--published>Nov 11, 2022</time>
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
@@ -105,23 +105,12 @@
 </div>
 </header>
 <section class=article-content>
-<h1 id=1-使两台机器通过交换机连通>1. 使两台机器通过交换机连通</h1>
-<p>1.1 网络结构：</p>
-<p><img src=/blog/0001.png loading=lazy alt=网络拓扑-0001></p>
-<p>1.2 网络现状：机器一和机器二不通。</p>
-<p>1.3 原因分析：当前两台机器都是自动获取IP模式，但是交换机不分配IP。</p>
-<p>1.4 目标：机器一和机器二连通。</p>
-<p>1.5 操作：</p>
-<p>给机器一设置 IP 和子网掩码(不设置网关)：</p>
-<ul>
-<li>address: 192.168.0.10</li>
-<li>netmask: 255.255.255.0</li>
-</ul>
-<p>给机器二设置 IP 和子网掩码(不设置网关)：</p>
-<ul>
-<li>address: 192.168.0.11</li>
-<li>netmask: 255.255.255.0</li>
-</ul>
+<p>参考: <a class=link href=https://www.jianshu.com/p/a49eaabef205 target=_blank rel=noopener>https://www.jianshu.com/p/a49eaabef205</a></p>
+<ol>
+<li>用 vi 编辑器打开 nginx 配置文件</li>
+</ol>
+<p><code>vi /etc/nginx/nginx.conf</code></p>
+<p>添加</p>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
@@ -129,148 +118,113 @@
 </span><span class=lnt>3
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 临时修改
-# ifconfig 网卡名称 IP地址 netmask 子网掩码
-sudo ifconfig eno2 192.168.0.11 netmask 255.255.255.0
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>                location /images {
+                        root /home/sammy/data/;
+                        autoindex on;
 </code></pre></td></tr></table>
 </div>
-</div><p>1.6 测试连通:</p>
+</div><p>添加后如下</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>http {
+        ......
+                server {
+        listen  443 ssl;
+                ssl_certificate /usr/share/nginx/chenjinxin.cn_bundle.crt;
+                ssl_certificate_key /usr/share/nginx/chenjinxin.cn.key;
+                ssl_session_timeout 5m;
+                #请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。
+                ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+                #请按照以下协议配置
+                ssl_protocols TLSv1.2 TLSv1.3;
+                ssl_prefer_server_ciphers on;
+                server_name chenjinxin.cn www.chenjinxin.cn;
+                location / {
+                        root /home/sammy/cjx_blog/public;
+                }
+                location /images {
+                        root /home/sammy/data/;
+                        autoindex on;
+           
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p><code>autoindex</code>是开启浏览功能
+再把首行的<code>user</code>设为<code>root</code>，配置文件访问权限</p>
+</blockquote>
+<p>编辑完成后保存退出，重启nginx</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo /usr/sbin/nginx -s reload
+</code></pre></td></tr></table>
+</div>
+</div><p>测试：</p>
+<ol>
+<li>向映射的路径 <code>/home/sammy/data/</code> 下放张图片</li>
+</ol>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 机器一
-ping 192.168.0.11
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sammy@VM-8-4-ubuntu:~/cjx_blog$ ll /home/sammy/data/images/
+total 100
+drwxrwxr-x 2 sammy sammy  4096 Nov 11 21:48 ./
+drwxrwxr-x 4 sammy sammy  4096 Nov 11 21:39 ../
+-rw-rw-r-- 1 sammy sammy 61250 Nov 11 21:39 1.jpg
 </code></pre></td></tr></table>
 </div>
-</div><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 机器二
-ping 192.168.0.10
-</code></pre></td></tr></table>
-</div>
-</div><p>测试连通成功</p>
-<h1 id=2-使机器一-1921680024-的网段可以跟机器二的-1921683024-的网段互通>2. 使机器一 192.168.0.0/24 的网段，可以跟机器二的 192.168.3.0/24 的网段互通</h1>
-<p>1.2 网络结构：</p>
-<p><img src=/blog/0002.png loading=lazy alt=网络拓扑-0002></p>
-<p>1.2 网络现状：机器一和机器二 192.168.0.11 的 IP 互相连通，机器一和机器二 192.168.3.34 的 IP 互相不通。</p>
-<p>1.3 原因分析：两个网段不通。</p>
-<p>1.4 目标：使机器一 192.168.0.0/24 的网段，可以跟机器二的 192.168.3.0/24 的网段互通。</p>
-<p>1.5 操作：</p>
-<p>机器一</p>
+</div><ol start=2>
+<li>在浏览器访问</li>
+</ol>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo route add -net 192.168.3.0 netmask 255.255.255.0 gw 192.168.0.11
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>https://chenjinxin.cn/images/1.jpg
 </code></pre></td></tr></table>
 </div>
-</div><p>机器二</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -d 192.168.3.0/24 -o wlo1 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -d 192.168.0.0/24 -o eno2 -j MASQUERADE
-</code></pre></td></tr></table>
 </div>
-</div><p>机器三</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo route add -net 192.168.0.0 netmask 255.255.255.0 gw 192.168.3.34
-</code></pre></td></tr></table>
-</div>
-</div><p>1.6 测试连通:</p>
-<div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 机器一
-ping 192.168.3.102
-</code></pre></td></tr></table>
-</div>
-</div><div class=highlight><div class=chroma>
-<table class=lntable><tr><td class=lntd>
-<pre tabindex=0 class=chroma><code><span class=lnt>1
-</span><span class=lnt>2
-</span></code></pre></td>
-<td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 机器三
-ping 192.168.0.10
-</code></pre></td></tr></table>
-</div>
-</div><p>测试连通成功</p>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
-<a href=/blog/tags/linux/>Linux</a>
-<a href=/blog/tags/%E7%BD%91%E7%BB%9C/>网络</a>
+<a href=/blog/tags/%E5%9B%BE%E7%89%87/>图片</a>
 </section>
 <section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
 <span>Licensed under CC BY-NC-SA 4.0</span>
 </section>
-<section class=article-lastmod><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
-<span>
-最后更新于 Aug 28, 2022 00:00 UTC
-</span>
-</section></footer>
+</footer>
 </article>
-<aside class=related-content--wrapper>
-<h2 class=section-title>相关文章</h2>
-<div class=related-content>
-<div class="flex article-list--tile">
-<article>
-<a href=/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/>
-<div class=article-details>
-<h2 class=article-title>终端设置特定IP段走路由</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>
-<div class=article-details>
-<h2 class=article-title>网络学习-0001</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/blog/p/%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/>
-<div class=article-details>
-<h2 class=article-title>网络问题</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/blog/p/ip-netns-ling/>
-<div class=article-details>
-<h2 class=article-title>ip-netns-ling</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/blog/p/ip-netns/>
-<div class=article-details>
-<h2 class=article-title>ip-netns</h2>
-</div>
-</a>
-</article>
-</div>
-</div>
-</aside>
 <div class=disqus-container>
 <div id=disqus_thread></div>
 <script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//hugo-theme-stack.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
