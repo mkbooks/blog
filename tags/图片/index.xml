@@ -64,7 +64,7 @@ autoindex on;
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;blockquote>
-&lt;p>&lt;code>autoindex&lt;/code>是开启浏览功能
+&lt;p>&lt;code>autoindex&lt;/code>是开启浏览功能&lt;!-- raw HTML omitted -->
 再把首行的&lt;code>user&lt;/code>设为&lt;code>root&lt;/code>，配置文件访问权限&lt;/p>
 &lt;/blockquote>
 &lt;p>编辑完成后保存退出，重启nginx&lt;/p>
