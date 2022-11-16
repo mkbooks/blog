@@ -42,3 +42,4 @@ sudo exportfs -ra
 ```
 sudo exportfs -v
 ```
+查看 nfs 服务状态
