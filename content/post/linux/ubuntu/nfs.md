@@ -43,3 +43,6 @@ sudo exportfs -ra
 sudo exportfs -v
 ```
 查看 nfs 服务状态
+```
+sudo systemctl status nfs-kernel-server
+```
