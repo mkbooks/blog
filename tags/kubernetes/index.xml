@@ -1,3 +1,816 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on 我的空间</title><link>https://mkbooks.github.io/blog/tags/kubernetes/</link><description>Recent content in Kubernetes on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 18 Aug 2022 10:03:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 Kubernetes API 访问集群</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-kubernetes-api-%E8%AE%BF%E9%97%AE%E9%9B%86%E7%BE%A4/</link><pubDate>Thu, 18 Aug 2022 10:03:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-kubernetes-api-%E8%AE%BF%E9%97%AE%E9%9B%86%E7%BE%A4/</guid><description>&lt;p>转载: &lt;a class="link" href="https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/access-cluster-api/" target="_blank" rel="noopener"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on 我的空间</title><link>https://mkbooks.github.io/blog/tags/kubernetes/</link><description>Recent content in Kubernetes on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 16 Nov 2022 20:46:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 NFS 创建 StorageClass</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-nfs-%E5%88%9B%E5%BB%BA-storageclass/</link><pubDate>Wed, 16 Nov 2022 20:46:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-nfs-%E5%88%9B%E5%BB%BA-storageclass/</guid><description>&lt;p>参考: &lt;a class="link" href="https://github.com/kubernetes-retired/external-storage/tree/master/nfs-client" target="_blank" rel="noopener"
+>https://github.com/kubernetes-retired/external-storage/tree/master/nfs-client&lt;/a>&lt;/p>
+&lt;h1 id="创建目录">创建目录&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">mkdir -p ~/yamls/storageclass/nfs/test
+cd ~/yamls/storageclass/nfs
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="创建-yaml-文件">创建 yaml 文件&lt;/h1>
+&lt;ul>
+&lt;li>deployment.yaml&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># https://github.com/kubernetes-sigs/nfs-subdir-external-provisioner
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+name: nfs-client-provisioner
+labels:
+app: nfs-client-provisioner
+# replace with namespace where provisioner is deployed
+namespace: default # 与RBAC文件中的namespace保持一致
+spec:
+replicas: 1
+strategy:
+type: Recreate
+selector:
+matchLabels:
+app: nfs-client-provisioner
+template:
+metadata:
+labels:
+app: nfs-client-provisioner
+spec:
+serviceAccountName: nfs-client-provisioner
+containers:
+- name: nfs-client-provisioner
+# image: k8s.gcr.io/sig-storage/nfs-subdir-external-provisioner:v4.0.2
+image: quay.io/external_storage/nfs-client-provisioner:latest
+imagePullPolicy: IfNotPresent
+volumeMounts:
+- name: nfs-client-root
+mountPath: /persistentvolumes
+env:
+- name: PROVISIONER_NAME
+value: k8s-sigs.io/nfs-subdir-external-provisioner #provisioner名称,确保该名称与 class.yaml文件中的provisioner名称保持一致
+- name: NFS_SERVER
+value: MY_NFS_SERVER_HOST #NFS Server IP地址
+- name: NFS_PATH
+value: MY_NFS_SERVER_PATH #NFS挂载卷
+volumes:
+- name: nfs-client-root
+nfs:
+server: MY_NFS_SERVER_HOST #NFS Server IP地址
+path: MY_NFS_SERVER_PATH #NFS 挂载卷
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>class.yaml&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+name: managed-nfs-storage
+mountOptions:
+- noresvport
+# - vers=3
+provisioner: k8s-sigs.io/nfs-subdir-external-provisioner # or choose another name, must match deployment&amp;#39;s env PROVISIONER_NAME&amp;#39;
+parameters:
+pathPattern: MY_NFS_SERVER_PATH # waits for nfs.io/storage-path annotation, if not specified will accept as empty string.
+onDelete: delete
+archiveOnDelete: &amp;#34;false&amp;#34;
+# allowVolumeExpansion: true #增加该字段表示允许动态扩容，NFS 暂时不支持
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>rbac.yaml&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: v1
+kind: ServiceAccount
+metadata:
+name: nfs-client-provisioner
+# replace with namespace where provisioner is deployed
+namespace: default
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+name: nfs-client-provisioner-runner
+rules:
+- apiGroups: [&amp;#34;&amp;#34;]
+resources: [&amp;#34;nodes&amp;#34;]
+verbs: [&amp;#34;get&amp;#34;, &amp;#34;list&amp;#34;, &amp;#34;watch&amp;#34;]
+- apiGroups: [&amp;#34;&amp;#34;]
+resources: [&amp;#34;persistentvolumes&amp;#34;]
+verbs: [&amp;#34;get&amp;#34;, &amp;#34;list&amp;#34;, &amp;#34;watch&amp;#34;, &amp;#34;create&amp;#34;, &amp;#34;delete&amp;#34;]
+- apiGroups: [&amp;#34;&amp;#34;]
+resources: [&amp;#34;persistentvolumeclaims&amp;#34;]
+verbs: [&amp;#34;get&amp;#34;, &amp;#34;list&amp;#34;, &amp;#34;watch&amp;#34;, &amp;#34;update&amp;#34;]
+- apiGroups: [&amp;#34;storage.k8s.io&amp;#34;]
+resources: [&amp;#34;storageclasses&amp;#34;]
+verbs: [&amp;#34;get&amp;#34;, &amp;#34;list&amp;#34;, &amp;#34;watch&amp;#34;]
+- apiGroups: [&amp;#34;&amp;#34;]
+resources: [&amp;#34;events&amp;#34;]
+verbs: [&amp;#34;create&amp;#34;, &amp;#34;update&amp;#34;, &amp;#34;patch&amp;#34;]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+name: run-nfs-client-provisioner
+subjects:
+- kind: ServiceAccount
+name: nfs-client-provisioner
+# replace with namespace where provisioner is deployed
+namespace: default
+roleRef:
+kind: ClusterRole
+name: nfs-client-provisioner-runner
+apiGroup: rbac.authorization.k8s.io
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+name: leader-locking-nfs-client-provisioner
+# replace with namespace where provisioner is deployed
+namespace: default
+rules:
+- apiGroups: [&amp;#34;&amp;#34;]
+resources: [&amp;#34;endpoints&amp;#34;]
+verbs: [&amp;#34;get&amp;#34;, &amp;#34;list&amp;#34;, &amp;#34;watch&amp;#34;, &amp;#34;create&amp;#34;, &amp;#34;update&amp;#34;, &amp;#34;patch&amp;#34;]
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+name: leader-locking-nfs-client-provisioner
+# replace with namespace where provisioner is deployed
+namespace: default
+subjects:
+- kind: ServiceAccount
+name: nfs-client-provisioner
+# replace with namespace where provisioner is deployed
+namespace: default
+roleRef:
+kind: Role
+name: leader-locking-nfs-client-provisioner
+apiGroup: rbac.authorization.k8s.io
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>test/claim.yaml&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+name: test-claim
+spec:
+storageClassName: managed-nfs-storage
+accessModes:
+- ReadWriteMany
+resources:
+requests:
+storage: 1Mi
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>test/pod.yaml&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kind: Pod
+apiVersion: v1
+metadata:
+name: test-pod
+spec:
+containers:
+- name: test-pod
+image: busybox:latest
+command:
+- &amp;#34;/bin/sh&amp;#34;
+args:
+- &amp;#34;-c&amp;#34;
+- &amp;#34;touch /mnt/SUCCESS &amp;amp;&amp;amp; exit 0 || exit 1&amp;#34; #创建一个SUCCESS文件后退出
+volumeMounts:
+- name: nfs-pvc
+mountPath: &amp;#34;/mnt&amp;#34;
+restartPolicy: &amp;#34;Never&amp;#34;
+volumes:
+- name: nfs-pvc
+persistentVolumeClaim:
+claimName: test-claim #与PVC名称保持一致
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="设置环境变量">设置环境变量&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">export MY_NFS_SERVER_HOST=&amp;#34;192.168.3.150&amp;#34;
+export MY_NFS_SERVER_PATH=&amp;#34;/mnt/nfs&amp;#34;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="替换文件中的值">替换文件中的值&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cp deployment.yaml deployment.bak
+sed -i &amp;#39;s/MY_NFS_SERVER_HOST/&amp;#39;$MY_NFS_SERVER_HOST&amp;#39;/g&amp;#39; deployment.yaml
+sed -i &amp;#39;s#MY_NFS_SERVER_PATH#&amp;#39;$MY_NFS_SERVER_PATH&amp;#39;#g&amp;#39; deployment.yaml
+sed -i &amp;#39;s#MY_NFS_SERVER_PATH#&amp;#39;$MY_NFS_SERVER_PATH&amp;#39;#g&amp;#39; class.yaml
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="创建">创建&lt;/h1>
+&lt;h2 id="下载镜像">下载镜像&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">docker pull busybox:latest
+docker pull quay.io/external_storage/nfs-client-provisioner:latest
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="apply">apply&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">k apply -f .
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="检查">检查&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">k get pod
+NAME READY STATUS RESTARTS AGE
+nfs-client-provisioner-5c4dbc6dc5-r2sb5 1/1 Running 0 7s
+k get sc
+NAME PROVISIONER RECLAIMPOLICY VOLUMEBINDINGMODE ALLOWVOLUMEEXPANSION AGE
+managed-nfs-storage k8s-sigs.io/nfs-subdir-external-provisioner Delete Immediate false 8s
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="测试">测试&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">k apply -f test
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">ls $MY_NFS_SERVER_PATH
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>使用 NFS 创建 StorageClass</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-nfs-%E5%88%9B%E5%BB%BA-storageclass/</link><pubDate>Wed, 16 Nov 2022 20:35:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-nfs-%E5%88%9B%E5%BB%BA-storageclass/</guid><description>&lt;h1 id="创建目录">创建目录&lt;/h1>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">mkdir -p ~/yamls/storageclass/local/test
+cd ~/yamls/storageclass/local
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="创建-yaml-文件">创建 yaml 文件&lt;/h1>
+&lt;ul>
+&lt;li>StorageClass.yaml&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+annotations:
+cas.openebs.io/config: |
+- name: StorageType
+value: &amp;#34;hostpath&amp;#34;
+- name: BasePath
+value: &amp;#34;/var/openebs/local/&amp;#34;
+kubectl.kubernetes.io/last-applied-configuration: |
+{&amp;#34;apiVersion&amp;#34;:&amp;#34;storage.k8s.io/v1&amp;#34;,&amp;#34;kind&amp;#34;:&amp;#34;StorageClass&amp;#34;,&amp;#34;metadata&amp;#34;:{&amp;#34;annotations&amp;#34;:{&amp;#34;cas.openebs.io/config&amp;#34;:&amp;#34;- name: StorageType\n value: \&amp;#34;hostpath\&amp;#34;\n- name: BasePath\n value: \&amp;#34;/var/openebs/local/\&amp;#34;\n&amp;#34;,&amp;#34;openebs.io/cas-type&amp;#34;:&amp;#34;local&amp;#34;,&amp;#34;storageclass.beta.kubernetes.io/is-default-class&amp;#34;:&amp;#34;true&amp;#34;,&amp;#34;storageclass.kubesphere.io/supported-access-modes&amp;#34;:&amp;#34;[\&amp;#34;ReadWriteOnce\&amp;#34;]&amp;#34;},&amp;#34;name&amp;#34;:&amp;#34;local&amp;#34;},&amp;#34;provisioner&amp;#34;:&amp;#34;openebs.io/local&amp;#34;,&amp;#34;reclaimPolicy&amp;#34;:&amp;#34;Delete&amp;#34;,&amp;#34;volumeBindingMode&amp;#34;:&amp;#34;WaitForFirstConsumer&amp;#34;}
+openebs.io/cas-type: local
+storageclass.beta.kubernetes.io/is-default-class: &amp;#34;true&amp;#34;
+storageclass.kubesphere.io/supported-access-modes: &amp;#39;[&amp;#34;ReadWriteOnce&amp;#34;]&amp;#39;
+creationTimestamp: &amp;#34;2022-11-15T14:04:07Z&amp;#34;
+name: local
+resourceVersion: &amp;#34;430&amp;#34;
+uid: f4c69e41-7ea3-4970-b026-8606c1ef97a5
+provisioner: openebs.io/local
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>test/claim.yaml&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+name: test-claim
+spec:
+storageClassName: local
+accessModes:
+- ReadWriteMany
+resources:
+requests:
+storage: 1Mi
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>test/pod.yaml&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kind: Pod
+apiVersion: v1
+metadata:
+name: test-pod
+spec:
+containers:
+- name: test-pod
+image: busybox:latest
+command:
+- &amp;#34;/bin/sh&amp;#34;
+args:
+- &amp;#34;-c&amp;#34;
+- &amp;#34;touch /mnt/SUCCESS &amp;amp;&amp;amp; exit 0 || exit 1&amp;#34; #创建一个SUCCESS文件后退出
+volumeMounts:
+- name: local-pvc
+mountPath: &amp;#34;/mnt&amp;#34;
+restartPolicy: &amp;#34;Never&amp;#34;
+volumes:
+- name: local-pvc
+persistentVolumeClaim:
+claimName: test-claim #与PVC名称保持一致
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h1 id="创建">创建&lt;/h1>
+&lt;h2 id="下载镜像">下载镜像&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">docker pull busybox:latest
+docker pull quay.io/external_storage/nfs-client-provisioner:latest
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="apply">apply&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">k apply -f .
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="检查">检查&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">k get sc
+NAME PROVISIONER RECLAIMPOLICY VOLUMEBINDINGMODE ALLOWVOLUMEEXPANSION AGE
+local (default) openebs.io/local Delete WaitForFirstConsumer false 2s
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="测试">测试&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">k apply -f test
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">ls $MY_NFS_SERVER_PATH
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>使用 Kubernetes API 访问集群</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-kubernetes-api-%E8%AE%BF%E9%97%AE%E9%9B%86%E7%BE%A4/</link><pubDate>Thu, 18 Aug 2022 10:03:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-kubernetes-api-%E8%AE%BF%E9%97%AE%E9%9B%86%E7%BE%A4/</guid><description>&lt;p>转载: &lt;a class="link" href="https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/access-cluster-api/" target="_blank" rel="noopener"
 >https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/access-cluster-api/&lt;/a>&lt;/p>
-&lt;h1 id="访问集群-api">访问集群 API&lt;/h1></description></item></channel></rss>
+&lt;h1 id="访问集群-api">访问集群 API&lt;/h1></description></item><item><title>查看 namespace 下面所有的资源并删除</title><link>https://mkbooks.github.io/blog/p/%E6%9F%A5%E7%9C%8B-namespace-%E4%B8%8B%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E8%B5%84%E6%BA%90%E5%B9%B6%E5%88%A0%E9%99%A4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/%E6%9F%A5%E7%9C%8B-namespace-%E4%B8%8B%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E8%B5%84%E6%BA%90%E5%B9%B6%E5%88%A0%E9%99%A4/</guid><description>&lt;p>转载: &lt;a class="link" href="https://blog.csdn.net/Man_In_The_Night/article/details/109184175" target="_blank" rel="noopener"
+>https://blog.csdn.net/Man_In_The_Night/article/details/109184175&lt;/a>&lt;/p>
+&lt;p>查看 namespace 下面所有的资源&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl api-resources -o name --verbs=list --namespaced | xargs -n 1 kubectl get --show-kind --ignore-not-found -n {namespace}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>删除 namespace 下面所有的资源&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl delete all --all -n {namespace}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>删除 namespace 下面某种的资源&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl delete --all pods -n {namespace}
+kubectl delete --all deploy -n {namespace}
+kubectl delete --all sts -n {namespace}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>有时候删除资源会出现长时间处于 terminating 状态，可以使用 &amp;ndash;force &amp;ndash;grace-period=0&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl delete po xxx --force --grace-period=0
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>有时候删除 namespace ，会出现长时间处于 terminating 状态，即使使用 &amp;ndash;force &amp;ndash;grace-period=0 ，仍然处于 terminating 状态，可以使用原生接口删除&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># 获取namespace的详情信息
+$ kubectl get ns rdbms -o json &amp;gt; rdbms.json
+# 查看napespace定义的json配置
+## 删除掉spec部分即可
+$ cat rdbms.json
+{
+&amp;#34;apiVersion&amp;#34;: &amp;#34;v1&amp;#34;,
+&amp;#34;kind&amp;#34;: &amp;#34;Namespace&amp;#34;,
+&amp;#34;metadata&amp;#34;: {
+&amp;#34;annotations&amp;#34;: {
+&amp;#34;kubectl.kubernetes.io/last-applied-configuration&amp;#34;: &amp;#34;{\&amp;#34;apiVersion\&amp;#34;:\&amp;#34;v1\&amp;#34;,\&amp;#34;kind\&amp;#34;:\&amp;#34;Namespace\&amp;#34;,\&amp;#34;metadata\&amp;#34;:{\&amp;#34;annotations\&amp;#34;:{},\&amp;#34;name\&amp;#34;:\&amp;#34;rdbms\&amp;#34;}}\n&amp;#34;
+},
+&amp;#34;creationTimestamp&amp;#34;: &amp;#34;2019-10-14T12:17:44Z&amp;#34;,
+&amp;#34;deletionTimestamp&amp;#34;: &amp;#34;2019-10-14T12:30:27Z&amp;#34;,
+&amp;#34;name&amp;#34;: &amp;#34;rdbms&amp;#34;,
+&amp;#34;resourceVersion&amp;#34;: &amp;#34;8844754&amp;#34;,
+&amp;#34;selfLink&amp;#34;: &amp;#34;/api/v1/namespaces/rdbms&amp;#34;,
+&amp;#34;uid&amp;#34;: &amp;#34;29067ddf-56d7-4cce-afa3-1fbdbb221ab1&amp;#34;
+},
+&amp;#34;spec&amp;#34;: {
+&amp;#34;finalizers&amp;#34;: [
+&amp;#34;kubernetes&amp;#34;
+]
+},
+&amp;#34;status&amp;#34;: {
+&amp;#34;phase&amp;#34;: &amp;#34;Terminating&amp;#34;
+}
+}
+# 使用http接口进行删除
+$ curl -k -H &amp;#34;Content-Type:application/json&amp;#34; -X PUT --data-binary @rdbms.json https://x.x.x.x:6443/api/v1/namespaces/rdbms/finalize
+{
+&amp;#34;kind&amp;#34;: &amp;#34;Namespace&amp;#34;,
+&amp;#34;apiVersion&amp;#34;: &amp;#34;v1&amp;#34;,
+&amp;#34;metadata&amp;#34;: {
+&amp;#34;name&amp;#34;: &amp;#34;rdbms&amp;#34;,
+&amp;#34;selfLink&amp;#34;: &amp;#34;/api/v1/namespaces/rdbms/finalize&amp;#34;,
+&amp;#34;uid&amp;#34;: &amp;#34;29067ddf-56d7-4cce-afa3-1fbdbb221ab1&amp;#34;,
+&amp;#34;resourceVersion&amp;#34;: &amp;#34;8844754&amp;#34;,
+&amp;#34;creationTimestamp&amp;#34;: &amp;#34;2019-10-14T12:17:44Z&amp;#34;,
+&amp;#34;deletionTimestamp&amp;#34;: &amp;#34;2019-10-14T12:30:27Z&amp;#34;,
+&amp;#34;annotations&amp;#34;: {
+&amp;#34;kubectl.kubernetes.io/last-applied-configuration&amp;#34;: &amp;#34;{\&amp;#34;apiVersion\&amp;#34;:\&amp;#34;v1\&amp;#34;,\&amp;#34;kind\&amp;#34;:\&amp;#34;Namespace\&amp;#34;,\&amp;#34;metadata\&amp;#34;:{\&amp;#34;annotations\&amp;#34;:{},\&amp;#34;name\&amp;#34;:\&amp;#34;rdbms\&amp;#34;}}\n&amp;#34;
+}
+},
+&amp;#34;spec&amp;#34;: {
+},
+&amp;#34;status&amp;#34;: {
+&amp;#34;phase&amp;#34;: &amp;#34;Terminating&amp;#34;
+}
+# 再次查看namespace发现已经被删除了
+$ kubectl get ns | grep rdb
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果在这些命令后 Pod 仍处于 Unknown 状态，请使用以下命令从集群中删除 Pod:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl patch pod &amp;lt;pod&amp;gt; -p &amp;#39;{&amp;#34;metadata&amp;#34;:{&amp;#34;finalizers&amp;#34;:null}}&amp;#39;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>
