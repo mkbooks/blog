@@ -647,6 +647,58 @@ local (default) openebs.io/local Delete WaitForFirstConsumer false 2s
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">ls /var/openebs/local/
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
+&lt;/div></description></item><item><title>k8s 驱逐节点</title><link>https://mkbooks.github.io/blog/p/k8s-%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9/</link><pubDate>Thu, 18 Aug 2022 10:03:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/k8s-%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9/</guid><description>&lt;p>转载: &lt;a class="link" href="https://docs.rancher.cn/docs/rke/upgrades/configuring-strategy/_index/#%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9" target="_blank" rel="noopener"
+>https://docs.rancher.cn/docs/rke/upgrades/configuring-strategy/_index/#%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9&lt;/a>&lt;/p>
+&lt;h1 id="驱逐节点">驱逐节点&lt;/h1>
+&lt;p>默认情况下，升级节点前需要使用kubectl cordon命令将节点标记为“不可用”，这个标记的目的是防止在节点在升级的过程中因为被分配到新的 pods 或者流量而中断。完成升级后，您需要使用kubectl uncordon命令将节点重新标记为“可用”，此时可以将 pods 和流量分配到该节点上。该操作不会对节点上已有的 pods 造成影响。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl cordon node_name
+kubectl uncordon node_name
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>除了将节点标记为“不可用”外，您也可以使用kubectl drain命令，在升级节点前将节点内的所有 pod 驱逐到其他节点上，并且将其标记为“不可用”，确保这个节点内在升级完成之前不会有正在运行的 pods。kubectl drain命令会导致节点内所有的 pods 被驱逐。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">kubectl drain --ignore-daemonsets node_name
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>请参考&lt;a class="link" href="https://kubernetes.io/docs/tasks/administer-cluster/safely-drain-node/" target="_blank" rel="noopener"
+>Kubernetes 官方文档&lt;/a>，了解驱逐节点的注意事项。&lt;/p>
+&lt;p>注意：drain的默认值是false，如果将它的值改为true，会导致 worker 节点在升级之前被驱逐，无法升级 worker 节点。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">upgrade_strategy:
+max_unavailable_worker: 10%
+max_unavailable_controlplane: 1
+drain: false
+node_drain_input:
+force: false
+ignore_daemonsets: true
+delete_local_data: false
+grace_period: -1 // grace period specified for each pod spec will be used
+timeout: 60
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
 &lt;/div></description></item><item><title>使用 Kubernetes API 访问集群</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-kubernetes-api-%E8%AE%BF%E9%97%AE%E9%9B%86%E7%BE%A4/</link><pubDate>Thu, 18 Aug 2022 10:03:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-kubernetes-api-%E8%AE%BF%E9%97%AE%E9%9B%86%E7%BE%A4/</guid><description>&lt;p>转载: &lt;a class="link" href="https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/access-cluster-api/" target="_blank" rel="noopener"
 >https://kubernetes.io/zh-cn/docs/tasks/administer-cluster/access-cluster-api/&lt;/a>&lt;/p>
 &lt;h1 id="访问集群-api">访问集群 API&lt;/h1></description></item><item><title>查看 namespace 下面所有的资源并删除</title><link>https://mkbooks.github.io/blog/p/%E6%9F%A5%E7%9C%8B-namespace-%E4%B8%8B%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E8%B5%84%E6%BA%90%E5%B9%B6%E5%88%A0%E9%99%A4/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/%E6%9F%A5%E7%9C%8B-namespace-%E4%B8%8B%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E8%B5%84%E6%BA%90%E5%B9%B6%E5%88%A0%E9%99%A4/</guid><description>&lt;p>转载: &lt;a class="link" href="https://blog.csdn.net/Man_In_The_Night/article/details/109184175" target="_blank" rel="noopener"
