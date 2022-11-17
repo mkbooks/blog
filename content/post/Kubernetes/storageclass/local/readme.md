@@ -1,7 +1,7 @@
 ---
-title: "使用 NFS 创建 StorageClass"           # 文章标题
+title: "创建 StorageClass"           # 文章标题
 author: "陈金鑫"              # 文章作者
-description : "使用 NFS 创建 StorageClass"    # 文章描述信息
+description : "创建 StorageClass"    # 文章描述信息
 lastmod: 2022-11-16T20:35:00+08:00         # 文章修改日期
 date: 2022-11-16T20:35:00+08:00
 tags : [                    # 文章所属标签
