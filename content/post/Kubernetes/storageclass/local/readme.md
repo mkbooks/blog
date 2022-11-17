@@ -104,5 +104,5 @@ local (default)   openebs.io/local   Delete          WaitForFirstConsumer   fals
 k apply -f test
 ```
 ```
-ls $MY_NFS_SERVER_PATH
+ls /var/openebs/local/
 ```
