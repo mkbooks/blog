@@ -644,7 +644,7 @@ local (default) openebs.io/local Delete WaitForFirstConsumer false 2s
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">ls $MY_NFS_SERVER_PATH
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">ls /var/openebs/local/
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div></description></item></channel></rss>
