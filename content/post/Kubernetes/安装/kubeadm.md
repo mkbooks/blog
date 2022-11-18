@@ -142,7 +142,7 @@ kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
 ## 添加节点
 master
 ```
-kubeadm token create
+kubeadm token create --print-join-command
 kubeadm token list
 ```
 node
