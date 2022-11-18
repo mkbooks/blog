@@ -5,7 +5,7 @@ description : "k8s强制删除pod&pv&pvc和ns&namespace方法"    # 文章描述
 lastmod: 2020-08-17        # 文章修改日期
 date: 2022-08-17T11:03:18+08:00
 tags : [                    # 文章所属标签
-    "K8S",
+    "kubernetes",
     "云原生"
 ]
 categories : [              # 文章所属标签
