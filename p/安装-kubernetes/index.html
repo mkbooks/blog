@@ -1,14 +1,14 @@
 <!doctype html><html lang=en-us dir=ltr>
 <head><meta charset=utf-8>
-<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="终端设置特定IP段走路由"><title>终端设置特定IP段走路由</title>
-<link rel=canonical href=https://mkbooks.github.io/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/>
-<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="终端设置特定IP段走路由">
-<meta property="og:description" content="终端设置特定IP段走路由">
-<meta property="og:url" content="https://mkbooks.github.io/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/">
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="安装 kubernetes"><title>安装 kubernetes</title>
+<link rel=canonical href=https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85-kubernetes/>
+<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="安装 kubernetes">
+<meta property="og:description" content="安装 kubernetes">
+<meta property="og:url" content="https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85-kubernetes/">
 <meta property="og:site_name" content="我的空间">
-<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="Linux"><meta property="article:tag" content="网络"><meta property="article:tag" content="vpn"><meta property="article:published_time" content="2022-09-08T11:02:00+08:00"><meta property="article:modified_time" content="2022-09-08T11:02:00+08:00">
-<meta name=twitter:title content="终端设置特定IP段走路由">
-<meta name=twitter:description content="终端设置特定IP段走路由">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="kubernetes"><meta property="article:published_time" content="2022-11-18T22:22:00+08:00"><meta property="article:modified_time" content="2022-11-18T22:22:00+08:00">
+<meta name=twitter:title content="安装 kubernetes">
+<meta name=twitter:description content="安装 kubernetes">
 <link rel="shortcut icon" href=https://chenjinxin.cn/images/favicon.png>
 </head>
 <body class=article-page>
@@ -80,78 +80,326 @@
 <header class=article-header>
 <div class=article-details>
 <header class=article-category>
-<a href=/blog/categories/%E7%BD%91%E7%BB%9C/>
-网络
+<a href=/blog/categories/kubernetes/>
+kubernetes
 </a>
 </header>
 <div class=article-title-wrapper>
 <h2 class=article-title>
-<a href=/blog/p/%E7%BB%88%E7%AB%AF%E8%AE%BE%E7%BD%AE%E7%89%B9%E5%AE%9Aip%E6%AE%B5%E8%B5%B0%E8%B7%AF%E7%94%B1/>终端设置特定IP段走路由</a>
+<a href=/blog/p/%E5%AE%89%E8%A3%85-kubernetes/>安装 kubernetes</a>
 </h2>
 <h3 class=article-subtitle>
-终端设置特定IP段走路由
+安装 kubernetes
 </h3>
 </div>
 <footer class=article-time>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
-<time class=article-time--published>Sep 08, 2022</time>
+<time class=article-time--published>Nov 18, 2022</time>
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
-阅读时长: 1 分钟
+阅读时长: 2 分钟
 </time>
 </div>
 </footer>
 </div>
 </header>
 <section class=article-content>
-<h2 id=create-config>create config</h2>
+<h1 id=环境>环境</h1>
+<ul>
+<li>操作系统: Ubuntu20.04</li>
+<li>cpu 架构: x86</li>
+<li>kubernetes 版本: v1.22.16</li>
+</ul>
+<h1 id=基础环境设置>基础环境设置</h1>
+<h2 id=添加-sudo-权限>添加 sudo 权限</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo visudo
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>%sudo ALL=(ALL:ALL) NOPASSWD:ALL
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo -i
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=关闭-swap>关闭 Swap</h2>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span><span class=lnt>2
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>pptpsetup --create vpn --server vpn.bjklb.com --username ai-lijinxin --password <span class=m>123</span>
-pptpsetup --create vpn --server 111.198.75.20 --username ai-lijinxin --password <span class=m>123</span>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>swapoff -a
+vi /etc/fstab
 </code></pre></td></tr></table>
 </div>
-</div><h2 id=connect>connect</h2>
+</div><p>remove the line with swap keyword</p>
+<h2 id=设置-iptables>设置 iptables</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>cat &lt;&lt;EOF | sudo tee /etc/modules-load.d/k8s.conf
+br_netfilter
+EOF
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sysctl --system
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=安装基础软件>安装基础软件</h1>
+<h2 id=更新>更新</h2>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>pon vpn
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo apt-get update
 </code></pre></td></tr></table>
 </div>
-</div><p>then will create a network device named <code>ppp0</code></p>
-<h2 id=route>route</h2>
-<p>route for target like <code>10.0.1.0</code> to <code>ppp0</code></p>
+</div><h2 id=安装-docker>安装 docker</h2>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>ip route add 10.0.1.0/24 dev ppp0
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>apt install docker.io
 </code></pre></td></tr></table>
 </div>
-</div><h2 id=disconnect>disconnect</h2>
+</div><h3 id=设置-docker>设置 docker</h3>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
 <pre tabindex=0 class=chroma><code><span class=lnt>1
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>poff vpn
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>vi /etc/docker/daemon.json
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>{
+  &#34;exec-opts&#34;: [&#34;native.cgroupdriver=systemd&#34;]
+}
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>systemctl daemon-reload
+systemctl restart docker
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=安装-apt-transport-https-ca-certificates-curl>安装 apt-transport-https ca-certificates curl</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>apt-get install -y apt-transport-https ca-certificates curl
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=安装-kubeadm>安装 kubeadm</h2>
+<h3 id=添加库>添加库</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>curl -s https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg | sudo apt-key add -
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>tee /etc/apt/sources.list.d/kubernetes.list &lt;&lt;-&#39;EOF&#39;
+deb https://mirrors.aliyun.com/kubernetes/apt kubernetes-xenial main
+EOF
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=更新源>更新源</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>apt-get update
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=安装-kubelet-kubeadm-kubectl>安装 kubelet, kubeadm, kubectl</h3>
+<h4 id=查看版本>查看版本</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>apt-cache madison kubectl|grep 1.22
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>apt-get install -y kubelet=1.22.16-00 kubeadm=1.22.16-00 kubectl=1.22.16-00
+apt-mark hold kubelet kubeadm kubectl
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=kubeadm-init>kubeadm init</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm init \
+ --image-repository registry.aliyuncs.com/google_containers \
+ --kubernetes-version v1.22.16 \
+ --pod-network-cidr=192.168.0.0/16
+</code></pre></td></tr></table>
+</div>
+</div><p>如果用 containerd 的话</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm init \
+--image-repository registry.aliyuncs.com/google_containers \
+--kubernetes-version v1.22.16 \
+--pod-network-cidr=192.168.0.0/16 \
+--cri-socket /run/containerd/containerd.sock
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=使用>使用</h1>
+<p>普通用户</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>mkdir -p $HOME/.kube
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+</code></pre></td></tr></table>
+</div>
+</div><p>root 用户</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>export KUBECONFIG=/etc/kubernetes/admin.conf
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=取消节点污点>取消节点污点</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubectl taint nodes --all node-role.kubernetes.io/master-
+kubectl taint nodes --all node-role.kubernetes.io/control-plane- node-role.kubernetes.io/master-
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=安装-calico-cni-plugin>安装 calico cni plugin</h2>
+<p><a class=link href=https://docs.projectcalico.org/getting-started/kubernetes/quickstart target=_blank rel=noopener>https://docs.projectcalico.org/getting-started/kubernetes/quickstart</a></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubectl create -f https://docs.projectcalico.org/manifests/tigera-operator.yaml
+kubectl create -f https://docs.projectcalico.org/manifests/custom-resources.yaml
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=添加节点>添加节点</h2>
+<p>master</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm token create
+kubeadm token list
+</code></pre></td></tr></table>
+</div>
+</div><p>node</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm join --token &lt;token&gt; &lt;control-plane-host&gt;:&lt;control-plane-port&gt; --discovery-token-ca-cert-hash sha256:&lt;hash&gt;
 </code></pre></td></tr></table>
 </div>
 </div>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
-<a href=/blog/tags/linux/>Linux</a>
-<a href=/blog/tags/%E7%BD%91%E7%BB%9C/>网络</a>
-<a href=/blog/tags/vpn/>vpn</a>
+<a href=/blog/tags/kubernetes/>Kubernetes</a>
 </section>
 <section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
 <span>Licensed under CC BY-NC-SA 4.0</span>
@@ -163,37 +411,23 @@ pptpsetup --create vpn --server 111.198.75.20 --username ai-lijinxin --password 
 <div class=related-content>
 <div class="flex article-list--tile">
 <article>
-<a href=/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>
+<a href=/blog/p/%E4%BD%BF%E7%94%A8-nfs-%E5%88%9B%E5%BB%BA-storageclass/>
 <div class=article-details>
-<h2 class=article-title>网络学习-0001</h2>
+<h2 class=article-title>使用 NFS 创建 StorageClass</h2>
 </div>
 </a>
 </article>
 <article>
-<a href=/blog/p/%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0-0001/>
+<a href=/blog/p/%E5%88%9B%E5%BB%BA-storageclass/>
 <div class=article-details>
-<h2 class=article-title>网络学习-0001</h2>
+<h2 class=article-title>创建 StorageClass</h2>
 </div>
 </a>
 </article>
 <article>
-<a href=/blog/p/%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/>
+<a href=/blog/p/%E6%9F%A5%E7%9C%8B-namespace-%E4%B8%8B%E9%9D%A2%E6%89%80%E6%9C%89%E7%9A%84%E8%B5%84%E6%BA%90%E5%B9%B6%E5%88%A0%E9%99%A4/>
 <div class=article-details>
-<h2 class=article-title>网络问题</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/blog/p/iptables/>
-<div class=article-details>
-<h2 class=article-title>iptables</h2>
-</div>
-</a>
-</article>
-<article>
-<a href=/blog/p/ip-netns/>
-<div class=article-details>
-<h2 class=article-title>ip-netns</h2>
+<h2 class=article-title>查看 namespace 下面所有的资源并删除</h2>
 </div>
 </a>
 </article>
@@ -265,10 +499,35 @@ Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
 <div class=widget--toc>
 <nav id=TableOfContents>
 <ol>
-<li><a href=#create-config>create config</a></li>
-<li><a href=#connect>connect</a></li>
-<li><a href=#route>route</a></li>
-<li><a href=#disconnect>disconnect</a></li>
+<li><a href=#添加-sudo-权限>添加 sudo 权限</a></li>
+<li><a href=#关闭-swap>关闭 Swap</a></li>
+<li><a href=#设置-iptables>设置 iptables</a></li>
+</ol>
+<ol>
+<li><a href=#更新>更新</a></li>
+<li><a href=#安装-docker>安装 docker</a>
+<ol>
+<li><a href=#设置-docker>设置 docker</a></li>
+</ol>
+</li>
+<li><a href=#安装-apt-transport-https-ca-certificates-curl>安装 apt-transport-https ca-certificates curl</a></li>
+<li><a href=#安装-kubeadm>安装 kubeadm</a>
+<ol>
+<li><a href=#添加库>添加库</a></li>
+<li><a href=#更新源>更新源</a></li>
+<li><a href=#安装-kubelet-kubeadm-kubectl>安装 kubelet, kubeadm, kubectl</a>
+<ol>
+<li><a href=#查看版本>查看版本</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><a href=#kubeadm-init>kubeadm init</a></li>
+</ol>
+<ol>
+<li><a href=#取消节点污点>取消节点污点</a></li>
+<li><a href=#安装-calico-cni-plugin>安装 calico cni plugin</a></li>
+<li><a href=#添加节点>添加节点</a></li>
 </ol>
 </nav>
 </div>
