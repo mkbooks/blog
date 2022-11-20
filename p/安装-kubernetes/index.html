@@ -234,6 +234,15 @@ EOF
 systemctl restart docker
 </code></pre></td></tr></table>
 </div>
+</div><h3 id=添加普通用户>添加普通用户</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo usermod -aG docker ${USER}
+</code></pre></td></tr></table>
+</div>
 </div><h2 id=安装-apt-transport-https-ca-certificates-curl>安装 apt-transport-https ca-certificates curl</h2>
 <div class=highlight><div class=chroma>
 <table class=lntable><tr><td class=lntd>
@@ -522,6 +531,7 @@ Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
 <li><a href=#安装-docker>安装 docker</a>
 <ol>
 <li><a href=#设置-docker>设置 docker</a></li>
+<li><a href=#添加普通用户>添加普通用户</a></li>
 </ol>
 </li>
 <li><a href=#安装-apt-transport-https-ca-certificates-curl>安装 apt-transport-https ca-certificates curl</a></li>
