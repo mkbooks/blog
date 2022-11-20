@@ -72,6 +72,10 @@ vi /etc/docker/daemon.json
 systemctl daemon-reload
 systemctl restart docker
 ```
+### 添加普通用户
+```
+sudo usermod -aG docker ${USER}
+```
 ## 安装 apt-transport-https ca-certificates curl
 ```
 apt-get install -y apt-transport-https ca-certificates curl
