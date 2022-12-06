@@ -10,8 +10,87 @@
 Linux cjx 5.15.0-56-generic #62-Ubuntu SMP Tue Nov 22 19:54:14 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h2 id="系统设置">系统设置&lt;/h2>
-&lt;h3 id="设置网络">设置网络&lt;/h3>
+&lt;/div>&lt;h3 id="安装工具">安装工具&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.ventoy.net/cn/index.html" target="_blank" rel="noopener"
+>Ventoy&lt;/a>&lt;/p>
+&lt;h2 id="系统设置">系统设置&lt;/h2>
+&lt;h3 id="ssh-设置">ssh 设置&lt;/h3>
+&lt;h4 id="设置-root-密码">设置 root 密码&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo passwd
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="sudo免密">&lt;code>sudo&lt;/code>免密&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo -i
+visudo
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在&lt;code>%sudo ALL=(ALL:ALL) ALL&lt;/code>的下一行添加&lt;code>${USER} ALL=(ALL:ALL) NOPASSWD:ALL&lt;/code>&lt;/p>
+&lt;h4 id="su-root免密">&lt;code>su root&lt;/code>免密&lt;/h4>
+&lt;p>查看组&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cjx@cjx:~$ groups
+cjx adm cdrom sudo dip plugdev lpadmin lxd sambashare
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">su root
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>给 cjx 用户添加组&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">groupadd wheel
+usermod -G wheel cjx
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>修改&lt;code>su&lt;/code>的配置文件（给 wheel 组设置免密）&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">vim /etc/pam.d/su
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># Uncomment this if you want wheel members to be able to
+# su without a password.
+auth required pam_wheel.so group=wheel
+auth sufficient pam_wheel.so trust use_uid
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="设置网络">设置网络&lt;/h3>
 &lt;h4 id="火狐">火狐&lt;/h4>
 &lt;ol>
 &lt;li>登陆同步服务&lt;/li>
@@ -92,7 +171,431 @@ for more information
 >下载&lt;/a>&lt;/li>
 &lt;li>安装: &lt;code>sudo dpkg -i &lt;/code>&lt;/li>
 &lt;/ol>
-&lt;h2 id="安装软件">安装软件&lt;/h2>
+&lt;h3 id="设置-oh-my-zsh">设置 oh-my-zsh&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.jianshu.com/p/ba782b57ae96" target="_blank" rel="noopener"
+>参阅&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://ohmyz.sh/#install" target="_blank" rel="noopener"
+>oh-my-zsh&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>默认 shell: &lt;code>echo $SHELL&lt;/code>&lt;/li>
+&lt;li>系统自带 shell: &lt;code>cat /etc/shells&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h4 id="安装-zsh">安装 zsh&lt;/h4>
+&lt;ol>
+&lt;li>安装: &lt;code>sudo apt install zsh -y&lt;/code>&lt;/li>
+&lt;li>查看是否已添加到 shell: &lt;code>cat /etc/shells&lt;/code>
+&lt;ol>
+&lt;li>有 zsh 即可&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>设置 zsh 为默认 shell
+&lt;ol>
+&lt;li>当前用户: &lt;code>chsh -s /bin/zsh&lt;/code>&lt;/li>
+&lt;li>root 用户: &lt;code>sudo chsh -s /bin/zsh&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>重启: &lt;code>sudo reboot&lt;/code>，或注销: &lt;code>logout&lt;/code>
+&lt;ol>
+&lt;li>选择 2 : 使用推荐配置&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>查看默认 shell: &lt;code>echo $SHELL&lt;/code>
+&lt;ol>
+&lt;li>输出&lt;code>/bin/zsh&lt;/code>表示已修改成功&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h4 id="安装-oh-my-zsh">安装 oh-my-zsh&lt;/h4>
+&lt;ol>
+&lt;li>安装 curl: &lt;code>sudo apt install curl&lt;/code>&lt;/li>
+&lt;li>安装 oh-my-zsh: &lt;code>sh -c &amp;quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;quot;&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h4 id="个性化">个性化&lt;/h4>
+&lt;h5 id="主题">主题&lt;/h5>
+&lt;p>&lt;a class="link" href="https://www.slant.co/topics/7553/~theme-for-oh-my-zsh" target="_blank" rel="noopener"
+>官方主题网站&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/romkatv/powerlevel10k" target="_blank" rel="noopener"
+>powerlevel10k&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/zakaziko99/agnosterzak-ohmyzsh-theme" target="_blank" rel="noopener"
+>agnosterzak&lt;/a>&lt;/p>
+&lt;h6 id="powerlevel10k">powerlevel10k&lt;/h6>
+&lt;ol>
+&lt;li>&lt;code>cd ~/.oh-my-zsh/themes&lt;/code>&lt;/li>
+&lt;li>&lt;code>git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k&lt;/code>&lt;/li>
+&lt;li>&lt;code>vi ~/.zshrc&lt;/code>
+&lt;ol>
+&lt;li>&lt;code>ZSH_THEME=&amp;quot;powerlevel10k/powerlevel10k&amp;quot;&lt;/code>, 默认: &lt;code>ZSH_THEME=&amp;quot;robbyrussell&amp;quot;&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;code>source ~/.zshrc&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo apt install fonts-powerline -y&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h6 id="agnosterzak">agnosterzak&lt;/h6>
+&lt;ol>
+&lt;li>&lt;code>cd ~/.oh-my-zsh/themes&lt;/code>&lt;/li>
+&lt;li>&lt;code>wget https://raw.githubusercontent.com/zakaziko99/agnosterzak-ohmyzsh-theme/master/agnosterzak.zsh-theme&lt;/code>&lt;/li>
+&lt;li>&lt;code>vi ~/.zshrc&lt;/code>
+&lt;ol>
+&lt;li>&lt;code>ZSH_THEME=&amp;quot;agnosterzak&amp;quot;&lt;/code>, 默认: &lt;code>ZSH_THEME=&amp;quot;robbyrussell&amp;quot;&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;code>source ~/.zshrc&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo apt install fonts-powerline -y&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;ul>
+&lt;li>如果&lt;code>ZSH_THEME=&amp;quot;&amp;quot;&lt;/code>则不启用任何主题.&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>如果&lt;code>ZSH_THEME=&amp;quot;random&amp;quot;&lt;/code>，那么每次打开一个新的终端窗口时，电脑会随机选择一个主题使用，&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>&lt;code>echo $RANDOM_THEME&lt;/code>可输出当前主题名称.&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>如果你想从你最喜欢的主题列表中选择随机主题，那么&lt;code>ZSH_THEME=&amp;quot;random&amp;quot;&lt;/code>且&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>&lt;code>ZSH_THEME_RANDOM_CANDIDATES&lt;/code>的值设置为你喜欢的主题名称&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>例如：&lt;code>ZSH_THEME_RANDOM_CANDIDATES=( &amp;quot;robbyrussell&amp;quot; &amp;quot;agnoster&amp;quot; )&lt;/code>&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;h5 id="插件">插件&lt;/h5>
+&lt;h6 id="自动补全插件-incr">自动补全插件 incr&lt;/h6>
+&lt;ol>
+&lt;li>&lt;code>cd ~/.oh-my-zsh/plugins/&lt;/code>&lt;/li>
+&lt;li>&lt;code>mkdir incr &amp;amp;&amp;amp; cd incr&lt;/code>&lt;/li>
+&lt;li>&lt;code>wget http://mimosa-pudica.net/src/incr-0.2.zsh&lt;/code>&lt;/li>
+&lt;li>&lt;code>vi ~/.zshrc&lt;/code>
+&lt;ol>
+&lt;li>&lt;code>source ~/.oh-my-zsh/plugins/incr/incr*.zsh&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;code>source ~/.zshrc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>提示：
+与&lt;code>vim&lt;/code>的提示相冲突的解决方案&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ vim t
+_arguments:451: _vim_files: function definition file not found
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>将~/.zcompdump*删除即可&lt;/p>
+&lt;p>&lt;code>rm -rf ~/.zcompdump*&lt;/code>&lt;/p>
+&lt;p>&lt;code>exec zsh&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;h6 id="直接使用的插件">直接使用的插件&lt;/h6>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;code>vi ~/.zshrc&lt;/code>&lt;/p>
+&lt;ol>
+&lt;li>plugins=(git extract z)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>source ~/.zshrc&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>git&lt;/p>
+&lt;ol>
+&lt;li>默认开启的插件，提供了大量 git 的alias.&lt;/li>
+&lt;li>查看 alias: &lt;code>alias&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;p>extract&lt;/p>
+&lt;ol>
+&lt;li>功能强大的解压插件，所有类型的文件解压一个命令x全搞定，再也不需要去记tar后面到底是哪几个参数了.&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;p>z&lt;/p>
+&lt;ol>
+&lt;li>强大的目录自动跳转命令，会记忆你曾经进入过的目录，用模糊匹配快速进入你想要的目录.&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h6 id="安装zsh-autosuggestions语法历史记录插件">安装&lt;code>zsh-autosuggestions&lt;/code>语法历史记录插件&lt;/h6>
+&lt;ol>
+&lt;li>&lt;code>git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions&lt;/code>&lt;/li>
+&lt;li>&lt;code>vim ~/.zshrc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">plugins=(zsh-autosuggestions)
+最后一行：
+source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>&lt;code>source ~/.zshrc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h6 id="其他">其他&lt;/h6>
+&lt;blockquote>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins" target="_blank" rel="noopener"
+>oh-my-zsh插件&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Plugin:git" target="_blank" rel="noopener"
+>git插件&lt;/a>&lt;/li>
+&lt;li>大多数插件包括一个README，它记录了如何使用它们.&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;h5 id="其他-1">其他&lt;/h5>
+&lt;ol>
+&lt;li>更新&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>设置更新日期: &lt;code>vi ~/.zshrc&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">export UPDATE_ZSH_DAYS=13
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>禁用自动更新: &lt;code>vi ~/.zshrc&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">DISABLE_AUTO_UPDATE=&amp;#34;true&amp;#34;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>手动更新oh-my-zsh: &lt;code>upgrade_oh_my_zsh&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;ol start="2">
+&lt;li>卸载&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>卸载&lt;code>oh-my-zsh&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">uninstall_oh_my_zsh zsh
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>&lt;code>.zshrc&lt;/code>源文件内容&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-mysql" data-lang="mysql">&lt;span class="c1"># If you come from bash you might have to change your $PATH.
+&lt;/span>&lt;span class="c1"># export PATH=$HOME/bin:/usr/local/bin:$PATH
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Path to your oh-my-zsh installation.
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">export&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">ZSH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/root/.oh-my-zsh&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">zsh主题&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Set name of the theme to load --- if set to &amp;#34;random&amp;#34;, it will
+&lt;/span>&lt;span class="c1"># load a random theme each time oh-my-zsh is loaded, in which case,
+&lt;/span>&lt;span class="c1"># to know which specific one was loaded, run: echo $RANDOM_THEME
+&lt;/span>&lt;span class="c1"># See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">ZSH_THEME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;robbyrussell&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Set list of themes to pick from when loading at random
+&lt;/span>&lt;span class="c1"># Setting this variable when ZSH_THEME=random will cause zsh to load
+&lt;/span>&lt;span class="c1"># a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+&lt;/span>&lt;span class="c1"># If set to an empty array, this variable will have no effect.
+&lt;/span>&lt;span class="c1"># ZSH_THEME_RANDOM_CANDIDATES=( &amp;#34;robbyrussell&amp;#34; &amp;#34;agnoster&amp;#34; )
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to use case-sensitive completion.
+&lt;/span>&lt;span class="c1"># CASE_SENSITIVE=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to use hyphen-insensitive completion.
+&lt;/span>&lt;span class="c1"># Case-sensitive completion must be off. _ and - will be interchangeable.
+&lt;/span>&lt;span class="c1"># HYPHEN_INSENSITIVE=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="err">是否自动更新&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to disable bi-weekly auto-update checks.
+&lt;/span>&lt;span class="c1"># DISABLE_AUTO_UPDATE=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="err">更新周期&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to change how often to auto-update (in days).
+&lt;/span>&lt;span class="c1"># export UPDATE_ZSH_DAYS=13
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to disable colors in ls.
+&lt;/span>&lt;span class="c1"># DISABLE_LS_COLORS=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to disable auto-setting terminal title.
+&lt;/span>&lt;span class="c1"># DISABLE_AUTO_TITLE=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to enable command auto-correction.
+&lt;/span>&lt;span class="c1"># ENABLE_CORRECTION=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to display red dots whilst waiting for completion.
+&lt;/span>&lt;span class="c1"># COMPLETION_WAITING_DOTS=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line if you want to disable marking untracked files
+&lt;/span>&lt;span class="c1"># under VCS as dirty. This makes repository status check for large repositories
+&lt;/span>&lt;span class="c1"># much, much faster.
+&lt;/span>&lt;span class="c1"># DISABLE_UNTRACKED_FILES_DIRTY=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line if you want to change the command execution time
+&lt;/span>&lt;span class="c1"># stamp shown in the history command output.
+&lt;/span>&lt;span class="c1"># You can set one of the optional three formats:
+&lt;/span>&lt;span class="c1"># &amp;#34;mm/dd/yyyy&amp;#34;|&amp;#34;dd.mm.yyyy&amp;#34;|&amp;#34;yyyy-mm-dd&amp;#34;
+&lt;/span>&lt;span class="c1"># or set a custom format using the strftime function format specifications,
+&lt;/span>&lt;span class="c1"># see &amp;#39;man strftime&amp;#39; for details.
+&lt;/span>&lt;span class="c1"># HIST_STAMPS=&amp;#34;mm/dd/yyyy&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Would you like to use another custom folder than $ZSH/custom?
+&lt;/span>&lt;span class="c1"># ZSH_CUSTOM=/path/to/new-custom-folder
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">zsh插件&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Which plugins would you like to load?
+&lt;/span>&lt;span class="c1"># Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+&lt;/span>&lt;span class="c1"># Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+&lt;/span>&lt;span class="c1"># Example format: plugins=(rails git textmate ruby lighthouse)
+&lt;/span>&lt;span class="c1"># Add wisely, as too many plugins slow down shell startup.
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">plugins&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">git&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="n">source&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="err">$&lt;/span>&lt;span class="n">ZSH&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">oh&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">my&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">zsh&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sh&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># User configuration
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># export MANPATH=&amp;#34;/usr/local/man:$MANPATH&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># You may need to manually set your language environment
+&lt;/span>&lt;span class="c1"># export LANG=en_US.UTF-8
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Preferred editor for local and remote sessions
+&lt;/span>&lt;span class="c1"># if [[ -n $SSH_CONNECTION ]]; then
+&lt;/span>&lt;span class="c1"># export EDITOR=&amp;#39;vim&amp;#39;
+&lt;/span>&lt;span class="c1"># else
+&lt;/span>&lt;span class="c1"># export EDITOR=&amp;#39;mvim&amp;#39;
+&lt;/span>&lt;span class="c1"># fi
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Compilation flags
+&lt;/span>&lt;span class="c1"># export ARCHFLAGS=&amp;#34;-arch x86_64&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># ssh
+&lt;/span>&lt;span class="c1"># export SSH_KEY_PATH=&amp;#34;~/.ssh/rsa_id&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Set personal aliases, overriding those provided by oh-my-zsh libs,
+&lt;/span>&lt;span class="c1"># plugins, and themes. Aliases can be placed here, though oh-my-zsh
+&lt;/span>&lt;span class="c1"># users are encouraged to define aliases within the ZSH_CUSTOM folder.
+&lt;/span>&lt;span class="c1"># For a full list of active aliases, run `alias`.
+&lt;/span>&lt;span class="c1">#
+&lt;/span>&lt;span class="c1"># Example aliases
+&lt;/span>&lt;span class="c1"># alias zshconfig=&amp;#34;mate ~/.zshrc&amp;#34;
+&lt;/span>&lt;span class="c1"># alias ohmyzsh=&amp;#34;mate ~/.oh-my-zsh&amp;#34;
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="安装软件">安装软件&lt;/h2>
 &lt;h3 id="vscode">vscode&lt;/h3>
 &lt;h3 id="idea">IDEA&lt;/h3>
 &lt;h3 id="pycharm">PyCharm&lt;/h3></description></item><item><title>基于python的信用评分模型(详附代码)</title><link>https://mkbooks.github.io/blog/p/%E5%9F%BA%E4%BA%8Epython%E7%9A%84%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B%E8%AF%A6%E9%99%84%E4%BB%A3%E7%A0%81/</link><pubDate>Mon, 21 Nov 2022 12:22:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%9F%BA%E4%BA%8Epython%E7%9A%84%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B%E8%AF%A6%E9%99%84%E4%BB%A3%E7%A0%81/</guid><description>&lt;p>转载: &lt;a class="link" href="https://zhuanlan.zhihu.com/p/48048914" target="_blank" rel="noopener"
