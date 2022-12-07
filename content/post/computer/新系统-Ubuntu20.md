@@ -337,3 +337,18 @@ source $ZSH/oh-my-zsh.sh
 
 ### PyCharm
 
+### 百度网盘
+
+### 火焰截图
+
+### 微信
+
+### 虚拟系统管理器
+
+### APIPost
+
+### uGet
+
+### WPS
+
+### VLC 媒体播放器
