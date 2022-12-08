@@ -22,6 +22,10 @@ Linux cjx 5.15.0-56-generic #62-Ubuntu SMP Tue Nov 22 19:54:14 UTC 2022 x86_64 x
 [Ventoy](https://www.ventoy.net/cn/index.html)
 ## 系统设置
 ### ssh 设置
+#### 创建秘钥
+```
+ssh-keygen
+```
 #### 设置 root 密码
 ```
 sudo passwd
