@@ -606,16 +606,46 @@ source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 &lt;/div>
 &lt;/div>&lt;h2 id="安装软件">安装软件&lt;/h2>
 &lt;h3 id="vscode">vscode&lt;/h3>
+&lt;p>&lt;a class="link" href="https://code.visualstudio.com/Download" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
 &lt;h3 id="idea">IDEA&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.jetbrains.com/idea/download/#section=linux" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
 &lt;h3 id="pycharm">PyCharm&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.jetbrains.com/pycharm/download/#section=linux" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
 &lt;h3 id="百度网盘">百度网盘&lt;/h3>
+&lt;p>&lt;a class="link" href="https://pan.baidu.com/download#linux" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
 &lt;h3 id="火焰截图">火焰截图&lt;/h3>
-&lt;h3 id="微信">微信&lt;/h3>
+&lt;p>&lt;a class="link" href="https://linux265.com/soft/3848.html" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo apt install flameshot
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="微信">微信&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.ubuntukylin.com/applications/106-cn.html" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
 &lt;h3 id="虚拟系统管理器">虚拟系统管理器&lt;/h3>
+&lt;p>&lt;a class="link" href="https://virt-manager.org/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
 &lt;h3 id="apipost">APIPost&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.apipost.cn/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
 &lt;h3 id="uget">uGet&lt;/h3>
+&lt;p>&lt;a class="link" href="https://ugetdm.com/downloads/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
 &lt;h3 id="wps">WPS&lt;/h3>
-&lt;h3 id="vlc-媒体播放器">VLC 媒体播放器&lt;/h3></description></item><item><title>NFS</title><link>https://mkbooks.github.io/blog/p/nfs/</link><pubDate>Wed, 16 Nov 2022 20:27:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/nfs/</guid><description>&lt;p>安装&lt;/p>
+&lt;p>&lt;a class="link" href="https://www.wps.com/download/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;h3 id="vlc-媒体播放器">VLC 媒体播放器&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.videolan.org/vlc/download-ubuntu.html" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p></description></item><item><title>NFS</title><link>https://mkbooks.github.io/blog/p/nfs/</link><pubDate>Wed, 16 Nov 2022 20:27:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/nfs/</guid><description>&lt;p>安装&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
