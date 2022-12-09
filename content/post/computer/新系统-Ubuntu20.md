@@ -336,23 +336,38 @@ source $ZSH/oh-my-zsh.sh
 ## 安装软件
 
 ### vscode
+[下载](https://code.visualstudio.com/Download)
 
 ### IDEA
+[下载](https://www.jetbrains.com/idea/download/#section=linux)
 
 ### PyCharm
+[下载](https://www.jetbrains.com/pycharm/download/#section=linux)
 
 ### 百度网盘
+[下载](https://pan.baidu.com/download#linux)
 
 ### 火焰截图
+[下载](https://linux265.com/soft/3848.html)
+
+```
+sudo apt install flameshot
+```
 
 ### 微信
+[下载](https://www.ubuntukylin.com/applications/106-cn.html)
 
 ### 虚拟系统管理器
+[下载](https://virt-manager.org/)
 
 ### APIPost
+[下载](https://www.apipost.cn/)
 
 ### uGet
+[下载](https://ugetdm.com/downloads/)
 
 ### WPS
+[下载](https://www.wps.com/download/)
 
 ### VLC 媒体播放器
+[下载](https://www.videolan.org/vlc/download-ubuntu.html)
