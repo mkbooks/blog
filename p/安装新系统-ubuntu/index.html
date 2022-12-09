@@ -98,7 +98,7 @@ Ubuntu
 </div>
 <div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
 <time class=article-time--reading>
-阅读时长: 5 分钟
+阅读时长: 6 分钟
 </time>
 </div>
 </footer>
@@ -312,6 +312,7 @@ for more information
 <h4 id=安装-oh-my-zsh>安装 oh-my-zsh</h4>
 <ol>
 <li>安装 curl: <code>sudo apt install curl</code></li>
+<li>下载 Git: <code>sudo apt-get install git</code></li>
 <li>安装 oh-my-zsh: <code>sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"</code></li>
 </ol>
 <h4 id=个性化>个性化</h4>
@@ -426,9 +427,9 @@ _arguments:451: _vim_files: function definition file not found
 </span><span class=lnt>3
 </span></code></pre></td>
 <td class=lntd>
-<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>plugins=(zsh-autosuggestions)
-最后一行：
-source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>plugins=(git zsh-autosuggestions)
+# 最后一行：（可以不加）
+# source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 </code></pre></td></tr></table>
 </div>
 </div><ol start=3>
@@ -695,7 +696,7 @@ source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 </span></code></pre></td></tr></table>
 </div>
 </div><h2 id=安装软件>安装软件</h2>
-<h3 id=vscode>vscode</h3>
+<h3 id=vscode>VSCode</h3>
 <p><a class=link href=https://code.visualstudio.com/Download target=_blank rel=noopener>下载</a></p>
 <h3 id=idea>IDEA</h3>
 <p><a class=link href="https://www.jetbrains.com/idea/download/#section=linux" target=_blank rel=noopener>下载</a></p>
@@ -722,9 +723,46 @@ source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 <h3 id=uget>uGet</h3>
 <p><a class=link href=https://ugetdm.com/downloads/ target=_blank rel=noopener>下载</a></p>
 <h3 id=wps>WPS</h3>
-<p><a class=link href=https://www.wps.com/download/ target=_blank rel=noopener>下载</a></p>
+<p><a class=link href=https://linux.wps.cn/ target=_blank rel=noopener>下载</a></p>
 <h3 id=vlc-媒体播放器>VLC 媒体播放器</h3>
 <p><a class=link href=https://www.videolan.org/vlc/download-ubuntu.html target=_blank rel=noopener>下载</a></p>
+<h2 id=添加硬盘>添加硬盘</h2>
+<p><a class=link href=https://www.jianshu.com/p/ec5579ef15a6 target=_blank rel=noopener>参考一</a></p>
+<p><a class=link href=https://blog.51cto.com/u_15127582/4731125 target=_blank rel=noopener>参考二</a></p>
+<ol>
+<li>查看硬盘状况: <code>sudo fdisk -l</code></li>
+<li>分区: <code>sudo fdisk /dev/sdb</code>
+<ol>
+<li>m: 查看命令</li>
+<li>n: 开始分区
+<ol>
+<li>输入分区号1，然后输入大小，默认是一个分区，全部的空间大小</li>
+<li>w保存退出</li>
+</ol>
+</li>
+<li><code>sudo fdisk -l</code> 查看是否创建</li>
+</ol>
+</li>
+<li>格式化分区: <code>sudo mkfs -t ext4 /dev/sdb1</code></li>
+<li>挂载
+<ol>
+<li>sudo mkdir /ssd2</li>
+<li>sudo mount /dev/sdb1 /ssd2</li>
+</ol>
+</li>
+<li>自动挂载
+<ol>
+<li><code>sudo vim /etc/fstab</code>
+<ol>
+<li><code>UUID=b543f8f7-579c-45b5-96d6-31de6fa1a55e /ssd2 ext4 defaults 0 2</code></li>
+<li><code>/dev/nvme0n1p1 /ssd2 ext4 defaults 0 2</code></li>
+</ol>
+</li>
+</ol>
+</li>
+<li>修改权限: ``</li>
+</ol>
+<h2 id=安装服务>安装服务</h2>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
@@ -870,7 +908,7 @@ Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
 </li>
 <li><a href=#安装软件>安装软件</a>
 <ol>
-<li><a href=#vscode>vscode</a></li>
+<li><a href=#vscode>VSCode</a></li>
 <li><a href=#idea>IDEA</a></li>
 <li><a href=#pycharm>PyCharm</a></li>
 <li><a href=#百度网盘>百度网盘</a></li>
@@ -883,6 +921,8 @@ Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
 <li><a href=#vlc-媒体播放器>VLC 媒体播放器</a></li>
 </ol>
 </li>
+<li><a href=#添加硬盘>添加硬盘</a></li>
+<li><a href=#安装服务>安装服务</a></li>
 </ol>
 </nav>
 </div>

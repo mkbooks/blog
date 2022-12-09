@@ -217,6 +217,7 @@ for more information
 &lt;h4 id="安装-oh-my-zsh">安装 oh-my-zsh&lt;/h4>
 &lt;ol>
 &lt;li>安装 curl: &lt;code>sudo apt install curl&lt;/code>&lt;/li>
+&lt;li>下载 Git: &lt;code>sudo apt-get install git&lt;/code>&lt;/li>
 &lt;li>安装 oh-my-zsh: &lt;code>sh -c &amp;quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;quot;&lt;/code>&lt;/li>
 &lt;/ol>
 &lt;h4 id="个性化">个性化&lt;/h4>
@@ -334,9 +335,9 @@ _arguments:451: _vim_files: function definition file not found
 &lt;/span>&lt;span class="lnt">3
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>
 &lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">plugins=(zsh-autosuggestions)
-最后一行：
-source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">plugins=(git zsh-autosuggestions)
+# 最后一行：（可以不加）
+# source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;ol start="3">
@@ -605,7 +606,7 @@ source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 &lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;h2 id="安装软件">安装软件&lt;/h2>
-&lt;h3 id="vscode">vscode&lt;/h3>
+&lt;h3 id="vscode">VSCode&lt;/h3>
 &lt;p>&lt;a class="link" href="https://code.visualstudio.com/Download" target="_blank" rel="noopener"
 >下载&lt;/a>&lt;/p>
 &lt;h3 id="idea">IDEA&lt;/h3>
@@ -641,11 +642,50 @@ source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 &lt;p>&lt;a class="link" href="https://ugetdm.com/downloads/" target="_blank" rel="noopener"
 >下载&lt;/a>&lt;/p>
 &lt;h3 id="wps">WPS&lt;/h3>
-&lt;p>&lt;a class="link" href="https://www.wps.com/download/" target="_blank" rel="noopener"
+&lt;p>&lt;a class="link" href="https://linux.wps.cn/" target="_blank" rel="noopener"
 >下载&lt;/a>&lt;/p>
 &lt;h3 id="vlc-媒体播放器">VLC 媒体播放器&lt;/h3>
 &lt;p>&lt;a class="link" href="https://www.videolan.org/vlc/download-ubuntu.html" target="_blank" rel="noopener"
->下载&lt;/a>&lt;/p></description></item><item><title>基于python的信用评分模型(详附代码)</title><link>https://mkbooks.github.io/blog/p/%E5%9F%BA%E4%BA%8Epython%E7%9A%84%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B%E8%AF%A6%E9%99%84%E4%BB%A3%E7%A0%81/</link><pubDate>Mon, 21 Nov 2022 12:22:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%9F%BA%E4%BA%8Epython%E7%9A%84%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B%E8%AF%A6%E9%99%84%E4%BB%A3%E7%A0%81/</guid><description>&lt;p>转载: &lt;a class="link" href="https://zhuanlan.zhihu.com/p/48048914" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;h2 id="添加硬盘">添加硬盘&lt;/h2>
+&lt;p>&lt;a class="link" href="https://www.jianshu.com/p/ec5579ef15a6" target="_blank" rel="noopener"
+>参考一&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://blog.51cto.com/u_15127582/4731125" target="_blank" rel="noopener"
+>参考二&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>查看硬盘状况: &lt;code>sudo fdisk -l&lt;/code>&lt;/li>
+&lt;li>分区: &lt;code>sudo fdisk /dev/sdb&lt;/code>
+&lt;ol>
+&lt;li>m: 查看命令&lt;/li>
+&lt;li>n: 开始分区
+&lt;ol>
+&lt;li>输入分区号1，然后输入大小，默认是一个分区，全部的空间大小&lt;/li>
+&lt;li>w保存退出&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;code>sudo fdisk -l&lt;/code> 查看是否创建&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>格式化分区: &lt;code>sudo mkfs -t ext4 /dev/sdb1&lt;/code>&lt;/li>
+&lt;li>挂载
+&lt;ol>
+&lt;li>sudo mkdir /ssd2&lt;/li>
+&lt;li>sudo mount /dev/sdb1 /ssd2&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>自动挂载
+&lt;ol>
+&lt;li>&lt;code>sudo vim /etc/fstab&lt;/code>
+&lt;ol>
+&lt;li>&lt;code>UUID=b543f8f7-579c-45b5-96d6-31de6fa1a55e /ssd2 ext4 defaults 0 2&lt;/code>&lt;/li>
+&lt;li>&lt;code>/dev/nvme0n1p1 /ssd2 ext4 defaults 0 2&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>修改权限: ``&lt;/li>
+&lt;/ol>
+&lt;h2 id="安装服务">安装服务&lt;/h2></description></item><item><title>基于python的信用评分模型(详附代码)</title><link>https://mkbooks.github.io/blog/p/%E5%9F%BA%E4%BA%8Epython%E7%9A%84%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B%E8%AF%A6%E9%99%84%E4%BB%A3%E7%A0%81/</link><pubDate>Mon, 21 Nov 2022 12:22:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%9F%BA%E4%BA%8Epython%E7%9A%84%E4%BF%A1%E7%94%A8%E8%AF%84%E5%88%86%E6%A8%A1%E5%9E%8B%E8%AF%A6%E9%99%84%E4%BB%A3%E7%A0%81/</guid><description>&lt;p>转载: &lt;a class="link" href="https://zhuanlan.zhihu.com/p/48048914" target="_blank" rel="noopener"
 >https://zhuanlan.zhihu.com/p/48048914&lt;/a>&lt;/p>
 &lt;p>随着金融知识的普及，越来越多的人开始改变了自己的消费观念，以前是“先储蓄后消费”，现在是“先消费后还钱”，不得不说，这种观念的改变使得人们的物质生活开始变得更丰富，但与此同时也带来了一些问题：部分人开始还不起款了。在贷款供应端就涉及到了信用评分的问题。&lt;/p></description></item><item><title>kubernetes 镜像</title><link>https://mkbooks.github.io/blog/p/kubernetes-%E9%95%9C%E5%83%8F/</link><pubDate>Fri, 18 Nov 2022 23:22:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/kubernetes-%E9%95%9C%E5%83%8F/</guid><description>&lt;h1 id="查看需要哪些镜像">查看需要哪些镜像：&lt;/h1>
 &lt;div class="highlight">&lt;div class="chroma">
