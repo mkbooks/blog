@@ -128,7 +128,8 @@ for more information
 
 #### 安装 oh-my-zsh
 1. 安装 curl: `sudo apt install curl`
-2. 安装 oh-my-zsh: `sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
+2. 下载 Git: `sudo apt-get install git`
+3. 安装 oh-my-zsh: `sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
 
 #### 个性化
 ##### 主题
@@ -198,9 +199,9 @@ for more information
 1. `git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions`
 2. `vim ~/.zshrc`
 ```
-plugins=(zsh-autosuggestions)
-最后一行：
-source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+plugins=(git zsh-autosuggestions)
+# 最后一行：（可以不加）
+# source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 ```
 3. `source ~/.zshrc`
 
@@ -332,10 +333,9 @@ source $ZSH/oh-my-zsh.sh
 ```
 
 
-
 ## 安装软件
 
-### vscode
+### VSCode
 [下载](https://code.visualstudio.com/Download)
 
 ### IDEA
@@ -367,7 +367,32 @@ sudo apt install flameshot
 [下载](https://ugetdm.com/downloads/)
 
 ### WPS
-[下载](https://www.wps.com/download/)
+[下载](https://linux.wps.cn/)
 
 ### VLC 媒体播放器
 [下载](https://www.videolan.org/vlc/download-ubuntu.html)
+
+## 添加硬盘
+[参考一](https://www.jianshu.com/p/ec5579ef15a6)
+
+[参考二](https://blog.51cto.com/u_15127582/4731125)
+
+1. 查看硬盘状况: `sudo fdisk -l`
+2. 分区: `sudo fdisk /dev/sdb`
+    1. m: 查看命令
+    2. n: 开始分区
+        1. 输入分区号1，然后输入大小，默认是一个分区，全部的空间大小
+        2. w保存退出
+    3. `sudo fdisk -l` 查看是否创建
+3. 格式化分区: `sudo mkfs -t ext4 /dev/sdb1`
+4. 挂载
+    1. sudo mkdir /ssd2
+    2. sudo mount /dev/sdb1 /ssd2
+5. 自动挂载
+    1. `sudo vim /etc/fstab`
+        1. `UUID=b543f8f7-579c-45b5-96d6-31de6fa1a55e /ssd2 ext4 defaults 0 2`
+        2. `/dev/nvme0n1p1  /ssd2   ext4 defaults 0 2`
+6. 修改权限: ``
+
+## 安装服务
+
