@@ -798,6 +798,54 @@ _arguments:451: _vim_files: function definition file not found
 <h3 id=go>go</h3>
 <p><a class=link href=https://golang.google.cn/dl/ target=_blank rel=noopener>下载</a></p>
 <p><a class=link href=https://mkbooks.github.io/k8s-mengfanjie/1/2/2/ target=_blank rel=noopener>安装</a></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>tar -zxf go*.tar.gz
+sudo mv go /usr/local
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=设置环境变量>设置环境变量</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>mkdir -p /ssd2/go/{src,pkg,bin}
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sudo vim ~/.bashrc
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>export GOROOT=/usr/local/go
+export GOPATH=/ssd2/go
+export GOPROXY=https://goproxy.cn
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>source ~/.bashrc
+</code></pre></td></tr></table>
+</div>
+</div>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
@@ -960,7 +1008,11 @@ Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
 <li><a href=#安装服务>安装服务</a>
 <ol>
 <li><a href=#mkdocs>mkdocs</a></li>
-<li><a href=#go>go</a></li>
+<li><a href=#go>go</a>
+<ol>
+<li><a href=#设置环境变量>设置环境变量</a></li>
+</ol>
+</li>
 </ol>
 </li>
 </ol>
