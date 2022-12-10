@@ -612,9 +612,21 @@ _arguments:451: _vim_files: function definition file not found
 &lt;h3 id="idea">IDEA&lt;/h3>
 &lt;p>&lt;a class="link" href="https://www.jetbrains.com/idea/download/#section=linux" target="_blank" rel="noopener"
 >下载&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>tar -zxf ideaIU-2020.1.3.tar.gz&lt;/code>&lt;/li>
+&lt;li>&lt;code>cd idea-IU-201.8538.31/bin/&lt;/code>&lt;/li>
+&lt;li>安装: &lt;code>./idea.sh&lt;/code>&lt;/li>
+&lt;li>设置桌面快捷方式（略）&lt;/li>
+&lt;/ol>
 &lt;h3 id="pycharm">PyCharm&lt;/h3>
 &lt;p>&lt;a class="link" href="https://www.jetbrains.com/pycharm/download/#section=linux" target="_blank" rel="noopener"
 >下载&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>tar -zxf pycharm-professional-2020.1.3.tar.gz&lt;/code>&lt;/li>
+&lt;li>&lt;code>cd idea-IU-201.8538.31/bin/&lt;/code>&lt;/li>
+&lt;li>安装: &lt;code>./idea.sh&lt;/code>&lt;/li>
+&lt;li>设置桌面快捷方式（略）&lt;/li>
+&lt;/ol>
 &lt;h3 id="百度网盘">百度网盘&lt;/h3>
 &lt;p>&lt;a class="link" href="https://pan.baidu.com/download#linux" target="_blank" rel="noopener"
 >下载&lt;/a>&lt;/p>
@@ -635,6 +647,16 @@ _arguments:451: _vim_files: function definition file not found
 &lt;h3 id="虚拟系统管理器">虚拟系统管理器&lt;/h3>
 &lt;p>&lt;a class="link" href="https://virt-manager.org/" target="_blank" rel="noopener"
 >下载&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>sudo apt install virt-manager&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo systemctl status libvirtd&lt;/code>
+&lt;ol>
+&lt;li>&lt;code>sudo systemctl enable libvirtd&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo systemctl start libvirtd&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;code>sudo usermod -a -G libvirt ${USER}&lt;/code>&lt;/li>
+&lt;/ol>
 &lt;h3 id="apipost">APIPost&lt;/h3>
 &lt;p>&lt;a class="link" href="https://www.apipost.cn/" target="_blank" rel="noopener"
 >下载&lt;/a>&lt;/p>
@@ -683,9 +705,25 @@ _arguments:451: _vim_files: function definition file not found
 &lt;/li>
 &lt;/ol>
 &lt;/li>
-&lt;li>修改权限: ``&lt;/li>
+&lt;li>修改权限: &lt;code>sudo chown -R cjx:cjx /ssd2&lt;/code>&lt;/li>
 &lt;/ol>
-&lt;h2 id="安装服务">安装服务&lt;/h2></description></item><item><title>NFS</title><link>https://mkbooks.github.io/blog/p/nfs/</link><pubDate>Wed, 16 Nov 2022 20:27:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/nfs/</guid><description>&lt;p>安装&lt;/p>
+&lt;h2 id="安装服务">安装服务&lt;/h2>
+&lt;h3 id="mkdocs">mkdocs&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.mkdocs.org/getting-started/" target="_blank" rel="noopener"
+>Getting Started with MkDocs&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>sudo apt update&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo apt install python3-pip&lt;/code>&lt;/li>
+&lt;li>&lt;code>pip install mkdocs&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo apt install mkdocs&lt;/code>&lt;/li>
+&lt;li>&lt;code>pip install mkdocs-material&lt;/code>&lt;/li>
+&lt;li>&lt;code>mkdocs serve&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h3 id="go">go&lt;/h3>
+&lt;p>&lt;a class="link" href="https://golang.google.cn/dl/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://mkbooks.github.io/k8s-mengfanjie/1/2/2/" target="_blank" rel="noopener"
+>安装&lt;/a>&lt;/p></description></item><item><title>NFS</title><link>https://mkbooks.github.io/blog/p/nfs/</link><pubDate>Wed, 16 Nov 2022 20:27:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/nfs/</guid><description>&lt;p>安装&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
