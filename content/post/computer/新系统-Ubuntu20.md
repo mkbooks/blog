@@ -426,3 +426,22 @@ sudo apt install flameshot
 
 [安装](https://mkbooks.github.io/k8s-mengfanjie/1/2/2/)
 
+```
+tar -zxf go*.tar.gz
+sudo mv go /usr/local
+```
+#### 设置环境变量
+```
+mkdir -p /ssd2/go/{src,pkg,bin}
+```
+```
+sudo vim ~/.bashrc
+```
+```
+export GOROOT=/usr/local/go
+export GOPATH=/ssd2/go
+export GOPROXY=https://goproxy.cn
+```
+```
+source ~/.bashrc
+```
