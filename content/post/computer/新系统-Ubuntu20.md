@@ -341,8 +341,18 @@ source $ZSH/oh-my-zsh.sh
 ### IDEA
 [下载](https://www.jetbrains.com/idea/download/#section=linux)
 
+1. `tar -zxf ideaIU-2020.1.3.tar.gz`
+2. `cd idea-IU-201.8538.31/bin/`
+3. 安装: `./idea.sh`
+4. 设置桌面快捷方式（略）
+
 ### PyCharm
 [下载](https://www.jetbrains.com/pycharm/download/#section=linux)
+
+1. `tar -zxf pycharm-professional-2020.1.3.tar.gz`
+2. `cd idea-IU-201.8538.31/bin/`
+3. 安装: `./idea.sh`
+4. 设置桌面快捷方式（略）
 
 ### 百度网盘
 [下载](https://pan.baidu.com/download#linux)
@@ -360,6 +370,11 @@ sudo apt install flameshot
 ### 虚拟系统管理器
 [下载](https://virt-manager.org/)
 
+1. `sudo apt install virt-manager`
+2. `sudo systemctl status libvirtd`
+    1. `sudo systemctl enable libvirtd`
+    2. `sudo systemctl start libvirtd`
+3. `sudo usermod -a -G libvirt ${USER}`
 ### APIPost
 [下载](https://www.apipost.cn/)
 
@@ -392,7 +407,22 @@ sudo apt install flameshot
     1. `sudo vim /etc/fstab`
         1. `UUID=b543f8f7-579c-45b5-96d6-31de6fa1a55e /ssd2 ext4 defaults 0 2`
         2. `/dev/nvme0n1p1  /ssd2   ext4 defaults 0 2`
-6. 修改权限: ``
+6. 修改权限: `sudo chown -R cjx:cjx /ssd2`
 
 ## 安装服务
+
+### mkdocs
+[Getting Started with MkDocs](https://www.mkdocs.org/getting-started/)
+
+1. `sudo apt update`
+2. `sudo apt install python3-pip`
+3. `pip install mkdocs`
+4. `sudo apt install mkdocs`
+5. `pip install mkdocs-material`
+6. `mkdocs serve`
+
+### go
+[下载](https://golang.google.cn/dl/)
+
+[安装](https://mkbooks.github.io/k8s-mengfanjie/1/2/2/)
 
