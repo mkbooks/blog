@@ -352,7 +352,9 @@ source $ZSH/oh-my-zsh.sh
 1. `tar -zxf pycharm-professional-2020.1.3.tar.gz`
 2. `cd idea-IU-201.8538.31/bin/`
 3. 安装: `./idea.sh`
-4. 设置桌面快捷方式（略）
+4. 设置桌面快捷方式
+    1. pycharm_pkg目录下: `bin/pycharm.sh`
+    2. tools -> Create desktop entry
 
 ### 百度网盘
 [下载](https://pan.baidu.com/download#linux)
