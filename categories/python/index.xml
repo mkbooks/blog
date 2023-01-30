@@ -143,6 +143,7 @@ print({
 {&amp;#39;容量&amp;#39;: &amp;#39;457G&amp;#39;, &amp;#39;已用&amp;#39;: &amp;#39;325G&amp;#39;, &amp;#39;可用&amp;#39;: &amp;#39;110G&amp;#39;, &amp;#39;已用%&amp;#39;: &amp;#39;75%&amp;#39;}
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>python 清理包</title><link>https://mkbooks.github.io/blog/p/python-%E6%B8%85%E7%90%86%E5%8C%85/</link><pubDate>Mon, 08 Aug 2022 18:13:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/python-%E6%B8%85%E7%90%86%E5%8C%85/</guid><description>&lt;p>pip freeze &amp;gt; test.txt&lt;/p>
+&lt;/div></description></item><item><title>python 清理包</title><link>https://mkbooks.github.io/blog/p/python-%E6%B8%85%E7%90%86%E5%8C%85/</link><pubDate>Mon, 08 Aug 2022 18:13:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/python-%E6%B8%85%E7%90%86%E5%8C%85/</guid><description>&lt;p>pip list&lt;/p>
+&lt;p>pip freeze &amp;gt; test.txt&lt;/p>
 &lt;p>pip uninstall -r test.txt -y&lt;/p>
 &lt;p>pip install -r requirements.txt&lt;/p></description></item></channel></rss>
