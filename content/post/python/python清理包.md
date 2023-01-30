@@ -13,6 +13,8 @@ categories : [              # 文章所属标签
 ]
 
 ---
+pip list 
+
 pip freeze > test.txt
 
 pip uninstall -r test.txt -y
