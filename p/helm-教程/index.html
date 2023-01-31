@@ -129,6 +129,94 @@ helm 教程
 </ul>
 </li>
 </ul>
+<h2 id=基础操作>基础操作</h2>
+<h3 id=仓库>仓库</h3>
+<ul>
+<li>查看配置的仓库：<code>helm repo list</code></li>
+<li>添加新的仓库：<code>helm repo add</code>
+<ul>
+<li><code>helm repo add brigade https://brigadecore.github.io/charts</code></li>
+</ul>
+</li>
+<li>更新仓库：<code>helm repo update</code></li>
+<li>移除仓库: <code>helm repo remove</code></li>
+</ul>
+<h3 id=charts>Charts</h3>
+<ul>
+<li>查找可用的charts：<code>helm search hub</code>
+<ul>
+<li><code>helm search hub wordpress</code></li>
+</ul>
+</li>
+<li>从添加的仓库中查找可用的charts: <code>helm search repo brigade</code>
+<ul>
+<li>搜索使用模糊字符串匹配算法: <code>helm search repo bri</code></li>
+</ul>
+</li>
+</ul>
+<h3 id=安装一个-helm-包>安装一个 helm 包</h3>
+<ul>
+<li>使用 <code>helm install</code> 命令来安装一个新的 helm 包。最简单的使用方法只需要传入两个参数：你命名的release名字和你想安装的chart的名称。（如果想让Helm生成一个名称，删除发布名称并使用&ndash;generate-name。）
+<ul>
+<li><code>helm install happy-panda bitnami/wordpress</code></li>
+</ul>
+</li>
+<li>使用 helm status 来追踪 release 的状态，或是重新读取配置信息：
+<ul>
+<li><code>helm status happy-panda</code></li>
+</ul>
+</li>
+</ul>
+<h4 id=自定义-chart>自定义 chart</h4>
+<ul>
+<li>使用 helm show values 可以查看 chart 中的可配置选项：<code>helm show values bitnami/wordpress</code></li>
+</ul>
+<p>使用 YAML 格式的文件覆盖上述任意配置项，并在安装过程中使用该文件。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>$ echo &#39;{mariadb.auth.database: user0db, mariadb.auth.username: user0}&#39; &gt; values.yaml
+$ helm install -f values.yaml bitnami/wordpress --generate-name
+</code></pre></td></tr></table>
+</div>
+</div><p>安装过程中有两种方式传递配置数据：</p>
+<ul>
+<li>&ndash;values (或 -f)：使用 YAML 文件覆盖配置。可以指定多次，优先使用最右边的文件。</li>
+<li>&ndash;set：通过命令行的方式对指定项进行覆盖。</li>
+</ul>
+<h4 id=升级-release>升级 release</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>helm upgrade -f panda.yaml happy-panda bitnami/wordpress
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=失败时恢复>失败时恢复</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>helm rollback happy-panda 1
+</code></pre></td></tr></table>
+</div>
+</div><h4 id=查看配置值>查看配置值</h4>
+<p><code>helm get values happy-panda</code></p>
+<h4 id=卸载-release>卸载 release</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>helm uninstall happy-panda
+</code></pre></td></tr></table>
+</div>
+</div><p>展示 Helm 保留的所有 release 记录，包括失败或删除的条目（指定了 &ndash;keep-history）：<code>helm list --all</code></p>
 </section>
 <footer class=article-footer>
 <section class=article-tags>
@@ -178,9 +266,9 @@ helm 教程
 </a>
 </article>
 <article>
-<a href=/blog/p/k8s%E5%BC%BA%E5%88%B6%E5%88%A0%E9%99%A4podpvpvc%E5%92%8Cnsnamespace%E6%96%B9%E6%B3%95/>
+<a href=/blog/p/k8s%E7%9A%84namespace%E4%B8%80%E7%9B%B4terminating%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/>
 <div class=article-details>
-<h2 class=article-title>k8s强制删除pod&pv&pvc和ns&namespace方法</h2>
+<h2 class=article-title>k8s的namespace一直Terminating的完美解决方案</h2>
 </div>
 </a>
 </article>
@@ -244,6 +332,34 @@ Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
 </div>
 </div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous>
 </main>
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
+</div>
+<h2 class="widget-title section-title">目录</h2>
+<div class=widget--toc>
+<nav id=TableOfContents>
+<ol>
+<li><a href=#基础操作>基础操作</a>
+<ol>
+<li><a href=#仓库>仓库</a></li>
+<li><a href=#charts>Charts</a></li>
+<li><a href=#安装一个-helm-包>安装一个 helm 包</a>
+<ol>
+<li><a href=#自定义-chart>自定义 chart</a></li>
+<li><a href=#升级-release>升级 release</a></li>
+<li><a href=#失败时恢复>失败时恢复</a></li>
+<li><a href=#查看配置值>查看配置值</a></li>
+<li><a href=#卸载-release>卸载 release</a></li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
+</nav>
+</div>
+</section>
+</aside>
 </div>
 <script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/blog/ts/main.js defer></script>
 <script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
