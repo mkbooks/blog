@@ -1,4 +1,86 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>kubernetes on 我的空间</title><link>https://mkbooks.github.io/blog/tags/kubernetes/</link><description>Recent content in kubernetes on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 29 Nov 2022 09:00:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>安装 kubernetes v1.25</title><link>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85-kubernetes-v1.25/</link><pubDate>Tue, 29 Nov 2022 09:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85-kubernetes-v1.25/</guid><description>&lt;h1 id="环境">环境&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Kubernetes on 我的空间</title><link>https://mkbooks.github.io/blog/tags/kubernetes/</link><description>Recent content in Kubernetes on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 31 Jan 2023 14:30:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/tags/kubernetes/index.xml" rel="self" type="application/rss+xml"/><item><title>使用 helm 遇到的问题</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-helm-%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</link><pubDate>Tue, 31 Jan 2023 14:30:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8-helm-%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98/</guid><description>&lt;ul>
+&lt;li>版本
+&lt;ul>
+&lt;li>helm version
+&lt;ul>
+&lt;li>&lt;code>version.BuildInfo{Version:&amp;quot;v3.7.0&amp;quot;, GitCommit:&amp;quot;eeac83883cb4014fe60267ec6373570374ce770b&amp;quot;, GitTreeState:&amp;quot;clean&amp;quot;, GoVersion:&amp;quot;go1.16.8&amp;quot;}&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h1 id="问题-1">问题 1&lt;/h1>
+&lt;h2 id="操作">操作&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">helm repo add bitnami https://charts.bitnami.com/bitnami
+helm search repo bitnami | grep mysql
+helm repo update
+helm install bitnami/mysql --generate-name
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="报错">报错&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">Error: INSTALLATION FAILED: Kubernetes cluster unreachable: Get &amp;#34;http://localhost:8080/version?timeout=32s&amp;#34;: dial tcp 127.0.0.1:8080: connect: connection refused
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="解决">解决&lt;/h2>
+&lt;blockquote>
+&lt;p>手动配置 KUBECONFIG 环境变量&lt;/p>
+&lt;/blockquote>
+&lt;p>临时解决: &lt;code>export KUBECONFIG=/etc/rancher/k3s/k3s.yaml&lt;/code>&lt;/p>
+&lt;p>永久解决:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">vim ~/.bashrc
+# 写入内容: export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+source ~/.bashrc
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="原理">原理&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">helm v3 版本不再需要 Tiller，而是直接访问 ApiServer 来与 k8s 交互，通过环境变量 KUBECONFIG 来读取存有 ApiServre 的地址与 token 的配置文件地址，默认地址为 ~/.kube/config
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>helm 教程</title><link>https://mkbooks.github.io/blog/p/helm-%E6%95%99%E7%A8%8B/</link><pubDate>Tue, 31 Jan 2023 14:20:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/helm-%E6%95%99%E7%A8%8B/</guid><description>&lt;ul>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://helm.sh/" target="_blank" rel="noopener"
+>helm docs 官网&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;a class="link" href="https://helm.sh/zh/docs/" target="_blank" rel="noopener"
+>helm docs 中文文档&lt;/a>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>版本&lt;/p>
+&lt;ul>
+&lt;li>helm version
+&lt;ul>
+&lt;li>&lt;code>version.BuildInfo{Version:&amp;quot;v3.7.0&amp;quot;, GitCommit:&amp;quot;eeac83883cb4014fe60267ec6373570374ce770b&amp;quot;, GitTreeState:&amp;quot;clean&amp;quot;, GoVersion:&amp;quot;go1.16.8&amp;quot;}&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item><item><title>安装 kubernetes v1.25</title><link>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85-kubernetes-v1.25/</link><pubDate>Tue, 29 Nov 2022 09:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85-kubernetes-v1.25/</guid><description>&lt;h1 id="环境">环境&lt;/h1>
 &lt;ul>
 &lt;li>操作系统: CentOS7&lt;/li>
 &lt;li>cpu 架构: x86&lt;/li>
