@@ -16,10 +16,10 @@ menu:
 
 ## 个人能力
 - 编程语言: Go、Scala、Kotlin、Python、Java、SQL、Shell。
-- 开发框架: Gin、AKKA、Vert.x、Flask。
-- 大数据生态: Hadoop、YARN、MapReduce、Kafka、Flume、Sqoop、Oozie、Azkaban、Spark、SparkSQL、SparkStreaming、Storm等。
+- 开发框架: Gin、AKKA、Vert.x、Flask、Spring Boot。
+- 大数据生态: Hadoop、YARN、MapReduce、Kafka、Flume、Sqoop、Oozie、Azkaban、Spark、SparkSQL、SparkStreaming、Storm、Flink等。
 - ETL: Flume、Sqoop、Kettle。
-- 数据库: HBase、Hive、Redis、MySQL、PostgreSQL、ElasticSearch、MSSQL。
+- 数据库: HBase、Hive、Redis、MySQL、PostgreSQL、ElasticSearch、MongoDB、MSSQL。
 - 云原生: Docker、Kubernetes（K8s）。
 - 团队协作: Git、GitHub、GitLab。
 - 能够独立从0到1搭建企业大数据平台及云原生平台。
@@ -28,7 +28,7 @@ menu:
 ### 工作经历（4）
 - 工作时间: 2021年8月至今
 - 工作公司: 北京可利邦信息技术有限公司
-- 部门岗位: AI中台部门-大数据&后台开发工程师
+- 部门岗位: AI事业部-大数据&后台开发工程师
 #### 项目经验
 - 项目名称：AI中台
 - 项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台敏捷地提供各种AI服务。
