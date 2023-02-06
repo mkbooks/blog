@@ -44,8 +44,8 @@ menu:
 #### 负责项目三
 - 项目名称：大数据隐私计算平台
 - 项目描述：基于KubeFATE开源框架开发，运行在Kubernetes平台上。为联邦集群提供隐私计算能力。
-- 我的职责：搭建Kubernetes基础平台，包括NFS、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。
-- 开发技术：开发语言：Python，Go，Lua。使用技术：Kurberntes、KubeFATE、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、Elasticsearch、Fluentd、Kibana、MySQL、Redis。开发框架：flask-restplus。ECK: Elasticsearch、Kibana、Fluentd。
+- 我的职责：搭建Kubernetes基础平台，包括NFS、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。搭建OpenVPN网络。
+- 开发技术：开发语言：Python，Go，Lua。使用技术：Kurberntes、KubeFATE、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、Elasticsearch、Fluentd、Kibana、MySQL、Redis。开发框架：flask-restplus。ECK: Elasticsearch、Kibana、Fluentd。VPN：OpenVPN。
 
 ### 工作经历（3）
 - 工作时间: 2020年4月至2021年8月
