@@ -1,5 +1,5 @@
 ---
-title: "安装 kubernetes"           # 文章标题
+title: "安装 kubernetes(Ubuntu20.04环境)"           # 文章标题
 author: "陈金鑫"              # 文章作者
 description : "安装 kubernetes"    # 文章描述信息
 lastmod: 2022-11-18T22:22:00+08:00        # 文章修改日期
