@@ -57,7 +57,7 @@ sudo apt-get update
 ```
 ## 安装 docker 
 ```
-apt install docker.io
+sudo apt install docker.io -y
 ```
 ### 设置 docker
 ```
