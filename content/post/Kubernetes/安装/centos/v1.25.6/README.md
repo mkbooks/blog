@@ -362,6 +362,7 @@ kubeadm version
 kubectl version --client
 systemctl enable --now kubelet
 ```
+
 # 创建成镜像，复制两台做node
 ## 设置三台机器
 hostname
@@ -381,6 +382,7 @@ hosts
 192.168.122.221 node1
 192.168.122.105 node2
 ```
+
 # 创建集群
 ## 修改 kubeadm 配置文件
 输出集群初始化默认使用的配置
@@ -518,3 +520,64 @@ ifconfig cni0 down && ip link delete cni0
 ifconfig flannel.1 down && ip link delete flannel.1
 rm -rf /var/lib/cni/
 ```
+
+# Dashboard
+一键安装
+```
+wget https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
+vim recommended.yaml
+# 修改Service为NodePort类型
+# 创建
+kubectl apply -f recommended.yaml
+```
+Dashboard 会被默认安装在 kubernetes-dashboard 这个命名空间下面
+```
+[root@master ~]# k get pod -n kubernetes-dashboard
+NAME                                         READY   STATUS    RESTARTS   AGE
+dashboard-metrics-scraper-64bcc67c9c-qxxdb   1/1     Running   0          25s
+kubernetes-dashboard-5c8bd6b59-hvcmz         1/1     Running   0          25s
+```
+查看 Dashboard 的 NodePort 端口：
+```
+[root@master ~]# k -n kubernetes-dashboard get svc
+NAME                        TYPE        CLUSTER-IP       EXTERNAL-IP   PORT(S)         AGE
+dashboard-metrics-scraper   ClusterIP   10.104.242.146   <none>        8000/TCP        58s
+kubernetes-dashboard        NodePort    10.97.53.187     <none>        443:31113/TCP   58s
+```
+浏览器访问`https://192.168.122.88:31113/`
+
+后创建一个具有全局所有权限的用户来登录 Dashboard：
+```
+# admin.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: admin-user
+  namespace: kubernetes-dashboard
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: admin-user
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: admin-user
+    namespace: kubernetes-dashboard
+```
+```
+k apply -f admin.yaml
+```
+使用 `kubectl create token` 命令来请求一个 service account token：
+```
+# 请求创建一个 token 作为 kubernetes-dashboard 命名空间中的 admin-user 这个 sa 对 kube-apiserver 进行身份验证
+kubectl -n kubernetes-dashboard create token admin-user
+```
+output
+```
+eyJhbGciOiJSUzI1NiIsImtpZCI6IjVpN0xiazlNT1VwdGc5MGIxNTloOVVGSE9rMlp4b0J2NF9KLUZhT25ONTgifQ.eyJhdWQiOlsiaHR0cHM6Ly9rdWJlcm5ldGVzLmRlZmF1bHQuc3ZjLmNsdXN0ZXIubG9jYWwiXSwiZXhwIjoxNjc2OTA0MTM2LCJpYXQiOjE2NzY5MDA1MzYsImlzcyI6Imh0dHBzOi8va3ViZXJuZXRlcy5kZWZhdWx0LnN2Yy5jbHVzdGVyLmxvY2FsIiwia3ViZXJuZXRlcy5pbyI6eyJuYW1lc3BhY2UiOiJrdWJlcm5ldGVzLWRhc2hib2FyZCIsInNlcnZpY2VhY2NvdW50Ijp7Im5hbWUiOiJhZG1pbi11c2VyIiwidWlkIjoiMmNkNmZkNjktNDgwMS00NDg4LWJmNmYtYTU5OTk1NDZmNzg4In19LCJuYmYiOjE2NzY5MDA1MzYsInN1YiI6InN5c3RlbTpzZXJ2aWNlYWNjb3VudDprdWJlcm5ldGVzLWRhc2hib2FyZDphZG1pbi11c2VyIn0.PGmc5jL4wyDCDmMAgXh4WA7kdfc1nrFuvq6zWCsM96zSyxzpB_yqtSCjfoOxlmTRvddiVuZRd8V8lcgka7rPuISJgm0AXN-1vX1sZaA7YTCLuEwMfRRo9cG8Z6k36TiWuDiKETyG5lPUh7FbfHccYh7nRHAoKyKmkkZlDrt2rEQI8jAVEpoJVDC0KEo-pC146dZe9dXgcT5JrDRjbVnYOVfTQAjxNYMkSf1uOGyKo00GoFK5PI-4NsLC751YxXxFILnhH8ojm3nz3vurJr4mNvHcGrYGnSu6ki12_SKsLHQRthzkRmDCJAOzmxMuk04sGC2KP7nxDgP4DVrJc3rZXQ
+```
+用上面的字符串作为 token 登录 Dashboard 即可
