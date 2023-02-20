@@ -1,5 +1,5 @@
 ---
-title: "CentOS7.9下安装kubernetes v1.25.6"
+title: "CentOS7.9 下安装 kubernetes v1.25.6"
 author: "陈金鑫"
 description : "安装 kubernetes"
 lastmod: 2023-02-20T09:00:00+08:00
@@ -63,7 +63,7 @@ vim /etc/hosts
 ```
 [root@master ~]# modprobe br_netfilter
 ```
-令设置成开机启动
+设置成开机启动
 ```
 vim /etc/rc.d/rc.local
 # 添加
