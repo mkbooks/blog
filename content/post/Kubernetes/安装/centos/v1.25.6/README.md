@@ -2,12 +2,12 @@
 title: "CentOS7.9下安装kubernetes v1.25.6"
 author: "陈金鑫"
 description : "安装 kubernetes"
-lastmod: 2023-02-19T09:00:00+08:00
-date: 2023-02-19T09:00:00+08:00
-tags : [                    # 文章所属标签
+lastmod: 2023-02-20T09:00:00+08:00
+date: 2023-02-20T09:00:00+08:00
+tags : [                    
     "kubernetes"
 ]
-categories : [              # 文章所属标签
+categories : [              
     "kubernetes"
 ]
 
@@ -344,10 +344,9 @@ EOF
 ```
 安装 kubeadm、kubelet、kubectl
 ```
+yum makecache fast
 # 查看可安装版本
 yum list kubectl --showduplicates|grep 1.25
-
-yum makecache fast
 
 # --disableexcludes 禁掉除了kubernetes之外的别的仓库
 yum install -y kubelet-1.25.4 kubeadm-1.25.4 kubectl-1.25.4 --disableexcludes=kubernetes
@@ -410,6 +409,11 @@ kubeadm config images pull --config kubeadm.yaml
 invalid configuration for GroupVersionKind /, Kind=InitConfiguration: kind and apiVersion is mandatory information that must be specified
 To see the stack trace of this error execute with --v=5 or higher
 ```
+问题原因
+```
+kubeadm.yaml文件内容粘贴错误
+```
+
 尝试下面方法
 ```
 [root@master ~]# kubeadm config images pull --image-repository=registry.aliyuncs.com/k8sxio
