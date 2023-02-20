@@ -34,7 +34,7 @@ categories : [
     3. 创建 FRP 容器。
         1. docker run -d --restart always --network host --name frps -v /home/sammy/frp/frps.ini:/etc/frp/frps.ini snowdreamtech/frps
     4. 控制面板
-        1. http://114.132.247.115:7500/
+        1. http://${public_ip}:7500/
 3. 客户端
     1. 下载 FRP 镜像。
         1. docker pull snowdreamtech/frpc
@@ -44,8 +44,8 @@ categories : [
         1. docker run -d --restart always --network host --name frpc -v /home/sammy/frp/frpc.ini:/etc/frp/frpc.ini snowdreamtech/frpc
 4. 测试
     1. ssh
-        2. ssh root@114.132.247.115 -p 2288
+        2. ssh root@${public_ip} -p 2288
     2. nginx
-        1. http://114.132.247.115:8080/
+        1. http://${public_ip}:8080/
     3. k8s-dashboard
-        1. https://114.132.247.115:1113/
+        1. https://${public_ip}:1113/
