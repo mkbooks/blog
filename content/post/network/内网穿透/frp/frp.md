@@ -4,10 +4,10 @@ author: "陈金鑫"
 description : "基于Docker通过FRP实现内网穿透"
 lastmod: 2023-02-20T10:00:00+08:00
 date: 2023-02-20T10:00:00+08:00
-tags : [                    
-    "FRP"
-]
 categories : [              
+    "网络"
+]
+tags : [                    
     "FRP"
 ]
 ---
@@ -44,7 +44,7 @@ categories : [
         1. docker run -d --restart always --network host --name frpc -v /home/sammy/frp/frpc.ini:/etc/frp/frpc.ini snowdreamtech/frpc
 4. 测试
     1. ssh
-        2. ssh root@${public_ip} -p 2288
+        1. ssh root@${public_ip} -p 2288
     2. nginx
         1. http://${public_ip}:8080/
     3. k8s-dashboard

@@ -1,8 +1,8 @@
 ---
-title: "Linux"
+title: "Python"
 description: "This is an example category"
-slug: "Linux"
-image: "hutomo-abrianto-l2jk-uxb1BY-unsplash.jpg"
+slug: "Python"
+image: "python.jpeg"
 style:
     background: "#2a9d8f"
     color: "#fff"
