@@ -2,8 +2,8 @@
 title: "stable-diffusion-webui 使用"
 author: "陈金鑫"
 description : "stable-diffusion-webui 使用"
-date: 2022-10-30T16:38:18+08:00
-lastmod: 2022-10-30T16:38:18+08:00
+date: 2023-03-07T21:00:00+08:00
+lastmod: 2023-03-07T21:00:00+08:00
 
 tags : [            
     "绘画",
