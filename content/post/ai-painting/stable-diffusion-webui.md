@@ -56,3 +56,9 @@ Negative prompt: (((simple background))),monochrome ,lowres, bad anatomy, bad ha
 Steps: 30, Sampler: Euler a, CFG scale: 6, Seed: 1882365488, Face restoration: CodeFormer, Size: 512x512, Model hash: 03df69045a, Model: stablydiffuseds_26, Denoising strength: 0.7, ControlNet Enabled: True, ControlNet Module: openpose, ControlNet Model: control_sd15_openpose [fef5e48e], ControlNet Weight: 1, ControlNet Guidance Start: 0, ControlNet Guidance End: 1, Hires upscale: 2, Hires steps: 30, Hires upscaler: Latent (bicubic antialiased)
 ```
 ![stablydiffuseds_26](images/00011-2912952065.png)
+
+## Fantasy World
+风景
+
+## Cheese Daddy's Landscapes mix
+风景
