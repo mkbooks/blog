@@ -8,6 +8,7 @@ lastmod: 2023-03-07T21:00:00+08:00
 tags : [            
     "绘画",
     "AI",
+    "stable-diffusion"
 ]
 categories : [
     "绘画",
