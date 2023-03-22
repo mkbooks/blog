@@ -5,15 +5,11 @@ on:
     branches:
       - main  # 这里的意思是当 main分支发生push的时候，运行下面的jobs
 
-# 解决方案
-permissions:
-  contents: write
-
 jobs:
   deploy: # 任务名自取
     runs-on: ubuntu-latest	# 在什么环境运行任务
     steps:
-      - uses: actions/checkout@v2	# 引用actions/checkout这个action，与所在的github仓库同名
+      - uses: actions/checkout@v3	# 引用actions/checkout这个action，与所在的github仓库同名
         with:
           submodules: true  # Fetch Hugo themes (true OR recursive) 获取submodule主题
           fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
