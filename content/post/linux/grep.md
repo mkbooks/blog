@@ -1,7 +1,7 @@
 ---
 title: "grep 使用"
 author: "陈金鑫"
-description : "VLC播放器快捷键"
+description : "grep 使用"
 lastmod: 2023-03-22T17:00:00+08:00
 date: 2023-03-22T17:00:00+08:00
 tags : [
