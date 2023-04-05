@@ -55,8 +55,8 @@ menu:
 - 开发技术：开发语言：Python，Go，Lua。使用技术：Kurberntes、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、Elasticsearch、Fluentd、Kibana、MySQL、Redis。开发框架：flask-restplus。ECK: Elasticsearch、Kibana、Fluentd。数据库版本管理：Alembic。自动化部署：Fabric。
 
 ### 工作经历（3）
-- 工作时间: 2020年4月至2021年8月
 - 工作公司: 深圳市维知科技有限责任公司
+- 工作时间: 2020年4月至2021年8月
 - 部门岗位: AI中台部门-大数据研发工程师
 - 岗位职责: 负责数据库设计，后端开发，Bot引擎维护。
 
@@ -79,8 +79,8 @@ menu:
 - 开发技术：框架是基于Vert.x二次开发的、简易的、专注接口开发的框架。开发语言：Kotlin。版本管理工具：Gradle。数据库：Redis、MySQL。消息队列：RabbitMQ。开放平台：Docker。
 
 ### 工作经历（2）
-- 工作时间: 2019年12月至2020年4月
 - 工作公司: 文思海辉
+- 工作时间: 2019年12月至2020年4月
 - 部门岗位: 中广核数仓事业部-初级大数据分析与挖掘顾问
 - 岗位职责: 维护数据仓库。
 
@@ -90,8 +90,8 @@ menu:
 - 我的职责：设计、验证、对比各种技术路线的可行性，并撰写文档。设计ETL自动化流程。
 
 ### 工作经历（1）
-- 工作时间: 2019年7月至2019年11月
 - 工作公司: 深圳掌众智能科技股份有限公司
+- 工作时间: 2019年7月至2019年11月
 - 部门岗位: 广告事业部-高级Scala/Java后端开发
 - 岗位职责: 负责广告交易平台的开发、维护。
 #### 负责项目二
@@ -130,8 +130,8 @@ menu:
 	- Zookeeper，HDFS（HA），YARN（HA），Hive，HBase，Flume，Spark，Sqoop，Oozie，Hue，Impala
 
 ### 实习经历（0）
-- 工作时间: 2018年7月至2019年6月
 - 工作公司: 中诚信国际信用评级有限责任公司
+- 工作时间: 2018年7月至2019年6月
 - 部门岗位: 债券风险控制事业部-全栈开发工程师
 - 岗位职责: 负责后端架构设计及开发，数据库设计及开发。
 
