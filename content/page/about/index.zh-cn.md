@@ -20,7 +20,7 @@ menu:
 ## 个人能力
 - 编程语言: Go、Python、Scala、Kotlin、Java、SQL、C/C++、C#、JS、Shell、Lua。
 - 常用数据结构与算法、设计模式。
-- 后端开发框架: Gin、AKKA、Vert.x、Flask、Spring Boot。
+- 后端开发框架: Gin、AKKA、Vert.x、FastAPI、Flask、Django、Spring Boot。
 - 前端开发框架: Vue、Ant Design、Echarts。
 - 大数据生态: Hadoop、YARN、MapReduce、HBase、Hive、Flume、Sqoop、Kettle、Oozie、Azkaban、Spark、SparkSQL、SparkStreaming、Storm、Flink等。
 - 数据库: MySQL、Redis、MongoDB、PostgreSQL、MSSQL。
@@ -41,6 +41,7 @@ menu:
 - 项目描述：基于KubeFATE开源框架开发，运行在Kubernetes平台上。给联邦集群添加隐私计算能力。为用户提供易于部署，操作简单的联邦学习平台。
 - 我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。构建OpenVPN网络。
 - 开发技术：开发语言：Python，Go，Lua。使用技术：Kurberntes、KubeFATE、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、Elasticsearch、Fluentd、Kibana、MySQL、Redis。开发框架：flask-restplus。ECK: Elasticsearch、Kibana、Fluentd。VPN：OpenVPN。数据库版本管理：Alembic。自动化部署：Fabric。
+- 项目成就：2023年获得“信通院”《联邦学习基础能力评测证书》；2023年获得中互金认证《联邦学习产品安全认证证书》。
 
 #### 负责项目二
 - 项目名称：电商推荐系统
