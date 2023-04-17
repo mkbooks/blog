@@ -389,6 +389,15 @@ sudo apt install flameshot
 ### VLC 媒体播放器
 [下载](https://www.videolan.org/vlc/download-ubuntu.html)
 
+### DBeaver数据库管理工具
+```
+sudo add-apt-repository ppa:serge-rider/dbeaver-ce
+sudo apt-get update
+sudo apt-get install dbeaver-ce
+# 启动DBeaver
+dbeaver-ce
+```
+
 ## 添加硬盘
 [参考一](https://www.jianshu.com/p/ec5579ef15a6)
 
