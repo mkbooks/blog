@@ -5,10 +5,12 @@ description : "安装新系统后需要做的操作"    # 文章描述信息
 lastmod: 2022-12-05T20:00:00+08:00        # 文章修改日期
 date: 2022-12-05T20:00:00+08:00
 tags : [                    # 文章所属标签
-    "Ubuntu"
+    "Ubuntu",
+    "网络"
 ]
 categories : [              # 文章所属标签
-    "Ubuntu"
+    "Ubuntu",
+    "网络"
 ]
 
 ---
@@ -72,6 +74,15 @@ auth       sufficient pam_wheel.so trust use_uid
 2. [安装](https://shurufa.sogou.com/linux/guide)
 
 ### 设置上网
+#### 设置服务器
+```
+sudo -i 
+apt-get update -y && apt-get install curl -y
+bash <(curl -s -L https://git.io/v2ray.sh)
+1
+
+v2ray url
+```
 #### Qv2ray
 1. https://github.com/v2fly/v2ray-core/releases
     1. `unzip v2ray-linux-64.zip`
