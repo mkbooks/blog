@@ -5,3 +5,10 @@ assets/jsconfig.json
 
 .vscode/
 kubevious-deploy.git/
+
+*.bin
+*.exe
+*.dll
+*.so
+*.dylib
+main
