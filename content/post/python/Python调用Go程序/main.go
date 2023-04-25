@@ -4,6 +4,10 @@ import (
 	"fmt"
 )
 
+func GoFunctiono() {
+	fmt.Printf("GoFunctiono")
+}
+
 func main() {
-	fmt.Printf("cjx")
+	fmt.Printf("cjx go")
 }
