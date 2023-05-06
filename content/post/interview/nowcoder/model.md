@@ -13,7 +13,54 @@ tags : [
 ]
 ---
 ## 刷题模板
+### Python3
 ```python
+class Pipe:
+    def __init__(self, func):
+        self.func = func
+
+    def __ror__(self, other):
+        return self.func(other)
+
+    def __call__(self, *args, **kwargs):
+        return self.func(*args, **kwargs)
+
+
+@Pipe
+def deal(datas):
+    result = []
+    for data in datas:
+        pass
+
+    return result
+
+
+@Pipe
+def print_data(datas):
+    for data in datas:
+        print(data)
+
+
+if __name__ == "__main__":
+    datas = []
+
+    while True:
+        try:
+            data = input()
+            if data == "":
+                break
+            datas.append(data)
+        except:
+            break
+    
+    datas | deal | print_data
+```
+
+#### 样例
+```python
+# HJ19 简单错误记录
+
+
 class Pipe:
     def __init__(self, func):
         self.func = func
