@@ -108,6 +108,7 @@ for more information
 
     0. `sudo v2ray url`
     1. [搬瓦工](https://bwh1.net/index.php)
+        1. https://justmysocks5.net/members/clientarea.php?action=services
     2. [腾讯云](https://cloud.tencent.com/)
     3. [阿里云](https://www.aliyun.com)
     4. [谷歌云](https://cloud.google.com/)
