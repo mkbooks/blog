@@ -402,6 +402,7 @@ sudo apt install flameshot
 [下载](https://www.videolan.org/vlc/download-ubuntu.html)
 
 ### DBeaver数据库管理工具
+[deb包下载](https://dbeaver.io/download/?start&os=linux&arch=x86_64&dist=deb)
 ```
 sudo add-apt-repository ppa:serge-rider/dbeaver-ce
 sudo apt-get update
