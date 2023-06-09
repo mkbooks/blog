@@ -1,40 +1,34 @@
 ---
-title: "docker部署langchain-ChatGLM"
+title: "langchain-ChatGLM-and-TigerBot"
 author: "陈金鑫"
-description : "docker部署langchain-ChatGLM"
-lastmod: 2023-06-04T10:00:00+08:00
-date: 2023-06-04T10:00:00+08:00
+description : "langchain-ChatGLM-and-TigerBot"
+lastmod: 2023-06-09T10:00:00+08:00
+date: 2023-06-09T10:00:00+08:00
 categories : [              
     "AIGC"
 ]
 tags : [                    
     "AIGC",
-    "ChatGLM",
+    "TigerBot",
+    "langchain"
 ]
 ---
 ## 下载项目
 ```
-git clone https://github.com/imClumsyPanda/langchain-ChatGLM
-cd langchain-ChatGLM
-git fetch --all
-git checkout v0.1.14
+git clone https://github.com/wordweb/langchain-ChatGLM-and-TigerBot.git
+cd langchain-ChatGLM-and-TigerBot/
 ```
-## docker 部署
-在主机上安装 NVIDIA Container Toolkit
-```
+## Docker 部署
+为了能让容器使用主机GPU资源，需要在主机上安装 [NVIDIA Container Toolkit](https://github.com/NVIDIA/nvidia-container-toolkit)。具体安装步骤如下：
+```shell
 sudo apt-get update
 sudo apt-get install -y nvidia-container-toolkit-base
 sudo systemctl daemon-reload 
 sudo systemctl restart docker
 ```
-### 联网使用
-#### 编译镜像
+安装完成后，可以使用以下命令编译镜像和启动容器：
 ```
-docker build -f Dockerfile-cuda -t chatglm-cuda:latest .
-```
-#### 启动容器
-```
-docker run --gpus all -d --name chatglm -p 7860:7860  chatglm-cuda:latest
+docker build -f Dockerfile-cuda -t chatglm-cuda-tigerbot:latest .
 ```
 ### 使用离线模型
 text2vec-large-chinese
@@ -82,6 +76,23 @@ drwxrwxr-x  8 cjx cjx       4096  5月 22 14:43 .git/
 -rw-rw-r--  1 cjx cjx      17047  5月 22 14:43 tokenization_chatglm.py
 -rw-rw-r--  1 cjx cjx        441  5月 22 14:43 tokenizer_config.json
 ```
+TigerResearch
+```
+cjx@cjx:/ssd2/huggingface/TigerResearch/tigerbot-7b-sft$ ll
+总计 15824908
+drwxrwxr-x 2 cjx cjx       4096  6月  9 20:35 ./
+drwxrwxr-x 3 cjx cjx       4096  6月  9 20:09 ../
+-rw-rw-r-- 1 cjx cjx        765  6月  9 20:10 config.json
+-rw-rw-r-- 1 cjx cjx        132  6月  9 20:10 generation_config.json
+-rw-rw-r-- 1 cjx cjx       1528  6月  9 20:10 .gitattributes
+-rw-rw-r-- 1 cjx cjx 9974654870  6月  7 19:14 pytorch_model-00001-of-00002.bin
+-rw-rw-r-- 1 cjx cjx 6215469038  6月  7 18:53 pytorch_model-00002-of-00002.bin
+-rw-rw-r-- 1 cjx cjx      31898  6月  9 20:10 pytorch_model.bin.index.json
+-rw-rw-r-- 1 cjx cjx       2123  6月  9 20:10 README.md
+-rw-rw-r-- 1 cjx cjx        190  6月  9 20:10 special_tokens_map.json
+-rw-rw-r-- 1 cjx cjx        289  6月  9 20:10 tokenizer_config.json
+-rw-rw-r-- 1 cjx cjx   14500838  6月  9 20:11 tokenizer.json
+```
 #### 修改配置
 configs/model_config
 ```
@@ -97,10 +108,10 @@ docker build -f Dockerfile-cuda -t chatglm-cuda:latest .
 配置好模型路径，然后此repo挂载到Container
 ```
 docker run --gpus all -d \
-  --name chatglm \
-  -p 7860:7860 \
-  -v /ssd2/huggingface/GanymedeNil/text2vec-large-chinese:/chatGLM/GanymedeNil/text2vec-large-chinese \
+  --name chatglm-tigerbot \
+  -p 7861:7860 \
+  -v /ssd2/huggingface/GanymedeNil/text2vec-large-chinese:/chatGLM/model/text2vec-large-chinese \
   -v /ssd2/github/THUDM/ChatGLM-6B/chatglm-6b:/chatGLM/model/chatglm-6b \
-  chatglm-cuda:latest
+  -v /ssd2/huggingface/TigerResearch/tigerbot-7b-sft:/chatGLM/model/TigerBot \
+  chatglm-cuda-tigerbot:latest
 ```
-
