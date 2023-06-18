@@ -36,6 +36,17 @@ menu:
 - 部门岗位: AI事业部-大数据&后台开发工程师
 - 岗位职责: 负责云平台的搭建、开发、维护；数据库设计，后端开发、网关开发、项目CI\CD。
 
+#### 负责项目四
+- 项目名称：隐私计算模型市场
+- 项目描述：基于KubeFATE开源框架开发，运行在Kubernetes平台上。将《大数据隐私计算平台》中训练好的模型导出，然后导入到本平台，提供推理服务。
+- 我的职责：开发Web后端端管理平台。
+- 开发技术：开发语言：Python。使用技术：Kurberntes、KubeFATE、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、MySQL、Redis。开发框架：fastapi。数据库版本管理：Alembic。自动化部署：Fabric。
+##### 负责项目四-子项目一
+- 项目名称：接口代理服务
+- 项目描述：为用户提供请求推理的接口代理。
+- 我的职责：开发agent服务。维护项目文档。
+- 开发技术：开发语言：Go。开发框架：Gin。
+
 #### 负责项目三
 - 项目名称：大数据隐私计算平台
 - 项目描述：基于KubeFATE开源框架开发，运行在Kubernetes平台上。给联邦集群添加隐私计算能力。为用户提供易于部署，操作简单的联邦学习平台。
