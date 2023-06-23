@@ -39,7 +39,7 @@ menu:
 #### 负责项目四
 - 项目名称：隐私计算模型市场
 - 项目描述：基于KubeFATE开源框架开发，运行在Kubernetes平台上。将《大数据隐私计算平台》中训练好的模型导出，然后导入到本平台，提供推理服务。
-- 我的职责：开发Web后端端管理平台。
+- 我的职责：开发Web后端端管理平台。开发agent服务。
 - 开发技术：开发语言：Python。使用技术：Kurberntes、KubeFATE、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、MySQL、Redis。开发框架：fastapi。数据库版本管理：Alembic。自动化部署：Fabric。
 ##### 负责项目四-子项目一
 - 项目名称：接口代理服务
