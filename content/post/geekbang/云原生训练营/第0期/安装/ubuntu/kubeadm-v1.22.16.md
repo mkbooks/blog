@@ -76,6 +76,10 @@ systemctl restart docker
 ```
 sudo usermod -aG docker ${USER}
 ```
+立即生效
+```
+su - ${USER}
+```
 ## 安装 apt-transport-https ca-certificates curl
 ```
 apt-get install -y apt-transport-https ca-certificates curl
