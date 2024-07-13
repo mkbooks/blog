@@ -15,14 +15,14 @@ links:
     image: ts-logo-128.jpg
   - title: kubernetes
     description: kubernetes学习笔记。
-    website: https://mkbooks.github.io/k8s-mengfanjie/
+    website: https://mkbooks.github.io/k8s-001/
     image: kubernetes.png
 menu:
-    main: 
-        weight: -50
-        url: "/links"
-        params:
-            icon: link
+  main:
+    weight: -50
+    url: "/links"
+    params:
+      icon: link
 
 comments: false
 ---
