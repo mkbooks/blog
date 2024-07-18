@@ -144,8 +144,6 @@ func healthHandler(c *gin.Context) {
 
 	// 遍历request的header并循环写入response header
 	for k, v := range c.Request.Header {
-		//fmt.Printf("key : %s\n", k)
-		//fmt.Printf("value : %v\n", v)
 		c.Writer.Header().Set(k, v[0])
 	}
 
@@ -175,7 +173,7 @@ ENV GO111MODULE=on \
     GOARCH=amd64 \
 	GOPROXY="https://goproxy.cn,direct"
 
-WORKDIR /root/cncamp
+WORKDIR /root/ccx
 COPY main.go .
 
 RUN go mod init example.com/httpserver
@@ -185,15 +183,15 @@ RUN go build -o httpserver .
 WORKDIR /opt/modules/httpserver
 RUN mkdir src .
 
-RUN cp /root/cncamp/httpserver ./src
+RUN cp /root/ccx/httpserver ./src
 EXPOSE 8080
 
 CMD ["/opt/modules/httpserver/src/httpserver"]
 ```
 测试运行：
 ```bash
-docker build -t cncamp/httpserver:v0.0.1 .
-docker run -d --name httpserver -p 9090:8080 -e VERSION=v0.0.1 cncamp/httpserver:v0.0.1
+docker build -t ccx/httpserver:v0.0.1 .
+docker run -d --name httpserver -p 9090:8080 -e VERSION=v0.0.1 ccx/httpserver:v0.0.1
 docker logs -f httpserver
 
 curl -v localhost:9090/healthz -H "ttt:yyy"
@@ -236,16 +234,16 @@ ENTRYPOINT ["/bin/httpserver"]
 ```
 测试运行：
 ```bash
-docker build -t cncamp/httpserver:v0.0.2 .
-docker run -d --name httpserver -p 9090:8080 -e VERSION=v0.0.2 cncamp/httpserver:v0.0.2
+docker build -t ccx/httpserver:v0.0.2 .
+docker run -d --name httpserver -p 9090:8080 -e VERSION=v0.0.2 ccx/httpserver:v0.0.2
 docker logs -f httpserver
 
 curl -v localhost:9090/healthz -H "ttt:yyy"
 
 # 镜像比较
 docker images|grep httpserver
-cncamp/httpserver   v0.0.2        1fc9919e6afa   About a minute ago   9.93MB
-cncamp/httpserver   v0.0.1        22fc44df77a6   1 days ago          558MB
+ccx/httpserver   v0.0.2        1fc9919e6afa   About a minute ago   9.93MB
+ccx/httpserver   v0.0.1        22fc44df77a6   1 days ago          558MB
 ```
 基础镜像差异: Dockerfile3：
 ```Dockerfile
@@ -284,17 +282,17 @@ ENTRYPOINT ["/bin/httpserver"]
 ```
 测试
 ```bash
-docker build -t cncamp/httpserver:v0.0.3 .
-docker run -d --name httpserver -p 9090:8080 -e VERSION=v0.0.3 cncamp/httpserver:v0.0.3
+docker build -t ccx/httpserver:v0.0.3 .
+docker run -d --name httpserver -p 9090:8080 -e VERSION=v0.0.3 ccx/httpserver:v0.0.3
 docker logs -f httpserver
 
 curl -v localhost:9090/healthz -H "ttt:yyy"
 
 # 镜像比较
 docker images|grep httpserver
-cncamp/httpserver   v0.0.3        e6ccaa261248   29 seconds ago   15.5MB
-cncamp/httpserver   v0.0.2        1fc9919e6afa   4 minutes ago    9.93MB
-cncamp/httpserver   v0.0.1        22fc44df77a6   1 days ago      558MB
+ccx/httpserver   v0.0.3        e6ccaa261248   29 seconds ago   15.5MB
+ccx/httpserver   v0.0.2        1fc9919e6afa   4 minutes ago    9.93MB
+ccx/httpserver   v0.0.1        22fc44df77a6   1 days ago      558MB
 ```
 ## 问题：同样的一份代码，在不同环境中可以打出完全一样的制品吗？
 > **可信要求**
