@@ -16698,26 +16698,7 @@ ping 10.10.0.1
 client-to-client
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item><item><title>Archives</title><link>https://mkbooks.github.io/blog/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/archives/</guid><description/></item><item><title>About</title><link>https://mkbooks.github.io/blog/about/</link><pubDate>Thu, 28 Feb 2019 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/about/</guid><description>&lt;p>Written in Go, Hugo is an open source static site generator available under the &lt;a class="link" href="https://github.com/gohugoio/hugo/blob/master/LICENSE" target="_blank" rel="noopener"
->Apache Licence 2.0.&lt;/a> Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.&lt;/p>
-&lt;p>Hugo makes use of a variety of open source projects including:&lt;/p>
-&lt;ul>
-&lt;li>&lt;a class="link" href="https://github.com/yuin/goldmark" target="_blank" rel="noopener"
->https://github.com/yuin/goldmark&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://github.com/alecthomas/chroma" target="_blank" rel="noopener"
->https://github.com/alecthomas/chroma&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://github.com/muesli/smartcrop" target="_blank" rel="noopener"
->https://github.com/muesli/smartcrop&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://github.com/spf13/cobra" target="_blank" rel="noopener"
->https://github.com/spf13/cobra&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://github.com/spf13/viper" target="_blank" rel="noopener"
->https://github.com/spf13/viper&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>Hugo is ideal for blogs, corporate websites, creative portfolios, online magazines, single page applications or even a website with thousands of pages.&lt;/p>
-&lt;p>Hugo is for people who want to hand code their own website without worrying about setting up complicated runtimes, dependencies and databases.&lt;/p>
-&lt;p>Websites built with Hugo are extremelly fast, secure and can be deployed anywhere including, AWS, GitHub Pages, Heroku, Netlify and any other hosting provider.&lt;/p>
-&lt;p>Learn more and contribute on &lt;a class="link" href="https://github.com/gohugoio" target="_blank" rel="noopener"
->GitHub&lt;/a>.&lt;/p></description></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title>lama 使用</title><link>https://mkbooks.github.io/blog/p/lama-%E4%BD%BF%E7%94%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/lama-%E4%BD%BF%E7%94%A8/</guid><description>&lt;h3 id="下载镜像">下载镜像&lt;/h3>
+&lt;/div></description></item><item><title>Archives</title><link>https://mkbooks.github.io/blog/archives/</link><pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/archives/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title/><link>https://mkbooks.github.io/blog/p/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/</guid><description/></item><item><title>lama 使用</title><link>https://mkbooks.github.io/blog/p/lama-%E4%BD%BF%E7%94%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/lama-%E4%BD%BF%E7%94%A8/</guid><description>&lt;h3 id="下载镜像">下载镜像&lt;/h3>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -16848,4 +16829,242 @@ Icon=/home/cjx/图片/Cursor.png
 docker run --gpus all -p 8812:8812 nagadomi/waifu2x:latest th web.lua
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item></channel></rss>
+&lt;/div></description></item><item><title>关于</title><link>https://mkbooks.github.io/blog/%E5%85%B3%E4%BA%8E/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/%E5%85%B3%E4%BA%8E/</guid><description>&lt;h1 id="陈金鑫-后端研发工程师">陈金鑫-后端研发工程师&lt;/h1>
+&lt;h2 id="基础信息">基础信息&lt;/h2>
+&lt;ul>
+&lt;li>性别: 男&lt;/li>
+&lt;li>出生日期: 1995-10-03&lt;/li>
+&lt;li>手机: 17137621499&lt;/li>
+&lt;li>邮箱: &lt;a class="link" href="mailto:chenjinxin@chenjinxin.cn" >chenjinxin@chenjinxin.cn&lt;/a>　&lt;/li>
+&lt;li>毕业院校及专业: 黑河学院本科19届-计算机科学与技术专业&lt;/li>
+&lt;li>博客: &lt;a class="link" href="https://chenjinxin.cn" target="_blank" rel="noopener"
+>https://chenjinxin.cn&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="个人能力">个人能力&lt;/h2>
+&lt;ul>
+&lt;li>编程语言: Go、Python、Scala、Kotlin、Java、SQL、C/C++、C#、JS、Shell、Lua。&lt;/li>
+&lt;li>常用数据结构与算法、设计模式。&lt;/li>
+&lt;li>后端开发框架: Gin、AKKA、Vert.x、FastAPI、Flask、Django、Spring Boot。&lt;/li>
+&lt;li>前端开发框架: Vue、Ant Design、Echarts。&lt;/li>
+&lt;li>大数据生态: Hadoop、YARN、MapReduce、HBase、Hive、Flume、Sqoop、Kettle、Oozie、Azkaban、Spark、SparkSQL、SparkStreaming、Storm、Flink等。&lt;/li>
+&lt;li>数据库: MySQL、Redis、MongoDB、PostgreSQL、MSSQL。&lt;/li>
+&lt;li>中间件：Kafka、RabbitMQ、ElasticSearch。&lt;/li>
+&lt;li>云原生: Docker、Kubernetes（K8s）、KubeFATE、Prometheus、Grafana、APISIX、OpenVPN、Jenkins、ECK等。&lt;/li>
+&lt;li>团队协作: Git、GitHub、GitLab、CI/CD。&lt;/li>
+&lt;li>能够独立从0到1搭建企业大数据平台及云原生平台。&lt;/li>
+&lt;/ul>
+&lt;h2 id="工作经历">工作经历&lt;/h2>
+&lt;h3 id="工作经历5">工作经历（5）&lt;/h3>
+&lt;ul>
+&lt;li>工作公司: 上海科之锐人才咨询有限公司&lt;/li>
+&lt;li>工作时间: 2023年7月至今&lt;/li>
+&lt;li>部门岗位: 质量与流程IT部-IT平台服务部-软件开发工程师（华为-数据底座）&lt;/li>
+&lt;li>岗位职责: 负责云平台的搭建、开发、维护；数据库设计，后端开发、网关开发、项目CI\CD。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目一">负责项目一&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：数据库管家&lt;/li>
+&lt;li>项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台(智慧大屏、移动端应用、web端应用)敏捷地部署、训练及提供各种AI引擎服务(ASR, TTS, Bot, OCR等)。&lt;/li>
+&lt;li>我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。&lt;/li>
+&lt;li>开发技术：开发语言：Java。开发框架：SpringBoot、SpringCloud。版本管理工具：Maven。华为服务：大数据：MRS、DWS、CSS；CodeHub、EKS、ADS。其它技术：服务发现：Nacos、eureka；&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目二">负责项目二&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：资源高效&lt;/li>
+&lt;li>项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台(智慧大屏、移动端应用、web端应用)敏捷地部署、训练及提供各种AI引擎服务(ASR, TTS, Bot, OCR等)。&lt;/li>
+&lt;li>我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。&lt;/li>
+&lt;li>开发技术：开发语言：Java。开发框架：Flink、Spark。版本管理工具：Maven。华为服务：大数据：MRS、DWS、CSS；CodeHub、EKS、ADS。其它技术：服务发现：Nacos、eureka；&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目二-子项目一">负责项目二-子项目一&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：资源监控&lt;/li>
+&lt;li>项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台(智慧大屏、移动端应用、web端应用)敏捷地部署、训练及提供各种AI引擎服务(ASR, TTS, Bot, OCR等)。&lt;/li>
+&lt;li>我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。&lt;/li>
+&lt;li>开发技术：开发语言：Java。开发框架：Flink、Spark。版本管理工具：Maven。华为服务：大数据：MRS、DWS、CSS；CodeHub、EKS、ADS。其它技术：服务发现：Nacos、eureka；&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目二-子项目二">负责项目二-子项目二&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：作业监控&lt;/li>
+&lt;li>项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台(智慧大屏、移动端应用、web端应用)敏捷地部署、训练及提供各种AI引擎服务(ASR, TTS, Bot, OCR等)。&lt;/li>
+&lt;li>我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。&lt;/li>
+&lt;li>开发技术：开发语言：Java。开发框架：Flink、Spark。版本管理工具：Maven。华为服务：大数据：MRS、DWS、CSS；CodeHub、EKS、ADS。其它技术：服务发现：Nacos、eureka；&lt;/li>
+&lt;/ul>
+&lt;h3 id="工作经历4">工作经历（4）&lt;/h3>
+&lt;ul>
+&lt;li>工作公司: 北京可利邦信息技术股份有限公司&lt;/li>
+&lt;li>工作时间: 2021年8月至2023年7月&lt;/li>
+&lt;li>部门岗位: AI事业部-大数据&amp;amp;后台开发工程师&lt;/li>
+&lt;li>岗位职责: 负责云平台的搭建、开发、维护；数据库设计，后端开发、网关开发、项目CI\CD。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目四">负责项目四&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：隐私计算模型市场&lt;/li>
+&lt;li>项目描述：基于KubeFATE开源框架开发，运行在Kubernetes平台上。将《大数据隐私计算平台》中训练好的模型导出，然后导入到本平台，提供推理服务。&lt;/li>
+&lt;li>我的职责：开发Web后端端管理平台。开发agent服务。&lt;/li>
+&lt;li>开发技术：开发语言：Python。使用技术：Kurberntes、KubeFATE、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、MySQL、Redis。开发框架：fastapi。数据库版本管理：Alembic。自动化部署：Fabric。&lt;/li>
+&lt;/ul>
+&lt;h5 id="负责项目四-子项目一">负责项目四-子项目一&lt;/h5>
+&lt;ul>
+&lt;li>项目名称：接口代理服务&lt;/li>
+&lt;li>项目描述：为用户提供请求推理的接口代理。&lt;/li>
+&lt;li>我的职责：开发agent服务。维护项目文档。&lt;/li>
+&lt;li>开发技术：开发语言：Go。开发框架：Gin。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目三">负责项目三&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：大数据隐私计算平台&lt;/li>
+&lt;li>项目描述：基于KubeFATE开源框架开发，运行在Kubernetes平台上。给联邦集群添加隐私计算能力。为用户提供易于部署，操作简单的联邦学习平台。&lt;/li>
+&lt;li>我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。构建OpenVPN网络。&lt;/li>
+&lt;li>开发技术：开发语言：Python，Go，Lua。使用技术：Kurberntes、KubeFATE、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、Elasticsearch、Fluentd、Kibana、MySQL、Redis。开发框架：flask-restplus。ECK: Elasticsearch、Kibana、Fluentd。VPN：OpenVPN。数据库版本管理：Alembic。自动化部署：Fabric。&lt;/li>
+&lt;li>项目成就：2023年获得“信通院”《联邦学习基础能力评测证书》；2023年获得中互金认证《联邦学习产品安全认证证书》。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目二-1">负责项目二&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：电商推荐系统&lt;/li>
+&lt;li>项目描述：给电商平台增加推荐系统和搜索引擎。&lt;/li>
+&lt;li>我的职责：编写、维护项目文档，包括开发文档、部署文档等。推荐系统和搜索引擎的架构设计、推荐算法实现、接口开发。数据的ETL。项目部署。&lt;/li>
+&lt;li>开发技术：开发语言：Scala、Go。计算引擎：Spark。版本管理工具：Maven。数据库：Redis、MongoDB。消息队列：Kafka。Web框架：Gin。ECK: Elasticsearch、Kibana、Fluentd。部署方式：docker-compose。任务调度：cron。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目一-1">负责项目一&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：AI中台&lt;/li>
+&lt;li>项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台(智慧大屏、移动端应用、web端应用)敏捷地部署、训练及提供各种AI引擎服务(ASR, TTS, Bot, OCR等)。&lt;/li>
+&lt;li>我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。&lt;/li>
+&lt;li>开发技术：开发语言：Python，Go，Lua。使用技术：Kurberntes、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、Elasticsearch、Fluentd、Kibana、MySQL、Redis。开发框架：flask-restplus。ECK: Elasticsearch、Kibana、Fluentd。数据库版本管理：Alembic。自动化部署：Fabric。&lt;/li>
+&lt;/ul>
+&lt;h3 id="工作经历3">工作经历（3）&lt;/h3>
+&lt;ul>
+&lt;li>工作公司: 深圳市维知科技有限责任公司&lt;/li>
+&lt;li>工作时间: 2020年4月至2021年8月&lt;/li>
+&lt;li>部门岗位: AI中台部门-大数据研发工程师&lt;/li>
+&lt;li>岗位职责: 负责数据库设计，后端开发，Bot引擎维护。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目三-1">负责项目三&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：AI中台服务平台&lt;/li>
+&lt;li>项目描述：对接各个后台AI引擎服务（如后台bot引擎、ASR引擎、TTS引擎、OCR引擎）、前台应用服务（大屏应用、移动端应用、web端应用）。&lt;/li>
+&lt;li>我的职责：AI中台的后端接口设计与开发，数据库设计与开发，K8S部署。制作AI中台的各个微服务项目镜像、大数据平台镜像。&lt;/li>
+&lt;li>开发技术：开放平台：Kubernetes，Docker。平台监控：Prometheus。大数据组件：Hadoop、HBase、Hive、Spark、Zookeeper、Kafka、Oozie、Flume、Sqoop、ElasticSearch、Logstash、Kibana。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目二-2">负责项目二&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：引擎管理服务平台&lt;/li>
+&lt;li>项目描述：对接客服bot引擎和web端，提供友好的交互功能给引擎训练工程师使用，设计维护多轮对话逻辑。&lt;/li>
+&lt;li>我的职责：独立构建、开发、测试、维护、部署该项目，维护部署文档，将项目打包成Docker镜像，提供方便的部署脚本。&lt;/li>
+&lt;li>开发技术：开发语言：Kotlin。框架是基于Vert.x二次开发的、简易的、专注接口开发的框架。版本管理工具：Gradle。数据库：Redis、MySQL。消息队列：RabbitMQ。开放平台：Docker。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目一-2">负责项目一&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：虚拟交互服务平台&lt;/li>
+&lt;li>项目描述：客户端是大屏（C++开发的Windows应用）和移动端（Unity3D、C#开发的Android应用），服务端负责接收、处理用户端发出的语音或文本信息，按照客户端设置（ASR、bot、TTS）请求具体的引擎，接收处理引擎的响应结果，返回给客户端。&lt;/li>
+&lt;li>我的职责：一个人维护、部署该项目，完成所有对接工作，按照产品需求迭代项目。将项目打包成Docker镜像，维护部署文档。&lt;/li>
+&lt;li>开发技术：开发语言：Kotlin。框架是基于Vert.x二次开发的、简易的、专注接口开发的框架。版本管理工具：Gradle。数据库：Redis、MySQL。消息队列：RabbitMQ。开放平台：Docker。&lt;/li>
+&lt;/ul>
+&lt;h3 id="工作经历2">工作经历（2）&lt;/h3>
+&lt;ul>
+&lt;li>工作公司: 文思海辉&lt;/li>
+&lt;li>工作时间: 2019年12月至2020年4月&lt;/li>
+&lt;li>部门岗位: 数仓事业部-初级大数据分析与挖掘顾问（中广核）&lt;/li>
+&lt;li>岗位职责: 维护数据仓库。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目一-3">负责项目一&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：供应链数据仓库建设（中广核驻场项目）&lt;/li>
+&lt;li>项目描述：将原HANA数据库数据迁移到星环大数据平台，以星环大数据平台中的Inceptor、HyperBase、Search为基础构建全新的大数据平台。定时从业务数据库MSSQL、Oracle、HANA等数据库做数据同步。&lt;/li>
+&lt;li>我的职责：设计、验证、对比各种技术路线的可行性，并撰写文档。设计ETL自动化流程。&lt;/li>
+&lt;li>开发技术：编程语言：SQL。&lt;/li>
+&lt;/ul>
+&lt;h3 id="工作经历1">工作经历（1）&lt;/h3>
+&lt;ul>
+&lt;li>工作公司: 深圳掌众智能科技股份有限公司&lt;/li>
+&lt;li>工作时间: 2019年7月至2019年11月&lt;/li>
+&lt;li>部门岗位: 广告事业部-高级Scala/Java后端开发&lt;/li>
+&lt;li>岗位职责: 负责广告交易平台的开发、维护。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目二-3">负责项目二&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：ADX平台&lt;/li>
+&lt;li>项目描述：使用Scala开发ADX（广告交易平台）服务平台，对接DSP（广告主服务平台）和SSP（媒体服务平台）。每日广告源请求数量在4亿次左右，每日展示数量1亿左右，每日生产TB级日志。对接DSP一百多家。具有RTB（实时竞价）和PDB（直接购买）两种交易类型。&lt;/li>
+&lt;li>我的职责：一个人维护该项目，完成所有对接工作，按照产品需求迭代项目，实现ETL为运营提供技术支持。&lt;/li>
+&lt;li>开发技术：开发语言：Scala；版本管理工具：SBT；开发框架：AKKA；应用层协议使用Protobuf、Thrift；使用Akka库和AkkaHTTP库提供Http服务；消息引擎系统采用Kafka；数据库框架是Slick；cats（scala函数式编程库）；circe（Json解析库）；Prometheus（监控报警系统）；Finagle（RPC框架）；http4s；doobie（JDBC层）；netty；quill（ORM框架）。MySQL、PostgreSQL数据库，GreenPlumSQL数据仓库，HDFS（分布式文件系统），AS/400报表系统。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目一-4">负责项目一&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：日志分析系统（离线+准实时）&lt;/li>
+&lt;li>业务描述：为运营和商务提供技术支持。根据日志信息（TB），实时分析各个广告位的请求、响应、点击事件的具体情况，实时统计当前线上媒体端用户活跃情况，统计哪个时段的用户浏览量最高，输出准实时可视化报表。对运营提出的问题及时作出响应。&lt;/li>
+&lt;li>我的职责：系统架构设计与实现。&lt;/li>
+&lt;li>系统架构：&lt;/li>
+&lt;/ul>
+&lt;ol>
+&lt;li>展示层：统计查询/报表——HUE，数据可视化分析——H5+Echarts&lt;/li>
+&lt;li>接口层：技术协议——Http/WebSocket，数据协议——XML/JSON/Thrift/Protobuf&lt;/li>
+&lt;li>服务层：Java/Scala&lt;/li>
+&lt;li>计算层：在线计算－Streaming，离线计算－MapReduce，内存计算－Spark，统一资源调度管理－YARN&lt;/li>
+&lt;li>存储层：分布式消息队列Kafka，MySQL，Hbase，Hive，HDFS&lt;/li>
+&lt;li>采集层：日志采集框架Flume，DB数据处理工具Sqoop&lt;/li>
+&lt;li>数据源层：DB，LogFile&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>
+&lt;p>项目模块：分布式日志收集，日至合并预处理，实时数据处理，大屏实时Echarts统计，离线数据处理，Hue可视化分析，多维BI报表。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>开发技术：Hadoop2.x，Zookeeper，Flume，Hive，Hbase，Kafka，Spark2.x，SparkString，MySQL，Hue，J2EE，websoket，Echarts。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>项目名称：CDH搭建企业大数据平台&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>1.作用&lt;/p>
+&lt;ul>
+&lt;li>数据分析&lt;/li>
+&lt;li>数据检索&lt;/li>
+&lt;li>集群规划与资源配置
+&lt;ul>
+&lt;li>集群数量：15台&lt;/li>
+&lt;li>硬盘：60TB，内存：32GB，CPU：10核，网卡：万兆&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>2.技术选型&lt;/p>
+&lt;ul>
+&lt;li>Cloudera Mananger(CM)——基于 yum 源&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>3.集群监控&lt;/p>
+&lt;ul>
+&lt;li>Cloudera Managerment Serice&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>
+&lt;p>4.基于CDH安装部署大数据组件及配置&lt;/p>
+&lt;ul>
+&lt;li>Zookeeper，HDFS（HA），YARN（HA），Hive，HBase，Flume，Spark，Sqoop，Oozie，Hue，Impala&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="实习经历0">实习经历（0）&lt;/h3>
+&lt;ul>
+&lt;li>工作公司: 中诚信国际信用评级有限责任公司&lt;/li>
+&lt;li>工作时间: 2018年7月至2019年6月&lt;/li>
+&lt;li>部门岗位: 债券风险控制事业部-全栈开发工程师&lt;/li>
+&lt;li>岗位职责: 负责后端架构设计及开发，数据库设计及开发。&lt;/li>
+&lt;/ul>
+&lt;h4 id="负责项目一-5">负责项目一&lt;/h4>
+&lt;ul>
+&lt;li>项目名称：中诚信·智警系统&lt;/li>
+&lt;li>项目描述：超越传统信用评级理论，用金融和征信大数据建模评估发债公司的信用风险，并实时跟踪。当用户持有的债券等级发生变化，通过邮件通知用户。项目做成SaaS端应用，除了核心的评级结果，用户还可以按行业、信用等级等条件筛选目标企业；按地区、政府等筛选目标城投，并查看其财务分析、债券信息、舆情征信等。&lt;/li>
+&lt;li>我的职责：编写后端代码，设计数据库及表结构，编写SQL语句，验证数据的准确性，实现ETL。梳理项目需求，提出产品建议，辅助产品设计，产品上线，测试服务器等。&lt;/li>
+&lt;li>开发技术：开发语言：Java。框架SpringBoot。版本管理工具：Maven。数据库：Redis、MySQL、MSSQL。&lt;/li>
+&lt;li>项目成就：获得2019中国金融创新论坛暨“2019中国金融创新奖”——“十佳智能风控创新奖”。&lt;/li>
+&lt;/ul>
+&lt;h2 id="证书认证">证书认证&lt;/h2>
+&lt;ul>
+&lt;li>国家奖学金、省三好学生&lt;/li>
+&lt;li>全国软件和信息技术专业人才大赛决赛三等奖（蓝桥杯）&lt;/li>
+&lt;li>ACP：&lt;/li>
+&lt;li>CNCF：&lt;/li>
+&lt;/ul></description></item></channel></rss>
