@@ -1,4 +1,112 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux(Ubuntu, CentOS) on 我的空间</title><link>https://mkbooks.github.io/blog/categories/linux/</link><description>Recent content in Linux(Ubuntu, CentOS) on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 13 Sep 2022 14:44:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>ssh服务</title><link>https://mkbooks.github.io/blog/p/ssh%E6%9C%8D%E5%8A%A1/</link><pubDate>Tue, 13 Sep 2022 14:44:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ssh%E6%9C%8D%E5%8A%A1/</guid><description>&lt;h2 id="更新源">更新源&lt;/h2>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on 我的空间</title><link>https://mkbooks.github.io/blog/categories/linux/</link><description>Recent content in Linux on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 16 Jul 2023 14:00:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>删除内容重复的文件</title><link>https://mkbooks.github.io/blog/p/%E5%88%A0%E9%99%A4%E5%86%85%E5%AE%B9%E9%87%8D%E5%A4%8D%E7%9A%84%E6%96%87%E4%BB%B6/</link><pubDate>Sun, 16 Jul 2023 14:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%88%A0%E9%99%A4%E5%86%85%E5%AE%B9%E9%87%8D%E5%A4%8D%E7%9A%84%E6%96%87%E4%BB%B6/</guid><description>&lt;h2 id="脚本功能">脚本功能&lt;/h2>
+&lt;p>指定一个目录，删除其中内容重复的文件。根据md5sum值判断文件是否重复，根据文件名长短判断保留文件名短的文件。根据文件数量判断处理进度。&lt;/p>
+&lt;h2 id="脚本内容">脚本内容&lt;/h2>
+&lt;p>文件名：cleanup_duplicates.sh&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="c1"># 设置默认文件夹路径为 /home/user/test&lt;/span>
+&lt;span class="nv">folder&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="s2">&amp;#34;/home/user/test&amp;#34;&lt;/span>&lt;span class="si">}&lt;/span>
+&lt;span class="c1"># 统计文件夹下的文件总数&lt;/span>
+&lt;span class="nv">file_count&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>find &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$folder&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -maxdepth &lt;span class="m">1&lt;/span> -type f &lt;span class="p">|&lt;/span> wc -l&lt;span class="k">)&lt;/span>
+&lt;span class="nv">processed_count&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">0&lt;/span>
+&lt;span class="c1"># 找出文件夹下所有文件，并计算每个文件的 MD5 值&lt;/span>
+find &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$folder&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -maxdepth &lt;span class="m">1&lt;/span> -type f -exec md5sum &lt;span class="o">{}&lt;/span> + &lt;span class="p">|&lt;/span> sort &amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$folder&lt;/span>&lt;span class="s2">/md5sum.txt&amp;#34;&lt;/span>
+&lt;span class="c1"># 根据 MD5 值进行重复文件的处理&lt;/span>
+&lt;span class="k">while&lt;/span> &lt;span class="nb">read&lt;/span> -r line&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;span class="nv">md5&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$line&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;{print $1}&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;span class="nv">filename&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$line&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;{print $2}&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;span class="c1"># 检查是否有重复的文件&lt;/span>
+&lt;span class="nv">duplicates&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>grep &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$md5&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$folder&lt;/span>&lt;span class="s2">/md5sum.txt&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> grep -v &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$filename&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> -n &lt;span class="nv">$duplicates&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;span class="nv">shortest_filename&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$filename&lt;/span>
+&lt;span class="c1"># 查找文件名较短的重复文件&lt;/span>
+&lt;span class="k">while&lt;/span> &lt;span class="nb">read&lt;/span> -r duplicate&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;span class="nv">duplicate_filename&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$duplicate&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;{print $2}&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="si">${#&lt;/span>&lt;span class="nv">duplicate_filename&lt;/span>&lt;span class="si">}&lt;/span> -lt &lt;span class="si">${#&lt;/span>&lt;span class="nv">shortest_filename&lt;/span>&lt;span class="si">}&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;span class="nv">shortest_filename&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="nv">$duplicate_filename&lt;/span>
+&lt;span class="k">fi&lt;/span>
+&lt;span class="k">done&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&amp;lt;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$duplicates&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="c1"># 删除除了文件名最短的重复文件之外的其他文件&lt;/span>
+&lt;span class="k">while&lt;/span> &lt;span class="nb">read&lt;/span> -r duplicate&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;span class="nv">duplicate_filename&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$duplicate&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;{print $2}&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>
+&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$duplicate_filename&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> !&lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$shortest_filename&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+rm &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$duplicate_filename&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="k">fi&lt;/span>
+&lt;span class="k">done&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&amp;lt;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$duplicates&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;span class="k">fi&lt;/span>
+&lt;span class="c1"># 更新进度&lt;/span>
+&lt;span class="nv">processed_count&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$((&lt;/span>processed_count &lt;span class="o">+&lt;/span> &lt;span class="m">1&lt;/span>&lt;span class="k">))&lt;/span>
+&lt;span class="nv">progress&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$((&lt;/span>processed_count &lt;span class="o">*&lt;/span> &lt;span class="m">100&lt;/span> &lt;span class="o">/&lt;/span> file_count&lt;span class="k">))&lt;/span>
+&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Processing: &lt;/span>&lt;span class="nv">$progress&lt;/span>&lt;span class="s2">%&amp;#34;&lt;/span>
+&lt;span class="k">done&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&amp;lt;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>tail -n +2 &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$folder&lt;/span>&lt;span class="s2">/md5sum.txt&amp;#34;&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="c1"># 跳过第一行，不包括 md5sum.txt 文件本身&lt;/span>
+&lt;span class="c1"># 删除临时文件&lt;/span>
+rm &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$folder&lt;/span>&lt;span class="s2">/md5sum.txt&amp;#34;&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="使用方法">使用方法&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">chmod +x cleanup_duplicates.sh
+$ ./cleanup_duplicates.sh /home/cjx/test/test
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>ssh服务</title><link>https://mkbooks.github.io/blog/p/ssh%E6%9C%8D%E5%8A%A1/</link><pubDate>Tue, 13 Sep 2022 14:44:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/ssh%E6%9C%8D%E5%8A%A1/</guid><description>&lt;h2 id="更新源">更新源&lt;/h2>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1

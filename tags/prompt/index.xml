@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Prompt on 我的空间</title><link>https://mkbooks.github.io/blog/tags/prompt/</link><description>Recent content in Prompt on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 16 Apr 2023 21:22:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/tags/prompt/index.xml" rel="self" type="application/rss+xml"/><item><title>使用Auto-GPT v0.1.1</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8auto-gpt-v0.1.1/</link><pubDate>Sun, 16 Apr 2023 21:22:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8auto-gpt-v0.1.1/</guid><description>&lt;h1 id="环境要求">环境要求&lt;/h1>
+&lt;ul>
+&lt;li>Python 3.8 or later&lt;/li>
+&lt;li>OpenAI GPT-3 API Key(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)&lt;/li>
+&lt;/ul>
+&lt;h1 id="安装">安装&lt;/h1>
+&lt;h2 id="下载auto-gpt">下载Auto-GPT&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">git clone https://github.com/Torantulino/Auto-GPT.git
+&lt;span class="nb">cd&lt;/span> Auto-GPT
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="切换到标签v011">切换到标签v0.1.1&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">git fetch --all --tags
+git tag
+git checkout v0.1.1
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="安装依赖">安装依赖&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="运行redis容器">运行Redis容器&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">docker run -d --name redis-stack-server -p 6379:6379 redis/redis-stack-server:latest
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="配置">配置&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">cp .env.example .env
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>修改.env文件中的配置&lt;/p>
+&lt;ul>
+&lt;li>OPENAI_API_KEY: OpenAI GPT-3 API Key&lt;/li>
+&lt;li>MEMORY_BACKEND=redis
+&lt;ul>
+&lt;li>REDIS_HOST=localhost&lt;/li>
+&lt;li>REDIS_PORT=6379&lt;/li>
+&lt;li>REDIS_PASSWORD=&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="修改ai设置">修改AI设置&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">cp ai_settings.yaml ai_settings.yaml.bak
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="添加待修改程序">添加待修改程序&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">touch auto_gpt_workspace/basic_math.py
+import math
+def calc_area&lt;span class="o">(&lt;/span>radius&lt;span class="o">)&lt;/span>:
+&lt;span class="k">return&lt;/span> math.pi * radius**2
+def calc_circumference&lt;span class="o">(&lt;/span>radius&lt;span class="o">)&lt;/span>:
+&lt;span class="nv">radius&lt;/span> &lt;span class="o">=&lt;/span> float&lt;span class="o">(&lt;/span>radius&lt;span class="o">)&lt;/span>
+def main&lt;span class="o">(&lt;/span>radius&lt;span class="o">)&lt;/span>:
+try:
+&lt;span class="nv">radius&lt;/span> &lt;span class="o">=&lt;/span> float&lt;span class="o">(&lt;/span>radius&lt;span class="o">)&lt;/span>
+except ValueError:
+print&lt;span class="o">(&lt;/span>&lt;span class="s2">&amp;#34;Please enter a valid number&amp;#34;&lt;/span>&lt;span class="o">)&lt;/span>
+&lt;span class="k">return&lt;/span>
+&lt;span class="nv">area&lt;/span> &lt;span class="o">=&lt;/span> calc_area&lt;span class="o">(&lt;/span>radius&lt;span class="o">)&lt;/span>
+&lt;span class="nv">circumference&lt;/span> &lt;span class="o">=&lt;/span> calc_circumference&lt;span class="o">(&lt;/span>radius&lt;span class="o">)&lt;/span>
+print&lt;span class="o">(&lt;/span>&lt;span class="s2">&amp;#34;Area: &amp;#34;&lt;/span>, area&lt;span class="o">)&lt;/span>
+print&lt;span class="o">(&lt;/span>&lt;span class="s2">&amp;#34;Circumference: &amp;#34;&lt;/span>, circumference&lt;span class="o">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="修改ai_settingsyaml">修改ai_settings.yaml&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="nt">ai_goals&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;Denonstrate your new programming abilities!&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;Improve basic_math.py&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;Build and run tests for it&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;When the file is error free, shut yourself down&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;Be sure to write your outputs to file.&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">ai_name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">NBGPT&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="nt">ai_role&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;Read, evaluate, improve write tests for and execute the code contained in basic_math.py&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="运行">运行&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">python3 scripts/main.py --gpt3only --continuous
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>使用Auto-GPT</title><link>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8auto-gpt/</link><pubDate>Sun, 16 Apr 2023 20:48:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E4%BD%BF%E7%94%A8auto-gpt/</guid><description>&lt;h1 id="环境要求">环境要求&lt;/h1>
+&lt;ul>
+&lt;li>Python 3.8 or later&lt;/li>
+&lt;li>OpenAI GPT-3 API Key(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)&lt;/li>
+&lt;/ul>
+&lt;h1 id="安装">安装&lt;/h1>
+&lt;h2 id="下载auto-gpt">下载Auto-GPT&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">git clone https://github.com/Torantulino/Auto-GPT.git
+&lt;span class="nb">cd&lt;/span> Auto-GPT
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="安装依赖">安装依赖&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple --trusted-host mirrors.aliyun.com
+或
+pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn
+或
+pip install -r requirements.txt -i https://pypi.douban.com/simple --trusted-host pypi.douban.com
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="运行redis容器">运行Redis容器&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">docker run -d -p 6379:6379 --name redis redis
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="配置">配置&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">cp .env.example .env
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>修改.env文件中的配置&lt;/p>
+&lt;ul>
+&lt;li>OPENAI_API_KEY: OpenAI GPT-3 API Key&lt;/li>
+&lt;li>MEMORY_BACKEND=redis&lt;/li>
+&lt;/ul>
+&lt;h2 id="运行">运行&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">python -m autogpt
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

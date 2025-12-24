@@ -1,4 +1,306 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on 我的空间</title><link>https://mkbooks.github.io/blog/categories/python/</link><description>Recent content in Python on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 01 Feb 2023 14:10:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/python/index.xml" rel="self" type="application/rss+xml"/><item><title>JSON 编码</title><link>https://mkbooks.github.io/blog/p/json-%E7%BC%96%E7%A0%81/</link><pubDate>Wed, 01 Feb 2023 14:10:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/json-%E7%BC%96%E7%A0%81/</guid><description>&lt;h1 id="问题-1">问题 1&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Python on 我的空间</title><link>https://mkbooks.github.io/blog/categories/python/</link><description>Recent content in Python on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Tue, 25 Apr 2023 14:10:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/python/index.xml" rel="self" type="application/rss+xml"/><item><title>Python调用Go程序</title><link>https://mkbooks.github.io/blog/p/python%E8%B0%83%E7%94%A8go%E7%A8%8B%E5%BA%8F/</link><pubDate>Tue, 25 Apr 2023 14:10:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/python%E8%B0%83%E7%94%A8go%E7%A8%8B%E5%BA%8F/</guid><description>&lt;h2 id="使用子进程调用-go-程序">使用子进程调用 Go 程序&lt;/h2>
+&lt;p>将 Go 程序编译为可执行文件，然后在 Python 脚本中使用 subprocess 模块运行 Go 可执行文件。这是一种简单且通用的方法，但通信可能受到限制，因为它依赖于进程间通信（IPC）。&lt;/p>
+&lt;h3 id="go程序">go程序&lt;/h3>
+&lt;p>main.go&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
+&lt;span class="kn">import&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;span class="s">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span class="p">)&lt;/span>
+&lt;span class="kd">func&lt;/span> &lt;span class="nf">GoFunctiono&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;GoFunctiono&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="kd">func&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;cjx go&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="使用-python-调用-go-程序">使用 Python 调用 Go 程序&lt;/h3>
+&lt;p>main.py&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">import&lt;/span> &lt;span class="nn">subprocess&lt;/span>
+&lt;span class="c1"># 编译并运行 Go 程序&lt;/span>
+&lt;span class="n">go_executable&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;./main&amp;#34;&lt;/span>
+&lt;span class="n">subprocess&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">run&lt;/span>&lt;span class="p">([&lt;/span>&lt;span class="n">go_executable&lt;/span>&lt;span class="p">])&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>编译并运行 Go 程序&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">go build -o main main.go
+./main
+cjx go%
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>运行 Python 程序&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">python main.py
+cjx go%
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="使用-c-扩展">使用 C 扩展&lt;/h2>
+&lt;p>将 Go 函数编译为 C 共享库，然后使用 Python 的 C 扩展（如 ctypes 或 cffi）调用该库。这种方法可能会增加复杂性，但在性能方面可能更优越。&lt;/p>
+&lt;h3 id="go程序-1">go程序&lt;/h3>
+&lt;p>main_c.go&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
+&lt;span class="kn">import&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;span class="s">&amp;#34;C&amp;#34;&lt;/span>
+&lt;span class="s">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;span class="p">)&lt;/span>
+&lt;span class="c1">//export GoFunction
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="kd">func&lt;/span> &lt;span class="nf">GoFunction&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Printf&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;GoFunction&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;span class="kd">func&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>将 Go 函数编译为 C 共享库&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">go build -o go_function.so -buildmode&lt;span class="o">=&lt;/span>c-shared main_c.go
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="cffi性能好">cffi(性能好)&lt;/h3>
+&lt;p>cffi_go.py&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">from&lt;/span> &lt;span class="nn">cffi&lt;/span> &lt;span class="kn">import&lt;/span> &lt;span class="n">FFI&lt;/span>
+&lt;span class="n">ffi&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">FFI&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="n">ffi&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cdef&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;void GoFunction();&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">go_lib&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ffi&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dlopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;./go_function.so&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">go_lib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">GoFunction&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>运行 Python 程序&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">python cffi_go.py
+GoFunctiono
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="ctypespython标准库">ctypes(Python标准库)&lt;/h3>
+&lt;p>ctypes_go.py&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">import&lt;/span> &lt;span class="nn">ctypes&lt;/span>
+&lt;span class="n">go_lib&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">CDLL&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;./go_function.so&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">go_lib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">GoFunction&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>运行 Python 程序&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">python ctypes_go.py
+GoFunctiono
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="使用-grpc-或其他-rpc-框架">使用 gRPC 或其他 RPC 框架&lt;/h2>
+&lt;p>创建一个 Go 服务并通过 gRPC（或其他 RPC 框架）公开函数，然后在 Python 中调用该服务。这种方法适用于跨语言和跨平台的通信，但可能需要额外的设置和依赖项。&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://github.com/chenjinxin1124/grpc-python" target="_blank" rel="noopener"
+>https://github.com/chenjinxin1124/grpc-python&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/chenjinxin1124/grpc-go" target="_blank" rel="noopener"
+>https://github.com/chenjinxin1124/grpc-go&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Python调用C程序</title><link>https://mkbooks.github.io/blog/p/python%E8%B0%83%E7%94%A8c%E7%A8%8B%E5%BA%8F/</link><pubDate>Tue, 25 Apr 2023 13:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/python%E8%B0%83%E7%94%A8c%E7%A8%8B%E5%BA%8F/</guid><description>&lt;h2 id="c程序">C程序&lt;/h2>
+&lt;p>mylib.c&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-c" data-lang="c">&lt;span class="cp">#include&lt;/span> &lt;span class="cpf">&amp;lt;stdio.h&amp;gt;&lt;/span>&lt;span class="cp">
+&lt;/span>&lt;span class="cp">&lt;/span>
+&lt;span class="kt">int&lt;/span> &lt;span class="nf">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="kt">int&lt;/span> &lt;span class="n">a&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="kt">int&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;span class="k">return&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">b&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;span class="p">}&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>编译这个 C 文件为共享库：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">gcc -shared -o mylib.so mylib.c
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="cffi性能好">cffi(性能好)&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">pip install cffi
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>cffi_c.py&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">import&lt;/span> &lt;span class="nn">cffi&lt;/span>
+&lt;span class="n">ffi&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">cffi&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">FFI&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;span class="c1"># 定义C函数的接口&lt;/span>
+&lt;span class="n">ffi&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">cdef&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;
+&lt;/span>&lt;span class="s2"> int add(int a, int b);
+&lt;/span>&lt;span class="s2">&amp;#34;&amp;#34;&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1"># 加载动态链接库&lt;/span>
+&lt;span class="n">lib&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ffi&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dlopen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;./mylib.so&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="c1"># 这里假设动态库名为test.so，需要将其放在与Python脚本同一目录下&lt;/span>
+&lt;span class="c1"># 调用C函数&lt;/span>
+&lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">lib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">3&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>运行 Python 程序&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">python cffi_c.py
+&lt;span class="m">5&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="ctypespython标准库">ctypes(Python标准库)&lt;/h3>
+&lt;p>ctypes_c.py&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="kn">import&lt;/span> &lt;span class="nn">ctypes&lt;/span>
+&lt;span class="c1"># 加载库&lt;/span>
+&lt;span class="n">mylib&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">CDLL&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;./mylib.so&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="c1"># 定义参数类型和返回值类型&lt;/span>
+&lt;span class="n">mylib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">argtypes&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">c_int&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">c_int&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="n">mylib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">restype&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">ctypes&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">c_int&lt;/span>
+&lt;span class="c1"># 调用 C 函数&lt;/span>
+&lt;span class="n">result&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">mylib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">4&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">f&lt;/span>&lt;span class="s2">&amp;#34;3 + 4 = &lt;/span>&lt;span class="si">{&lt;/span>&lt;span class="n">result&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>运行 Python 程序&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">python ctypes_c.py
+&lt;span class="m">3&lt;/span> + &lt;span class="nv">4&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="m">7&lt;/span>
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>JSON 编码</title><link>https://mkbooks.github.io/blog/p/json-%E7%BC%96%E7%A0%81/</link><pubDate>Wed, 01 Feb 2023 14:10:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/json-%E7%BC%96%E7%A0%81/</guid><description>&lt;h1 id="问题-1">问题 1&lt;/h1>
 &lt;h2 id="操作">操作&lt;/h2>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">

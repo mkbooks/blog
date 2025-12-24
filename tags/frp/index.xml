@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>FRP on 我的空间</title><link>https://mkbooks.github.io/blog/tags/frp/</link><description>Recent content in FRP on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 20 Feb 2023 10:00:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/tags/frp/index.xml" rel="self" type="application/rss+xml"/><item><title>通过FRP实现内网穿透</title><link>https://mkbooks.github.io/blog/p/%E9%80%9A%E8%BF%87frp%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</link><pubDate>Mon, 20 Feb 2023 10:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E9%80%9A%E8%BF%87frp%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</guid><description>&lt;ol>
+&lt;li>安装 Docker。
+&lt;ol>
+&lt;li>Ubuntu
+&lt;ol>
+&lt;li>&lt;code>sudo apt install docker.io -y&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>CentOS
+&lt;ol>
+&lt;li>&lt;code>sudo yum update&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo yum install -y yum-utils&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo yum install -y docker-ce docker-ce-cli containerd.io&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo systemctl start docker&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo docker run hello-world&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>普通用户执行权限添加
+&lt;ol>
+&lt;li>&lt;code>sudo groupadd docker&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo usermod -aG docker ${USER}&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>更新并激活组权限
+&lt;ol>
+&lt;li>&lt;code>newgrp docker&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>服务端
+&lt;ol>
+&lt;li>下载 FRP 镜像。
+&lt;ol>
+&lt;li>&lt;code>docker pull snowdreamtech/frps&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>创建配置文件
+&lt;ol>
+&lt;li>&lt;code>vim /home/sammy/frp/frps.ini&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>创建 FRP 容器。
+&lt;ol>
+&lt;li>&lt;code>docker run -d --restart always --network host --name frps -v /home/sammy/frp/frps.ini:/etc/frp/frps.ini snowdreamtech/frps&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>控制面板
+&lt;ol>
+&lt;li>http://${public_ip}:7500/&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>客户端
+&lt;ol>
+&lt;li>下载 FRP 镜像。
+&lt;ol>
+&lt;li>&lt;code>docker pull snowdreamtech/frpc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>创建配置文件
+&lt;ol>
+&lt;li>&lt;code>vim /home/sammy/frp/frpc.ini&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>创建 FRP 容器。
+&lt;ol>
+&lt;li>&lt;code>docker run -d --restart always --network host --name frpc -v /home/sammy/frp/frpc.ini:/etc/frp/frpc.ini snowdreamtech/frpc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>测试
+&lt;ol>
+&lt;li>ssh
+&lt;ol>
+&lt;li>&lt;code>ssh root@${public_ip} -p 2288&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>nginx
+&lt;ol>
+&lt;li>http://${public_ip}:8080/&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>k8s-dashboard
+&lt;ol>
+&lt;li>https://${public_ip}:1113/&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol></description></item></channel></rss>

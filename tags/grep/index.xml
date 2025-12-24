@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>grep on 我的空间</title><link>https://mkbooks.github.io/blog/tags/grep/</link><description>Recent content in grep on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Wed, 22 Mar 2023 17:00:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/tags/grep/index.xml" rel="self" type="application/rss+xml"/><item><title>grep 使用</title><link>https://mkbooks.github.io/blog/p/grep-%E4%BD%BF%E7%94%A8/</link><pubDate>Wed, 22 Mar 2023 17:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/grep-%E4%BD%BF%E7%94%A8/</guid><description>&lt;h3 id="文件内容查找">文件内容查找&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo grep -r --exclude=&amp;#34;*.log&amp;#34; --exclude=&amp;#34;*.pom&amp;#34; --exclude=&amp;#34;.zsh_history&amp;#34; --exclude-dir=.vscode --exclude-dir=wise-projects --exclude-dir=go --exclude-dir=maven --exclude-dir=temp --exclude-dir=.gradle --exclude=&amp;#34;*.xml&amp;#34; --exclude=&amp;#34;*.tar&amp;#34; --exclude-dir=&amp;#34;images&amp;#34; &amp;#34;JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64&amp;#34; /etc 2&amp;gt;/dev/null
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>output:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">/etc/profile:export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>这是一个在Linux系统中使用sudo命令搜索文件内容的命令。该命令的作用是在/etc目录下搜索包含&amp;quot;JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64&amp;quot;字符串的文件内容，但是排除了一些文件类型和目录。具体的参数解释如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo: 表示以管理员权限运行该命令。
+grep: 用于在文件中查找匹配的字符串。
+-r: 表示递归搜索子目录。
+--exclude=&amp;#34;*.log&amp;#34;: 排除所有后缀为.log的文件。
+--exclude=&amp;#34;*.pom&amp;#34;: 排除所有后缀为.pom的文件。
+--exclude=&amp;#34;.zsh_history&amp;#34;: 排除所有名为.zsh_history的文件。
+--exclude-dir=.vscode: 排除名为.vscode的子目录。
+--exclude-dir=wise-projects: 排除名为wise-projects的子目录。
+--exclude-dir=go: 排除名为go的子目录。
+--exclude-dir=maven: 排除名为maven的子目录。
+--exclude-dir=temp: 排除名为temp的子目录。
+--exclude-dir=.gradle: 排除名为.gradle的子目录。
+--exclude=&amp;#34;*.xml&amp;#34;: 排除所有后缀为.xml的文件。
+--exclude=&amp;#34;*.tar&amp;#34;: 排除所有后缀为.tar的文件。
+--exclude-dir=&amp;#34;images&amp;#34;: 排除名为images的子目录。
+&amp;#34;JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64&amp;#34;: 要搜索的字符串。
+/etc: 要搜索的目录。
+2&amp;gt;/dev/null: 将错误信息输出到空设备，即不输出任何错误信息。
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

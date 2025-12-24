@@ -114,7 +114,25 @@ auth sufficient pam_wheel.so trust use_uid
 >安装&lt;/a>&lt;/li>
 &lt;/ol>
 &lt;h3 id="设置上网">设置上网&lt;/h3>
-&lt;h4 id="qv2ray">Qv2ray&lt;/h4>
+&lt;h4 id="设置服务器">设置服务器&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo -i
+apt-get update -y &amp;amp;&amp;amp; apt-get install curl -y
+bash &amp;lt;(curl -s -L https://git.io/v2ray.sh)
+1
+v2ray url
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="qv2ray">Qv2ray&lt;/h4>
 &lt;ol>
 &lt;li>&lt;a class="link" href="https://github.com/v2fly/v2ray-core/releases" target="_blank" rel="noopener"
 >https://github.com/v2fly/v2ray-core/releases&lt;/a>
@@ -160,7 +178,12 @@ for more information
 &lt;ol start="0">
 &lt;li>&lt;code>sudo v2ray url&lt;/code>&lt;/li>
 &lt;li>&lt;a class="link" href="https://bwh1.net/index.php" target="_blank" rel="noopener"
->搬瓦工&lt;/a>&lt;/li>
+>搬瓦工&lt;/a>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://justmysocks5.net/members/clientarea.php?action=services" target="_blank" rel="noopener"
+>https://justmysocks5.net/members/clientarea.php?action=services&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
 &lt;li>&lt;a class="link" href="https://cloud.tencent.com/" target="_blank" rel="noopener"
 >腾讯云&lt;/a>&lt;/li>
 &lt;li>&lt;a class="link" href="https://www.aliyun.com" target="_blank" rel="noopener"
@@ -674,7 +697,26 @@ _arguments:451: _vim_files: function definition file not found
 &lt;h3 id="vlc-媒体播放器">VLC 媒体播放器&lt;/h3>
 &lt;p>&lt;a class="link" href="https://www.videolan.org/vlc/download-ubuntu.html" target="_blank" rel="noopener"
 >下载&lt;/a>&lt;/p>
-&lt;h2 id="添加硬盘">添加硬盘&lt;/h2>
+&lt;h3 id="dbeaver数据库管理工具">DBeaver数据库管理工具&lt;/h3>
+&lt;p>&lt;a class="link" href="https://dbeaver.io/download/?start&amp;amp;os=linux&amp;amp;arch=x86_64&amp;amp;dist=deb" target="_blank" rel="noopener"
+>deb包下载&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo add-apt-repository ppa:serge-rider/dbeaver-ce
+sudo apt-get update
+sudo apt-get install dbeaver-ce
+# 启动DBeaver
+dbeaver-ce
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="添加硬盘">添加硬盘&lt;/h2>
 &lt;p>&lt;a class="link" href="https://www.jianshu.com/p/ec5579ef15a6" target="_blank" rel="noopener"
 >参考一&lt;/a>&lt;/p>
 &lt;p>&lt;a class="link" href="https://blog.51cto.com/u_15127582/4731125" target="_blank" rel="noopener"
@@ -943,4 +985,34 @@ find . -type f -name &amp;#39;*.jpg&amp;#39; -print -exec \
 convert &amp;#39;{}&amp;#39; -resize 320x320 &amp;#39;../small/{}&amp;#39; \;
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div></description></item></channel></rss>
+&lt;/div></description></item><item><title>Ubuntu系统中给AppImage文件创建快捷启动</title><link>https://mkbooks.github.io/blog/p/ubuntu%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%BB%99appimage%E6%96%87%E4%BB%B6%E5%88%9B%E5%BB%BA%E5%BF%AB%E6%8D%B7%E5%90%AF%E5%8A%A8/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/ubuntu%E7%B3%BB%E7%BB%9F%E4%B8%AD%E7%BB%99appimage%E6%96%87%E4%BB%B6%E5%88%9B%E5%BB%BA%E5%BF%AB%E6%8D%B7%E5%90%AF%E5%8A%A8/</guid><description>&lt;p>要在Ubuntu系统中为AppImage文件创建快捷启动，可以按照以下步骤进行操作：&lt;/p>
+&lt;h1 id="一般流程">一般流程&lt;/h1>
+&lt;!-- raw HTML omitted -->
+&lt;h1 id="以-cursor-019appimage-为例">以 Cursor-0.1.9.AppImage 为例&lt;/h1>
+&lt;ol>
+&lt;li>打开终端，进入到AppImage文件所在的目录。&lt;/li>
+&lt;li>&lt;code>chmod +x Cursor-0.1.9.AppImage&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo cp Cursor-0.1.9.AppImage /usr/local/bin/Cursor&lt;/code>&lt;/li>
+&lt;li>&lt;code>gedit ~/.local/share/applications/Cursor.desktop&lt;/code>&lt;/li>
+&lt;li>在打开的gedit窗口中输入以下内容：&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">[Desktop Entry]
+Type=Application
+Name=Cursor
+Exec=/usr/local/bin/Cursor
+Icon=/home/cjx/图片/Cursor.png
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="6">
+&lt;li>保存并关闭gedit窗口。
+现在，在桌面上应该会出现一个新的快捷方式，你可以使用它来启动你的AppImage程序了。&lt;/li>
+&lt;/ol></description></item></channel></rss>

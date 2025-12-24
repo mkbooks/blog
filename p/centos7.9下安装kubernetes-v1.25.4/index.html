@@ -1,0 +1,1296 @@
+<!doctype html><html lang=en-us dir=ltr>
+<head><meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="安装 kubernetes"><title>CentOS7.9下安装kubernetes v1.25.4</title>
+<link rel=canonical href=https://mkbooks.github.io/blog/p/centos7.9%E4%B8%8B%E5%AE%89%E8%A3%85kubernetes-v1.25.4/>
+<link rel=stylesheet href=/blog/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="CentOS7.9下安装kubernetes v1.25.4">
+<meta property="og:description" content="安装 kubernetes">
+<meta property="og:url" content="https://mkbooks.github.io/blog/p/centos7.9%E4%B8%8B%E5%AE%89%E8%A3%85kubernetes-v1.25.4/">
+<meta property="og:site_name" content="我的空间">
+<meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="kubernetes"><meta property="article:published_time" content="2023-02-19T09:00:00+08:00"><meta property="article:modified_time" content="2023-02-19T09:00:00+08:00">
+<meta name=twitter:title content="CentOS7.9下安装kubernetes v1.25.4">
+<meta name=twitter:description content="安装 kubernetes">
+<link rel="shortcut icon" href=https://chenjinxin.cn/images/favicon.png>
+</head>
+<body class=article-page>
+<script>(function(){const a='StackColorScheme';localStorage.getItem(a)||localStorage.setItem(a,"auto")})()</script><script>(function(){const b='StackColorScheme',a=localStorage.getItem(b),c=window.matchMedia('(prefers-color-scheme: dark)').matches===!0;a=='dark'||a==='auto'&&c?document.documentElement.dataset.scheme='dark':document.documentElement.dataset.scheme='light'})()</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky">
+<button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box>
+<span class=hamburger-inner></span>
+</span>
+</button>
+<header>
+<figure class=site-avatar>
+<a href=/blog/>
+<img src=/blog/img/1_hu8b5a3db4a21c8e092ed8817bbbdf793a_61250_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a>
+<span class=emoji>🍥</span>
+</figure>
+<div class=site-meta>
+<h1 class=site-name><a href=/blog>我的空间</a></h1>
+<h2 class=site-description>常香玉&陈金鑫.</h2>
+</div>
+</header><ol class=social-menu>
+<li>
+<a href=https://github.com/chenjinxin1124 target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg>
+</a>
+</li>
+</ol><ol class=menu id=main-menu>
+<li>
+<a href=/blog/blog/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home</span>
+</a>
+</li>
+<li>
+<a href=/blog/blog/about/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About</span>
+</a>
+</li>
+<li>
+<a href=/blog/blog/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span>
+</a>
+</li>
+<li>
+<a href=/blog/blog/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span>
+</a>
+</li>
+<li>
+<a href=/blog/blog/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span>
+</a>
+</li>
+<div class=menu-bottom-section>
+<li id=i18n-switch><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://mkbooks.github.io/blog/en/>English</option><option value=https://mkbooks.github.io/blog/ selected>中文</option></select>
+</li>
+<li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>暗色模式</span>
+</li>
+</div>
+</ol>
+</aside>
+<main class="main full-width">
+<article class=main-article>
+<header class=article-header>
+<div class=article-details>
+<header class=article-category>
+<a href=/blog/categories/kubernetes/>
+kubernetes
+</a>
+</header>
+<div class=article-title-wrapper>
+<h2 class=article-title>
+<a href=/blog/p/centos7.9%E4%B8%8B%E5%AE%89%E8%A3%85kubernetes-v1.25.4/>CentOS7.9下安装kubernetes v1.25.4</a>
+</h2>
+<h3 class=article-subtitle>
+安装 kubernetes
+</h3>
+</div>
+<footer class=article-time>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>Feb 19, 2023</time>
+</div>
+<div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>
+阅读时长: 7 分钟
+</time>
+</div>
+</footer>
+</div>
+</header>
+<section class=article-content>
+<h1 id=环境>环境</h1>
+<ul>
+<li>操作系统: CentOS7.9</li>
+<li>cpu 架构: x86</li>
+<li>kubernetes 版本: v1.25.6</li>
+</ul>
+<h2 id=系统版本>系统版本</h2>
+<p>版本号</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# cat /etc/centos-release
+CentOS Linux release 7.9.2009 (Core)
+</code></pre></td></tr></table>
+</div>
+</div><p>内核版本</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# uname -r
+3.10.0-1160.el7.x86_64
+</code></pre></td></tr></table>
+</div>
+</div><p>操作系统位数</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# getconf LONG_BIT
+64
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=环境准备>环境准备</h1>
+<h2 id=设置-hostname>设置 hostname</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>hostnamectl set-hostname master
+</code></pre></td></tr></table>
+</div>
+</div><p>添加到<code>/etc/hosts</code></p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>vim /etc/hosts
+
+192.168.122.88  master
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=禁用防火墙>禁用防火墙</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# systemctl stop firewalld
+[root@master ~]# systemctl disable firewalld
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=禁用-selinux>禁用 SELINUX</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 暂时性
+[root@master ~]# setenforce 0
+# 永久
+[root@master ~]# vim /etc/selinux/config
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>SELINUX=disabled，重新启动系统，使更改生效。</p>
+</blockquote>
+<h2 id=开启内核-ipv4-转发>开启内核 ipv4 转发</h2>
+<p>加载 br_netfilter 模块</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# modprobe br_netfilter
+</code></pre></td></tr></table>
+</div>
+</div><p>令设置成开机启动</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>vim /etc/rc.d/rc.local
+# 添加
+for file in /etc/sysconfig/modules/*.modules ; do
+[ -x $file ] &#34;# $file
+done
+</code></pre></td></tr></table>
+</div>
+</div><p>在 /etc/sysconfig/modules/ 目录下新建如下文件：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>mkdir -p /etc/sysconfig/modules/
+vi /etc/sysconfig/modules/br_netfilter.modules
+</code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>modprobe br_netfilter</p>
+</blockquote>
+<p>增加权限</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>chmod 755 /etc/sysconfig/modules/br_netfilter.modules
+</code></pre></td></tr></table>
+</div>
+</div><p>重启测试</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>lsmod|grep br_netfilter
+
+br_netfilter 22256 0
+bridge 151336 1 br_netfilter
+</code></pre></td></tr></table>
+</div>
+</div><p>创建 <code>vim /etc/sysctl.d/k8s.conf</code> 文件，添加如下内容</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+net.ipv4.ip_forward = 1
+# 下面的内核参数可以解决ipvs模式下长连接空闲超时的问题
+net.ipv4.tcp_keepalive_intvl = 30
+net.ipv4.tcp_keepalive_probes = 10
+net.ipv4.tcp_keepalive_time = 600
+</code></pre></td></tr></table>
+</div>
+</div><p>令使修改生效</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sysctl -p /etc/sysctl.d/k8s.conf
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=关闭-swap>关闭 Swap</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>swapoff -a
+vi /etc/fstab
+</code></pre></td></tr></table>
+</div>
+</div><p>remove the line with swap keyword</p>
+<h2 id=设置-iptables>设置 iptables</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>cat &lt;&lt;EOF | sudo tee /etc/modules-load.d/k8s.conf
+br_netfilter
+EOF
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>cat &lt;&lt;EOF | sudo tee /etc/sysctl.d/k8s.conf
+net.bridge.bridge-nf-call-ip6tables = 1
+net.bridge.bridge-nf-call-iptables = 1
+EOF
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>sysctl --system
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=安装-ipvs>安装 ipvs</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-bash data-lang=bash>cat &gt; /etc/sysconfig/modules/ipvs.modules <span class=s>&lt;&lt;EOF
+</span><span class=s>#!/bin/bash
+</span><span class=s>modprobe -- ip_vs
+</span><span class=s>modprobe -- ip_vs_rr
+</span><span class=s>modprobe -- ip_vs_wrr
+</span><span class=s>modprobe -- ip_vs_sh
+</span><span class=s>modprobe -- nf_conntrack_ipv4
+</span><span class=s>EOF</span>
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>chmod 755 /etc/sysconfig/modules/ipvs.modules &amp;&amp; bash /etc/sysconfig/modules/ipvs.modules &amp;&amp; lsmod | grep -e ip_vs -e nf_conntrack_ipv4
+</code></pre></td></tr></table>
+</div>
+</div><p>output:</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>nf_conntrack_ipv4      15053  0 
+nf_defrag_ipv4         12729  1 nf_conntrack_ipv4
+ip_vs_sh               12688  0 
+ip_vs_wrr              12697  0 
+ip_vs_rr               12600  0 
+ip_vs                 145458  6 ip_vs_rr,ip_vs_sh,ip_vs_wrr
+nf_conntrack          139264  2 ip_vs,nf_conntrack_ipv4
+libcrc32c              12644  3 xfs,ip_vs,nf_conntrack
+</code></pre></td></tr></table>
+</div>
+</div><p>安装管理工具ipvsadm：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>yum install ipset
+yum install ipvsadm -y
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=同步服务器时间>同步服务器时间</h2>
+<p>这里使用 chrony 来进行同步，其他工具也可以：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>yum install chrony -y
+systemctl enable chronyd
+systemctl start chronyd
+chronyc sources
+</code></pre></td></tr></table>
+</div>
+</div><p>output</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>210 Number of sources = 4
+MS Name/IP address         Stratum Poll Reach LastRx Last sample               
+===============================================================================
+^- ns1.newsnet.li                2   6    17     3  -7556us[-7556us] +/-  148ms
+^? ntp6.flashdance.cx            2   6     3     1    +16ms[  +16ms] +/-  161ms
+^* 36.110.233.85                 2   6    17     4    -53us[  -10ms] +/-   70ms
+^? a.chl.la                      2   6    10     9    -33ms[ -467ms] +/-  174ms
+</code></pre></td></tr></table>
+</div>
+</div><p>查看时间</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# date
+2023年 02月 19日 星期日 21:44:15 CST
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=关闭-swap-分区>关闭 swap 分区</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>swapoff -a
+</code></pre></td></tr></table>
+</div>
+</div><p>修改 <code>/etc/fstab</code> 文件，注释掉 SWAP 的自动挂载，使用 <code>free -m</code> 确认 swap 已经关闭。swappiness 参数调整，修改 <code>/etc/sysctl.d/k8s.conf</code> 添加下面一行：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>vm.swappiness=0
+</code></pre></td></tr></table>
+</div>
+</div><p>执行 <code>sysctl -p /etc/sysctl.d/k8s.conf</code> 使修改生效。</p>
+<p>当然如果是生产环境使用还可以先对内核参数进行统一的调优。</p>
+<h2 id=安装-containerd>安装 Containerd</h2>
+<h3 id=安装-seccomp-依赖>安装 seccomp 依赖</h3>
+<p>在节点上安装 seccomp 依赖，需要版本 >2.4，如果有则升级</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>rpm -qa |grep libseccomp
+output:
+libseccomp-2.3.1-4.el7.x86_64
+</code></pre></td></tr></table>
+</div>
+</div><p>卸载</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>yum remove libseccomp-2.3.1-4.el7.x86_64 -y
+</code></pre></td></tr></table>
+</div>
+</div><p>output</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>...
+Running transaction
+  正在删除    : chrony-3.4-1.el7.x86_64                                                                                                                         1/2 
+  正在删除    : libseccomp-2.3.1-4.el7.x86_64                                                                                                                   2/2 
+  验证中      : libseccomp-2.3.1-4.el7.x86_64                                                                                                                   1/2 
+  验证中      : chrony-3.4-1.el7.x86_64                                                                                                                         2/2 
+
+删除:
+  libseccomp.x86_64 0:2.3.1-4.el7                                                                                                                                   
+
+作为依赖被删除:
+  chrony.x86_64 0:3.4-1.el7                                                                                                                                         
+
+完毕！
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=重新安装-chrony>重新安装 chrony</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>yum install chrony -y
+systemctl enable chronyd
+systemctl start chronyd
+chronyc sources
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=安装-libseccomp>安装 libseccomp</h3>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>wget http://rpmfind.net/linux/centos/8-stream/BaseOS/x86_64/os/Packages/libseccomp-2.5.1-1.el8.x86_64.rpm
+yum install libseccomp-2.5.1-1.el8.x86_64.rpm -y
+</code></pre></td></tr></table>
+</div>
+</div><p>验证</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>rpm -qa |grep libseccomp
+output:
+libseccomp-2.5.1-1.el8.x86_64
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=安装-containerd-1>安装 Containerd</h3>
+<p>下载包</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># wget https://github.com/containerd/containerd/releases/download/v1.6.18/cri-containerd-cni-1.6.18-linux-amd64.tar.gz
+URL 加速
+wget https://ghdl.feizhuqwq.cf/https://github.com/containerd/containerd/releases/download/v1.6.10/cri-containerd-1.6.10-linux-amd64.tar.gz
+</code></pre></td></tr></table>
+</div>
+</div><p>解压</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>tar -C / -xzf cri-containerd-1.6.10-linux-amd64.tar.gz
+</code></pre></td></tr></table>
+</div>
+</div><p>将 /usr/local/bin 和 /usr/local/sbin 追加到 PATH 环境变量中：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# echo $PATH
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/root/bin
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# containerd -v
+containerd github.com/containerd/containerd v1.6.10 770bd0108c32f3fb5c73ae1264f7e503fe7b2661
+
+[root@master ~]# runc -v
+runc version 1.1.4
+commit: v1.1.4-0-g5fd4c4d1
+spec: 1.0.2-dev
+go: go1.18.8
+libseccomp: 2.5.1
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=修改-containerd-默认配置>修改 containerd 默认配置</h3>
+<p>Containerd 的默认配置文件为 /etc/containerd/config.toml，我们可以通过如下所示的命令生成一个默认的配置：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>mkdir -p /etc/containerd
+containerd config default &gt; /etc/containerd/config.toml
+</code></pre></td></tr></table>
+</div>
+</div><p>对于使用 systemd 作为 init system 的 Linux 的发行版，使用 systemd 作为容器的 cgroup driver 可以确 保节点在资源紧张的情况更加稳定，所以推荐将 containerd 的 cgroup driver 配置为 systemd。</p>
+<p>修改前面生成的配置文件 /etc/containerd/config.toml，在plugins.&ldquo;io.containerd.grpc.v1.cri&rdquo;.containerd.runtimes.runc.options 配置块下面将 SystemdCgroup 设置为 true ：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes.runc]
+...
+  [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.runtimes.runc.options]
+    ...
+            SystemdCgroup = true
+
+      [plugins.&#34;io.containerd.grpc.v1.cri&#34;.containerd.untrusted_workload_runtime]
+</code></pre></td></tr></table>
+</div>
+</div><p>然后再为镜像仓库配置一个加速器，需要在 cri 配置块下面的 registry 配置块下面进行配置 registry.mirrors ：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[plugins.&#34;io.containerd.grpc.v1.cri&#34;]
+  ...
+  # sandbox_image = &#34;registry.k8s.io/pause:3.6&#34;
+  sandbox_image = &#34;registry.aliyuncs.com/k8sxio/pause:3.8&#34;
+  ...
+  [plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry]
+    [plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.mirrors]
+      [plugins.&#34;io.containerd.grpc.v1.cri&#34;.registry.mirrors.&#34;docker.io&#34;]
+        endpoint = [&#34;https://bqr1dr1n.mirror.aliyuncs.com&#34;]
+</code></pre></td></tr></table>
+</div>
+</div><p>使配置生效</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>systemctl daemon-reload
+systemctl enable containerd --now
+</code></pre></td></tr></table>
+</div>
+</div><p>验证</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>containerd -v
+
+containerd github.com/containerd/containerd v1.6.10 770bd0108c32f3fb5c73ae1264f7e503fe7b2661
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>ctr version
+
+Client:
+  Version:  v1.6.10
+  Revision: 770bd0108c32f3fb5c73ae1264f7e503fe7b2661
+  Go version: go1.18.8
+
+Server:
+  Version:  v1.6.10
+  Revision: 770bd0108c32f3fb5c73ae1264f7e503fe7b2661
+  UUID: b2acca82-0694-4df2-890e-93cc9f6c3069
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>crictl version
+
+Version:  0.1.0
+RuntimeName:  containerd
+RuntimeVersion:  v1.6.10
+RuntimeApiVersion:  v1
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=安装-kubeadmkubeletkubectl>安装 kubeadm、kubelet、kubectl</h2>
+<p>使用阿里云的源进行安装</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=http://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64
+enabled=1
+gpgcheck=0
+repo_gpgcheck=0
+gpgkey=http://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg
+        http://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg
+EOF
+</code></pre></td></tr></table>
+</div>
+</div><p>安装 kubeadm、kubelet、kubectl</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>yum makecache fast
+# 查看可安装版本
+yum list kubectl --showduplicates|grep 1.25
+
+# --disableexcludes 禁掉除了kubernetes之外的别的仓库
+yum install -y kubelet-1.25.4 kubeadm-1.25.4 kubectl-1.25.4 --disableexcludes=kubernetes
+</code></pre></td></tr></table>
+</div>
+</div><p>验证+开机自启</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm version
+kubectl version --client
+systemctl enable --now kubelet
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=创建成镜像复制两台做node>创建成镜像，复制两台做node</h1>
+<h2 id=设置三台机器>设置三台机器</h2>
+<p>hostname</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>hostnamectl set-hostname node1
+hostnamectl set-hostname node2
+</code></pre></td></tr></table>
+</div>
+</div><p>重启生效</p>
+<p>hosts</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# cat /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+192.168.122.88  master
+192.168.122.221 node1
+192.168.122.105 node2
+</code></pre></td></tr></table>
+</div>
+</div><h1 id=创建集群>创建集群</h1>
+<h2 id=修改-kubeadm-配置文件>修改 kubeadm 配置文件</h2>
+<p>输出集群初始化默认使用的配置</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm config print init-defaults --component-configs KubeletConfiguration &gt; kubeadm.yaml
+</code></pre></td></tr></table>
+</div>
+</div><p>查看需要的镜像</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# kubeadm config images list
+I0219 23:33:43.205958    4423 version.go:256] remote version is much newer: v1.26.1; falling back to: stable-1.25
+registry.k8s.io/kube-apiserver:v1.25.6
+registry.k8s.io/kube-controller-manager:v1.25.6
+registry.k8s.io/kube-scheduler:v1.25.6
+registry.k8s.io/kube-proxy:v1.25.6
+registry.k8s.io/pause:3.8
+registry.k8s.io/etcd:3.5.5-0
+registry.k8s.io/coredns/coredns:v1.9.3
+</code></pre></td></tr></table>
+</div>
+</div><p>预先在各个服务器节点上拉取所 k8s 需要的容器镜像。</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm config images pull --config kubeadm.yaml
+</code></pre></td></tr></table>
+</div>
+</div><p>执行错误</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# kubeadm config images pull --config kubeadm.yaml
+invalid configuration for GroupVersionKind /, Kind=InitConfiguration: kind and apiVersion is mandatory information that must be specified
+To see the stack trace of this error execute with --v=5 or higher
+</code></pre></td></tr></table>
+</div>
+</div><p>尝试下面方法</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# kubeadm config images pull --image-repository=registry.aliyuncs.com/k8sxio
+I0219 23:36:09.944807    4603 version.go:256] remote version is much newer: v1.26.1; falling back to: stable-1.25
+[config/images] Pulled registry.aliyuncs.com/k8sxio/kube-apiserver:v1.25.6
+[config/images] Pulled registry.aliyuncs.com/k8sxio/kube-controller-manager:v1.25.6
+[config/images] Pulled registry.aliyuncs.com/k8sxio/kube-scheduler:v1.25.6
+[config/images] Pulled registry.aliyuncs.com/k8sxio/kube-proxy:v1.25.6
+[config/images] Pulled registry.aliyuncs.com/k8sxio/pause:3.8
+[config/images] Pulled registry.aliyuncs.com/k8sxio/etcd:3.5.5-0
+failed to pull image &#34;registry.aliyuncs.com/k8sxio/coredns:v1.9.3&#34;: output: E0219 23:36:32.189360    4681 remote_image.go:238] &#34;PullImage from image service failed&#34; err=&#34;rpc error: code = NotFound desc = failed to pull and unpack image \&#34;registry.aliyuncs.com/k8sxio/coredns:v1.9.3\&#34;: failed to resolve reference \&#34;registry.aliyuncs.com/k8sxio/coredns:v1.9.3\&#34;: registry.aliyuncs.com/k8sxio/coredns:v1.9.3: not found&#34; image=&#34;registry.aliyuncs.com/k8sxio/coredns:v1.9.3&#34;
+time=&#34;2023-02-19T23:36:32+08:00&#34; level=fatal msg=&#34;pulling image: rpc error: code = NotFound desc = failed to pull and unpack image \&#34;registry.aliyuncs.com/k8sxio/coredns:v1.9.3\&#34;: failed to resolve reference \&#34;registry.aliyuncs.com/k8sxio/coredns:v1.9.3\&#34;: registry.aliyuncs.com/k8sxio/coredns:v1.9.3: not found&#34;
+, error: exit status 1
+To see the stack trace of this error execute with --v=5 or higher
+</code></pre></td></tr></table>
+</div>
+</div><p>在拉取 coredns 镜像的时候出错了，没有找到这个镜像，我们可以手动 pull 该镜像，然后重新 tag 下镜像地址即可：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 在node上操作
+ctr -n k8s.io i pull docker.io/coredns/coredns:1.9.3
+ctr -n k8s.io i tag docker.io/coredns/coredns:1.9.3 registry.aliyuncs.com/k8sxio/coredns:v1.9.3
+</code></pre></td></tr></table>
+</div>
+</div><p>初始化集群</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm init --config kubeadm.yaml
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm init \
+--image-repository registry.aliyuncs.com/k8sxio \
+--kubernetes-version v1.25.6 \
+--pod-network-cidr=10.244.0.0/16 \
+--cri-socket /var/run/containerd/containerd.sock
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm init \
+--image-repository registry.aliyuncs.com/k8sxio \
+--kubernetes-version v1.25.6 \
+--pod-network-cidr=10.244.0.0/16 \
+--cri-socket /run/containerd/containerd.sock
+</code></pre></td></tr></table>
+</div>
+</div><p>失败处理</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>journalctl -xeu kubelet
+2月 20 00:39:05 master kubelet[6934]: E0220 00:39:05.012927    6934 remote_runtime.go:222] &#34;RunPodSandbox from runtime service failed&#34; err=&#34;rpc error: code = Unknown desc = failed to get sandbox image \&#34;registry.k8s.io/paus
+2月 20 00:39:05 master kubelet[6934]: E0220 00:39:05.012965    6934 kuberuntime_sandbox.go:71] &#34;Failed to create sandbox for pod&#34; err=&#34;rpc error: code = Unknown desc = failed to get sandbox image \&#34;registry.k8s.io/pause:3.6
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback># 每台机器都要操作
+ctr -n k8s.io i pull registry.aliyuncs.com/k8sxio/pause:3.6
+ctr -n k8s.io i tag registry.aliyuncs.com/k8sxio/pause:3.6 registry.k8s.io/pause:3.6
+kubeadm reset
+重新初始化
+</code></pre></td></tr></table>
+</div>
+</div><p>根据安装提示拷贝 kubeconfig 文件：</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>Your Kubernetes control-plane has initialized successfully!
+
+To start using your cluster, you need to run the following as a regular user:
+
+  mkdir -p $HOME/.kube
+  sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Alternatively, if you are the root user, you can run:
+
+  export KUBECONFIG=/etc/kubernetes/admin.conf
+
+You should now deploy a pod network to the cluster.
+Run &#34;kubectl apply -f [podnetwork].yaml&#34; with one of the options listed at:
+  https://kubernetes.io/docs/concepts/cluster-administration/addons/
+
+Then you can join any number of worker nodes by running the following on each as root:
+
+kubeadm join 192.168.122.88:6443 --token 9xmb00.jgg2ytslgqgavcxc \
+        --discovery-token-ca-cert-hash sha256:5dc53c7febabebb55cdd616d6614da055a3c2c2859a3b6128ccb4366ab486342 
+</code></pre></td></tr></table>
+</div>
+</div><p>添加节点</p>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>[root@master ~]# kubeadm token create --print-join-command
+kubeadm join 192.168.122.88:6443 --token 57d01o.hd3y1o1g83sv8nkq --discovery-token-ca-cert-hash sha256:5dc53c7febabebb55cdd616d6614da055a3c2c2859a3b6128ccb4366ab486342 
+
+kubeadm join 192.168.122.88:6443 --token 9xmb00.jgg2ytslgqgavcxc \
+        --discovery-token-ca-cert-hash sha256:5dc53c7febabebb55cdd616d6614da055a3c2c2859a3b6128ccb4366ab486342 
+
+[root@master ~]# kubectl get node
+NAME     STATUS     ROLES           AGE     VERSION
+master   NotReady   control-plane   7m52s   v1.25.6
+node1    NotReady   &lt;none&gt;          90s     v1.25.6
+node2    NotReady   &lt;none&gt;          50s     v1.25.6
+</code></pre></td></tr></table>
+</div>
+</div><h3 id=安装网络插件>安装网络插件</h3>
+<h4 id=安装-flannel>安装 flannel</h4>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>wget https://raw.githubusercontent.com/flannel-io/flannel/v0.20.1/Documentation/kube-flannel.yml
+</code></pre></td></tr></table>
+</div>
+</div><div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubectl apply -f kube-flannel.yml
+</code></pre></td></tr></table>
+</div>
+</div><h2 id=清理>清理</h2>
+<div class=highlight><div class=chroma>
+<table class=lntable><tr><td class=lntd>
+<pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td>
+<td class=lntd>
+<pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback>kubeadm reset
+ifconfig cni0 down &amp;&amp; ip link delete cni0
+ifconfig flannel.1 down &amp;&amp; ip link delete flannel.1
+rm -rf /var/lib/cni/
+</code></pre></td></tr></table>
+</div>
+</div>
+</section>
+<footer class=article-footer>
+<section class=article-tags>
+<a href=/blog/tags/kubernetes/>kubernetes</a>
+</section>
+<section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span>
+</section>
+</footer>
+</article>
+<aside class=related-content--wrapper>
+<h2 class=section-title>相关文章</h2>
+<div class=related-content>
+<div class="flex article-list--tile">
+<article>
+<a href=/blog/p/centos7.9-%E4%B8%8B%E5%AE%89%E8%A3%85-kubernetes-v1.25.6/>
+<div class=article-details>
+<h2 class=article-title>CentOS7.9 下安装 kubernetes v1.25.6</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/blog/p/kubernetes%E4%BF%AE%E6%94%B9%E8%BF%90%E8%A1%8C%E6%97%B6/>
+<div class=article-details>
+<h2 class=article-title>kubernetes修改运行时</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/blog/p/kubernetes-%E9%95%9C%E5%83%8F/>
+<div class=article-details>
+<h2 class=article-title>kubernetes 镜像</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/blog/p/kubernetes-%E5%AE%89%E8%A3%85%E9%97%AE%E9%A2%98/>
+<div class=article-details>
+<h2 class=article-title>kubernetes 安装问题</h2>
+</div>
+</a>
+</article>
+<article>
+<a href=/blog/p/%E5%AE%89%E8%A3%85-kubernetesubuntu20.04%E7%8E%AF%E5%A2%83/>
+<div class=article-details>
+<h2 class=article-title>安装 kubernetes(Ubuntu20.04环境)</h2>
+</div>
+</a>
+</article>
+</div>
+</div>
+</aside>
+<div class=disqus-container>
+<div id=disqus_thread></div>
+<script type=application/javascript>var disqus_config=function(){};(function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById('disqus_thread').innerHTML='Disqus comments not available by default when the website is previewed locally.';return}var b=document,a=b.createElement('script');a.async=!0,a.src='//hugo-theme-stack.disqus.com/embed.js',a.setAttribute('data-timestamp',+new Date),(b.head||b.body).appendChild(a)})()</script>
+<noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript>
+<a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a>
+</div>
+<style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style>
+<script>window.addEventListener('onColorSchemeChange',a=>{typeof DISQUS=='object'&&DISQUS.reset({reload:!0})})</script>
+<footer class=site-footer>
+<section class=copyright>
+&copy;
+2020 -
+2025 我的空间
+</section>
+<section class=powerby>
+Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a> <br>
+主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.13.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计
+<br><a href=https://beian.miit.gov.cn/ target=_blank>粤ICP备19123935号</a>
+</section>
+</footer>
+<div class=pswp tabindex=-1 role=dialog aria-hidden=true>
+<div class=pswp__bg></div>
+<div class=pswp__scroll-wrap>
+<div class=pswp__container>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+<div class=pswp__item></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class=pswp__top-bar>
+<div class=pswp__counter></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class=pswp__preloader>
+<div class=pswp__preloader__icn>
+<div class=pswp__preloader__cut>
+<div class=pswp__preloader__donut></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class=pswp__share-tooltip></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class=pswp__caption>
+<div class=pswp__caption__center></div>
+</div>
+</div>
+</div>
+</div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous>
+</main>
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg>
+</div>
+<h2 class="widget-title section-title">目录</h2>
+<div class=widget--toc>
+<nav id=TableOfContents>
+<ol>
+<li><a href=#系统版本>系统版本</a></li>
+</ol>
+<ol>
+<li><a href=#设置-hostname>设置 hostname</a></li>
+<li><a href=#禁用防火墙>禁用防火墙</a></li>
+<li><a href=#禁用-selinux>禁用 SELINUX</a></li>
+<li><a href=#开启内核-ipv4-转发>开启内核 ipv4 转发</a></li>
+<li><a href=#关闭-swap>关闭 Swap</a></li>
+<li><a href=#设置-iptables>设置 iptables</a></li>
+<li><a href=#安装-ipvs>安装 ipvs</a></li>
+<li><a href=#同步服务器时间>同步服务器时间</a></li>
+<li><a href=#关闭-swap-分区>关闭 swap 分区</a></li>
+<li><a href=#安装-containerd>安装 Containerd</a>
+<ol>
+<li><a href=#安装-seccomp-依赖>安装 seccomp 依赖</a></li>
+<li><a href=#重新安装-chrony>重新安装 chrony</a></li>
+<li><a href=#安装-libseccomp>安装 libseccomp</a></li>
+<li><a href=#安装-containerd-1>安装 Containerd</a></li>
+<li><a href=#修改-containerd-默认配置>修改 containerd 默认配置</a></li>
+</ol>
+</li>
+<li><a href=#安装-kubeadmkubeletkubectl>安装 kubeadm、kubelet、kubectl</a></li>
+</ol>
+<ol>
+<li><a href=#设置三台机器>设置三台机器</a></li>
+</ol>
+<ol>
+<li><a href=#修改-kubeadm-配置文件>修改 kubeadm 配置文件</a>
+<ol>
+<li><a href=#安装网络插件>安装网络插件</a>
+<ol>
+<li><a href=#安装-flannel>安装 flannel</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><a href=#清理>清理</a></li>
+</ol>
+</nav>
+</div>
+</section>
+</aside>
+</div>
+<script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/blog/ts/main.js defer></script>
+<script>(function(){const a=document.createElement('link');a.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",a.type="text/css",a.rel="stylesheet",document.head.appendChild(a)})()</script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>监控 on 我的空间</title><link>https://mkbooks.github.io/blog/categories/%E7%9B%91%E6%8E%A7/</link><description>Recent content in 监控 on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Thu, 25 May 2023 08:00:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/%E7%9B%91%E6%8E%A7/index.xml" rel="self" type="application/rss+xml"/><item><title>GPU监控</title><link>https://mkbooks.github.io/blog/p/gpu%E7%9B%91%E6%8E%A7/</link><pubDate>Thu, 25 May 2023 08:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/gpu%E7%9B%91%E6%8E%A7/</guid><description>&lt;h2 id="安装服务">安装服务&lt;/h2>
+&lt;h3 id="prometheus">Prometheus&lt;/h3>
+&lt;h3 id="grafana">Grafana&lt;/h3>
+&lt;h3 id="dcgm">DCGM&lt;/h3></description></item></channel></rss>

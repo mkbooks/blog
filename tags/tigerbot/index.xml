@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>TigerBot on 我的空间</title><link>https://mkbooks.github.io/blog/tags/tigerbot/</link><description>Recent content in TigerBot on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Fri, 09 Jun 2023 10:00:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/tags/tigerbot/index.xml" rel="self" type="application/rss+xml"/><item><title>langchain-ChatGLM-and-TigerBot</title><link>https://mkbooks.github.io/blog/p/langchain-chatglm-and-tigerbot/</link><pubDate>Fri, 09 Jun 2023 10:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/langchain-chatglm-and-tigerbot/</guid><description>&lt;h2 id="下载项目">下载项目&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">git clone https://github.com/wordweb/langchain-ChatGLM-and-TigerBot.git
+cd langchain-ChatGLM-and-TigerBot/
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="docker-部署">Docker 部署&lt;/h2>
+&lt;p>为了能让容器使用主机GPU资源，需要在主机上安装 &lt;a class="link" href="https://github.com/NVIDIA/nvidia-container-toolkit" target="_blank" rel="noopener"
+>NVIDIA Container Toolkit&lt;/a>。具体安装步骤如下：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">sudo apt-get update
+sudo apt-get install -y nvidia-container-toolkit-base
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装完成后，可以使用以下命令编译镜像和启动容器：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">docker build -f Dockerfile-cuda -t chatglm-cuda-tigerbot:latest .
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="使用离线模型">使用离线模型&lt;/h3>
+&lt;p>text2vec-large-chinese&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cjx@cjx:/ssd2/huggingface/GanymedeNil/text2vec-large-chinese$ ll
+总计 1272280
+drwxrwxr-x 2 cjx cjx 4096 6月 9 20:46 ./
+drwxrwxr-x 3 cjx cjx 4096 6月 9 20:45 ../
+-rw-rw-r-- 1 cjx cjx 821 6月 9 20:46 config.json
+-rw-rw-r-- 1 cjx cjx 69 6月 9 20:46 eval_results.txt
+-rw-rw-r-- 1 cjx cjx 1477 6月 9 20:45 .gitattributes
+-rw-rw-r-- 1 cjx cjx 1302223089 3月 7 11:34 pytorch_model.bin
+-rw-rw-r-- 1 cjx cjx 317 6月 9 20:46 README.md
+-rw-rw-r-- 1 cjx cjx 125 6月 9 20:46 special_tokens_map.json
+-rw-rw-r-- 1 cjx cjx 514 6月 9 20:46 tokenizer_config.json
+-rw-rw-r-- 1 cjx cjx 439387 6月 9 20:46 tokenizer.json
+-rw-rw-r-- 1 cjx cjx 109540 6月 9 20:46 vocab.txt
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>ChatGLM-6B&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cjx@cjx:/ssd2/github/THUDM/ChatGLM-6B/chatglm-6b$ ll
+总计 13105340
+drwxrwxr-x 3 cjx cjx 4096 5月 22 14:55 ./
+drwxrwxr-x 10 cjx cjx 4096 5月 22 15:18 ../
+-rw-rw-r-- 1 cjx cjx 773 5月 22 14:43 config.json
+-rw-rw-r-- 1 cjx cjx 4276 5月 22 14:43 configuration_chatglm.py
+drwxrwxr-x 8 cjx cjx 4096 5月 22 14:43 .git/
+-rw-rw-r-- 1 cjx cjx 1477 5月 22 14:43 .gitattributes
+-rw-rw-r-- 1 cjx cjx 2706249 5月 22 14:44 ice_text.model
+-rw-rw-r-- 1 cjx cjx 11336 5月 22 14:44 LICENSE
+-rw-rw-r-- 1 cjx cjx 57620 5月 22 14:43 modeling_chatglm.py
+-rw-rw-r-- 1 cjx cjx 2354 5月 22 14:44 MODEL_LICENSE
+-rw-rw-r-- 1 cjx cjx 1740651802 5月 22 14:53 pytorch_model-00001-of-00008.bin
+-rw-rw-r-- 1 cjx cjx 1879731432 5月 22 14:53 pytorch_model-00002-of-00008.bin
+-rw-rw-r-- 1 cjx cjx 1980385902 5月 22 14:53 pytorch_model-00003-of-00008.bin
+-rw-rw-r-- 1 cjx cjx 1913294120 5月 22 14:53 pytorch_model-00004-of-00008.bin
+-rw-rw-r-- 1 cjx cjx 1879722289 5月 22 14:53 pytorch_model-00005-of-00008.bin
+-rw-rw-r-- 1 cjx cjx 1879731496 5月 22 14:53 pytorch_model-00006-of-00008.bin
+-rw-rw-r-- 1 cjx cjx 1074103621 5月 22 14:50 pytorch_model-00007-of-00008.bin
+-rw-rw-r-- 1 cjx cjx 1069286123 5月 22 14:50 pytorch_model-00008-of-00008.bin
+-rw-rw-r-- 1 cjx cjx 33416 5月 22 14:43 pytorch_model.bin.index.json
+-rw-rw-r-- 1 cjx cjx 15054 5月 22 14:43 quantization.py
+-rw-rw-r-- 1 cjx cjx 6087 5月 22 14:43 README.md
+-rw-rw-r-- 1 cjx cjx 13822 5月 22 14:43 test_modeling_chatglm.py
+-rw-rw-r-- 1 cjx cjx 17047 5月 22 14:43 tokenization_chatglm.py
+-rw-rw-r-- 1 cjx cjx 441 5月 22 14:43 tokenizer_config.json
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>TigerResearch&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cjx@cjx:/ssd2/huggingface/TigerResearch/tigerbot-7b-sft$ ll
+总计 15824908
+drwxrwxr-x 2 cjx cjx 4096 6月 9 20:35 ./
+drwxrwxr-x 3 cjx cjx 4096 6月 9 20:09 ../
+-rw-rw-r-- 1 cjx cjx 765 6月 9 20:10 config.json
+-rw-rw-r-- 1 cjx cjx 132 6月 9 20:10 generation_config.json
+-rw-rw-r-- 1 cjx cjx 1528 6月 9 20:10 .gitattributes
+-rw-rw-r-- 1 cjx cjx 9974654870 6月 7 19:14 pytorch_model-00001-of-00002.bin
+-rw-rw-r-- 1 cjx cjx 6215469038 6月 7 18:53 pytorch_model-00002-of-00002.bin
+-rw-rw-r-- 1 cjx cjx 31898 6月 9 20:10 pytorch_model.bin.index.json
+-rw-rw-r-- 1 cjx cjx 2123 6月 9 20:10 README.md
+-rw-rw-r-- 1 cjx cjx 190 6月 9 20:10 special_tokens_map.json
+-rw-rw-r-- 1 cjx cjx 289 6月 9 20:10 tokenizer_config.json
+-rw-rw-r-- 1 cjx cjx 14500838 6月 9 20:11 tokenizer.json
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="修改配置">修改配置&lt;/h4>
+&lt;p>configs/model_config&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-mysql" data-lang="mysql">&lt;span class="c1"># 如果你需要加载本地的model，指定这个参数 ` --no-remote-model`，或者下方参数修改为 `True`
+&lt;/span>&lt;span class="c1"># NO_REMOTE_MODEL = False
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">NO_REMOTE_MODEL&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="no">True&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="编译镜像">编译镜像&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">docker build -f Dockerfile-cuda -t chatglm-cuda:latest .
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="启动容器">启动容器&lt;/h4>
+&lt;p>配置好模型路径，然后此repo挂载到Container&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">docker run --gpus all -d \
+--name chatglm-tigerbot \
+-p 7861:7860 \
+-v /ssd2/huggingface/GanymedeNil/text2vec-large-chinese:/chatGLM/model/text2vec-large-chinese \
+-v /ssd2/github/THUDM/ChatGLM-6B/chatglm-6b:/chatGLM/model/chatglm-6b \
+-v /ssd2/huggingface/TigerResearch/tigerbot-7b-sft:/chatGLM/model/TigerBot \
+chatglm-cuda-tigerbot:latest
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>TigerBot</title><link>https://mkbooks.github.io/blog/p/tigerbot/</link><pubDate>Fri, 09 Jun 2023 10:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/tigerbot/</guid><description>&lt;h2 id="下载项目">下载项目&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">git clone https://github.com/TigerResearch/TigerBot.git
+cd TigerBot/
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="宿主机部署">宿主机部署&lt;/h2>
+&lt;h3 id="环境安装">环境安装&lt;/h3>
+&lt;h3 id="模型下载">模型下载&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">git lfs install
+GIT_LFS_SKIP_SMUDGE=1
+git clone https://huggingface.co/TigerResearch/tigerbot-7b-sft
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item></channel></rss>

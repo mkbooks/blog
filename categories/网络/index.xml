@@ -1,4 +1,927 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>网络 on 我的空间</title><link>https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/</link><description>Recent content in 网络 on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Sun, 30 Oct 2022 16:38:18 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml"/><item><title>安装openVPN客户端</title><link>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85openvpn%E5%AE%A2%E6%88%B7%E7%AB%AF/</link><pubDate>Sun, 30 Oct 2022 16:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85openvpn%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid><description>&lt;h1 id="windows平台">Windows平台&lt;/h1>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>网络 on 我的空间</title><link>https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/</link><description>Recent content in 网络 on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 06 Mar 2023 21:00:00 +0800</lastBuildDate><atom:link href="https://mkbooks.github.io/blog/categories/%E7%BD%91%E7%BB%9C/index.xml" rel="self" type="application/rss+xml"/><item><title>proxy: unknown scheme: socks</title><link>https://mkbooks.github.io/blog/p/proxy-unknown-scheme-socks/</link><pubDate>Mon, 06 Mar 2023 21:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/proxy-unknown-scheme-socks/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">unset all_proxy
+unset ALL_PROXY
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>通过FRP实现内网穿透</title><link>https://mkbooks.github.io/blog/p/%E9%80%9A%E8%BF%87frp%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</link><pubDate>Mon, 20 Feb 2023 10:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E9%80%9A%E8%BF%87frp%E5%AE%9E%E7%8E%B0%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</guid><description>&lt;ol>
+&lt;li>安装 Docker。
+&lt;ol>
+&lt;li>Ubuntu
+&lt;ol>
+&lt;li>&lt;code>sudo apt install docker.io -y&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>CentOS
+&lt;ol>
+&lt;li>&lt;code>sudo yum update&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo yum install -y yum-utils&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo yum install -y docker-ce docker-ce-cli containerd.io&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo systemctl start docker&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo docker run hello-world&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>普通用户执行权限添加
+&lt;ol>
+&lt;li>&lt;code>sudo groupadd docker&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo usermod -aG docker ${USER}&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>更新并激活组权限
+&lt;ol>
+&lt;li>&lt;code>newgrp docker&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>服务端
+&lt;ol>
+&lt;li>下载 FRP 镜像。
+&lt;ol>
+&lt;li>&lt;code>docker pull snowdreamtech/frps&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>创建配置文件
+&lt;ol>
+&lt;li>&lt;code>vim /home/sammy/frp/frps.ini&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>创建 FRP 容器。
+&lt;ol>
+&lt;li>&lt;code>docker run -d --restart always --network host --name frps -v /home/sammy/frp/frps.ini:/etc/frp/frps.ini snowdreamtech/frps&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>控制面板
+&lt;ol>
+&lt;li>http://${public_ip}:7500/&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>客户端
+&lt;ol>
+&lt;li>下载 FRP 镜像。
+&lt;ol>
+&lt;li>&lt;code>docker pull snowdreamtech/frpc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>创建配置文件
+&lt;ol>
+&lt;li>&lt;code>vim /home/sammy/frp/frpc.ini&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>创建 FRP 容器。
+&lt;ol>
+&lt;li>&lt;code>docker run -d --restart always --network host --name frpc -v /home/sammy/frp/frpc.ini:/etc/frp/frpc.ini snowdreamtech/frpc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>测试
+&lt;ol>
+&lt;li>ssh
+&lt;ol>
+&lt;li>&lt;code>ssh root@${public_ip} -p 2288&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>nginx
+&lt;ol>
+&lt;li>http://${public_ip}:8080/&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>k8s-dashboard
+&lt;ol>
+&lt;li>https://${public_ip}:1113/&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol></description></item><item><title>安装新系统-Ubuntu</title><link>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85%E6%96%B0%E7%B3%BB%E7%BB%9F-ubuntu/</link><pubDate>Mon, 05 Dec 2022 20:00:00 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85%E6%96%B0%E7%B3%BB%E7%BB%9F-ubuntu/</guid><description>&lt;h2 id="系统">系统&lt;/h2>
+&lt;p>ubuntu20.04&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ uname -a
+Linux cjx 5.15.0-56-generic #62-Ubuntu SMP Tue Nov 22 19:54:14 UTC 2022 x86_64 x86_64 x86_64 GNU/Linux
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="安装工具">安装工具&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.ventoy.net/cn/index.html" target="_blank" rel="noopener"
+>Ventoy&lt;/a>&lt;/p>
+&lt;h2 id="系统设置">系统设置&lt;/h2>
+&lt;h3 id="ssh-设置">ssh 设置&lt;/h3>
+&lt;h4 id="创建秘钥">创建秘钥&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">ssh-keygen
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="设置-root-密码">设置 root 密码&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo passwd
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="sudo免密">&lt;code>sudo&lt;/code>免密&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo -i
+visudo
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>在&lt;code>%sudo ALL=(ALL:ALL) ALL&lt;/code>的下一行添加&lt;code>${USER} ALL=(ALL:ALL) NOPASSWD:ALL&lt;/code>&lt;/p>
+&lt;h4 id="su-root免密">&lt;code>su root&lt;/code>免密&lt;/h4>
+&lt;p>查看组&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">cjx@cjx:~$ groups
+cjx adm cdrom sudo dip plugdev lpadmin lxd sambashare
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">su root
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>给 cjx 用户添加组&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">groupadd wheel
+usermod -G wheel cjx
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>修改&lt;code>su&lt;/code>的配置文件（给 wheel 组设置免密）&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">vim /etc/pam.d/su
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback"># Uncomment this if you want wheel members to be able to
+# su without a password.
+auth required pam_wheel.so group=wheel
+auth sufficient pam_wheel.so trust use_uid
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="设置网络">设置网络&lt;/h3>
+&lt;h4 id="火狐">火狐&lt;/h4>
+&lt;ol>
+&lt;li>登陆同步服务&lt;/li>
+&lt;li>设置 SwitchyOmega（使用内网其他可以上网的机器）&lt;/li>
+&lt;/ol>
+&lt;h3 id="设置输入法">设置输入法&lt;/h3>
+&lt;h4 id="搜狗输入法">搜狗输入法&lt;/h4>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://shurufa.sogou.com/linux" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://shurufa.sogou.com/linux/guide" target="_blank" rel="noopener"
+>安装&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;h3 id="设置上网">设置上网&lt;/h3>
+&lt;h4 id="设置服务器">设置服务器&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo -i
+apt-get update -y &amp;amp;&amp;amp; apt-get install curl -y
+bash &amp;lt;(curl -s -L https://git.io/v2ray.sh)
+1
+v2ray url
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="qv2ray">Qv2ray&lt;/h4>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://github.com/v2fly/v2ray-core/releases" target="_blank" rel="noopener"
+>https://github.com/v2fly/v2ray-core/releases&lt;/a>
+&lt;ol>
+&lt;li>&lt;code>unzip v2ray-linux-64.zip&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/Qv2ray/Qv2ray/releases" target="_blank" rel="noopener"
+>https://github.com/Qv2ray/Qv2ray/releases&lt;/a>
+&lt;ol>
+&lt;li>&lt;code>sudo chmod +x ./Qv2ray-refs.tags.v1.99.6-linux.AppImage&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo ./Qv2ray-refs.tags.v1.99.6-linux.AppImage&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;p>如果报错：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">dlopen(): error loading libfuse.so.2
+AppImages require FUSE to run.
+You might still be able to extract the contents of this AppImage
+if you run it with the --appimage-extract option.
+See https://github.com/AppImage/AppImageKit/wiki/FUSE
+for more information
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>安装：&lt;code>sudo apt install libfuse2&lt;/code>&lt;/p>
+&lt;ol start="3">
+&lt;li>
+&lt;p>首选项 -&amp;gt; 内核设置&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>设置服务器&lt;/p>
+&lt;ol start="0">
+&lt;li>&lt;code>sudo v2ray url&lt;/code>&lt;/li>
+&lt;li>&lt;a class="link" href="https://bwh1.net/index.php" target="_blank" rel="noopener"
+>搬瓦工&lt;/a>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://justmysocks5.net/members/clientarea.php?action=services" target="_blank" rel="noopener"
+>https://justmysocks5.net/members/clientarea.php?action=services&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;a class="link" href="https://cloud.tencent.com/" target="_blank" rel="noopener"
+>腾讯云&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.aliyun.com" target="_blank" rel="noopener"
+>阿里云&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://cloud.google.com/" target="_blank" rel="noopener"
+>谷歌云&lt;/a>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;p>SwitchyOmega.auto switch.规则列表设置: &lt;a class="link" href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="noopener"
+>https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt&lt;/a>&lt;/p>
+&lt;/li>
+&lt;/ol>
+&lt;h4 id="chrome-浏览器">chrome 浏览器&lt;/h4>
+&lt;ol>
+&lt;li>&lt;a class="link" href="https://www.google.com/intl/zh-CN/chrome/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/li>
+&lt;li>安装: &lt;code>sudo dpkg -i &lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h3 id="设置-oh-my-zsh">设置 oh-my-zsh&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.jianshu.com/p/ba782b57ae96" target="_blank" rel="noopener"
+>参阅&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://ohmyz.sh/#install" target="_blank" rel="noopener"
+>oh-my-zsh&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>默认 shell: &lt;code>echo $SHELL&lt;/code>&lt;/li>
+&lt;li>系统自带 shell: &lt;code>cat /etc/shells&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h4 id="安装-zsh">安装 zsh&lt;/h4>
+&lt;ol>
+&lt;li>安装: &lt;code>sudo apt install zsh -y&lt;/code>&lt;/li>
+&lt;li>查看是否已添加到 shell: &lt;code>cat /etc/shells&lt;/code>
+&lt;ol>
+&lt;li>有 zsh 即可&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>设置 zsh 为默认 shell
+&lt;ol>
+&lt;li>当前用户: &lt;code>chsh -s /bin/zsh&lt;/code>&lt;/li>
+&lt;li>root 用户: &lt;code>sudo chsh -s /bin/zsh&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>重启: &lt;code>sudo reboot&lt;/code>，或注销: &lt;code>logout&lt;/code>
+&lt;ol>
+&lt;li>选择 2 : 使用推荐配置&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>查看默认 shell: &lt;code>echo $SHELL&lt;/code>
+&lt;ol>
+&lt;li>输出&lt;code>/bin/zsh&lt;/code>表示已修改成功&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h4 id="安装-oh-my-zsh">安装 oh-my-zsh&lt;/h4>
+&lt;ol>
+&lt;li>安装 curl: &lt;code>sudo apt install curl&lt;/code>&lt;/li>
+&lt;li>下载 Git: &lt;code>sudo apt-get install git&lt;/code>&lt;/li>
+&lt;li>安装 oh-my-zsh: &lt;code>sh -c &amp;quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;quot;&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h4 id="个性化">个性化&lt;/h4>
+&lt;h5 id="主题">主题&lt;/h5>
+&lt;p>&lt;a class="link" href="https://www.slant.co/topics/7553/~theme-for-oh-my-zsh" target="_blank" rel="noopener"
+>官方主题网站&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/romkatv/powerlevel10k" target="_blank" rel="noopener"
+>powerlevel10k&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://github.com/zakaziko99/agnosterzak-ohmyzsh-theme" target="_blank" rel="noopener"
+>agnosterzak&lt;/a>&lt;/p>
+&lt;h6 id="powerlevel10k">powerlevel10k&lt;/h6>
+&lt;ol>
+&lt;li>&lt;code>cd ~/.oh-my-zsh/themes&lt;/code>&lt;/li>
+&lt;li>&lt;code>git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k&lt;/code>&lt;/li>
+&lt;li>&lt;code>vi ~/.zshrc&lt;/code>
+&lt;ol>
+&lt;li>&lt;code>ZSH_THEME=&amp;quot;powerlevel10k/powerlevel10k&amp;quot;&lt;/code>, 默认: &lt;code>ZSH_THEME=&amp;quot;robbyrussell&amp;quot;&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;code>source ~/.zshrc&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo apt install fonts-powerline -y&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h6 id="agnosterzak">agnosterzak&lt;/h6>
+&lt;ol>
+&lt;li>&lt;code>cd ~/.oh-my-zsh/themes&lt;/code>&lt;/li>
+&lt;li>&lt;code>wget https://raw.githubusercontent.com/zakaziko99/agnosterzak-ohmyzsh-theme/master/agnosterzak.zsh-theme&lt;/code>&lt;/li>
+&lt;li>&lt;code>vi ~/.zshrc&lt;/code>
+&lt;ol>
+&lt;li>&lt;code>ZSH_THEME=&amp;quot;agnosterzak&amp;quot;&lt;/code>, 默认: &lt;code>ZSH_THEME=&amp;quot;robbyrussell&amp;quot;&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;code>source ~/.zshrc&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo apt install fonts-powerline -y&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;ul>
+&lt;li>如果&lt;code>ZSH_THEME=&amp;quot;&amp;quot;&lt;/code>则不启用任何主题.&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>如果&lt;code>ZSH_THEME=&amp;quot;random&amp;quot;&lt;/code>，那么每次打开一个新的终端窗口时，电脑会随机选择一个主题使用，&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>&lt;code>echo $RANDOM_THEME&lt;/code>可输出当前主题名称.&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>如果你想从你最喜欢的主题列表中选择随机主题，那么&lt;code>ZSH_THEME=&amp;quot;random&amp;quot;&lt;/code>且&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>&lt;code>ZSH_THEME_RANDOM_CANDIDATES&lt;/code>的值设置为你喜欢的主题名称&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;li>例如：&lt;code>ZSH_THEME_RANDOM_CANDIDATES=( &amp;quot;robbyrussell&amp;quot; &amp;quot;agnoster&amp;quot; )&lt;/code>&lt;!-- raw HTML omitted -->&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;h5 id="插件">插件&lt;/h5>
+&lt;h6 id="自动补全插件-incr">自动补全插件 incr&lt;/h6>
+&lt;ol>
+&lt;li>&lt;code>cd ~/.oh-my-zsh/plugins/&lt;/code>&lt;/li>
+&lt;li>&lt;code>mkdir incr &amp;amp;&amp;amp; cd incr&lt;/code>&lt;/li>
+&lt;li>&lt;code>wget http://mimosa-pudica.net/src/incr-0.2.zsh&lt;/code>&lt;/li>
+&lt;li>&lt;code>vi ~/.zshrc&lt;/code>
+&lt;ol>
+&lt;li>&lt;code>source ~/.oh-my-zsh/plugins/incr/incr*.zsh&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;code>source ~/.zshrc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;blockquote>
+&lt;p>提示：
+与&lt;code>vim&lt;/code>的提示相冲突的解决方案&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">$ vim t
+_arguments:451: _vim_files: function definition file not found
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>将~/.zcompdump*删除即可&lt;/p>
+&lt;p>&lt;code>rm -rf ~/.zcompdump*&lt;/code>&lt;/p>
+&lt;p>&lt;code>exec zsh&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;h6 id="直接使用的插件">直接使用的插件&lt;/h6>
+&lt;ol>
+&lt;li>
+&lt;p>&lt;code>vi ~/.zshrc&lt;/code>&lt;/p>
+&lt;ol>
+&lt;li>plugins=(git extract z)&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>source ~/.zshrc&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>git&lt;/p>
+&lt;ol>
+&lt;li>默认开启的插件，提供了大量 git 的alias.&lt;/li>
+&lt;li>查看 alias: &lt;code>alias&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;p>extract&lt;/p>
+&lt;ol>
+&lt;li>功能强大的解压插件，所有类型的文件解压一个命令x全搞定，再也不需要去记tar后面到底是哪几个参数了.&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>
+&lt;p>z&lt;/p>
+&lt;ol>
+&lt;li>强大的目录自动跳转命令，会记忆你曾经进入过的目录，用模糊匹配快速进入你想要的目录.&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h6 id="安装zsh-autosuggestions语法历史记录插件">安装&lt;code>zsh-autosuggestions&lt;/code>语法历史记录插件&lt;/h6>
+&lt;ol>
+&lt;li>&lt;code>git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions&lt;/code>&lt;/li>
+&lt;li>&lt;code>vim ~/.zshrc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">plugins=(git zsh-autosuggestions)
+# 最后一行：（可以不加）
+# source $ZSH_CUSTOM/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>&lt;code>source ~/.zshrc&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h6 id="其他">其他&lt;/h6>
+&lt;blockquote>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Plugins" target="_blank" rel="noopener"
+>oh-my-zsh插件&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://github.com/ohmyzsh/ohmyzsh/wiki/Plugin:git" target="_blank" rel="noopener"
+>git插件&lt;/a>&lt;/li>
+&lt;li>大多数插件包括一个README，它记录了如何使用它们.&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;h5 id="其他-1">其他&lt;/h5>
+&lt;ol>
+&lt;li>更新&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>设置更新日期: &lt;code>vi ~/.zshrc&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">export UPDATE_ZSH_DAYS=13
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>禁用自动更新: &lt;code>vi ~/.zshrc&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">DISABLE_AUTO_UPDATE=&amp;#34;true&amp;#34;
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>手动更新oh-my-zsh: &lt;code>upgrade_oh_my_zsh&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;ol start="2">
+&lt;li>卸载&lt;/li>
+&lt;/ol>
+&lt;ul>
+&lt;li>卸载&lt;code>oh-my-zsh&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">uninstall_oh_my_zsh zsh
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ol start="3">
+&lt;li>&lt;code>.zshrc&lt;/code>源文件内容&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-mysql" data-lang="mysql">&lt;span class="c1"># If you come from bash you might have to change your $PATH.
+&lt;/span>&lt;span class="c1"># export PATH=$HOME/bin:/usr/local/bin:$PATH
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Path to your oh-my-zsh installation.
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">export&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="n">ZSH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/root/.oh-my-zsh&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">zsh主题&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Set name of the theme to load --- if set to &amp;#34;random&amp;#34;, it will
+&lt;/span>&lt;span class="c1"># load a random theme each time oh-my-zsh is loaded, in which case,
+&lt;/span>&lt;span class="c1"># to know which specific one was loaded, run: echo $RANDOM_THEME
+&lt;/span>&lt;span class="c1"># See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">ZSH_THEME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;robbyrussell&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Set list of themes to pick from when loading at random
+&lt;/span>&lt;span class="c1"># Setting this variable when ZSH_THEME=random will cause zsh to load
+&lt;/span>&lt;span class="c1"># a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
+&lt;/span>&lt;span class="c1"># If set to an empty array, this variable will have no effect.
+&lt;/span>&lt;span class="c1"># ZSH_THEME_RANDOM_CANDIDATES=( &amp;#34;robbyrussell&amp;#34; &amp;#34;agnoster&amp;#34; )
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to use case-sensitive completion.
+&lt;/span>&lt;span class="c1"># CASE_SENSITIVE=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to use hyphen-insensitive completion.
+&lt;/span>&lt;span class="c1"># Case-sensitive completion must be off. _ and - will be interchangeable.
+&lt;/span>&lt;span class="c1"># HYPHEN_INSENSITIVE=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="err">是否自动更新&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to disable bi-weekly auto-update checks.
+&lt;/span>&lt;span class="c1"># DISABLE_AUTO_UPDATE=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="err">更新周期&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to change how often to auto-update (in days).
+&lt;/span>&lt;span class="c1"># export UPDATE_ZSH_DAYS=13
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to disable colors in ls.
+&lt;/span>&lt;span class="c1"># DISABLE_LS_COLORS=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to disable auto-setting terminal title.
+&lt;/span>&lt;span class="c1"># DISABLE_AUTO_TITLE=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to enable command auto-correction.
+&lt;/span>&lt;span class="c1"># ENABLE_CORRECTION=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line to display red dots whilst waiting for completion.
+&lt;/span>&lt;span class="c1"># COMPLETION_WAITING_DOTS=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line if you want to disable marking untracked files
+&lt;/span>&lt;span class="c1"># under VCS as dirty. This makes repository status check for large repositories
+&lt;/span>&lt;span class="c1"># much, much faster.
+&lt;/span>&lt;span class="c1"># DISABLE_UNTRACKED_FILES_DIRTY=&amp;#34;true&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Uncomment the following line if you want to change the command execution time
+&lt;/span>&lt;span class="c1"># stamp shown in the history command output.
+&lt;/span>&lt;span class="c1"># You can set one of the optional three formats:
+&lt;/span>&lt;span class="c1"># &amp;#34;mm/dd/yyyy&amp;#34;|&amp;#34;dd.mm.yyyy&amp;#34;|&amp;#34;yyyy-mm-dd&amp;#34;
+&lt;/span>&lt;span class="c1"># or set a custom format using the strftime function format specifications,
+&lt;/span>&lt;span class="c1"># see &amp;#39;man strftime&amp;#39; for details.
+&lt;/span>&lt;span class="c1"># HIST_STAMPS=&amp;#34;mm/dd/yyyy&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Would you like to use another custom folder than $ZSH/custom?
+&lt;/span>&lt;span class="c1"># ZSH_CUSTOM=/path/to/new-custom-folder
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="mi">4&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">zsh插件&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Which plugins would you like to load?
+&lt;/span>&lt;span class="c1"># Standard plugins can be found in ~/.oh-my-zsh/plugins/*
+&lt;/span>&lt;span class="c1"># Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+&lt;/span>&lt;span class="c1"># Example format: plugins=(rails git textmate ruby lighthouse)
+&lt;/span>&lt;span class="c1"># Add wisely, as too many plugins slow down shell startup.
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="n">plugins&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">git&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="n">source&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="err">$&lt;/span>&lt;span class="n">ZSH&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">oh&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">my&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">zsh&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="n">sh&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># User configuration
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># export MANPATH=&amp;#34;/usr/local/man:$MANPATH&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># You may need to manually set your language environment
+&lt;/span>&lt;span class="c1"># export LANG=en_US.UTF-8
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Preferred editor for local and remote sessions
+&lt;/span>&lt;span class="c1"># if [[ -n $SSH_CONNECTION ]]; then
+&lt;/span>&lt;span class="c1"># export EDITOR=&amp;#39;vim&amp;#39;
+&lt;/span>&lt;span class="c1"># else
+&lt;/span>&lt;span class="c1"># export EDITOR=&amp;#39;mvim&amp;#39;
+&lt;/span>&lt;span class="c1"># fi
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Compilation flags
+&lt;/span>&lt;span class="c1"># export ARCHFLAGS=&amp;#34;-arch x86_64&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># ssh
+&lt;/span>&lt;span class="c1"># export SSH_KEY_PATH=&amp;#34;~/.ssh/rsa_id&amp;#34;
+&lt;/span>&lt;span class="c1">&lt;/span>&lt;span class="w">
+&lt;/span>&lt;span class="w">&lt;/span>&lt;span class="c1"># Set personal aliases, overriding those provided by oh-my-zsh libs,
+&lt;/span>&lt;span class="c1"># plugins, and themes. Aliases can be placed here, though oh-my-zsh
+&lt;/span>&lt;span class="c1"># users are encouraged to define aliases within the ZSH_CUSTOM folder.
+&lt;/span>&lt;span class="c1"># For a full list of active aliases, run `alias`.
+&lt;/span>&lt;span class="c1">#
+&lt;/span>&lt;span class="c1"># Example aliases
+&lt;/span>&lt;span class="c1"># alias zshconfig=&amp;#34;mate ~/.zshrc&amp;#34;
+&lt;/span>&lt;span class="c1"># alias ohmyzsh=&amp;#34;mate ~/.oh-my-zsh&amp;#34;
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="安装软件">安装软件&lt;/h2>
+&lt;h3 id="vscode">VSCode&lt;/h3>
+&lt;p>&lt;a class="link" href="https://code.visualstudio.com/Download" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;h3 id="idea">IDEA&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.jetbrains.com/idea/download/#section=linux" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>tar -zxf ideaIU-2020.1.3.tar.gz&lt;/code>&lt;/li>
+&lt;li>&lt;code>cd idea-IU-201.8538.31/bin/&lt;/code>&lt;/li>
+&lt;li>安装: &lt;code>./idea.sh&lt;/code>&lt;/li>
+&lt;li>设置桌面快捷方式（略）&lt;/li>
+&lt;/ol>
+&lt;h3 id="pycharm">PyCharm&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.jetbrains.com/pycharm/download/#section=linux" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>tar -zxf pycharm-professional-2020.1.3.tar.gz&lt;/code>&lt;/li>
+&lt;li>&lt;code>cd idea-IU-201.8538.31/bin/&lt;/code>&lt;/li>
+&lt;li>安装: &lt;code>./idea.sh&lt;/code>&lt;/li>
+&lt;li>设置桌面快捷方式
+&lt;ol>
+&lt;li>pycharm_pkg目录下: &lt;code>bin/pycharm.sh&lt;/code>&lt;/li>
+&lt;li>tools -&amp;gt; Create desktop entry&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;h3 id="百度网盘">百度网盘&lt;/h3>
+&lt;p>&lt;a class="link" href="https://pan.baidu.com/download#linux" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;h3 id="火焰截图">火焰截图&lt;/h3>
+&lt;p>&lt;a class="link" href="https://linux265.com/soft/3848.html" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo apt install flameshot
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="微信">微信&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.ubuntukylin.com/applications/106-cn.html" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;h3 id="虚拟系统管理器">虚拟系统管理器&lt;/h3>
+&lt;p>&lt;a class="link" href="https://virt-manager.org/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>sudo apt install virt-manager&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo systemctl status libvirtd&lt;/code>
+&lt;ol>
+&lt;li>&lt;code>sudo systemctl enable libvirtd&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo systemctl start libvirtd&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;code>sudo usermod -a -G libvirt ${USER}&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h3 id="apipost">APIPost&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.apipost.cn/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;h3 id="uget">uGet&lt;/h3>
+&lt;p>&lt;a class="link" href="https://ugetdm.com/downloads/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;h3 id="wps">WPS&lt;/h3>
+&lt;p>&lt;a class="link" href="https://linux.wps.cn/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;h3 id="vlc-媒体播放器">VLC 媒体播放器&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.videolan.org/vlc/download-ubuntu.html" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;h3 id="dbeaver数据库管理工具">DBeaver数据库管理工具&lt;/h3>
+&lt;p>&lt;a class="link" href="https://dbeaver.io/download/?start&amp;amp;os=linux&amp;amp;arch=x86_64&amp;amp;dist=deb" target="_blank" rel="noopener"
+>deb包下载&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo add-apt-repository ppa:serge-rider/dbeaver-ce
+sudo apt-get update
+sudo apt-get install dbeaver-ce
+# 启动DBeaver
+dbeaver-ce
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="添加硬盘">添加硬盘&lt;/h2>
+&lt;p>&lt;a class="link" href="https://www.jianshu.com/p/ec5579ef15a6" target="_blank" rel="noopener"
+>参考一&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://blog.51cto.com/u_15127582/4731125" target="_blank" rel="noopener"
+>参考二&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>查看硬盘状况: &lt;code>sudo fdisk -l&lt;/code>&lt;/li>
+&lt;li>分区: &lt;code>sudo fdisk /dev/sdb&lt;/code>
+&lt;ol>
+&lt;li>m: 查看命令&lt;/li>
+&lt;li>n: 开始分区
+&lt;ol>
+&lt;li>输入分区号1，然后输入大小，默认是一个分区，全部的空间大小&lt;/li>
+&lt;li>w保存退出&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>&lt;code>sudo fdisk -l&lt;/code> 查看是否创建&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>格式化分区: &lt;code>sudo mkfs -t ext4 /dev/sdb1&lt;/code>&lt;/li>
+&lt;li>挂载
+&lt;ol>
+&lt;li>sudo mkdir /ssd2&lt;/li>
+&lt;li>sudo mount /dev/sdb1 /ssd2&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>自动挂载
+&lt;ol>
+&lt;li>&lt;code>sudo vim /etc/fstab&lt;/code>
+&lt;ol>
+&lt;li>&lt;code>UUID=b543f8f7-579c-45b5-96d6-31de6fa1a55e /ssd2 ext4 defaults 0 2&lt;/code>&lt;/li>
+&lt;li>&lt;code>/dev/nvme0n1p1 /ssd2 ext4 defaults 0 2&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;/ol>
+&lt;/li>
+&lt;li>修改权限: &lt;code>sudo chown -R cjx:cjx /ssd2&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h2 id="安装服务">安装服务&lt;/h2>
+&lt;h3 id="mkdocs">mkdocs&lt;/h3>
+&lt;p>&lt;a class="link" href="https://www.mkdocs.org/getting-started/" target="_blank" rel="noopener"
+>Getting Started with MkDocs&lt;/a>&lt;/p>
+&lt;ol>
+&lt;li>&lt;code>sudo apt update&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo apt install python3-pip&lt;/code>&lt;/li>
+&lt;li>&lt;code>pip install mkdocs&lt;/code>&lt;/li>
+&lt;li>&lt;code>sudo apt install mkdocs&lt;/code>&lt;/li>
+&lt;li>&lt;code>pip install mkdocs-material&lt;/code>&lt;/li>
+&lt;li>&lt;code>mkdocs serve&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;h3 id="go">go&lt;/h3>
+&lt;p>&lt;a class="link" href="https://golang.google.cn/dl/" target="_blank" rel="noopener"
+>下载&lt;/a>&lt;/p>
+&lt;p>&lt;a class="link" href="https://mkbooks.github.io/k8s-mengfanjie/1/2/2/" target="_blank" rel="noopener"
+>安装&lt;/a>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">tar -zxf go*.tar.gz
+sudo mv go /usr/local
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="设置环境变量">设置环境变量&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">mkdir -p /ssd2/go/{src,pkg,bin}
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo vim ~/.bashrc
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">export GOROOT=/usr/local/go
+export GOPATH=/ssd2/go
+export GOPROXY=https://goproxy.cn
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">source ~/.bashrc
+&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>安装openVPN客户端</title><link>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85openvpn%E5%AE%A2%E6%88%B7%E7%AB%AF/</link><pubDate>Sun, 30 Oct 2022 16:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%AE%89%E8%A3%85openvpn%E5%AE%A2%E6%88%B7%E7%AB%AF/</guid><description>&lt;h1 id="windows平台">Windows平台&lt;/h1>
 &lt;h2 id="下载客户端">下载客户端&lt;/h2>
 &lt;p>&lt;a class="link" href="https://openvpn.net/community-downloads/" target="_blank" rel="noopener"
 >官方下载地址页面&lt;/a>&lt;/p>
@@ -924,114 +1847,6 @@ PING 192.168.50.1 &lt;span class="o">(&lt;/span>192.168.50.1&lt;span class="o">)
 --- 192.168.50.1 ping statistics ---
 &lt;span class="m">1&lt;/span> packets transmitted, &lt;span class="m">1&lt;/span> received, 0% packet loss, &lt;span class="nb">time&lt;/span> 0ms
 rtt min/avg/max/mdev &lt;span class="o">=&lt;/span> 0.054/0.054/0.054/0.000 ms
-&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div></description></item><item><title>iptables</title><link>https://mkbooks.github.io/blog/p/iptables/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/iptables/</guid><description>&lt;p>sysctl -w net.ipv4.ip_forward=1
-iptables -t nat -A PREROUTING -p tcp &amp;ndash;dport 80 -j DNAT &amp;ndash;to-destination 192.168.3.63:80
-iptables -t nat -A POSTROUTING -p tcp -d 192.168.3.63 &amp;ndash;dport 80 -j SNAT &amp;ndash;to-source 192.168.3.243&lt;/p>
-&lt;p>sysctl -w net.ipv4.ip_forward=1
-iptables -t nat -A PREROUTING -p tcp &amp;ndash;dport 80 -j DNAT &amp;ndash;to-destination 172.17.0.2:80
-iptables -t nat -A POSTROUTING -p tcp -d 172.17.0.2 &amp;ndash;dport 80 -j SNAT &amp;ndash;to-source 192.168.3.63&lt;/p>
-&lt;p>iptables -t nat -A PREROUTING -d 192.168.3.63 -p tcp &amp;ndash;dport 80 -j DNAT &amp;ndash;to-destination 172.17.0.2:80
-iptables -t nat -A POSTROUTING -d 172.17.0.2 -p tcp &amp;ndash;dport 80 -j SNAT &amp;ndash;to 192.168.3.63&lt;/p>
-&lt;p>B:
-iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -d 172.17.0.0/24 -o docker0 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 172.17.0.0/24 -d 192.168.3.0/24 -o enp0s3 -j MASQUERADE&lt;/p>
-&lt;p>A:
-route add -net 172.17.0.0 netmask 255.255.255.0 gw 192.168.3.63&lt;/p>
-&lt;p>C:
-route add -net 192.168.5.0 netmask 255.255.255.0 gw 192.168.3.63&lt;/p>
-&lt;p>echo 1 &amp;gt; /proc/sys/net/ipv4/ip_forward
-B:
-iptables -t nat -A POSTROUTING -s 192.168.100.0/24 -d 192.168.122.0/24 -o virbr0 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 192.168.122.0/24 -d 192.168.100.0/24 -o virbr1 -j MASQUERADE&lt;/p>
-&lt;p>A:
-iptables -t nat -A POSTROUTING -s 192.168.122.0/24 -d 192.168.100.0/24 -o enp1s0 -j MASQUERADE&lt;/p>
-&lt;p>route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.122.1 enp1s0&lt;/p>
-&lt;p>C:
-route add -net 192.168.122.0 netmask 255.255.255.0 gw 192.168.100.1 enp1s0&lt;/p>
-&lt;p>A:
-route add -net 192.168.100.0 netmask 255.255.255.0 gw 192.168.100.1&lt;/p>
-&lt;p>C:
-route add -net 192.168.122.0 netmask 255.255.255.0 gw 192.168.122.1&lt;/p>
-&lt;p>iptables -A FORWARD -i virbr1 -o virbr0 -j ACCEPT
-iptables -A FORWARD -i virbr0 -o virbr1 -m state &amp;ndash;state ESTABLISHED,RELATED -j ACCEPT
-iptables -t nat -A POSTROUTING -o virbr0 -j MASQUERADE&lt;/p>
-&lt;p>iptables -t nat -vnL POSTROUTING &amp;ndash;line-number
-iptables -t nat -D POSTROUTING 20
-iptables-save
-route
-route del -net 192.168.40.0 netmask 255.255.255.0
-route del -net 192.168.30.0 netmask 255.255.255.0&lt;/p>
-&lt;p>route del -net 192.169.30.0 netmask 255.255.255.0 dev virbr0
-route del -net 192.169.40.0 netmask 255.255.255.0 dev virbr1&lt;/p>
-&lt;p>B:
-echo 1 &amp;gt; /proc/sys/net/ipv4/ip_forward
-wlo1
-iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -d 192.168.40.0/24 -o wlo1 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 192.168.20.0/24 -d 192.168.40.0/24 -o virbr1 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 192.168.30.0/24 -d 192.168.40.0/24 -o virbr1 -j MASQUERADE
-iptables -t nat -A POSTROUTING -s 192.168.40.0/24 -d 192.168.30.0/24 -o virbr0 -j MASQUERADE&lt;/p>
-&lt;p>route add -net 192.168.40.0 netmask 255.255.255.0 gw 192.168.40.205
-route add -net 192.168.30.0 netmask 255.255.255.0 gw 192.168.30.235&lt;/p>
-&lt;p>route add -net 192.169.30.0 netmask 255.255.255.0 dev virbr0
-route add -net 192.169.40.0 netmask 255.255.255.0 dev virbr1&lt;/p>
-&lt;p>A:
-route add -net 192.168.40.0 netmask 255.255.255.0 gw 192.168.30.1&lt;/p>
-&lt;p>route del -net 192.168.40.0 netmask 255.255.255.0
-route add -net 192.168.40.0 netmask 255.255.0.0 gw 192.168.3.34 dev enp1s0&lt;/p>
-&lt;p>C:
-route add -net 192.168.30.0 netmask 255.255.255.0 gw 192.168.40.1&lt;/p>
-&lt;p>route del -net 192.168.30.0 netmask 255.255.255.0
-route add -net 192.168.30.0 netmask 255.255.0.0 gw 192.168.3.34&lt;/p>
-&lt;h1 id="linux一块网卡添加多个ip地址">Linux一块网卡添加多个IP地址&lt;/h1>
-&lt;p>&lt;a class="link" href="https://cloud.tencent.com/developer/article/1431717" target="_blank" rel="noopener"
->https://cloud.tencent.com/developer/article/1431717&lt;/a>&lt;/p>
-&lt;p>&lt;a class="link" href="https://virt-manager.org/" target="_blank" rel="noopener"
->https://virt-manager.org/&lt;/a>&lt;/p>
-&lt;h1 id="黄总">黄总&lt;/h1>
-&lt;p>sudo ip addr add 10.252.3.88/29 dev ens1f1
-sudo route add 88.88.43.8 gw 10.246.1.173&lt;/p>
-&lt;h1 id="sudo-ip-route-add-888843024-via-102461173">sudo ip route add 88.88.43.0/24 via 10.246.1.173&lt;/h1>
-&lt;p>sudo iptables -t nat -A PREROUTING -i ens1f1 -d 10.252.3.88 -j DNAT &amp;ndash;to 88.88.43.8
-sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT &amp;ndash;to-source 10.252.3.88&lt;/p>
-&lt;p>sudo iptables -t nat -A POSTROUTING -d 88.88.43.8 -o cni0 -j SNAT &amp;ndash;to-source 10.252.3.88&lt;/p>
-&lt;h2 id="源地址-102380228-转换为-8888443添加此地址回程路由">源地址 10.23.80.228 转换为 88.88.44.3，添加此地址回程路由&lt;/h2>
-&lt;p>sudo route add 88.88.44.3 gw 10.246.1.173&lt;/p>
-&lt;h1 id="查看登录日志">查看登录日志&lt;/h1>
-&lt;p>sudo tail /var/log/auth.log&lt;/p></description></item><item><title>iptables</title><link>https://mkbooks.github.io/blog/p/iptables/</link><pubDate>Thu, 25 Aug 2022 01:38:18 +0800</pubDate><guid>https://mkbooks.github.io/blog/p/iptables/</guid><description>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">专线两端IP：
-A：10.246.1.173
-B：10.246.1.174
-A出口伪IP：88.88.44.3（回程IP）
-A入口伪IP：88.88.43.8
-ANAT内部IP：10.23.80.228-230
-B中心服务器伪NAT内部IP：10.252.3.88/29
-配置方法：
-sudo ip addr add 10.252.3.88/29 dev ens1f1 #添加伪NATIP
-sudo route add 88.88.43.8 gw 10.246.1.173 #出口网关
-sudo route add 88.88.44.3 gw 10.246.1.173 #入口网关
-sudo iptables -t nat -A PREROUTING -i ens1f1 -d 10.252.3.88 -j DNAT --to 88.88.44.3
-sudo iptables -t nat -I POSTROUTING -d 88.88.43.8 -o ens1f1 -j SNAT --to-source 10.252.3.88
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div></description></item><item><title>在 Ubuntu20.04 建设 openVPN</title><link>https://mkbooks.github.io/blog/p/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/</link><pubDate>Thu, 06 Aug 2020 00:00:00 +0000</pubDate><guid>https://mkbooks.github.io/blog/p/%E5%9C%A8-ubuntu20.04-%E5%BB%BA%E8%AE%BE-openvpn/</guid><description>&lt;h1 id="openvpn">openvpn&lt;/h1>
@@ -3041,13 +3856,13 @@ ping 10.10.0.1
 &lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">sudo cp client1.ovpn /etc/openvpn/client/client.conf
 # 开机启动
-systemctl enable openvpn-client@client
+sudo systemctl enable openvpn-client@client
 # 启动
-systemctl start openvpn-client@client
+sudo systemctl start openvpn-client@client
 # 停止
-systemctl stop openvpn-client@client
+sudo systemctl stop openvpn-client@client
 # 测试
-systemctl status openvpn-client@client
+sudo systemctl status openvpn-client@client
 ping 10.8.0.1
 &lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
