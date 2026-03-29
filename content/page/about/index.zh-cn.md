@@ -190,10 +190,10 @@ menu:
 
 ## 证书认证
 
-- [国家奖学金](https://zwfw.moe.gov.cn/xszz/)、省三好学生
-- 全国软件和信息技术专业人才大赛决赛三等奖（蓝桥杯）
+- [国家奖学金](https://zwfw.moe.gov.cn/xszz/)(证书编号: 26070)、省三好学生(证书编号: 20194547)
+- [全国软件和信息技术专业人才大赛决赛三等奖（蓝桥杯）](https://dasai.lanqiao.cn/dasai-front/cert-list/?searchType=1&name=%E9%99%88%E9%87%91%E9%91%AB&card=020924658)(证书编号: 020924658)
 - [ACP](https://edu.aliyun.com/clouder/Certificate/search?source=5176.11533457&userCode=r3yteowb&type=2&num=340421199510031230)：
-  - 阿里云云计算高级工程师ACP认证
+  - 阿里云云计算高级工程师ACP认证(证书编号: 020ACP01240902018261924658)
 - CNCF：
 
 </div>
