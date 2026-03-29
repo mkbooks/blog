@@ -1,4 +1,4 @@
-baseurl: 
+baseurl: https://changxiangyu.cn/
 languageCode: en-us
 theme: hugo-theme-stack
 paginate: 5
@@ -37,7 +37,7 @@ params:
         - post
     featuredImageField: image
     rssFullContent: true
-    favicon: https://chenjinxin.cn/images/favicon.png
+    favicon: /images/favicon.ico
 
     footer:
         since: 2020
@@ -195,11 +195,11 @@ menu:
           params:
               icon: brand-github
 
-        # - identifier: twitter
-        #   name: Twitter
-        #   url: https://twitter.com
-        #   params:
-        #       icon: brand-twitter
+        - identifier: twitter
+          name: Twitter
+          url: https://twitter.com
+          params:
+              icon: brand-twitter
 
 related:
     includeNewer: true
@@ -216,7 +216,7 @@ markup:
     goldmark:
         renderer:
             ## Set to true if you have HTML content inside Markdown
-            unsafe: false
+            unsafe: true
     tableOfContents:
         endLevel: 4
         ordered: true
