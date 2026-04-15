@@ -25,7 +25,8 @@ menu:
 - 大数据生态: Hadoop、YARN、MapReduce、HBase、Hive、Flume、Sqoop、Kettle、Oozie、Azkaban、Spark、SparkSQL、SparkStreaming、Storm、Flink等。
 - 数据库: MySQL、Redis、MongoDB、PostgreSQL、MSSQL。
 - 中间件：Kafka、RabbitMQ、ElasticSearch。
-- 云原生: Docker、Kubernetes（K8s）、KubeFATE、Prometheus、Grafana、APISIX、OpenVPN、Jenkins、ECK等。
+- 云原生: Docker、Kubernetes（K8s）、KubeFATE、KubeRay、Prometheus、Grafana、APISIX、OpenVPN、Jenkins、ECK等。
+- AI: LLM、Langchain、RAG、Agent、Ray、Dask、cuDF、Daft
 - 团队协作: Git、GitHub、GitLab、CI/CD。
 - 能够独立从0到1搭建企业大数据平台及云原生平台。
 
