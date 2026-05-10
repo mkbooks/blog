@@ -26,7 +26,6 @@ menu:
 ## 核心技能
 
 ### Expert
-
 - **Kubernetes / 调度体系**：精通 K8s 调度器扩展与 Volcano，熟练构建队列调度、优先级抢占、GPU 共享与资源隔离策略。
 - **异构资源纳管**：有大规模统一纳管经验（300+ 集群、192 卡、1000+ 实例），覆盖资源采集、利用率分析与成本治理，推动利用率提升 30%+。
 - **AI任务调度与MLOps**：主导基于 Ray / KubeRay 的分布式计算平台建设，实现离线推理加速（6小时→3分钟）、模型灰度发布、回滚与 A/B 测试。
@@ -34,7 +33,6 @@ menu:
 - **后端语言**：Java、Python、Go
 
 ### Proficient
-
 - **分布式计算**：Spark、Flink、Hive、Hadoop、YARN、Kafka，有 TB 级日志处理经验。
 - **微服务与网关**：Spring Boot、Spring Cloud、FastAPI、Flask、Gin、APISIX，有微服务拆分与容器化交付经验。
 - **数据库与中间件**：
@@ -52,7 +50,6 @@ menu:
 - 方向：AI基础设施、融合计算、异构资源纳管、GPU调度、MLOps、可观测性
 
 ### 项目一：融合计算中心｜Ray / KubeRay / Volcano / MLOps
-
 - 主导分布式 Python 计算能力整体技术规划与关键技术选型，围绕 Ray / KubeRay / RayService / Dask / Volcano 设计 AI 任务提交、编排、调度、监控、弹性伸缩与生命周期管理能力。
 - 基于 Ray 集群优化离线推理任务，将平均推理耗时从 6 小时降低至 30 分钟以内，并进一步优化至 3 分钟以内，显著提升 AI 推理效率与资源利用率。
 - 基于 RayService 建设模型发布、回滚、监控、灰度发布、A/B 测试等 MLOps 能力，支撑模型服务稳定迭代与平台化交付。
@@ -62,7 +59,6 @@ menu:
 **核心技术**：Java、Python、Spring Boot、Kubernetes、Ray、KubeRay、RayService、Dask、Volcano、Prometheus、Grafana
 
 ### 项目二：资源高效 / 资源采集 / 资源监控
-
 - 建设异构资源统一纳管与监控链路，覆盖 300+ MRS 集群、最大 1000+ 节点集群、约 192 张 GPU 卡、1000+ 数据库实例、2000+ 作业、500+ 用户应用。
 - 对接云资源接口与内部 IAM，完成资源归属识别、资源亲缘关系、利用率分析、容量治理和运营看板数据同步。
 - 将监控采集频率提升至每分钟一次，覆盖 50+ 指标，监控数据准确率达到 99%+，故障发现时间从平均 0.5 天缩短至 5 分钟以内。
@@ -71,7 +67,6 @@ menu:
 **核心技术**：Java、Flink、Spark、Kafka、Prometheus、Grafana、MRS、DWS (基于 PostgreSQL)、CSS (基于ECK的Elasticsearch服务)
 
 ### 项目三：大数据融合计算引擎 / 数据库管家
-
 - 参与统一计算与数据服务平台建设，集成 Spark、Flink、Hive、OBS、DWS、CSS 等能力，支撑批处理、流处理、交互式 SQL、统一作业提交与状态监控。
 - 建设数据库统一纳管与查询能力，覆盖 MySQL、MongoDB、Redis、DWS (基于 PostgreSQL)、CSS (基于ECK的Elasticsearch服务) 等 1000+ 数据库与数据服务实例。
 - 对接内部日志、告警、可信平台，完成平台可观测、合规审计、镜像构建与容器化部署。
@@ -84,7 +79,6 @@ menu:
 - 方向：AI中台、隐私计算、Kubernetes平台、模型市场、监控告警、网关平台
 
 ### 核心成果
-
 - **从0到1主导** AI 中台与隐私计算平台的架构设计与落地，搭建包含 Kubernetes、Docker 镜像仓库、NFS、OpenVPN 在内的完整基础设施层。
 - 独立完成 Prometheus / AlertManager 监控告警体系、APISIX 统一网关中心，以及基于 Elasticsearch / Fluentd / Kibana（ECK）的日志平台建设。
 - 基于 KubeFATE 框架，完成联邦学习平台的容器化部署和产品化封装，推动项目获得信通院和中互金两项权威认证。
@@ -98,7 +92,6 @@ menu:
 - 方向：高并发广告交易平台、实时计算、日志分析
 
 ### 核心成果
-
 - 维护 ADX 广告交易平台，支撑每日约 4 亿次广告源请求、约 1 亿次广告展示、TB 级日志生产和 100+ DSP 对接。
 - 设计并实现日志分析系统，构建从 Flume / Kafka 采集、Spark Streaming 准实时计算、Hive / HBase / HDFS 存储到 ECharts 可视化的完整链路。
 
