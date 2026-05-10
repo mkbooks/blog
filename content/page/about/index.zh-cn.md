@@ -184,24 +184,12 @@ menu:
 }
 
 .resume-wrapper h2 {
-    display: flex;
-    align-items: center;
-    gap: 0.7rem;
     margin: 2.4rem 0 1rem;
-    padding: 0 0 0.55rem;
+    padding: 0 0 0.55rem 0.8rem;
     border-bottom: 1px solid var(--resume-border);
+    border-left: 0.38rem solid var(--resume-primary);
     font-size: 1.55rem;
     font-weight: 750;
-}
-
-.resume-wrapper h2::before {
-    content: "";
-    display: inline-block;
-    width: 0.38rem;
-    height: 1.35rem;
-    border-radius: 999px;
-    background: linear-gradient(180deg, var(--resume-primary), #60a5fa);
-    flex: 0 0 auto;
 }
 
 .resume-wrapper h3 {
@@ -293,7 +281,7 @@ menu:
     margin-top: 0.45rem;
 }
 
-@media (max-width: 720px) {
+@media (max-width: 768px) {
     .resume-wrapper {
         margin: 0;
         padding: 1.25rem;
@@ -358,17 +346,13 @@ menu:
 
     .resume-wrapper h2 {
         margin: 12pt 0 5pt;
-        padding-bottom: 3pt;
+        padding: 0 0 3pt 5pt;
+        border-left: 3pt solid var(--resume-primary);
         break-after: avoid;
         page-break-after: avoid;
         font-size: 12.5pt;
     }
 
-    .resume-wrapper h2::before {
-        width: 3pt;
-        height: 11pt;
-        background: var(--resume-primary) !important;
-    }
 
     .resume-wrapper h3 {
         margin: 8pt 0 4pt;
