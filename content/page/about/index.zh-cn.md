@@ -7,7 +7,6 @@ menu:
         params:
             icon: user
 ---
-
 <div class="resume-wrapper">
 
 # 陈金鑫｜AI异构算力平台 / 云原生架构 / 后端研发
@@ -20,11 +19,9 @@ menu:
 - 学历：黑河学院｜计算机科学与技术｜本科｜2019届
 - 方向：AI基础设施平台、异构资源纳管与调度、云原生平台、MLOps、后端架构
 
-
 ## 个人简介
 
 近7年平台研发经验，其中5年+聚焦云原生与AI基础设施平台建设，长期负责资源纳管、任务调度、监控告警、分布式计算与平台工程化落地。在华为数据底座项目中，主导异构资源纳管体系（覆盖300+集群/192卡/1000+实例）的建设，推动资源利用率提升30%+、成本降低20%+；同时主导分布式 Python 计算能力技术规划与关键选型，围绕 Ray / KubeRay / RayService / Volcano 构建离线推理加速、AI任务生命周期管理、MLOps 与 GPU 调度能力。具备技术方案评审、Code Review、研发规范制定、项目排期、跨团队协作和招聘面试经验，持续关注 AI Native、LLM Infra 与云原生调度技术演进。
-
 
 ## 核心技能
 
@@ -46,7 +43,6 @@ menu:
   - 搜索引擎：Elasticsearch、CSS (基于ECK的Elasticsearch服务)
   - 消息队列：Kafka、RabbitMQ
 - **工程化**：Docker、CI/CD、镜像构建、方案与接口文档规范、Code Review
-
 
 ## 工作经历
 
@@ -82,7 +78,6 @@ menu:
 
 **核心技术**：Java、Spring Boot、Spring Cloud、Maven、MRS、DWS、CSS、Spark、Flink、Hive、OBS、EKS
 
-
 ### 北京可利邦信息技术股份有限公司｜大数据 & 后台开发工程师
 
 - 时间：2021年8月 - 2023年7月
@@ -97,7 +92,6 @@ menu:
 
 **核心技术**：Python、Go、Kubernetes、KubeFATE、Docker、Prometheus、AlertManager、APISIX、ECK、Elasticsearch、Fluentd、Kibana、MySQL、Redis、FastAPI、Flask
 
-
 ### 深圳掌众智能科技股份有限公司｜高级 Scala / Java 后端开发
 
 - 时间：2019年7月 - 2019年11月
@@ -110,7 +104,6 @@ menu:
 
 **核心技术**：Scala、Java、AKKA、Kafka、Spark Streaming、Hadoop、Hive、HBase、HDFS、MySQL、PostgreSQL、Prometheus
 
-
 ### 深圳市维知科技有限责任公司｜大数据研发工程师
 
 - 时间：2020年4月 - 2021年8月
@@ -119,7 +112,6 @@ menu:
 
 **核心技术**：Kotlin、Vert.x、Kubernetes、Docker、Prometheus、Kafka、Hadoop、Hive、Spark、Redis、MySQL、RabbitMQ
 
-
 ### 文思海辉｜初级大数据分析与挖掘顾问
 
 - 时间：2019年12月 - 2020年4月
@@ -127,14 +119,12 @@ menu:
 
 **核心技术**：SQL、MSSQL、HANA、Inceptor、HyperBase、Search
 
-
 ### 中诚信国际信用评级有限责任公司｜全栈开发工程师｜实习
 
 - 时间：2018年7月 - 2019年6月
 - 参与金融风控 SaaS 平台建设，负责后端开发、数据库设计、SQL、ETL 和数据准确性验证；项目获“2019中国金融创新奖——十佳智能风控创新奖”。
 
 **核心技术**：Java、Spring Boot、Redis、MySQL、MSSQL、SQL
-
 
 ## 证书与荣誉
 
@@ -144,7 +134,6 @@ menu:
 - 蓝桥杯全国软件和信息技术专业人才大赛决赛三等奖
 - 信通院《联邦学习基础能力评测证书》项目参与
 - 中互金认证《联邦学习产品安全认证证书》项目参与
-
 
 ## 专业发展 & 技术前瞻
 
@@ -311,7 +300,6 @@ menu:
     margin-top: 0.45rem;
 }
 
-
 @media (max-width: 720px) {
     .resume-wrapper {
         margin: 0;
@@ -441,7 +429,6 @@ menu:
         border-radius: 5pt;
         background: #fbfcfe !important;
     }
-
 
     .resume-wrapper hr {
         margin: 7pt 0;
