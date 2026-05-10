@@ -244,7 +244,6 @@ menu:
 }
 
 .resume-wrapper hr {
-    width: 100%;
     height: 1px;
     margin: 1.75rem 0;
     border: 0;
@@ -352,7 +351,6 @@ menu:
         page-break-after: avoid;
         font-size: 12.5pt;
     }
-
 
     .resume-wrapper h3 {
         margin: 8pt 0 4pt;
