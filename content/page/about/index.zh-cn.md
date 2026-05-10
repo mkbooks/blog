@@ -21,7 +21,7 @@ menu:
 
 ## 个人简介
 
-近7年平台研发经验，其中5年+聚焦云原生与AI基础设施平台建设，长期负责资源纳管、任务调度、监控告警、分布式计算与平台工程化落地。在华为数据底座项目中，主导异构资源纳管体系（覆盖300+集群/192卡/1000+实例）的建设，推动资源利用率提升30%+、成本降低20%+；同时主导分布式 Python 计算能力技术规划与关键选型，围绕 Ray / KubeRay / RayService / Volcano 构建离线推理加速、AI任务生命周期管理、MLOps 与 GPU 调度能力。具备技术方案评审、Code Review、研发规范制定、项目排期、跨团队协作和招聘面试经验，持续关注 AI Native、LLM Infra 与云原生调度技术演进。
+近7年平台研发经验，其中5年+聚焦云原生与AI基础设施平台建设，长期负责资源纳管、任务调度、监控告警、分布式计算与平台工程化落地。在华为数据底座项目中，主导异构资源纳管体系（覆盖300+集群/192卡/1000+实例）的建设，推动资源利用率提升30%+、成本降低20%+；同时主导分布式 Python 计算能力技术规划与关键选型，围绕 Ray / KubeRay / RayService / Volcano 构建离线推理加速、AI任务生命周期管理、MLOps �� GPU 调度能力。具备技术方案评审、Code Review、研发规范制定、项目排期、跨团队协作和招聘面试经验，持续关注 AI Native、LLM Infra 与云原生调度技术演进。
 
 ## 核心技能
 
@@ -37,7 +37,7 @@ menu:
 - **微服务与网关**：Spring Boot、Spring Cloud、FastAPI、Flask、Gin、APISIX，有微服务拆分与容器化交付经验。
 - **数据库与中间件**：
   - 关系型 / MPP：MySQL、PostgreSQL、DWS (基于 PostgreSQL)
-  - NoSQL / 缓存：Redis、MongoDB
+  - NoSQL / 缓���：Redis、MongoDB
   - 搜索引擎：Elasticsearch、CSS (基于ECK的Elasticsearch服务)
   - 消息队列：Kafka、RabbitMQ
 - **工程化**：Docker、CI/CD、镜像构建、方案与接口文档规范、Code Review
@@ -252,9 +252,6 @@ menu:
 }
 
 .resume-wrapper h2:first-of-type + ul {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.5rem 1.25rem;
     margin: 0.6rem 0 1.2rem;
     padding: 1rem 1.15rem;
     border: 1px solid var(--resume-border);
@@ -289,10 +286,6 @@ menu:
         border-right: 0;
         box-shadow: none;
         font-size: 15px;
-    }
-
-    .resume-wrapper h2:first-of-type + ul {
-        grid-template-columns: 1fr;
     }
 }
 
@@ -388,9 +381,6 @@ menu:
     }
 
     .resume-wrapper h2:first-of-type + ul {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 2pt 8pt;
         margin-bottom: 6pt;
         padding: 5pt 7pt;
         border: 0.6pt solid var(--resume-border);
