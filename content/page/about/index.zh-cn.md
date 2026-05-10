@@ -371,7 +371,7 @@ menu:
     .resume-wrapper h1 {
         margin-bottom: 6pt;
         padding-bottom: 6pt;
-        border-bottom: 1.5pt solid #1f4ed8;
+        border-bottom: 1.5pt solid var(--resume-primary);
         font-size: 17pt;
     }
 
@@ -386,13 +386,13 @@ menu:
     .resume-wrapper h2::before {
         width: 3pt;
         height: 11pt;
-        background: #1f4ed8 !important;
+        background: var(--resume-primary) !important;
     }
 
     .resume-wrapper h3 {
         margin: 8pt 0 4pt;
         padding: 4pt 6pt;
-        border-left: 2.5pt solid #1f4ed8;
+        border-left: 2.5pt solid var(--resume-primary);
         border-radius: 4pt;
         background: #f3f6fb !important;
         break-after: avoid;
@@ -404,7 +404,7 @@ menu:
         margin: 6pt 0 3pt;
         break-after: avoid;
         page-break-after: avoid;
-        color: #1e3a8a !important;
+        color: var(--resume-primary-dark) !important;
         font-size: 9.8pt;
     }
 
