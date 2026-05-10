@@ -359,7 +359,7 @@ menu:
         padding: 4pt 6pt;
         border-left: 2.5pt solid var(--resume-primary);
         border-radius: 4pt;
-        background: #f3f6fb !important;
+        background: var(--resume-primary-soft) !important;
         break-after: avoid;
         page-break-after: avoid;
         font-size: 10.5pt;
@@ -395,21 +395,21 @@ menu:
         gap: 2pt 8pt;
         margin-bottom: 6pt;
         padding: 5pt 7pt;
-        border: 0.6pt solid #d7dee9;
+        border: 0.6pt solid var(--resume-border);
         border-radius: 5pt;
         background: #f8fafc !important;
     }
 
     .resume-wrapper h3 + ul {
         padding: 4pt 6pt 4pt 13pt;
-        border: 0.5pt solid #e5eaf2;
+        border: 0.5pt solid var(--resume-border);
         border-radius: 5pt;
         background: #fbfcfe !important;
     }
 
     .resume-wrapper hr {
         margin: 7pt 0;
-        background: #d7dee9 !important;
+        background: var(--resume-border) !important;
     }
 
     .resume-wrapper a {
