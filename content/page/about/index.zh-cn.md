@@ -63,7 +63,7 @@ menu:
 - 基于 Volcano 高价值资源调度机制，结合队列调度、优先级调度、GPU共享和资源隔离，保障 GPU 计算资源高效利用与公平分配。
 - 对接 Prometheus / Grafana / 内部日志告警平台，实现任务、资源、推理链路的可观测与故障定位。
 
-<p class="tech-stack"><strong>核心技术</strong>：Java、Python、Spring Boot、Kubernetes、Ray、KubeRay、RayService、Dask、Volcano、Prometheus、Grafana</p>
+**核心技术**：Java、Python、Spring Boot、Kubernetes、Ray、KubeRay、RayService、Dask、Volcano、Prometheus、Grafana
 
 #### 项目二：资源高效 / 资源采集 / 资源监控
 
@@ -72,7 +72,7 @@ menu:
 - 将监控采集频率提升至每分钟一次，覆盖 50+ 指标，监控数据准确率达到 99%+，故障发现时间从平均 0.5 天缩短至 5 分钟以内。
 - 通过资源治理、调度优化和利用率分析，推动资源利用率提升 30%+，整体成本降低 20%+。
 
-<p class="tech-stack"><strong>核心技术</strong>：Java、Flink、Spark、Kafka、Prometheus、Grafana、MRS、DWS (基于 PostgreSQL)、CSS (基于ECK的Elasticsearch服务)</p>
+**核心技术**：Java、Flink、Spark、Kafka、Prometheus、Grafana、MRS、DWS (基于 PostgreSQL)、CSS (基于ECK的Elasticsearch服务)
 
 #### 项目三：大数据融合计算引擎 / 数据库管家
 
@@ -80,7 +80,7 @@ menu:
 - 建设数据库统一纳管与查询能力，覆盖 MySQL、MongoDB、Redis、DWS (基于 PostgreSQL)、CSS (基于ECK的Elasticsearch服务) 等 1000+ 数据库与数据服务实例。
 - 对接内部日志、告警、可信平台，完成平台可观测、合规审计、镜像构建与容器化部署。
 
-<p class="tech-stack"><strong>核心技术</strong>：Java、Spring Boot、Spring Cloud、Maven、MRS、DWS、CSS、Spark、Flink、Hive、OBS、EKS</p>
+**核心技术**：Java、Spring Boot、Spring Cloud、Maven、MRS、DWS、CSS、Spark、Flink、Hive、OBS、EKS
 
 
 ### 北京可利邦信息技术股份有限公司｜大数据 & 后台开发工程师
@@ -95,7 +95,7 @@ menu:
 - 基于 KubeFATE 框架，完成联邦学习平台的容器化部署和产品化封装，推动项目获得信通院和中互金两项权威认证。
 - 打通模型开发到上线的最后一公里，主导开发推理代理服务和模型市场，为平台用户提供模型导入、管理与在线推理服务。
 
-<p class="tech-stack"><strong>核心技术</strong>：Python、Go、Kubernetes、KubeFATE、Docker、Prometheus、AlertManager、APISIX、ECK、Elasticsearch、Fluentd、Kibana、MySQL、Redis、FastAPI、Flask</p>
+**核心技术**：Python、Go、Kubernetes、KubeFATE、Docker、Prometheus、AlertManager、APISIX、ECK、Elasticsearch、Fluentd、Kibana、MySQL、Redis、FastAPI、Flask
 
 
 ### 深圳掌众智能科技股份有限公司｜高级 Scala / Java 后端开发
@@ -108,7 +108,7 @@ menu:
 - 维护 ADX 广告交易平台，支撑每日约 4 亿次广告源请求、约 1 亿次广告展示、TB 级日志生产和 100+ DSP 对接。
 - 设计并实现日志分析系统，构建从 Flume / Kafka 采集、Spark Streaming 准实时计算、Hive / HBase / HDFS 存储到 ECharts 可视化的完整链路。
 
-<p class="tech-stack"><strong>核心技术</strong>：Scala、Java、AKKA、Kafka、Spark Streaming、Hadoop、Hive、HBase、HDFS、MySQL、PostgreSQL、Prometheus</p>
+**核心技术**：Scala、Java、AKKA、Kafka、Spark Streaming、Hadoop、Hive、HBase、HDFS、MySQL、PostgreSQL、Prometheus
 
 
 ### 深圳市维知科技有限责任公司｜大数据研发工程师
@@ -117,7 +117,7 @@ menu:
 - 参与 AI 中台服务平台建设，负责后端接口、数据库设计、Kubernetes 部署和 Bot / ASR / TTS / OCR 等 AI 引擎接入。
 - 独立维护引擎管理服务与虚拟交互服务，完成 Docker 镜像、部署脚本和交付文档建设。
 
-<p class="tech-stack"><strong>核心技术</strong>：Kotlin、Vert.x、Kubernetes、Docker、Prometheus、Kafka、Hadoop、Hive、Spark、Redis、MySQL、RabbitMQ</p>
+**核心技术**：Kotlin、Vert.x、Kubernetes、Docker、Prometheus、Kafka、Hadoop、Hive、Spark、Redis、MySQL、RabbitMQ
 
 
 ### 文思海辉｜初级大数据分析与挖掘顾问
@@ -125,7 +125,7 @@ menu:
 - 时间：2019年12月 - 2020年4月
 - 参与中广核供应链数据仓库建设，负责 HANA / MSSQL / Oracle 数据迁移方案验证、ETL 自动化流程设计和技术文档输出。
 
-<p class="tech-stack"><strong>核心技术</strong>：SQL、MSSQL、HANA、Inceptor、HyperBase、Search</p>
+**核心技术**：SQL、MSSQL、HANA、Inceptor、HyperBase、Search
 
 
 ### 中诚信国际信用评级有限责任公司｜全栈开发工程师｜实习
@@ -133,7 +133,7 @@ menu:
 - 时间：2018年7月 - 2019年6月
 - 参与金融风控 SaaS 平台建设，负责后端开发、数据库设计、SQL、ETL 和数据准确性验证；项目获“2019中国金融创新奖——十佳智能风控创新奖”。
 
-<p class="tech-stack"><strong>核心技术</strong>：Java、Spring Boot、Redis、MySQL、MSSQL、SQL</p>
+**核心技术**：Java、Spring Boot、Redis、MySQL、MSSQL、SQL
 
 
 ## 证书与荣誉
@@ -311,13 +311,6 @@ menu:
     margin-top: 0.45rem;
 }
 
-.resume-wrapper .tech-stack {
-    margin: 0.8rem 0 1.15rem;
-    padding: 0.55rem 0.75rem;
-    border-radius: 10px;
-    background: rgba(239, 246, 255, 0.7);
-    color: var(--resume-muted);
-}
 
 @media (max-width: 720px) {
     .resume-wrapper {
@@ -449,12 +442,6 @@ menu:
         background: #fbfcfe !important;
     }
 
-    .resume-wrapper .tech-stack {
-        margin: 4pt 0 6pt;
-        padding: 3pt 5pt;
-        border-radius: 4pt;
-        background: #f3f6fb !important;
-    }
 
     .resume-wrapper hr {
         margin: 7pt 0;
