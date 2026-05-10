@@ -20,13 +20,11 @@ menu:
 - 学历：黑河学院｜计算机科学与技术｜本科｜2019届
 - 方向：AI基础设施平台、异构资源纳管与调度、云原生平台、MLOps、后端架构
 
----
 
 ## 个人简介
 
 近7年平台研发经验，其中5年+聚焦云原生与AI基础设施平台建设，长期负责资源纳管、任务调度、监控告警、分布式计算与平台工程化落地。在华为数据底座项目中，主导异构资源纳管体系（覆盖300+集群/192卡/1000+实例）的建设，推动资源利用率提升30%+、成本降低20%+；同时主导分布式 Python 计算能力技术规划与关键选型，围绕 Ray / KubeRay / RayService / Volcano 构建离线推理加速、AI任务生命周期管理、MLOps 与 GPU 调度能力。具备技术方案评审、Code Review、研发规范制定、项目排期、跨团队协作和招聘面试经验，持续关注 AI Native、LLM Infra 与云原生调度技术演进。
 
----
 
 ## 核心技能
 
@@ -49,7 +47,6 @@ menu:
   - 消息队列：Kafka、RabbitMQ
 - **工程化**：Docker、CI/CD、镜像构建、方案与接口文档规范、Code Review
 
----
 
 ## 工作经历
 
@@ -85,7 +82,6 @@ menu:
 
 <p class="tech-stack"><strong>核心技术</strong>：Java、Spring Boot、Spring Cloud、Maven、MRS、DWS、CSS、Spark、Flink、Hive、OBS、EKS</p>
 
----
 
 ### 北京可利邦信息技术股份有限公司｜大数据 & 后台开发工程师
 
@@ -101,7 +97,6 @@ menu:
 
 <p class="tech-stack"><strong>核心技术</strong>：Python、Go、Kubernetes、KubeFATE、Docker、Prometheus、AlertManager、APISIX、ECK、Elasticsearch、Fluentd、Kibana、MySQL、Redis、FastAPI、Flask</p>
 
----
 
 ### 深圳掌众智能科技股份有限公司｜高级 Scala / Java 后端开发
 
@@ -115,7 +110,6 @@ menu:
 
 <p class="tech-stack"><strong>核心技术</strong>：Scala、Java、AKKA、Kafka、Spark Streaming、Hadoop、Hive、HBase、HDFS、MySQL、PostgreSQL、Prometheus</p>
 
----
 
 ### 深圳市维知科技有限责任公司｜大数据研发工程师
 
@@ -125,7 +119,6 @@ menu:
 
 <p class="tech-stack"><strong>核心技术</strong>：Kotlin、Vert.x、Kubernetes、Docker、Prometheus、Kafka、Hadoop、Hive、Spark、Redis、MySQL、RabbitMQ</p>
 
----
 
 ### 文思海辉｜初级大数据分析与挖掘顾问
 
@@ -134,7 +127,6 @@ menu:
 
 <p class="tech-stack"><strong>核心技术</strong>：SQL、MSSQL、HANA、Inceptor、HyperBase、Search</p>
 
----
 
 ### 中诚信国际信用评级有限责任公司｜全栈开发工程师｜实习
 
@@ -143,7 +135,6 @@ menu:
 
 <p class="tech-stack"><strong>核心技术</strong>：Java、Spring Boot、Redis、MySQL、MSSQL、SQL</p>
 
----
 
 ## 证书与荣誉
 
@@ -154,7 +145,6 @@ menu:
 - 信通院《联邦学习基础能力评测证书》项目参与
 - 中互金认证《联邦学习产品安全认证证书》项目参与
 
----
 
 ## 专业发展 & 技术前瞻
 
@@ -292,7 +282,7 @@ menu:
     opacity: 1;
 }
 
-.resume-wrapper h2 + ul {
+.resume-wrapper h2:first-of-type + ul {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.5rem 1.25rem;
@@ -304,7 +294,7 @@ menu:
     list-style-position: inside;
 }
 
-.resume-wrapper h2 + ul li {
+.resume-wrapper h2:first-of-type + ul li {
     margin: 0;
     color: var(--resume-muted);
 }
@@ -340,7 +330,7 @@ menu:
         font-size: 15px;
     }
 
-    .resume-wrapper h2 + ul {
+    .resume-wrapper h2:first-of-type + ul {
         grid-template-columns: 1fr;
     }
 }
@@ -441,7 +431,7 @@ menu:
         page-break-inside: avoid;
     }
 
-    .resume-wrapper h2 + ul {
+    .resume-wrapper h2:first-of-type + ul {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 2pt 8pt;
