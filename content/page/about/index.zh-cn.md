@@ -20,13 +20,10 @@ menu:
 - 方向：AI基础设施平台、异构资源纳管与调度、云原生平台、MLOps、后端架构
 
 ---
-
 ## 个人简介
 
 近7年平台研发经验，其中5年+聚焦云原生与AI基础设施平台建设，长期负责资源纳管、任务调度、监控告警、分布式计算与平台工程化落地。在华为数据底座项目中，主导异构资源纳管体系（覆盖300+集群/192卡/1000+实例）的建设，推动资源利用率提升30%+、成本降低20%+；同时主导分布式 Python 计算能力技术规划与关键选型，围绕 Ray / KubeRay / RayService / Volcano 构建离线推理加速、AI任务生命周期管理、MLOps 与 GPU 调度能力。具备技术方案评审、Code Review、研发规范制定、项目排期、跨团队协作和招聘面试经验，持续关注 AI Native、LLM Infra 与云原生调度技术演进。
-
 ---
-
 ## 核心技能
 
 ### Expert
@@ -47,9 +44,7 @@ menu:
   - 搜索引擎：Elasticsearch、CSS (基于ECK的Elasticsearch服务)
   - 消息队列：Kafka、RabbitMQ
 - **工程化**：Docker、CI/CD、镜像构建、方案与接口文档规范、Code Review
-
 ---
-
 ## 工作经历
 
 ## 上海科之锐人才咨询有限公司｜软件开发工程师｜华为数据底座方向
@@ -83,7 +78,6 @@ menu:
 - 对接内部日志、告警、可信平台，完成平台可观测、合规审计、镜像构建与容器化部署。
 
 **核心技术**：Java、Spring Boot、Spring Cloud、Maven、MRS、DWS、CSS、Spark、Flink、Hive、OBS、EKS
-
 ---
 
 ## 北京可利邦信息技术股份有限公司｜大数据 & 后台开发工程师
@@ -92,30 +86,24 @@ menu:
 - 方向：AI中台、隐私计算、Kubernetes平台、模型市场、监控告警、网关平台
 
 ### 核心成果
-
 - **从0到1主导** AI 中台与隐私计算平台的架构设计与落地，搭建包含 Kubernetes、Docker 镜像仓库、NFS、OpenVPN 在内的完整基础设施层。
 - 独立完成 Prometheus / AlertManager 监控告警体系、APISIX 统一网关中心，以及基于 Elasticsearch / Fluentd / Kibana（ECK）的日志平台建设。
 - 基于 KubeFATE 框架，完成联邦学习平台的容器化部署和产品化封装，推动项目获得信通院和中互金两项权威认证。
 - 打通模型开发到上线的最后一公里，主导开发推理代理服务和模型市场，为平台用户提供模型导入、管理与在线推理服务。
 
 **核心技术**：Python、Go、Kubernetes、KubeFATE、Docker、Prometheus、AlertManager、APISIX、ECK、Elasticsearch、Fluentd、Kibana、MySQL、Redis、FastAPI、Flask
-
 ---
-
 ## 深圳掌众智能科技股份有限公司｜高级 Scala / Java 后端开发
 
 - 时间：2019年7月 - 2019年11月
 - 方向：高并发广告交易平台、实时计算、日志分析
 
 ### 核心成果
-
 - 维护 ADX 广告交易平台，支撑每日约 4 亿次广告源请求、约 1 亿次广告展示、TB 级日志生产和 100+ DSP 对接。
 - 设计并实现日志分析系统，构建从 Flume / Kafka 采集、Spark Streaming 准实时计算、Hive / HBase / HDFS 存储到 ECharts 可视化的完整链路。
 
 **核心技术**：Scala、Java、AKKA、Kafka、Spark Streaming、Hadoop、Hive、HBase、HDFS、MySQL、PostgreSQL、Prometheus
-
 ---
-
 ## 深圳市维知科技有限责任公司｜大数据研发工程师
 
 - 时间：2020年4月 - 2021年8月
@@ -123,27 +111,21 @@ menu:
 - 独立维护引擎管理服务与虚拟交互服务，完成 Docker 镜像、部署脚本和交付文档建设。
 
 **核心技术**：Kotlin、Vert.x、Kubernetes、Docker、Prometheus、Kafka、Hadoop、Hive、Spark、Redis、MySQL、RabbitMQ
-
 ---
-
 ## 文思海辉｜初级大数据分析与挖掘顾问
 
 - 时间：2019年12月 - 2020年4月
 - 参与中广核供应链数据仓库建设，负责 HANA / MSSQL / Oracle 数据迁移方案验证、ETL 自动化流程设计和技术文档输出。
 
 **核心技术**：SQL、MSSQL、HANA、Inceptor、HyperBase、Search
-
 ---
-
 ## 中诚信国际信用评级有限责任公司｜全栈开发工程师｜实习
 
 - 时间：2018年7月 - 2019年6月
 - 参与金融风控 SaaS 平台建设，负责后端开发、数据库设计、SQL、ETL 和数据准确性验证；项目获“2019中国金融创新奖——十佳智能风控创新奖”。
 
 **核心技术**：Java、Spring Boot、Redis、MySQL、MSSQL、SQL
-
 ---
-
 ## 证书与荣誉
 
 - 阿里云云计算高级工程师 ACP 认证
@@ -152,12 +134,8 @@ menu:
 - 蓝桥杯全国软件和信息技术专业人才大赛决赛三等奖
 - 信通院《联邦学习基础能力评测证书》项目参与
 - 中互金认证《联邦学习产品安全认证证书》项目参与
-
 ---
-
 ## 专业发展 & 技术前瞻
-
-**近期重点学习与认证计划：**
 
 - **Kubernetes方向**：备考 CKAD、CKA、CKS 认证，系统强化应用开发、集群管理、安全加固与云原生安全能力。
 - **AI大模型方向**：备考阿里云 ACP 大模型认证，系统学习 LLM、RAG、Agent、Prompt Engineering、LoRA 微调、模型蒸馏及企业级AI平台建设。
