@@ -101,7 +101,7 @@ menu:
 ## 深圳市维知科技有限责任公司｜大数据研发工程师
 
 - 时间：2020年4月 - 2021年8月
-- 参与 AI 中台服务平台建设，��责后端接口、数据库设计、Kubernetes 部署和 Bot / ASR / TTS / OCR 等 AI 引擎接入。
+- 参与 AI 中台服务平台建设，负责后端接口、数据库设计、Kubernetes 部署和 Bot / ASR / TTS / OCR 等 AI 引擎接入。
 - 独立维护引擎管理服务与虚拟交互服务，完成 Docker 镜像、部署脚本和交付文档建设。
 
 **核心技术**：Kotlin、Vert.x、Kubernetes、Docker、Prometheus、Kafka、Hadoop、Hive、Spark、Redis、MySQL、RabbitMQ
