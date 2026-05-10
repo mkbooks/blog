@@ -21,7 +21,7 @@ menu:
 
 ## 个人简介
 
-近7年平台研发经验，其中5年+聚焦云原生与AI基础设施平台建设，长期负责资源纳管、任务调度、监控告警、分布式计算与平台工程化落地。在华为数据底座项目中，主导异构资源纳管体系（覆盖300+集群/192卡/1000+实例）的建设，推动资源利用率提升30%+、成本降低20%+；同时主导分布式 Python 计算能力技术规划与关键选型，围绕 Ray / KubeRay / RayService / Volcano 构建离线推理加速、AI任务生命周期管理、MLOps 与 GPU 调度能力。具备技术方案评审、Code Review、研发规范制定、项目排期、跨团队协作和招聘面试经验，持续关注 AI Native、LLM Infra 与云原生调度技术演进。
+近7年平台研发经验，其中5年+聚焦云原生与AI基础设施平台建设，长期负责资源纳管、任务调度、监控告警、分布式计算与平台工程化落地。在华为数据底座项目中，主导异构资源纳管体系（覆盖300+集群/192卡/1000+实例）的建设，推动资源利用率提升30%+、成本降低20%+；同时主导分布式 Python 计算能力技术规划与关键选型，围绕 Ray / KubeRay / RayService / Volcano 构建离线推理加速、AI任务生命周期管理、MLOps 与 GPU 调度能力。具备技术方案评审、Code Review、研发规范制定、项目排期、跨团队协作和招聘面试经验，将 AI Coding 实践融入日常研发流程，持续关注 AI Native、LLM Infra 与云原生调度技术演进。
 
 ## 核心技能
 
@@ -41,6 +41,7 @@ menu:
   - 搜索引擎：Elasticsearch、CSS (基于ECK的Elasticsearch服务)
   - 消息队列：Kafka、RabbitMQ
 - **工程化**：Docker、CI/CD、镜像构建、方案与接口文档规范、Code Review
+- **AI Coding / AI辅助开发**：自 2023 年起将 AI Coding 融入日常开发流程，长期使用 GitHub Copilot，并结合公司内部 OpenCode（GLM5）完成代码生成、Code Review、重构与自动化测试等工作。持续对比 Claude Opus、Gemini、DeepSeek、GLM 等模型在代码生成、理解与重构场景中的效果，提升研发效率与代码质量。
 
 ## 工作经历
 
@@ -100,7 +101,7 @@ menu:
 ## 深圳市维知科技有限责任公司｜大数据研发工程师
 
 - 时间：2020年4月 - 2021年8月
-- 参与 AI 中台服务平台建设，负责后端接口、数据库设计、Kubernetes 部署和 Bot / ASR / TTS / OCR 等 AI 引擎接入。
+- 参与 AI 中台服务平台建设，��责后端接口、数据库设计、Kubernetes 部署和 Bot / ASR / TTS / OCR 等 AI 引擎接入。
 - 独立维护引擎管理服务与虚拟交互服务，完成 Docker 镜像、部署脚本和交付文档建设。
 
 **核心技术**：Kotlin、Vert.x、Kubernetes、Docker、Prometheus、Kafka、Hadoop、Hive、Spark、Redis、MySQL、RabbitMQ
@@ -132,7 +133,7 @@ menu:
 
 - **Kubernetes方向**：备考 CKAD、CKA、CKS 认证，系统强化应用开发、集群管理、安全加固与云原生安全能力。
 - **AI大模型方向**：备考阿里云 ACP 大模型认证，系统学习 LLM、RAG、Agent、Prompt Engineering、LoRA 微调、模型蒸馏及企业级AI平台建设。
-- **技术前沿关注**：持续跟踪 vLLM / TensorRT 推理优化、Ray / KubeRay 分布式计算、AI Native Infra 及 Cursor / Copilot 等 AI 工程效率工具。
+- **技术前沿关注**：持续跟踪 vLLM / TensorRT 推理优化、Ray / KubeRay 分布式计算与 AI Native Infra，在日常开发中深度使用 Cursor / Copilot / OpenCode / Claude / Gemini / DeepSeek / GLM 等 AI Coding 工具，持续探索 LLM 在代码生成、审查、重构与自动化测试中的工程化落地。
 
 </div>
 
