@@ -9,193 +9,159 @@ menu:
 ---
 <div class="resume-wrapper">
 
-# 陈金鑫-后端研发工程师
-## 基础信息
-- 性别: 男
-- 出生日期: 1995-10-03
-- 手机: 17137621499
-- 邮箱: chenjinxin@chenjinxin.cn　
-- 毕业院校及专业: 黑河学院本科19届-计算机科学与技术专业
-- 博客: https://chenjinxin.cn
+# 陈金鑫｜AI异构算力平台 / 云原生架构 / 后端研发
 
-## 个人能力
-- 编程语言: Go、Python、Scala、Kotlin、Java、SQL、C/C++、C#、JS、Shell、Lua。
-- 常用数据结构与算法、设计模式。
-- 后端开发框架: Gin、AKKA、Vert.x、FastAPI、Flask、Django、Spring Boot。
-- 前端开发框架: Vue、Ant Design、Echarts。
-- 大数据生态: Hadoop、YARN、MapReduce、HBase、Hive、Flume、Sqoop、Kettle、Oozie、Azkaban、Spark、SparkSQL、SparkStreaming、Storm、Flink等。
-- 数据库: MySQL、Redis、MongoDB、PostgreSQL、MSSQL。
-- 中间件：Kafka、RabbitMQ、ElasticSearch。
-- 云原生: Docker、Kubernetes（K8s）、KubeFATE、KubeRay、Prometheus、Grafana、APISIX、OpenVPN、Jenkins、ECK等。
-- AI: LLM、Langchain、RAG、Agent、Ray、Dask、cuDF、Daft
-- 团队协作: Git、GitHub、GitLab、CI/CD。
-- 能够独立从0到1搭建企业大数据平台及云原生平台。
+## 基础信息
+
+- 手机：17137621499
+- 邮箱：chenjinxin@chenjinxin.cn
+- 博客：https://chenjinxin.cn
+- 学历：黑河学院｜计算机科学与技术｜本科｜2019届
+- 方向：AI基础设施平台、异构资源纳管与调度、云原生平台、MLOps、后端架构
+
+---
+
+## 个人简介
+
+近7年平台研发经验，其中5年+聚焦云原生与AI基础设施平台建设，长期负责资源纳管、任务调度、监控告警、分布式计算与平台工程化落地。在华为数据底座项目中，主导异构资源纳管体系（覆盖300+集群/192卡/1000+实例）的建设，推动资源利用率提升30%+、成本降低20%+；同时主导分布式 Python 计算能力技术规划与关键选型，围绕 Ray / KubeRay / RayService / Volcano 构建离线推理加速、AI任务生命周期管理、MLOps 与 GPU 调度能力。具备技术方案评审、Code Review、研发规范制定、项目排期、跨团队协作和招聘面试经验，持续关注 AI Native、LLM Infra 与云原生调度技术演进。
+
+---
+
+## 核心技能
+
+### Expert
+
+- **Kubernetes / 调度体系**：精通 K8s 调度器扩展与 Volcano，熟练构建队列调度、优先级抢占、GPU 共享与资源隔离策略。
+- **异构资源纳管**：有大规模统一纳管经验（300+ 集群、192 卡、1000+ 实例），覆盖资源采集、利用率分析与成本治理，推动利用率提升 30%+。
+- **AI任务调度与MLOps**：主导基于 Ray / KubeRay 的分布式计算平台建设，实现离线推理加速（6小时→3分钟）、模型灰度发布、回滚与 A/B 测试。
+- **可观测性平台**：擅长从0到1构建监控、日志与告警体系，实现故障发现时间从 0.5 天缩短至 5 分钟，数据准确率 99%+。
+- **后端语言**：Java、Python、Go
+
+### Proficient
+
+- **分布式计算**：Spark、Flink、Hive、Hadoop、YARN、Kafka，有 TB 级日志处理经验。
+- **微服务与网关**：Spring Boot、Spring Cloud、FastAPI、Flask、Gin、APISIX，有微服务拆分与容器化交付经验。
+- **数据库与中间件**：
+  - 关系型 / MPP：MySQL、PostgreSQL、DWS (基于 PostgreSQL)
+  - NoSQL / 缓存：Redis、MongoDB
+  - 搜索引擎：Elasticsearch、CSS (基于ECK的Elasticsearch服务)
+  - 消息队列：Kafka、RabbitMQ
+- **工程化**：Docker、CI/CD、镜像构建、方案与接口文档规范、Code Review
+
+---
 
 ## 工作经历
 
-### 工作经历（5）
-- 工作公司: 上海科之锐人才咨询有限公司
-- 工作时间: 2023年7月至今
-- 部门岗位: 质量与流程IT部-IT平台服务部-软件开发工程师（华为-数据底座）
-- 岗位职责: 负责云平台的搭建、开发、维护；数据库设计，后端开发、网关开发、项目CI\CD。
+## 上海科之锐人才咨询有限公司｜软件开发工程师｜华为数据底座方向
 
-#### 负责项目一
-- 项目名称：数据库管家
-- 项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台(智慧大屏、移动端应用、web端应用)敏捷地部署、训练及提供各种AI引擎服务(ASR, TTS, Bot, OCR等)。
-- 我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。
-- 开发技术：开发语言：Java。开发框架：SpringBoot、SpringCloud。版本管理工具：Maven。华为服务：大数据：MRS、DWS、CSS；CodeHub、EKS、ADS。其它技术：服务发现：Nacos、eureka；
+- 时间：2023年7月 - 至今
+- 方向：AI基础设施、融合计算、异构资源纳管、GPU调度、MLOps、可观测性
 
-#### 负责项目二
-- 项目名称：资源高效
-- 项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台(智慧大屏、移动端应用、web端应用)敏捷地部署、训练及提供各种AI引擎服务(ASR, TTS, Bot, OCR等)。
-- 我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。
-- 开发技术：开发语言：Java。开发框架：Flink、Spark。版本管理工具：Maven。华为服务：大数据：MRS、DWS、CSS；CodeHub、EKS、ADS。其它技术：服务发现：Nacos、eureka；
+### 项目一：融合计算中心｜Ray / KubeRay / Volcano / MLOps
 
-#### 负责项目二-子项目一
-- 项目名称：资源监控
-- 项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台(智慧大屏、移动端应用、web端应用)敏捷地部署、训练及提供各种AI引擎服务(ASR, TTS, Bot, OCR等)。
-- 我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。
-- 开发技术：开发语言：Java。开发框架：Flink、Spark。版本管理工具：Maven。华为服务：大数据：MRS、DWS、CSS；CodeHub、EKS、ADS。其它技术：服务发现：Nacos、eureka；
+- 主导分布式 Python 计算能力整体技术规划与关键技术选型，围绕 Ray / KubeRay / RayService / Dask / Volcano 设计 AI 任务提交、编排、调度、监控、弹性伸缩与生命周期管理能力。
+- 基于 Ray 集群优化离线推理任务，将平均推理耗时从 6 小时降低至 30 分钟以内，并进一步优化至 3 分钟以内，显著提升 AI 推理效率与资源利用率。
+- 基于 RayService 建设模型发布、回滚、监控、灰度发布、A/B 测试等 MLOps 能力，支撑模型服务稳定迭代与平台化交付。
+- 基于 Volcano 高价值资源调度机制，结合队列调度、优先级调度、GPU共享和资源隔离，保障 GPU 计算资源高效利用与公平分配。
+- 对接 Prometheus / Grafana / 内部日志告警平台，实现任务、资源、推理链路的可观测与故障定位。
 
-#### 负责项目二-子项目二
-- 项目名称：作业监控
-- 项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台(智慧大屏、移动端应用、web端应用)敏捷地部署、训练及提供各种AI引擎服务(ASR, TTS, Bot, OCR等)。
-- 我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。
-- 开发技术：开发语言：Java。开发框架：Flink、Spark。版本管理工具：Maven。华为服务：大数据：MRS、DWS、CSS；CodeHub、EKS、ADS。其它技术：服务发现：Nacos、eureka；
+**核心技术**：Java、Python、Spring Boot、Kubernetes、Ray、KubeRay、RayService、Dask、Volcano、Prometheus、Grafana
 
-  
-### 工作经历（4）
-- 工作公司: 北京可利邦信息技术股份有限公司
-- 工作时间: 2021年8月至2023年7月
-- 部门岗位: AI事业部-大数据&后台开发工程师
-- 岗位职责: 负责云平台的搭建、开发、维护；数据库设计，后端开发、网关开发、项目CI\CD。
+### 项目二：资源高效 / 资源采集 / 资源监控
 
-#### 负责项目四
-- 项目名称：隐私计算模型市场
-- 项目描述：基于KubeFATE开源框架开发，运行在Kubernetes平台上。将《大数据隐私计算平台》中训练好的模型导出，然后导入到本平台，提供推理服务。
-- 我的职责：开发Web后端端管理平台。开发agent服务。
-- 开发技术：开发语言：Python。使用技术：Kurberntes、KubeFATE、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、MySQL、Redis。开发框架：fastapi。数据库版本管理：Alembic。自动化部署：Fabric。
-##### 负责项目四-子项目一
-- 项目名称：接口代理服务
-- 项目描述：为用户提供请求推理的接口代理。
-- 我的职责：开发agent服务。维护项目文档。
-- 开发技术：开发语言：Go。开发框架：Gin。
+- 建设异构资源统一纳管与监控链路，覆盖 300+ MRS 集群、最大 1000+ 节点集群、约 192 张 GPU 卡、1000+ 数据库实例、2000+ 作业、500+ 用户应用。
+- 对接云资源接口与内部 IAM，完成资源归属识别、资源亲缘关系、利用率分析、容量治理和运营看板数据同步。
+- 将监控采集频率提升至每分钟一次，覆盖 50+ 指标，监控数据准确率达到 99%+，故障发现时间从平均 0.5 天缩短至 5 分钟以内。
+- 通过资源治理、调度优化和利用率分析，推动资源利用率提升 30%+，整体成本降低 20%+。
 
-#### 负责项目三
-- 项目名称：大数据隐私计算平台
-- 项目描述：基于KubeFATE开源框架开发，运行在Kubernetes平台上。给联邦集群添加隐私计算能力。为用户提供易于部署，操作简单的联邦学习平台。
-- 我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。构建OpenVPN网络。
-- 开发技术：开发语言：Python，Go，Lua。使用技术：Kurberntes、KubeFATE、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、Elasticsearch、Fluentd、Kibana、MySQL、Redis。开发框架：flask-restplus。ECK: Elasticsearch、Kibana、Fluentd。VPN：OpenVPN。数据库版本管理：Alembic。自动化部署：Fabric。
-- 项目成就：2023年获得“信通院”《联邦学习基础能力评测证书》；2023年获得中互金认证《联邦学习产品安全认证证书》。
+**核心技术**：Java、Flink、Spark、Kafka、Prometheus、Grafana、MRS、DWS (基于 PostgreSQL)、CSS (基于ECK的Elasticsearch服务)
 
-#### 负责项目二
-- 项目名称：电商推荐系统
-- 项目描述：给电商平台增加推荐系统和搜索引擎。
-- 我的职责：编写、维护项目文档，包括开发文档、部署文档等。推荐系统和搜索引擎的架构设计、推荐算法实现、接口开发。数据的ETL。项目部署。
-- 开发技术：开发语言：Scala、Go。计算引擎：Spark。版本管理工具：Maven。数据库：Redis、MongoDB。消息队列：Kafka。Web框架：Gin。ECK: Elasticsearch、Kibana、Fluentd。部署方式：docker-compose。任务调度：cron。
+### 项目三：大数据融合计算引擎 / 数据库管家
 
-#### 负责项目一
-- 项目名称：AI中台
-- 项目描述：采用微服务架构，利用Kubernetes容器编排及Docker容器技术，为业务前台(智慧大屏、移动端应用、web端应用)敏捷地部署、训练及提供各种AI引擎服务(ASR, TTS, Bot, OCR等)。
-- 我的职责：编写、维护项目文档，包括开发文档、部署文档等。构建Kubernetes基础平台，包括NFS存储服务、Docker镜像仓库；搭建、开发监控平台；搭建、开发网关中心；搭建、开发日志平台；开发Web端管理平台。
-- 开发技术：开发语言：Python，Go，Lua。使用技术：Kurberntes、Docker、NFS、Prometheus、AlertManager、NodeExport、KubeStateMetrics、APISIX、Elasticsearch、Fluentd、Kibana、MySQL、Redis。开发框架：flask-restplus。ECK: Elasticsearch、Kibana、Fluentd。数据库版本管理：Alembic。自动化部署：Fabric。
+- 参与统一计算与数据服务平台建设，集成 Spark、Flink、Hive、OBS、DWS、CSS 等能力，支撑批处理、流处理、交互式 SQL、统一作业提交与状态监控。
+- 建设数据库统一纳管与查询能力，覆盖 MySQL、MongoDB、Redis、DWS (基于 PostgreSQL)、CSS (基于ECK的Elasticsearch服务) 等 1000+ 数据库与数据服务实例。
+- 对接内部日志、告警、可信平台，完成平台可观测、合规审计、镜像构建与容器化部署。
 
-### 工作经历（3）
-- 工作公司: 深圳市维知科技有限责任公司
-- 工作时间: 2020年4月至2021年8月
-- 部门岗位: AI中台部门-大数据研发工程师
-- 岗位职责: 负责数据库设计，后端开发，Bot引擎维护。
+**核心技术**：Java、Spring Boot、Spring Cloud、Maven、MRS、DWS、CSS、Spark、Flink、Hive、OBS、EKS
 
-#### 负责项目三
-- 项目名称：AI中台服务平台
-- 项目描述：对接各个后台AI引擎服务（如后台bot引擎、ASR引擎、TTS引擎、OCR引擎）、前台应用服务（大屏应用、移动端应用、web端应用）。
-- 我的职责：AI中台的后端接口设计与开发，数据库设计与开发，K8S部署。制作AI中台的各个微服务项目镜像、大数据平台镜像。
-- 开发技术：开放平台：Kubernetes，Docker。平台监控：Prometheus。大数据组件：Hadoop、HBase、Hive、Spark、Zookeeper、Kafka、Oozie、Flume、Sqoop、ElasticSearch、Logstash、Kibana。
+---
 
-#### 负责项目二
-- 项目名称：引擎管理服务平台
-- 项目描述：对接客服bot引擎和web端，提供友好的交互功能给引擎训练工程师使用，设计维护多轮对话逻辑。
-- 我的职责：独立构建、开发、测试、维护、部署该项目，维护部署文档，将项目打包成Docker镜像，提供方便的部署脚本。
-- 开发技术：开发语言：Kotlin。框架是基于Vert.x二次开发的、简易的、专注接口开发的框架。版本管理工具：Gradle。数据库：Redis、MySQL。消息队列：RabbitMQ。开放平台：Docker。
+## 北京可利邦信息技术股份有限公司｜大数据 & 后台开发工程师
 
-#### 负责项目一
-- 项目名称：虚拟交互服务平台
-- 项目描述：客户端是大屏（C++开发的Windows应用）和移动端（Unity3D、C#开发的Android应用），服务端负责接收、处理用户端发出的语音或文本信息，按照客户端设置（ASR、bot、TTS）请求具体的引擎，接收处理引擎的响应结果，返回给客户端。
-- 我的职责：一个人维护、部署该项目，完成所有对接工作，按照产品需求迭代项目。将项目打包成Docker镜像，维护部署文档。
-- 开发技术：开发语言：Kotlin。框架是基于Vert.x二次开发的、简易的、专注接口开发的框架。版本管理工具：Gradle。数据库：Redis、MySQL。消息队列：RabbitMQ。开放平台：Docker。
+- 时间：2021年8月 - 2023年7月
+- 方向：AI中台、隐私计算、Kubernetes平台、模型市场、监控告警、网关平台
 
-### 工作经历（2）
-- 工作公司: 文思海辉
-- 工作时间: 2019年12月至2020年4月
-- 部门岗位: 数仓事业部-初级大数据分析与挖掘顾问（中广核）
-- 岗位职责: 维护数据仓库。
+### 核心成果
 
-#### 负责项目一
-- 项目名称：供应链数据仓库建设（中广核驻场项目）
-- 项目描述：将原HANA数据库数据迁移到星环大数据平台，以星环大数据平台中的Inceptor、HyperBase、Search为基础构建全新的大数据平台。定时从业务数据库MSSQL、Oracle、HANA等数据库做数据同步。
-- 我的职责：设计、验证、对比各种技术路线的可行性，并撰写文档。设计ETL自动化流程。
-- 开发技术：编程语言：SQL。
+- **从0到1主导** AI 中台与隐私计算平台的架构设计与落地，搭建包含 Kubernetes、Docker 镜像仓库、NFS、OpenVPN 在内的完整基础设施层。
+- 独立完成 Prometheus / AlertManager 监控告警体系、APISIX 统一网关中心，以及基于 Elasticsearch / Fluentd / Kibana（ECK）的日志平台建设。
+- 基于 KubeFATE 框架，完成联邦学习平台的容器化部署和产品化封装，推动项目获得信通院和中互金两项权威认证。
+- 打通模型开发到上线的最后一公里，主导开发推理代理服务和模型市场，为平台用户提供模型导入、管理与在线推理服务。
 
-### 工作经历（1）
-- 工作公司: 深圳掌众智能科技股份有限公司
-- 工作时间: 2019年7月至2019年11月
-- 部门岗位: 广告事业部-高级Scala/Java后端开发
-- 岗位职责: 负责广告交易平台的开发、维护。
-#### 负责项目二
-- 项目名称：ADX平台
-- 项目描述：使用Scala开发ADX（广告交易平台）服务平台，对接DSP（广告主服务平台）和SSP（媒体服务平台）。每日广告源请求数量在4亿次左右，每日展示数量1亿左右，每日生产TB级日志。对接DSP一百多家。具有RTB（实时竞价）和PDB（直接购买）两种交易类型。
-- 我的职责：一个人维护该项目，完成所有对接工作，按照产品需求迭代项目，实现ETL为运营提供技术支持。
-- 开发技术：开发语言：Scala；版本管理工具：SBT；开发框架：AKKA；应用层协议使用Protobuf、Thrift；使用Akka库和AkkaHTTP库提供Http服务；消息引擎系统采用Kafka；数据库框架是Slick；cats（scala函数式编程库）；circe（Json解析库）；Prometheus（监控报警系统）；Finagle（RPC框架）；http4s；doobie（JDBC层）；netty；quill（ORM框架）。MySQL、PostgreSQL数据库，GreenPlumSQL数据仓库，HDFS（分布式文件系统），AS/400报表系统。
+**核心技术**：Python、Go、Kubernetes、KubeFATE、Docker、Prometheus、AlertManager、APISIX、ECK、Elasticsearch、Fluentd、Kibana、MySQL、Redis、FastAPI、Flask
 
-#### 负责项目一
-- 项目名称：日志分析系统（离线+准实时）
-- 业务描述：为运营和商务提供技术支持。根据日志信息（TB），实时分析各个广告位的请求、响应、点击事件的具体情况，实时统计当前线上媒体端用户活跃情况，统计哪个时段的用户浏览量最高，输出准实时可视化报表。对运营提出的问题及时作出响应。
-- 我的职责：系统架构设计与实现。
-- 系统架构：
-1. 展示层：统计查询/报表——HUE，数据可视化分析——H5+Echarts
-2. 接口层：技术协议——Http/WebSocket，数据协议——XML/JSON/Thrift/Protobuf
-3. 服务层：Java/Scala
-4. 计算层：在线计算－Streaming，离线计算－MapReduce，内存计算－Spark，统一资源调度管理－YARN
-5. 存储层：分布式消息队列Kafka，MySQL，Hbase，Hive，HDFS
-6. 采集层：日志采集框架Flume，DB数据处理工具Sqoop
-7. 数据源层：DB，LogFile
-- 项目模块：分布式日志收集，日至合并预处理，实时数据处理，大屏实时Echarts统计，离线数据处理，Hue可视化分析，多维BI报表。
-- 开发技术：Hadoop2.x，Zookeeper，Flume，Hive，Hbase，Kafka，Spark2.x，SparkString，MySQL，Hue，J2EE，websoket，Echarts。
+---
 
-- 项目名称：CDH搭建企业大数据平台
-- 1.作用
-    - 数据分析
-    - 数据检索
-    - 集群规划与资源配置
-        - 集群数量：15台
-        - 硬盘：60TB，内存：32GB，CPU：10核，网卡：万兆
-- 2.技术选型
-    - Cloudera Mananger(CM)——基于 yum 源
-- 3.集群监控
-	- Cloudera Managerment Serice
-- 4.基于CDH安装部署大数据组件及配置
-	- Zookeeper，HDFS（HA），YARN（HA），Hive，HBase，Flume，Spark，Sqoop，Oozie，Hue，Impala
+## 深圳掌众智能科技股份有限公司｜高级 Scala / Java 后端开发
 
-### 实习经历（0）
-- 工作公司: 中诚信国际信用评级有限责任公司
-- 工作时间: 2018年7月至2019年6月
-- 部门岗位: 债券风险控制事业部-全栈开发工程师
-- 岗位职责: 负责后端架构设计及开发，数据库设计及开发。
+- 时间：2019年7月 - 2019年11月
+- 方向：高并发广告交易平台、实时计算、日志分析
 
-#### 负责项目一
-- 项目名称：中诚信·智警系统
-- 项目描述：超越传统信用评级理论，用金融和征信大数据建模评估发债公司的信用风险，并实时跟踪。当用户持有的债券等级发生变化，通过邮件通知用户。项目做成SaaS端应用，除了核心的评级结果，用户还可以按行业、信用等级等条件筛选目标企业；按地区、政府等筛选目标城投，并查看其财务分析、债券信息、舆情征信等。
-- 我的职责：编写后端代码，设计数据库及表结构，编写SQL语句，验证数据的准确性，实现ETL。梳理项目需求，提出产品建议，辅助产品设计，产品上线，测试服务器等。
-- 开发技术：开发语言：Java。框架SpringBoot。版本管理工具：Maven。数据库：Redis、MySQL、MSSQL。
-- 项目成就：获得2019中国金融创新论坛暨“2019中国金融创新奖”——“十佳智能风控创新奖”。
+### 核心成果
 
-## 证书认证
+- 维护 ADX 广告交易平台，支撑每日约 4 亿次广告源请求、约 1 亿次广告展示、TB 级日志生产和 100+ DSP 对接。
+- 设计并实现日志分析系统，构建从 Flume / Kafka 采集、Spark Streaming 准实时计算、Hive / HBase / HDFS 存储到 ECharts 可视化的完整链路。
 
-- [国家奖学金](https://zwfw.moe.gov.cn/xszz/)(证书编号: 26070)、省三好学生(证书编号: 20194547)
-- [全国软件和信息技术专业人才大赛决赛三等奖（蓝桥杯）](https://dasai.lanqiao.cn/dasai-front/cert-list/?searchType=1&name=%E9%99%88%E9%87%91%E9%91%AB&card=020924658)(证书编号: 020924658)
-- [ACP](https://edu.aliyun.com/clouder/Certificate/search?source=5176.11533457&userCode=r3yteowb&type=2&num=340421199510031230)：
-  - 阿里云云计算高级工程师ACP认证(证书编号: ACP01240902018261)
-- CNCF：
+**核心技术**：Scala、Java、AKKA、Kafka、Spark Streaming、Hadoop、Hive、HBase、HDFS、MySQL、PostgreSQL、Prometheus
+
+---
+
+## 深圳市维知科技有限责任公司｜大数据研发工程师
+
+- 时间：2020年4月 - 2021年8月
+- 参与 AI 中台服务平台建设，负责后端接口、数据库设计、Kubernetes 部署和 Bot / ASR / TTS / OCR 等 AI 引擎接入。
+- 独立维护引擎管理服务与虚拟交互服务，完成 Docker 镜像、部署脚本和交付文档建设。
+
+**核心技术**：Kotlin、Vert.x、Kubernetes、Docker、Prometheus、Kafka、Hadoop、Hive、Spark、Redis、MySQL、RabbitMQ
+
+---
+
+## 文思海辉｜初级大数据分析与挖掘顾问
+
+- 时间：2019年12月 - 2020年4月
+- 参与中广核供应链数据仓库建设，负责 HANA / MSSQL / Oracle 数据迁移方案验证、ETL 自动化流程设计和技术文档输出。
+
+**核心技术**：SQL、MSSQL、HANA、Inceptor、HyperBase、Search
+
+---
+
+## 中诚信国际信用评级有限责任公司｜全栈开发工程师｜实习
+
+- 时间：2018年7月 - 2019年6月
+- 参与金融风控 SaaS 平台建设，负责后端开发、数据库设计、SQL、ETL 和数据准确性验证；项目获“2019中国金融创新奖——十佳智能风控创新奖”。
+
+**核心技术**：Java、Spring Boot、Redis、MySQL、MSSQL、SQL
+
+---
+
+## 证书与荣誉
+
+- 阿里云云计算高级工程师 ACP 认证
+- 国家奖学金
+- 省三好学生
+- 蓝桥杯全国软件和信息技术专业人才大赛决赛三等奖
+- 信通院《联邦学习基础能力评测证书》项目参与
+- 中互金认证《联邦学习产品安全认证证书》项目参与
+
+---
+
+## 专业发展 & 技术前瞻
+
+**近期重点学习与认证计划：**
+
+- **Kubernetes方向**：备考 CKAD、CKA、CKS 认证，系统强化应用开发、集群管理、安全加固与云原生安全能力。
+- **AI大模型方向**：备考阿里云 ACP 大模型认证，系统学习 LLM、RAG、Agent、Prompt Engineering、LoRA 微调、模型蒸馏及企业级AI平台建设。
+- **技术前沿关注**：持续跟踪 vLLM / TensorRT 推理优化、Ray / KubeRay 分布式计算、AI Native Infra 及 Cursor / Copilot 等 AI 工程效率工具。
 
 </div>
 
