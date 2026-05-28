@@ -21,14 +21,15 @@ menu:
 
 ## 个人简介
 
-近7年平台研发经验，其中5年+聚焦云原生与AI基础设施平台建设，长期负责资源纳管、任务调度、监控告警、分布式计算与平台工程化落地。在华为数据底座项目中，主导异构资源纳管体系（覆盖300+集群/192卡/1000+实例）的建设，推动资源利用率提升30%+、成本降低20%+；同时主导分布式 Python 计算能力技术规划与关键选型，围绕 Ray / KubeRay / RayService / Volcano 构建离线推理加速、AI任务生命周期管理、MLOps 与 GPU 调度能力。具备技术方案评审、Code Review、研发规范制定、项目排期、跨团队协作和招聘面试经验，将 AI Coding 实践融入日常研发流程，持续关注 AI Native、LLM Infra 与云原生调度技术演进。
+近7年平台研发经验，其中5年+聚焦云原生与AI基础设施平台建设，长期负责资源纳管、任务调度、监控告警、分布式计算与平台工程化落地。在华为数据底座项目中，主导异构资源纳管体系（覆盖300+ 集群、500+ GPU 卡、1000+ 实例）的建设，推动资源利用率提升 30%+、成本降低 20%+；同时主导分布式 Python 计算能力技术规划与关键选型，围绕 Ray / KubeRay / RayService / Volcano / Dask 构建离线推理加速、AI 任务生命周期管理、MLOps 与 GPU 调度能力，并完成 V100 / IB 高性能 Kubernetes 集群纳管、Dask on Ray 与 RDMA 加速实践。具备技术方案评审、Code Review、研发规范制定、项目推进、跨域团队协作和招聘面试经验，将 AI Coding 实践融入日常研发流程，持续关注 AI Native、LLM Infra 与云原生调度技术演进。
 
 ## 核心技能
 
 ### Expert
 - **Kubernetes / 调度体系**：精通 K8s 调度器扩展与 Volcano，熟练构建队列调度、优先级抢占、GPU 共享与资源隔离策略。
-- **异构资源纳管**：有大规模统一纳管经验（300+ 集群、192 卡、1000+ 实例），覆盖资源采集、利用率分析与成本治理，推动利用率提升 30%+。
+- **异构资源纳管**：有大规模统一纳管经验（300+ 集群、500+ GPU 卡、1000+ 实例），覆盖资源采集、利用率分析与成本治理，推动利用率提升 30%+。
 - **AI任务调度与MLOps**：主导基于 Ray / KubeRay 的分布式计算平台建设，实现离线推理加速（6小时→3分钟）、模型灰度发布、回滚与 A/B 测试。
+- **高性能计算网络**：具备 V100 / IB GPU 集群纳管与 RDMA 加速实践经验，完成 Dask on Ray 计算链路落地，提升跨节点计算与数据传输效率。
 - **可观测性平台**：擅长从0到1构建监控、日志与告警体系，实现故障发现时间从 0.5 天缩短至 5 分钟，数据准确率 99%+。
 - **后端语言**：Java、Python、Go
 
@@ -52,15 +53,16 @@ menu:
 
 ### 项目一：融合计算中心｜Ray / KubeRay / Volcano / MLOps
 - 主导分布式 Python 计算能力整体技术规划与关键技术选型，围绕 Ray / KubeRay / RayService / Dask / Volcano 设计 AI 任务提交、编排、调度、监控、弹性伸缩与生命周期管理能力。
+- 新增纳管高性能 GPU Kubernetes 集群（3 Master + 40 Worker，单节点 72 核 / 512G 内存 / 8 张 V100，并配备 IB 网卡），打通 Dask on Ray 运行链路，并基于 RDMA 加速跨节点计算与数据传输。
 - 基于 Ray 集群优化离线推理任务，将平均推理耗时从 6 小时降低至 30 分钟以内，并进一步优化至 3 分钟以内，显著提升 AI 推理效率与资源利用率。
 - 基于 RayService 建设模型发布、回滚、监控、灰度发布、A/B 测试等 MLOps 能力，支撑模型服务稳定迭代与平台化交付。
 - 基于 Volcano 高价值资源调度机制，结合队列调度、优先级调度、GPU共享和资源隔离，保障 GPU 计算资源高效利用与公平分配。
 - 对接 Prometheus / Grafana / 内部日志告警平台，实现任务、资源、推理链路的可观测与故障定位。
 
-**核心技术**：Java、Python、Spring Boot、Kubernetes、Ray、KubeRay、RayService、Dask、Volcano、Prometheus、Grafana
+**核心技术**：Java、Python、Spring Boot、Kubernetes、Ray、KubeRay、RayService、Dask、RDMA、InfiniBand、Volcano、Prometheus、Grafana
 
 ### 项目二：资源高效 / 资源采集 / 资源监控
-- 建设异构资源统一纳管与监控链路，覆盖 300+ MRS 集群、最大 1000+ 节点集群、约 192 张 GPU 卡、1000+ 数据库实例、2000+ 作业、500+ 用户应用。
+- 建设异构资源统一纳管与监控链路，覆盖 300+ MRS 集群、最大 1000+ 节点集群、约 500+ GPU 卡、1000+ 数据库实例、2000+ 作业、500+ 用户应用。
 - 对接云资源接口与内部 IAM，完成资源归属识别、资源亲缘关系、利用率分析、容量治理和运营看板数据同步。
 - 将监控采集频率提升至每分钟一次，覆盖 50+ 指标，监控数据准确率达到 99%+，故障发现时间从平均 0.5 天缩短至 5 分钟以内。
 - 通过资源治理、调度优化和利用率分析，推动资源利用率提升 30%+，整体成本降低 20%+。
@@ -133,7 +135,7 @@ menu:
 
 - **Kubernetes方向**：备考 CKAD、CKA、CKS 认证，系统强化应用开发、集群管理、安全加固与云原生安全能力。
 - **AI大模型方向**：备考阿里云 ACP 大模型认证，系统学习 LLM、RAG、Agent、Prompt Engineering、LoRA 微调、模型蒸馏及企业级AI平台建设。
-- **技术前沿关注**：持续跟踪 vLLM / TensorRT 推理优化、Ray / KubeRay 分布式计算与 AI Native Infra，在日常开发中深度使用 Cursor / Copilot / OpenCode / Claude / Gemini / DeepSeek / GLM 等 AI Coding 工具，持续探索 LLM 在代码生成、审查、重构与自动化测试中的工程化落地。
+- **技术前沿关注**：持续跟踪 vLLM / TensorRT 推理优化、Ray / KubeRay 分布式计算、RDMA / IB 高性能网络与 AI Native Infra，在日常开发中深度使用 Cursor / Copilot / OpenCode / Claude / Gemini / DeepSeek / GLM 等 AI Coding 工具，持续探索 LLM 在代码生成、审查、重构与自动化测试中的工程化落地。
 
 </div>
 
