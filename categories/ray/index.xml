@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ray on 我的空间</title><link>https://chenjinxin.cn/categories/ray/</link><description>Recent content in Ray on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sat, 28 Mar 2026 22:00:00 +0800</lastBuildDate><atom:link href="https://chenjinxin.cn/categories/ray/index.xml" rel="self" type="application/rss+xml"/><item><title>Ray 集群 Head Pod 无法连接到 Redis 的故障排查与解决</title><link>https://chenjinxin.cn/p/ray-%E9%9B%86%E7%BE%A4-head-pod-%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E5%88%B0-redis-%E7%9A%84%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%E4%B8%8E%E8%A7%A3%E5%86%B3/</link><pubDate>Sat, 28 Mar 2026 22:00:00 +0800</pubDate><guid>https://chenjinxin.cn/p/ray-%E9%9B%86%E7%BE%A4-head-pod-%E6%97%A0%E6%B3%95%E8%BF%9E%E6%8E%A5%E5%88%B0-redis-%E7%9A%84%E6%95%85%E9%9A%9C%E6%8E%92%E6%9F%A5%E4%B8%8E%E8%A7%A3%E5%86%B3/</guid><description>&lt;h2 id="-问题现象">📌 问题现象&lt;/h2>
+&lt;p>在 Kubernetes 环境中部署的 Ray 集群（使用 KubeRay Operator）出现 Head Pod 运行异常：&lt;/p>
+&lt;ul>
+&lt;li>Pod 状态为 &lt;code>Running&lt;/code>，但 &lt;code>Ready&lt;/code> 状态为 &lt;code>False&lt;/code>&lt;/li>
+&lt;li>容器的 &lt;strong>Liveness&lt;/strong> 和 &lt;strong>Readiness&lt;/strong> 探针持续失败&lt;/li>
+&lt;li>业务服务无法正常使用&lt;/li>
+&lt;/ul>
+&lt;p>通过 &lt;code>kubectl describe pod&lt;/code> 查看，发现探针命令执行失败：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">Liveness probe failed:
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Readiness probe failed:
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>探针内部检查了两个 Ray 健康端点：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>http://localhost:52365/api/local_raylet_healthz&lt;/code>&lt;/li>
+&lt;li>&lt;code>http://localhost:8265/api/gcs_healthz&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="-初步排查">🔍 初步排查&lt;/h2>
+&lt;h3 id="1-查看-head-容器日志">1. 查看 Head 容器日志&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl logs -n ray &amp;lt;pod-name&amp;gt; -c ray-serve-head
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>日志中反复出现以下错误：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">[2026-03-28 22:09:05,274 E 1 1] (ray_init) redis_context.cc:386: Failed to connect to Redis due to: RedisError: Could not establish connection to Redis 192.168.16.188:6379 (context.err = 1).. Will retry in 500ms.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>关键信息&lt;/strong>：Ray Head 无法连接到外部 Redis &lt;code>192.168.16.188:6379&lt;/code>，导致初始化一直卡在重试阶段，健康端点始终无法就绪。&lt;/p>
+&lt;h3 id="2-环境变量检查">2. 环境变量检查&lt;/h3>
+&lt;p>从 &lt;code>describe pod&lt;/code> 输出中看到相关环境变量：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">Environment&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">RAY_REDIS_ADDRESS&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">192.168.16.188&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="m">6379&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">REDIS_PASSWORD&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">&amp;lt;set to the key &amp;#39;pwd&amp;#39; in secret &amp;#39;redis-secret&amp;#39;&amp;gt;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>说明 Ray 被配置为使用外部 Redis，并需要密码认证。&lt;/p>
+&lt;h2 id="-故障原因定位">🧩 故障原因定位&lt;/h2>
+&lt;p>根本原因是 &lt;strong>Ray Head Pod 与 Redis 服务之间的网络不通&lt;/strong>，具体可能包括：&lt;/p>
+&lt;ul>
+&lt;li>Redis 服务未运行或未暴露正确端口&lt;/li>
+&lt;li>防火墙/安全组阻止了 Pod 所在节点对 Redis IP:Port 的访问&lt;/li>
+&lt;li>网络策略（NetworkPolicy）限制了跨命名空间或跨集群的流量&lt;/li>
+&lt;li>配置的 Redis 地址错误（例如 IP 已变更）&lt;/li>
+&lt;/ul>
+&lt;h2 id="-排查步骤">🛠 排查步骤&lt;/h2>
+&lt;h3 id="1-测试-pod-到-redis-的网络连通性">1. 测试 Pod 到 Redis 的网络连通性&lt;/h3>
+&lt;p>进入 Head 容器：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl &lt;span class="nb">exec&lt;/span> -it -n ray &amp;lt;pod-name&amp;gt; -c ray-serve-head -- bash
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>使用多种命令测试（根据容器内可用工具选择）：&lt;/p>
+&lt;h4 id="-使用-nc-netcat">✅ 使用 &lt;code>nc&lt;/code> (netcat)&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">nc -zv 192.168.16.188 &lt;span class="m">6379&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="-使用-telnet">✅ 使用 &lt;code>telnet&lt;/code>&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">telnet 192.168.16.188 &lt;span class="m">6379&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="-使用-curl">✅ 使用 &lt;code>curl&lt;/code>&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">curl -v telnet://192.168.16.188:6379
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="-使用-wget">✅ 使用 &lt;code>wget&lt;/code>&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">wget --timeout&lt;span class="o">=&lt;/span>&lt;span class="m">2&lt;/span> --tries&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span> -O- 192.168.16.188:6379
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h4 id="-使用-bash-内置-devtcp">✅ 使用 Bash 内置 &lt;code>/dev/tcp&lt;/code>&lt;/h4>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">timeout &lt;span class="m">2&lt;/span> bash -c &lt;span class="s2">&amp;#34;echo &amp;gt;/dev/tcp/192.168.16.188/6379&amp;#34;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Port open&amp;#34;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Port closed&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果以上命令均显示连接超时或拒绝，则确认网络不通。&lt;/p>
+&lt;h3 id="2-从集群其他-pod-测试">2. 从集群其他 Pod 测试&lt;/h3>
+&lt;p>启动一个临时调试 Pod：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl run test-conn --image&lt;span class="o">=&lt;/span>busybox --restart&lt;span class="o">=&lt;/span>Never -it --rm -- nc -zv 192.168.16.188 &lt;span class="m">6379&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="3-检查-redis-服务本身">3. 检查 Redis 服务本身&lt;/h3>
+&lt;ul>
+&lt;li>确认 Redis 是否正在运行：&lt;code>systemctl status redis&lt;/code> 或查看对应 Kubernetes Service/Deployment&lt;/li>
+&lt;li>检查 Redis 监听地址：是否绑定了 &lt;code>0.0.0.0&lt;/code> 或正确的内网 IP&lt;/li>
+&lt;li>检查密码是否正确：从 Secret 中解码验证&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl get secret -n ray redis-secret -o &lt;span class="nv">jsonpath&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;{.data.pwd}&amp;#39;&lt;/span> &lt;span class="p">|&lt;/span> base64 -d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="4-检查网络策略与安全组">4. 检查网络策略与安全组&lt;/h3>
+&lt;ul>
+&lt;li>如果 Redis 部署在同一个 Kubernetes 集群的不同命名空间，检查 NetworkPolicy 是否允许流量从 &lt;code>ray&lt;/code> 命名空间流向 Redis 所在命名空间&lt;/li>
+&lt;li>如果 Redis 部署在集群外部的虚拟机或物理机上，检查节点所在的安全组/防火墙是否允许出站到 &lt;code>192.168.16.188:6379&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="-解决方案">💡 解决方案&lt;/h2>
+&lt;p>根据排查结果选择对应的修复方式：&lt;/p>
+&lt;h3 id="方案一修复网络连通性">方案一：修复网络连通性&lt;/h3>
+&lt;ul>
+&lt;li>&lt;strong>调整安全组/防火墙规则&lt;/strong>：允许集群节点 IP 访问 Redis 主机的 6379 端口&lt;/li>
+&lt;li>&lt;strong>创建或修改 NetworkPolicy&lt;/strong>：允许 &lt;code>ray&lt;/code> 命名空间的 Pod 访问 Redis 服务&lt;/li>
+&lt;li>&lt;strong>使用 Kubernetes Service 名称&lt;/strong>：如果 Redis 部署在集群内部，改用 Service 域名（如 &lt;code>redis-service.namespace.svc.cluster.local&lt;/code>）代替硬编码 IP，避免 IP 变更导致故障&lt;/li>
+&lt;/ul>
+&lt;h3 id="方案二在集群内部署-redis">方案二：在集群内部署 Redis&lt;/h3>
+&lt;p>如果外部 Redis 网络难以打通，可考虑在 Kubernetes 内重新部署一个 Redis，并通过 Service 暴露给 Ray 使用。&lt;/p>
+&lt;p>示例 Redis Deployment + Service：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Service&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">redis-internal&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">namespace&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ray&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">selector&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">redis&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ports&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">port&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">6379&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nn">---&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">apps/v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Deployment&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">redis&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">namespace&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ray&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">replicas&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">selector&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">matchLabels&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">redis&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">labels&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">redis&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">containers&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">redis&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">redis:7-alpine&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ports&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">containerPort&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">6379&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后修改 RayCluster 的 &lt;code>RAY_REDIS_ADDRESS&lt;/code> 环境变量为 &lt;code>redis-internal.ray.svc.cluster.local:6379&lt;/code>。&lt;/p>
+&lt;h3 id="方案三修改-ray-配置使用内置-redis不推荐生产环境">方案三：修改 Ray 配置，使用内置 Redis（不推荐生产环境）&lt;/h3>
+&lt;p>Ray 默认会启动一个内置的 Redis 实例，但 KubeRay 通常配置使用外部 Redis 以实现高可用。如果临时调试，可以移除 &lt;code>RAY_REDIS_ADDRESS&lt;/code> 环境变量，让 Ray 自己启动 Redis。&lt;/p>
+&lt;h2 id="-验证修复">✅ 验证修复&lt;/h2>
+&lt;p>网络修复后，重启 Ray Pod（或等待自动重建），观察日志：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl logs -n ray &amp;lt;pod-name&amp;gt; -c ray-serve-head --tail&lt;span class="o">=&lt;/span>&lt;span class="m">20&lt;/span> -f
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>应看到不再有 Redis 连接失败的错误，最终出现类似 &lt;code>Ray runtime started&lt;/code> 的日志。随后探针检查成功，Pod 状态变为 &lt;code>Ready&lt;/code>。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl get pod -n ray
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">NAME READY STATUS RESTARTS AGE
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">bds-xxx-head-xxx 2/2 Running &lt;span class="m">0&lt;/span> 2m
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="-附录生成无换行的-base64-编码用于-kubernetes-secret">📎 附录：生成无换行的 Base64 编码（用于 Kubernetes Secret）&lt;/h2>
+&lt;p>在配置 Redis 密码或认证 Token 的 Secret 时，常常需要将明文进行 base64 编码，并且要求编码后的字符串不包含换行符，以便直接粘贴到 YAML 中。&lt;/p>
+&lt;h3 id="正确命令">正确命令：&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 对字符串编码（-n 去掉末尾换行，-w 0 禁止 base64 换行）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -n &lt;span class="s2">&amp;#34;your-password&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> base64 -w &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>示例：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ &lt;span class="nb">echo&lt;/span> -n &lt;span class="s2">&amp;#34;mysecret&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> base64 -w &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">bXlzZWNyZXQ&lt;/span>&lt;span class="o">=&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="在-secret-yaml-中使用">在 Secret YAML 中使用：&lt;/h3>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Secret&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">redis-secret&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">type&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Opaque&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">data&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">pwd&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">bXlzZWNyZXQ= &lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="c"># 单行，无换行&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>&lt;strong>注意&lt;/strong>：macOS 自带的 base64 不支持 &lt;code>-w&lt;/code> 选项，可使用 &lt;code>openssl base64 -A&lt;/code> 替代。&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="-总结">📚 总结&lt;/h2>
+&lt;p>遇到 Ray Head Pod 无法就绪的问题时，优先检查容器日志。如果日志中出现 Redis 连接失败，则几乎可以确定是网络或认证问题。通过容器内网络测试工具（&lt;code>nc&lt;/code>、&lt;code>telnet&lt;/code>、&lt;code>curl&lt;/code>、&lt;code>/dev/tcp&lt;/code> 等）定位具体原因，再根据 Redis 的部署位置选择修复网络连通性、迁移 Redis 或修正地址配置。最终确保 Ray 能成功连接到 Redis 后，集群即可恢复正常。&lt;/p>
+&lt;p>希望这篇博客能帮助你快速排查和解决 Ray 集群中的 Redis 连接问题。&lt;/p></description></item></channel></rss>
