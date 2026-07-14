@@ -1,6 +1,6 @@
 ---
 name: tailor-resume
-description: Use when the user provides a job description (JD) and asks to generate a tailored resume based on their base experience. Trigger keywords: "简历", "resume", "JD", "岗位描述", "定制简历", "tailor resume", "针对岗位". Reads index-base.md and generates a new tailored .md file in content/page/about/.
+description: Use when the user provides a job description (JD) and explicitly asks to generate or tailor a new resume based on their base experience. Trigger keywords: "定制简历", "针对岗位", "根据 JD 生成简历", "tailor resume", "岗位描述". Do not use for updating or supplementing base resume facts. Reads index-base.md as the only fact source and generates a new tailored .md file in content/page/about/.
 ---
 
 # Tailor Resume from Job Description
@@ -9,16 +9,17 @@ description: Use when the user provides a job description (JD) and asks to gener
 
 ## 前置文件
 
-| 文件 | 用途 |
-|------|------|
+| 文件                               | 用途                                                                         |
+| ---------------------------------- | ---------------------------------------------------------------------------- |
 | `content/page/about/index-base.md` | **基础简历（唯一事实来源）**，包含所有工作经历、项目、技术栈、证书等完整信息 |
-| `content/page/about/ai-infra.md` | 参考样例——一份针对 AI Infra 岗位的定制简历，展示输出格式 |
+| `content/page/about/ai-infra.md`   | 参考样例——只用于参考 Markdown 结构、排版和 CSS，不作为事实来源               |
 
 ## 工作流程
 
 ### 第一步：读取基础信息
 
 读取 `content/page/about/index-base.md`，理解用户的完整经历，包括：
+
 - 个人基础信息（姓名、学历、联系方式）
 - 每段工作经历的公司、时间、角色、项目详情、技术栈
 - 技术方向与技能等级
@@ -28,6 +29,7 @@ description: Use when the user provides a job description (JD) and asks to gener
 ### 第二步：分析岗位描述
 
 分析用户提供的岗位描述，提取：
+
 - **岗位方向**：如 AI Infra、后端开发、大数据平台、云原生等
 - **核心技术要求**：如 Kubernetes、Ray、Spark、Flink、Go、Python 等
 - **加分项**：如 MLOps、GPU 调度、联邦学习、隐私计算等
@@ -44,17 +46,17 @@ description: Use when the user provides a job description (JD) and asks to gener
    - 高度相关的项目 → 详细展开，用具体数据说话
    - 中度相关的项目 → 保留概要
    - 低相关度的经历 → 大幅压缩或合并为一句话
-4. **技能重组**：Expert / Proficient 分级重新评估，使 Expert 覆盖 JD 核心要求
+4. **技能重组**：Expert / Proficient 分级重新评估；Expert 只能放 `index-base.md` 中有强项目证据或成果支撑的能力，JD 核心但证据较弱的能力放入 Proficient 或不列
 
 ### 第四步：生成简历
 
-输出格式严格参照 `ai-infra.md`（也是 `index.zh-cn.md` 的格式），包含：
+输出格式严格参照 `ai-infra.md`（也是 `index.zh-cn.md` 的格式），但只参考结构、排版和 CSS；事实、数字、项目描述以 `index-base.md` 为准。包含：
 
 ```
 ---
 title: 关于
 menu:
-    main: 
+    main:
         weight: -90
         url: "/about"
         params:
@@ -97,20 +99,24 @@ menu:
 
 ## 生成规则
 
-1. **诚实优先**：只使用 `index-base.md` 中存在的经历，不编造任何数据、项目或技术
+1. **诚实优先**：只使用 `index-base.md` 中存在的经历，不编造任何数据、项目或技术；如果 `ai-infra.md` 样例与 `index-base.md` 冲突，以 `index-base.md` 为准
 2. **数据驱动**：优先使用有具体数字的成果描述（如 "300+ 集群"、"利用率提升 30%+"）
 3. **时间不虚构**：公司名、时间范围、项目名称必须与 `index-base.md` 完全一致
 4. **语言风格**：专业、简洁、数据化，避免空洞形容词
-5. **文件命名**：新文件保存为 `content/page/about/<岗位方向关键词>.md`（如 `backend-go.md`、`data-platform.md`）
+5. **文件命名**：新文件保存为 `content/page/about/<岗位方向关键词>.md`（如 `backend-go.md`、`data-platform.md`）；写入前必须检查目标文件是否已存在，如已存在，先询问用户是否覆盖、另存为新文件名，或只生成草稿
 6. **标题中的定位描述**：`# 陈金鑫｜<2-4个最相关的技术方向，用 / 分隔>`
 7. **个人简介的结构**：年限概述 → 核心匹配经历（2-3句，带数据） → 软技能与工程素养（1句）
-8. **工作经历排序**：不按时间倒序，而是按与 JD 的相关度排序。最相关的经历放在最前面，标注完整的公司、时间、方向。低相关度的经历可合并为简要条目放在末尾
-9. **CSS 样式块**必须完整复制 `ai-infra.md` 中的 `<style>...</style>` 部分，不得修改或省略
+8. **工作经历排序**：默认按与 JD 的相关度排序，最相关的经历放在最前面，标注完整的公司、时间、方向，低相关度的经历可合并为简要条目放在末尾；如果用户说明用于 ATS、正式投递或要求时间线清晰，则优先保持时间倒序，只调整每段经历的详略
+9. **CSS 样式块**必须完整复制 `ai-infra.md` 中的 `<style>...</style>` 部分，不得修改或省略；不要复制样例中的正文事实、数字或项目成果
+10. **能力缺口处理**：如果 JD 中有关键要求在 `index-base.md` 中缺少证据，不要强行补写；可在完成说明中提示该方向证据较弱，建议用户补充真实经历后再更新基础简历
 
 ## 完成后
 
 生成文件后告知用户：
+
 - 新文件路径
+- 文件写入方式（新建、覆盖，或另存为新文件名）
 - 简历针对的方向
 - 主要突出的经历和技能
+- JD 中证据较弱或未覆盖的关键要求（如果有）
 - 提示：如需微调某个部分的详略，可以直接说明
