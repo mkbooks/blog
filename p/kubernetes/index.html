@@ -1,0 +1,858 @@
+<!doctype html><html lang=zh-cn dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="kubernetes-docker"><title>kubernetes</title><link rel=canonical href=https://chenjinxin.cn/p/kubernetes/><link rel=stylesheet href=/scss/style.min.ac77dcf8b111b51da39a92990f431923f210f3876d85798a2125667f96dc33a4.css><meta property="og:title" content="kubernetes"><meta property="og:description" content="kubernetes-docker"><meta property="og:url" content="https://chenjinxin.cn/p/kubernetes/"><meta property="og:site_name" content="我的空间"><meta property="og:type" content="article"><meta property="article:section" content="Post"><meta property="article:tag" content="kubernetes"><meta property="article:tag" content="云原生"><meta property="article:published_time" content="2024-07-18T23:01:00+08:00"><meta property="article:modified_time" content="2024-07-18T23:01:00+08:00"><meta name=twitter:title content="kubernetes"><meta name=twitter:description content="kubernetes-docker"><link rel="shortcut icon" href=/images/favicon.ico></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label=切换菜单>
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/1_hu8b5a3db4a21c8e092ed8817bbbdf793a_61250_300x0_resize_q75_box.jpg width=300 height=300 class=site-logo loading=lazy alt=Avatar></a>
+<span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>我的空间</a></h1><h2 class=site-description>常香玉&陈金鑫.</h2></div></header><ol class=social-menu><li><a href=https://github.com/chenjinxin1124 target=_blank title=GitHub><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://twitter.com target=_blank title=Twitter><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-twitter" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M22 4.01c-1 .49-1.98.689-3 .99-1.121-1.265-2.783-1.335-4.38-.737S11.977 6.323 12 8v1c-3.245.083-6.135-1.395-8-4 0 0-4.182 7.433 4 11-1.872 1.247-3.739 2.088-6 2 3.308 1.803 6.913 2.423 10.034 1.517 3.58-1.04 6.522-3.723 7.651-7.742a13.84 13.84.0 00.497-3.753C20.18 7.773 21.692 5.25 22 4.009z"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg><span>主页</span></a></li><li><a href=/%E5%85%B3%E4%BA%8E/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg><span>关于</span></a></li><li><a href=/archives/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg><span>Archives</span></a></li><li><a href=/search/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg><span>Search</span></a></li><li><a href=/links/><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg><span>Links</span></a></li><div class=menu-bottom-section><li id=i18n-switch><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg><select name=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://chenjinxin.cn/en/>English</option><option value=https://chenjinxin.cn/ selected>中文</option></select></li><li id=dark-mode-toggle><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg><span>暗色模式</span></li></div></ol></aside><main class="main full-width"><article class=main-article><header class=article-header><div class=article-details><header class=article-category><a href=/categories/%E4%BA%91%E5%8E%9F%E7%94%9F/>云原生</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/p/kubernetes/>kubernetes</a></h2><h3 class=article-subtitle>kubernetes-docker</h3></div><footer class=article-time><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg><time class=article-time--published>Jul 18, 2024</time></div><div><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg><time class=article-time--reading>阅读时长: 13 分钟</time></div></footer></div></header><section class=article-content><h2 id=云原生>云原生</h2><p>云：抽象的计算资源（计算资源池: 公有云、私有云、混合云）</p><p>云原生的基本思想：
+0. 基础架构即代码，GitOps: 云原生中管理的一切对象都用git的方式以源代码的形式管理起来，做到绝对的可追溯。</p><ol><li>动态环境（云资源一体，不关心是哪来的资源）</li><li>自动化（声明式API，最终一致性）</li><li>DevOps<ol><li>CI/CD（流水线对接云服务）</li></ol></li><li>&mldr;&mldr;</li></ol><h2 id=kubernetes>kubernetes</h2><blockquote><p>云生态的核心组件</p></blockquote><p>Kubernetes（简称K8s）是一个开源的<strong>容器编排</strong>平台，用于自动化部署、扩展和管理容器化应用程序。</p><h3 id=容器技术>容器技术</h3><ol><li>Namespace: 进程隔离<ol><li>PID（Process ID）命名空间：隔离进程ID，每个容器可以有自己的进程编号。</li><li>网络（Network）命名空间：隔离网络接口，容器内的应用看到的只是容器内的网络环境。</li><li>挂载（Mount）命名空间：隔离文件系统挂载点，每个容器可以有自己的文件系统布局。</li><li>IPC（Inter-Process Communication）命名空间：隔离进程间通信资源，例如信号量和消息队列。</li><li>UTS（Unix Timesharing System）命名空间：隔离主机名和域名，容器可以有自己的主机名。</li><li>用户（User）命名空间：隔离用户ID和组ID，容器内的root可以与宿主机的root有不同的权限。</li></ol></li><li>Cgroup：资源管控<ol><li>CPU</li><li>内存</li><li>硬盘 I/O</li></ol></li><li>UnionFS：文件系统服务</li></ol><h3 id=容器技术解决了哪些问题>容器技术解决了哪些问题</h3><h4 id=1-环境一致性问题>1. 环境一致性问题</h4><p>容器确保了从开发到测试再到生产的环境一致性。这解决了“在我的机器上运行正常”这类问题，因为容器为应用程序提供了一个隔离的、一致的运行环境，包括相同的软件、配置和依赖。</p><h4 id=2-配置管理问题>2. 配置管理问题</h4><p>容器通过将应用程序及其全部依赖打包在一起，简化了配置管理。这意味着开发者不需要在每个环境中重新配置应用程序，可以避免因配置差异导致的错误。</p><h4 id=3-兼容性和依赖问题>3. 兼容性和依赖问题</h4><p>通过使用容器，开发者可以打包应用程序所需的库、工具和运行时环境，避免了软件在不同系统环境下运行时可能遇到的兼容性和依赖问题。</p><h4 id=4-快速部署和扩展>4. 快速部署和扩展</h4><p>容器的轻量级特性使得启动速度非常快，几乎可以实现秒级部署。这对于需要快速扩展的服务尤其重要。容器还支持自动化的部署和扩展，使得管理大规模应用程序变得更加容易。</p><h4 id=5-资源利用和隔离>5. 资源利用和隔离</h4><p>容器在操作系统级别进行资源隔离，使得每个容器都运行在指定的资源限制之内，而不会干扰其他容器。同时，容器共享同一个操作系统核心，与传统的虚拟机相比，能更有效地利用物理资源。</p><h4 id=6-移植性问题>6. 移植性问题</h4><p>容器技术提高了应用程序的移植性。由于容器在任何支持容器运行时的系统上都能运行，这使得从一个环境迁移到另一个环境（如从物理机到云平台）变得简单和可靠。</p><h4 id=7-持续集成和持续交付cicd>7. 持续集成和持续交付（CI/CD）</h4><p>容器非常适合实现自动化的持续集成和持续交付流程。开发者可以快速构建和回滚应用程序版本，实现高频率的更新和部署，而不影响系统的稳定性。</p><h4 id=8-降低开发与运维devops的障碍>8. 降低开发与运维（DevOps）的障碍</h4><p>容器化鼓励采用微服务架构，每个服务可以独立开发、部署和扩展。这降低了团队间的协调复杂性，加速了开发流程，使开发和运维更加紧密地合作。</p><p><img src=https://mkbooks.github.io/k8s-001/2/1/images/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%80%81%E7%9A%84%E5%AF%B9%E6%AF%94-%E8%99%9A%E6%8B%9F%E6%9C%BA.png loading=lazy alt=虚拟机和容器运行态的对比></p><p><img src=https://mkbooks.github.io/k8s-001/2/1/images/%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C%E6%80%81%E7%9A%84%E5%AF%B9%E6%AF%94-%E5%AE%B9%E5%99%A8.png loading=lazy alt=虚拟机和容器运行态的对比></p><h2 id=docker>docker</h2><h3 id=安装>安装</h3><p>在 ubuntu 上安装 Docker 运行时，参考 <a class=link href=https://docs.docker.com/engine/install/ubuntu/ target=_blank rel=noopener>https://docs.docker.com/engine/install/ubuntu/</a></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>$ sudo apt-get update
+</span></span><span class=line><span class=cl>$ sudo apt-get install \
+</span></span><span class=line><span class=cl>    apt-transport-https \
+</span></span><span class=line><span class=cl>    ca-certificates \
+</span></span><span class=line><span class=cl>    curl \
+</span></span><span class=line><span class=cl>    gnupg-agent \
+</span></span><span class=line><span class=cl>    software-properties-common
+</span></span><span class=line><span class=cl>$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+</span></span><span class=line><span class=cl>$ sudo add-apt-repository \
+</span></span><span class=line><span class=cl>    &#34;deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+</span></span><span class=line><span class=cl>    $(lsb_release -cs) \
+</span></span><span class=line><span class=cl>    stable&#34;
+</span></span><span class=line><span class=cl>$ sudo apt-get update
+</span></span><span class=line><span class=cl>$ sudo apt-get install docker-ce docker-ce-cli containerd.io
+</span></span></code></pre></td></tr></table></div></div><h3 id=操作>操作</h3><p>启动：</p><ul><li>docker run<ul><li>-it 交互</li><li>-d 后台运行</li><li>-p 端口映射</li><li>-v 磁盘挂载</li></ul></li><li>启动已终止容器<ul><li>docker start</li></ul></li><li>停止容器<ul><li>docker stop</li></ul></li><li>查看容器进程<ul><li>docker ps</li></ul></li><li>查看容器细节：<ul><li>docker inspect &lt;containerid></li></ul></li><li>进入容器；<ul><li>docker exec -it &lt;containerid> bash</li></ul></li><li>Docker attach：<ul><li>通过 nsenter</li><li>PID=$(docker inspect &ndash;format &ldquo;{{ .State.Pid }}&rdquo; &lt;container>)</li><li>$ nsenter &ndash;target $PID &ndash;mount &ndash;uts &ndash;ipc &ndash;net &ndash;pid</li></ul></li><li>拷贝文件至容器内：<ul><li>docker cp file1 &lt;containerid>:/file-to-path</li></ul></li></ul><h3 id=demo>Demo</h3><p>代码: main.go</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kn>import</span> <span class=p>(</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;fmt&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;os&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/gin-gonic/gin&#34;</span>
+</span></span><span class=line><span class=cl>	<span class=s>&#34;github.com/thinkeridea/go-extend/exnet&#34;</span>
+</span></span><span class=line><span class=cl><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=nx>r</span> <span class=o>:=</span> <span class=nx>gin</span><span class=p>.</span><span class=nf>Default</span><span class=p>()</span>
+</span></span><span class=line><span class=cl>	<span class=nx>r</span><span class=p>.</span><span class=nf>GET</span><span class=p>(</span><span class=s>&#34;/healthz&#34;</span><span class=p>,</span> <span class=nx>healthHandler</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=c1>// listen and serve on 0.0.0.0:8080
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>if</span> <span class=nx>err</span> <span class=o>:=</span> <span class=nx>r</span><span class=p>.</span><span class=nf>Run</span><span class=p>();</span> <span class=nx>err</span> <span class=o>!=</span> <span class=kc>nil</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nb>panic</span><span class=p>(</span><span class=nx>err</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>// healthHandler healthcheck实现, curl -v localhost:8080/healthz -H &#34;ttt:yyy&#34;
+</span></span></span><span class=line><span class=cl><span class=c1></span><span class=kd>func</span> <span class=nf>healthHandler</span><span class=p>(</span><span class=nx>c</span> <span class=o>*</span><span class=nx>gin</span><span class=p>.</span><span class=nx>Context</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// 遍历request的header并循环写入response header
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=k>for</span> <span class=nx>k</span><span class=p>,</span> <span class=nx>v</span> <span class=o>:=</span> <span class=k>range</span> <span class=nx>c</span><span class=p>.</span><span class=nx>Request</span><span class=p>.</span><span class=nx>Header</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>c</span><span class=p>.</span><span class=nx>Writer</span><span class=p>.</span><span class=nf>Header</span><span class=p>().</span><span class=nf>Set</span><span class=p>(</span><span class=nx>k</span><span class=p>,</span> <span class=nx>v</span><span class=p>[</span><span class=mi>0</span><span class=p>])</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// 获取环境变量VERSION并写入reponse header
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>c</span><span class=p>.</span><span class=nx>Writer</span><span class=p>.</span><span class=nf>Header</span><span class=p>().</span><span class=nf>Set</span><span class=p>(</span><span class=s>&#34;version&#34;</span><span class=p>,</span> <span class=nx>os</span><span class=p>.</span><span class=nf>Getenv</span><span class=p>(</span><span class=s>&#34;VERSION&#34;</span><span class=p>))</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// 日志记录客户端ip, http返回码, 输出到标准输出
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>ip</span> <span class=o>:=</span> <span class=nx>exnet</span><span class=p>.</span><span class=nf>ClientPublicIP</span><span class=p>(</span><span class=nx>c</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=k>if</span> <span class=nx>ip</span> <span class=o>==</span> <span class=s>&#34;&#34;</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=nx>ip</span> <span class=p>=</span> <span class=nx>exnet</span><span class=p>.</span><span class=nf>ClientIP</span><span class=p>(</span><span class=nx>c</span><span class=p>.</span><span class=nx>Request</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=nx>fmt</span><span class=p>.</span><span class=nf>Printf</span><span class=p>(</span><span class=s>&#34;客户端ip:%s, http返回码:%d\n&#34;</span><span class=p>,</span> <span class=nx>ip</span><span class=p>,</span> <span class=mi>200</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=c1>// 响应healthcheck信息, 状态码为200
+</span></span></span><span class=line><span class=cl><span class=c1></span>	<span class=nx>c</span><span class=p>.</span><span class=nf>JSON</span><span class=p>(</span><span class=mi>200</span><span class=p>,</span> <span class=nx>gin</span><span class=p>.</span><span class=nx>H</span><span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=s>&#34;message&#34;</span><span class=p>:</span> <span class=s>&#34;pong&#34;</span><span class=p>,</span>
+</span></span><span class=line><span class=cl>	<span class=p>})</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Dockerfile1：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Dockerfile data-lang=Dockerfile><span class=line><span class=cl><span class=k>FROM</span><span class=s> golang:alpine</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>ENV</span> <span class=nv>GO111MODULE</span><span class=o>=</span>on <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=nv>CGO_ENABLED</span><span class=o>=</span><span class=m>0</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=nv>GOOS</span><span class=o>=</span>linux <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=nv>GOARCH</span><span class=o>=</span>amd64 <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>	<span class=nv>GOPROXY</span><span class=o>=</span><span class=s2>&#34;https://goproxy.cn,direct&#34;</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /root/ccx</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> main.go .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> go mod init example.com/httpserver<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> go mod tidy<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> go build -o httpserver .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /opt/modules/httpserver</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> mkdir src .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> cp /root/ccx/httpserver ./src<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>EXPOSE</span><span class=s> 8080</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>CMD</span> <span class=p>[</span><span class=s2>&#34;/opt/modules/httpserver/src/httpserver&#34;</span><span class=p>]</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p>测试运行：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker build -t ccx/httpserver:v0.0.1 .
+</span></span><span class=line><span class=cl>docker run -d --name httpserver -p 9090:8080 -e <span class=nv>VERSION</span><span class=o>=</span>v0.0.1 ccx/httpserver:v0.0.1
+</span></span><span class=line><span class=cl>docker logs -f httpserver
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>curl -v localhost:9090/healthz -H <span class=s2>&#34;ttt:yyy&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>构建优化：Dockerfile2：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Dockerfile data-lang=Dockerfile><span class=line><span class=cl><span class=c># 编译阶段</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>FROM</span><span class=s> golang:1.17-alpine AS build</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># GO111MODULE=on: 强制开启gomod</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># GOPROXY=&#34;https://goproxy.cn,direct&#34;: 使用国内七牛云包代理</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># CGO_ENABLED=0: 关闭cgo，否则在alpine不可运行。</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>ENV</span> <span class=nv>GO111MODULE</span><span class=o>=</span>on <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=nv>CGO_ENABLED</span><span class=o>=</span><span class=m>0</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=nv>GOOS</span><span class=o>=</span>linux <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=nv>GOARCH</span><span class=o>=</span>amd64 <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>	<span class=nv>GOPROXY</span><span class=o>=</span><span class=s2>&#34;https://goproxy.cn,direct&#34;</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 拷贝源码</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /go/src/</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> main.go .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 预下载依赖 modules 到容器本地 cache</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> go mod init example.com/httpserver<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> go mod tidy<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 编译go程序</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> go build -o /tmp/httpserver<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 运行阶段</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>FROM</span><span class=s> scratch</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 拷贝编译阶段编译好的程序包</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> --from<span class=o>=</span>build /tmp/httpserver /bin/httpserver<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 开放的端口</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>EXPOSE</span><span class=s> 8080</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 容器启动执行命令，启动httpserver服务</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>ENTRYPOINT</span> <span class=p>[</span><span class=s2>&#34;/bin/httpserver&#34;</span><span class=p>]</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p>测试运行：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker build -t ccx/httpserver:v0.0.2 .
+</span></span><span class=line><span class=cl>docker run -d --name httpserver -p 9090:8080 -e <span class=nv>VERSION</span><span class=o>=</span>v0.0.2 ccx/httpserver:v0.0.2
+</span></span><span class=line><span class=cl>docker logs -f httpserver
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>curl -v localhost:9090/healthz -H <span class=s2>&#34;ttt:yyy&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 镜像比较</span>
+</span></span><span class=line><span class=cl>docker images<span class=p>|</span>grep httpserver
+</span></span><span class=line><span class=cl>ccx/httpserver   v0.0.2        1fc9919e6afa   About a minute ago   9.93MB
+</span></span><span class=line><span class=cl>ccx/httpserver   v0.0.1        22fc44df77a6   <span class=m>1</span> days ago          558MB
+</span></span></code></pre></td></tr></table></div></div><p>基础镜像差异: Dockerfile3：</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-Dockerfile data-lang=Dockerfile><span class=line><span class=cl><span class=c># 编译阶段</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>FROM</span><span class=s> golang:1.17-alpine AS build</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># GO111MODULE=on: 强制开启gomod</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># GOPROXY=&#34;https://goproxy.cn,direct&#34;: 使用国内七牛云包代理</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># CGO_ENABLED=0: 关闭cgo，否则在alpine不可运行。</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>ENV</span> <span class=nv>GO111MODULE</span><span class=o>=</span>on <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=nv>CGO_ENABLED</span><span class=o>=</span><span class=m>0</span> <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=nv>GOOS</span><span class=o>=</span>linux <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    <span class=nv>GOARCH</span><span class=o>=</span>amd64 <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>	<span class=nv>GOPROXY</span><span class=o>=</span><span class=s2>&#34;https://goproxy.cn,direct&#34;</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 拷贝源码</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /go/src/</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> main.go .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 预下载依赖 modules 到容器本地 cache</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> go mod init example.com/httpserver<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> go mod tidy<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 编译go程序</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> go build -o /tmp/httpserver<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 运行阶段</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>FROM</span><span class=s> alpine:latest</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 拷贝编译阶段编译好的程序包</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> --from<span class=o>=</span>build /tmp/httpserver /bin/httpserver<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 开放的端口</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>EXPOSE</span><span class=s> 8080</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># 容器启动执行命令，启动httpserver服务</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>ENTRYPOINT</span> <span class=p>[</span><span class=s2>&#34;/bin/httpserver&#34;</span><span class=p>]</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p>测试</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>docker build -t ccx/httpserver:v0.0.3 .
+</span></span><span class=line><span class=cl>docker run -d --name httpserver -p 9090:8080 -e <span class=nv>VERSION</span><span class=o>=</span>v0.0.3 ccx/httpserver:v0.0.3
+</span></span><span class=line><span class=cl>docker logs -f httpserver
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>curl -v localhost:9090/healthz -H <span class=s2>&#34;ttt:yyy&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 镜像比较</span>
+</span></span><span class=line><span class=cl>docker images<span class=p>|</span>grep httpserver
+</span></span><span class=line><span class=cl>ccx/httpserver   v0.0.3        e6ccaa261248   <span class=m>29</span> seconds ago   15.5MB
+</span></span><span class=line><span class=cl>ccx/httpserver   v0.0.2        1fc9919e6afa   <span class=m>4</span> minutes ago    9.93MB
+</span></span><span class=line><span class=cl>ccx/httpserver   v0.0.1        22fc44df77a6   <span class=m>1</span> days ago      558MB
+</span></span></code></pre></td></tr></table></div></div><h2 id=问题同样的一份代码在不同环境中可以打出完全一样的制品吗>问题：同样的一份代码，在不同环境中可以打出完全一样的制品吗？</h2><blockquote><p><strong>可信要求</strong></p></blockquote><p>可能导致差异的几点因素：</p><ol><li>基础镜像版本<ol><li>原因：基础镜像虽然指定了版本，但不同镜像仓库下同一版本的镜像不能保证一致。</li><li>应对措施：将常用的基础镜像和依赖包（构建镜像过程中的依赖包）存储在私有镜像仓库中。</li></ol></li><li>依赖包的版本<ol><li>原因：<code>go mod tidy</code> 会拉取依赖包的最新版本，如果某些包有新的发布，构建出的镜像也会有所不同。</li><li>应对措施：通过 <code>go.mod</code> 文件来锁定具体版本，结合 <code>go.sum</code> 确保依赖的一致性。</li></ol></li><li>缓存<ol><li>原因：Docker 使用构建缓存来加速构建过程。如果缓存不同，构建结果也可能有所不同。</li><li>应对措施：通过 &ndash;no-cache 选项来禁用缓存，确保每次构建都是全新的。</li></ol></li></ol><h2 id=namespace>Namespace</h2><h3 id=接口测试>接口测试</h3><h4 id=进入容器测试>进入容器测试</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>docker exec -it httpserver sh
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>/opt/modules/httpserver # curl -v localhost:8080/healthz -H &#34;ttt:yyy&#34;
+</span></span><span class=line><span class=cl>sh: curl: not found
+</span></span></code></pre></td></tr></table></div></div><h4 id=宿主机测试>宿主机测试</h4><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>curl -v localhost:9090/healthz -H &#34;ttt:yyy&#34;
+</span></span><span class=line><span class=cl>*   Trying 127.0.0.1:9090...
+</span></span><span class=line><span class=cl>* TCP_NODELAY set
+</span></span><span class=line><span class=cl>* Connected to localhost (127.0.0.1) port 9090 (#0)
+</span></span><span class=line><span class=cl>&gt; GET /healthz HTTP/1.1
+</span></span><span class=line><span class=cl>&gt; Host: localhost:9090
+</span></span><span class=line><span class=cl>&gt; User-Agent: curl/7.68.0
+</span></span><span class=line><span class=cl>&gt; Accept: */*
+</span></span><span class=line><span class=cl>&gt; ttt:yyy
+</span></span><span class=line><span class=cl>&gt; 
+</span></span><span class=line><span class=cl>* Mark bundle as not supporting multiuse
+</span></span><span class=line><span class=cl>&lt; HTTP/1.1 200 OK
+</span></span><span class=line><span class=cl>&lt; Accept: */*
+</span></span><span class=line><span class=cl>&lt; Content-Type: application/json; charset=utf-8
+</span></span><span class=line><span class=cl>&lt; Ttt: yyy
+</span></span><span class=line><span class=cl>&lt; User-Agent: curl/7.68.0
+</span></span><span class=line><span class=cl>&lt; Version: v0.0.1
+</span></span><span class=line><span class=cl>&lt; Date: Thu, 06 Oct 2022 10:07:17 GMT
+</span></span><span class=line><span class=cl>&lt; Content-Length: 18
+</span></span><span class=line><span class=cl>&lt; 
+</span></span><span class=line><span class=cl>* Connection #0 to host localhost left intact
+</span></span><span class=line><span class=cl>{&#34;message&#34;:&#34;pong&#34;}% 
+</span></span></code></pre></td></tr></table></div></div><h3 id=查看容器信息>查看容器信息</h3><p>获取<code>Pid</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>docker ps | grep httpserver
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>docker inspect httpserver|grep -i pid
+</span></span><span class=line><span class=cl>            &#34;Pid&#34;: 36309,
+</span></span><span class=line><span class=cl>            &#34;PidMode&#34;: &#34;&#34;,
+</span></span><span class=line><span class=cl>            &#34;PidsLimit&#34;: null,
+</span></span></code></pre></td></tr></table></div></div><h3 id=查看容器-ip>查看容器 ip</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>docker exec -it httpserver sh
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>/opt/modules/httpserver # ip a
+</span></span><span class=line><span class=cl>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN qlen 1000
+</span></span><span class=line><span class=cl>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span class=line><span class=cl>    inet 127.0.0.1/8 scope host lo
+</span></span><span class=line><span class=cl>       valid_lft forever preferred_lft forever
+</span></span><span class=line><span class=cl>23: eth0@if24: &lt;BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN&gt; mtu 1500 qdisc noqueue state UP 
+</span></span><span class=line><span class=cl>    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff
+</span></span><span class=line><span class=cl>    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+</span></span><span class=line><span class=cl>       valid_lft forever preferred_lft forever
+</span></span></code></pre></td></tr></table></div></div><h3 id=从宿主机通过-namespace-访问容器的网络>从宿主机通过 namespace 访问容器的网络</h3><p>查看当前系统的 namespace：<code>lsns –t &lt;type></code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>lsns -t net
+</span></span><span class=line><span class=cl>        NS TYPE NPROCS   PID USER    NETNSID NSFS COMMAND
+</span></span><span class=line><span class=cl>4026531992 net     124  9158 cjx  unassigned      /lib/systemd/systemd --user
+</span></span><span class=line><span class=cl>4026533051 net       2 19842 cjx  unassigned      /usr/share/code/code --type=zygo
+</span></span><span class=line><span class=cl>4026533633 net      25  9679 cjx  unassigned      /opt/google/chrome/chrome --type
+</span></span><span class=line><span class=cl>4026533725 net       1  9680 cjx  unassigned      /opt/google/chrome/nacl_helper
+</span></span></code></pre></td></tr></table></div></div><p>查看某进程的 namespace：<code>ls -la /proc/&lt;pid>/ns/</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo ls -la /proc/36309/ns/
+</span></span><span class=line><span class=cl>总用量 0
+</span></span><span class=line><span class=cl>dr-x--x--x 2 root root 0 10月  6 17:55 .
+</span></span><span class=line><span class=cl>dr-xr-xr-x 9 root root 0 10月  6 17:55 ..
+</span></span><span class=line><span class=cl>lrwxrwxrwx 1 root root 0 10月  6 18:03 cgroup -&gt; &#39;cgroup:[4026531835]&#39;
+</span></span><span class=line><span class=cl>lrwxrwxrwx 1 root root 0 10月  6 17:56 ipc -&gt; &#39;ipc:[4026533336]&#39;
+</span></span><span class=line><span class=cl>lrwxrwxrwx 1 root root 0 10月  6 17:56 mnt -&gt; &#39;mnt:[4026533334]&#39;
+</span></span><span class=line><span class=cl>lrwxrwxrwx 1 root root 0 10月  6 17:55 net -&gt; &#39;net:[4026533339]&#39;
+</span></span><span class=line><span class=cl>lrwxrwxrwx 1 root root 0 10月  6 17:56 pid -&gt; &#39;pid:[4026533337]&#39;
+</span></span><span class=line><span class=cl>lrwxrwxrwx 1 root root 0 10月  6 18:03 pid_for_children -&gt; &#39;pid:[4026533337]&#39;
+</span></span><span class=line><span class=cl>lrwxrwxrwx 1 root root 0 10月  6 18:03 user -&gt; &#39;user:[4026531837]&#39;
+</span></span><span class=line><span class=cl>lrwxrwxrwx 1 root root 0 10月  6 17:56 uts -&gt; &#39;uts:[4026533335]&#39;
+</span></span></code></pre></td></tr></table></div></div><p>进入某 namespace 运行命令：<code>nsenter -t &lt;pid> -n ip addr</code></p><ul><li>-n: 指定网络 ns</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo nsenter -t 36309 -n ip a 
+</span></span><span class=line><span class=cl>1: lo: &lt;LOOPBACK,UP,LOWER_UP&gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+</span></span><span class=line><span class=cl>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span><span class=line><span class=cl>    inet 127.0.0.1/8 scope host lo
+</span></span><span class=line><span class=cl>       valid_lft forever preferred_lft forever
+</span></span><span class=line><span class=cl>23: eth0@if24: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc noqueue state UP group default 
+</span></span><span class=line><span class=cl>    link/ether 02:42:ac:11:00:02 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+</span></span><span class=line><span class=cl>    inet 172.17.0.2/16 brd 172.17.255.255 scope global eth0
+</span></span><span class=line><span class=cl>       valid_lft forever preferred_lft forever
+</span></span></code></pre></td></tr></table></div></div><h3 id=测试接口容器内没有安装-curl只能通过这个方法测试否则需要把接口端口开放出来>测试接口(容器内没有安装 curl，只能通过这个方法测试，否则需要把接口端口开放出来)</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo nsenter -t 36309 -n curl -v localhost:8080/healthz -H &#34;ttt:yyy&#34;      
+</span></span><span class=line><span class=cl>*   Trying 127.0.0.1:8080...
+</span></span><span class=line><span class=cl>* TCP_NODELAY set
+</span></span><span class=line><span class=cl>* Connected to localhost (127.0.0.1) port 8080 (#0)
+</span></span><span class=line><span class=cl>&gt; GET /healthz HTTP/1.1
+</span></span><span class=line><span class=cl>&gt; Host: localhost:8080
+</span></span><span class=line><span class=cl>&gt; User-Agent: curl/7.68.0
+</span></span><span class=line><span class=cl>&gt; Accept: */*
+</span></span><span class=line><span class=cl>&gt; ttt:yyy
+</span></span><span class=line><span class=cl>&gt; 
+</span></span><span class=line><span class=cl>* Mark bundle as not supporting multiuse
+</span></span><span class=line><span class=cl>&lt; HTTP/1.1 200 OK
+</span></span><span class=line><span class=cl>&lt; Accept: */*
+</span></span><span class=line><span class=cl>&lt; Content-Type: application/json; charset=utf-8
+</span></span><span class=line><span class=cl>&lt; Ttt: yyy
+</span></span><span class=line><span class=cl>&lt; User-Agent: curl/7.68.0
+</span></span><span class=line><span class=cl>&lt; Version: v0.0.1
+</span></span><span class=line><span class=cl>&lt; Date: Thu, 06 Oct 2022 10:05:41 GMT
+</span></span><span class=line><span class=cl>&lt; Content-Length: 18
+</span></span><span class=line><span class=cl>&lt; 
+</span></span><span class=line><span class=cl>* Connection #0 to host localhost left intact
+</span></span><span class=line><span class=cl>{&#34;message&#34;:&#34;pong&#34;}%                             
+</span></span></code></pre></td></tr></table></div></div><h3 id=将新进程放入独立的网络>将新进程放入独立的网络</h3><p>在新 network namespace 执行 sleep 指令：<code>sudo unshare -fn sleep 60</code></p><ul><li>-fn: 放入独立的网络 ns</li></ul><p>查看进程信息<code>sudo ps -ef|grep 'sleep 60'</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo ps -ef<span class=p>|</span>grep <span class=s1>&#39;sleep 60&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>root       <span class=m>13747</span>   <span class=m>12656</span>  <span class=m>0</span> 12:31 pts/0    00:00:00 sudo unshare -fn sleep <span class=m>60</span>
+</span></span><span class=line><span class=cl>root       <span class=m>13748</span>   <span class=m>13747</span>  <span class=m>0</span> 12:31 pts/0    00:00:00 unshare -fn sleep <span class=m>60</span>
+</span></span><span class=line><span class=cl>root       <span class=m>13749</span>   <span class=m>13748</span>  <span class=m>0</span> 12:31 pts/0    00:00:00 sleep <span class=m>60</span>
+</span></span><span class=line><span class=cl>cjx        <span class=m>13766</span>   <span class=m>13489</span>  <span class=m>0</span> 12:31 pts/1    00:00:00 grep --color<span class=o>=</span>auto sleep <span class=m>60</span>
+</span></span></code></pre></td></tr></table></div></div><p>进入改进程所在 Namespace 查看网络配置，与主机不一致<code>sudo nsenter -t 13489 -n ip a</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>sudo nsenter -t <span class=m>13489</span> -n ip a
+</span></span><span class=line><span class=cl>1: lo: &lt;LOOPBACK&gt; mtu <span class=m>65536</span> qdisc noop state DOWN group default qlen <span class=m>1000</span>
+</span></span><span class=line><span class=cl>    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+</span></span></code></pre></td></tr></table></div></div><p>查看网络 Namespace<code>lsns -t net</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>lsns -t net
+</span></span><span class=line><span class=cl>        NS TYPE NPROCS   PID USER    NETNSID NSFS COMMAND
+</span></span><span class=line><span class=cl><span class=m>4026531840</span> net      <span class=m>66</span>  <span class=m>8880</span> cjx  unassigned      /lib/systemd/systemd --user
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>sudo lsns -t net
+</span></span><span class=line><span class=cl>        NS TYPE NPROCS   PID USER     NETNSID NSFS                           COMMAND
+</span></span><span class=line><span class=cl><span class=m>4026531840</span> net     <span class=m>327</span>     <span class=m>1</span> root  unassigned                                /sbin/init auto noprompt
+</span></span><span class=line><span class=cl><span class=m>4026532649</span> net       <span class=m>1</span>  <span class=m>1288</span> rtkit unassigned                                /usr/libexec/rtkit-daemon
+</span></span><span class=line><span class=cl><span class=m>4026532716</span> net       <span class=m>5</span> <span class=m>13036</span> root           <span class=m>0</span> /run/docker/netns/d07ea2c2f615 nginx: master process nginx -g daemon off<span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=m>4026532800</span> net       <span class=m>2</span> <span class=m>13748</span> root  unassigned                                unshare -fn sleep <span class=m>60</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>sudo ls -la /proc/13748/ns/
+</span></span><span class=line><span class=cl>total <span class=m>0</span>
+</span></span><span class=line><span class=cl>dr-x--x--x <span class=m>2</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 .
+</span></span><span class=line><span class=cl>dr-xr-xr-x <span class=m>9</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 ..
+</span></span><span class=line><span class=cl>lrwxrwxrwx <span class=m>1</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 cgroup -&gt; <span class=s1>&#39;cgroup:[4026531835]&#39;</span>
+</span></span><span class=line><span class=cl>lrwxrwxrwx <span class=m>1</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 ipc -&gt; <span class=s1>&#39;ipc:[4026531839]&#39;</span>
+</span></span><span class=line><span class=cl>lrwxrwxrwx <span class=m>1</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 mnt -&gt; <span class=s1>&#39;mnt:[4026531841]&#39;</span>
+</span></span><span class=line><span class=cl>lrwxrwxrwx <span class=m>1</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 net -&gt; <span class=s1>&#39;net:[4026532800]&#39;</span>
+</span></span><span class=line><span class=cl>lrwxrwxrwx <span class=m>1</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 pid -&gt; <span class=s1>&#39;pid:[4026531836]&#39;</span>
+</span></span><span class=line><span class=cl>lrwxrwxrwx <span class=m>1</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 pid_for_children -&gt; <span class=s1>&#39;pid:[4026531836]&#39;</span>
+</span></span><span class=line><span class=cl>lrwxrwxrwx <span class=m>1</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 <span class=nb>time</span> -&gt; <span class=s1>&#39;time:[4026531834]&#39;</span>
+</span></span><span class=line><span class=cl>lrwxrwxrwx <span class=m>1</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 time_for_children -&gt; <span class=s1>&#39;time:[4026531834]&#39;</span>
+</span></span><span class=line><span class=cl>lrwxrwxrwx <span class=m>1</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 user -&gt; <span class=s1>&#39;user:[4026531837]&#39;</span>
+</span></span><span class=line><span class=cl>lrwxrwxrwx <span class=m>1</span> root root <span class=m>0</span> Jul <span class=m>18</span> 12:31 uts -&gt; <span class=s1>&#39;uts:[4026531838]&#39;</span>
+</span></span></code></pre></td></tr></table></div></div><h2 id=cgroup-cpu>cgroup cpu</h2><p>代码：main.go</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-go data-lang=go><span class=line><span class=cl><span class=kn>package</span> <span class=nx>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=kd>func</span> <span class=nf>main</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>	<span class=k>go</span> <span class=kd>func</span><span class=p>()</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>		<span class=k>for</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>		<span class=p>}</span>
+</span></span><span class=line><span class=cl>	<span class=p>}()</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=k>for</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>	<span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>在 cgroup cpu 子系统目录中创建目录结构</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> /sys/fs/cgroup/cpu
+</span></span><span class=line><span class=cl>sudo mkdir cpudemo
+</span></span><span class=line><span class=cl><span class=nb>cd</span> cpudemo
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>➜  cpudemo ll
+</span></span><span class=line><span class=cl>总用量 <span class=m>0</span>
+</span></span><span class=line><span class=cl>drwxr-xr-x <span class=m>2</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 .
+</span></span><span class=line><span class=cl>dr-xr-xr-x <span class=m>7</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 07:21 ..
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cgroup.clone_children
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cgroup.procs
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpuacct.stat
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpuacct.usage
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpuacct.usage_all
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpuacct.usage_percpu
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpuacct.usage_percpu_sys
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpuacct.usage_percpu_user
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpuacct.usage_sys
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpuacct.usage_user
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpu.cfs_period_us
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpu.cfs_quota_us
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpu.shares
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpu.stat
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpu.uclamp.max
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 cpu.uclamp.min
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 notify_on_release
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 20:37 tasks
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>➜  cpudemo cat cpu.shares                 
+</span></span><span class=line><span class=cl><span class=m>1024</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>限制使用多少 CPU 时间片，-1 表示不限制
+</span></span><span class=line><span class=cl>➜  cpudemo cat cpu.cfs_quota_us          
+</span></span><span class=line><span class=cl>-1
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>一个 CPU 时间片数
+</span></span><span class=line><span class=cl>➜  cpudemo cat cpu.cfs_period_us                
+</span></span><span class=line><span class=cl><span class=m>100000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>监控的进程 ID，新建出来的为空
+</span></span><span class=line><span class=cl>➜  cpudemo cat cgroup.procs
+</span></span></code></pre></td></tr></table></div></div><p><code>cpu.shares</code>、<code>cpu.cfs_quota_us</code>、<code>cpu.cfs_period_us</code>关系：</p><p>cpu.cfs_quota_us 与 cpu.cfs_period_us 一起使用，用于限制 cgroup 中所有进程在一定时间周期内可以使用的 CPU 时间总量。这个参数提供了一种硬性限制，确保 cgroup 中的进程不会超过指定的 CPU 使用量。</p><p>cpu.shares 是一个相对权重参数，它决定了在多个 cgroup 之间竞争 CPU 资源时，每个 cgroup 能够获得的 CPU 时间的相对比例。这个参数并不提供硬性限制，而是在资源竞争时影响 CPU 时间的分配比例。</p><p>当 cpu.cfs_quota_us 和 cpu.shares 同时设置时，它们会按照以下方式共同作用：</p><p>资源竞争时的优先级：如果系统上的 CPU 资源充足，不在竞争状态，那么所有 cgroup 都可以使用更多的 CPU 时间，不会受到 cpu.shares 设置的限制。但是，如果 CPU 资源紧张，多个 cgroup 之间开始竞争 CPU 时间，cpu.shares 的值将决定它们获取 CPU 时间的相对权重。</p><h3 id=运行-busyloop>运行 busyloop</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>➜  busyloop git:<span class=o>(</span>main<span class=o>)</span> ✗ go build -o busyloop main.go
+</span></span><span class=line><span class=cl>➜  busyloop git:<span class=o>(</span>main<span class=o>)</span> ✗ ll 
+</span></span><span class=line><span class=cl>总用量 1.2M
+</span></span><span class=line><span class=cl>-rwxrwxr-x <span class=m>1</span> cjx cjx 1.2M 10月  <span class=m>7</span> 20:42 busyloop
+</span></span><span class=line><span class=cl>-rw-rw-r-- <span class=m>1</span> cjx cjx   <span class=m>73</span> 10月  <span class=m>7</span> 20:34 main.go
+</span></span><span class=line><span class=cl>➜  busyloop git:<span class=o>(</span>main<span class=o>)</span> ✗ ./busyloop
+</span></span></code></pre></td></tr></table></div></div><p>执行 top 查看 CPU 使用情况，CPU 占用 200%</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>top - 20:43:20 up 13:21,  <span class=m>1</span> user,  load average: 1.62, 0.87, 0.91
+</span></span><span class=line><span class=cl>任务: <span class=m>531</span> total,   <span class=m>3</span> running, <span class=m>527</span> sleeping,   <span class=m>0</span> stopped,   <span class=m>1</span> zombie
+</span></span><span class=line><span class=cl>%Cpu<span class=o>(</span>s<span class=o>)</span>: 11.1 us,  0.3 sy,  0.0 ni, 87.2 id,  0.0 wa,  0.0 hi,  1.4 si,  0.0 st
+</span></span><span class=line><span class=cl>MiB Mem : 128749.5 total, 117783.0 free,   5873.8 used,   5092.6 buff/cache
+</span></span><span class=line><span class=cl>MiB Swap:      0.0 total,      0.0 free,      0.0 used. 121378.7 avail Mem 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> 进程号 USER      PR  NI    VIRT    RES    SHR    %CPU  %MEM     TIME+ COMMAND      
+</span></span><span class=line><span class=cl>  <span class=m>52435</span> cjx       <span class=m>20</span>   <span class=m>0</span>  <span class=m>702364</span>   <span class=m>1160</span>    <span class=m>648</span> R 200.0   0.0   0:44.07 busyloop  
+</span></span><span class=line><span class=cl>......
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># 通过 cgroup 限制 cpu</span>
+</span></span><span class=line><span class=cl><span class=nb>cd</span> /sys/fs/cgroup/cpu/cpudemo
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 把进程添加到 cgroup 进程配置组</span>
+</span></span><span class=line><span class=cl><span class=c1># echo ps -ef|grep busyloop|grep -v grep|awk &#39;{print $2}&#39; &gt; cgroup.procs</span>
+</span></span><span class=line><span class=cl>➜  cpudemo ps -ef<span class=p>|</span>grep busyloop<span class=p>|</span>grep -v grep<span class=p>|</span>awk <span class=s1>&#39;{print $2}&#39;</span> 
+</span></span><span class=line><span class=cl><span class=m>52435</span>
+</span></span><span class=line><span class=cl>➜  cpudemo cat cgroup.procs
+</span></span><span class=line><span class=cl><span class=m>52435</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 设置 cpuquota</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=m>10000</span> &gt; cpu.cfs_quota_us
+</span></span><span class=line><span class=cl>cat cpu.cfs_quota_us
+</span></span></code></pre></td></tr></table></div></div><p>执行 top 查看 CPU 使用情况，CPU 占用变为10%(cpu.cfs_quota_us/cpu.cfs_period_us -> 10000/100000)</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>top - 20:49:11 up 13:27,  <span class=m>1</span> user,  load average: 1.28, 1.58, 1.26
+</span></span><span class=line><span class=cl>任务: <span class=m>531</span> total,   <span class=m>3</span> running, <span class=m>527</span> sleeping,   <span class=m>0</span> stopped,   <span class=m>1</span> zombie
+</span></span><span class=line><span class=cl>%Cpu<span class=o>(</span>s<span class=o>)</span>:  1.7 us,  0.5 sy,  0.0 ni, 97.7 id,  0.0 wa,  0.0 hi,  0.1 si,  0.0 st
+</span></span><span class=line><span class=cl>MiB Mem : 128749.5 total, 117765.6 free,   5888.9 used,   5095.0 buff/cache
+</span></span><span class=line><span class=cl>MiB Swap:      0.0 total,      0.0 free,      0.0 used. 121364.8 avail Mem 
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl> 进程号 USER      PR  NI    VIRT    RES    SHR    %CPU  %MEM     TIME+ COMMAND      
+</span></span><span class=line><span class=cl>   <span class=m>4507</span> cjx       <span class=m>20</span>   <span class=m>0</span> 1125.5g <span class=m>481848</span> <span class=m>208608</span> S  11.0   0.4  46:28.85 chrome       
+</span></span><span class=line><span class=cl>  <span class=m>52435</span> cjx       <span class=m>20</span>   <span class=m>0</span>  <span class=m>702364</span>   <span class=m>1160</span>    <span class=m>648</span> R  10.3   0.0  11:28.43 busyloop
+</span></span></code></pre></td></tr></table></div></div><h3 id=善后删除>善后删除</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>sudo apt install cgroup-tools
+</span></span><span class=line><span class=cl>sudo cgdelete cpu:cpudemo
+</span></span></code></pre></td></tr></table></div></div><h2 id=cgroup-memory>cgroup memory</h2><p>在 cgroup memory 子系统目录中创建目录结构</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>cd</span> /sys/fs/cgroup/memory
+</span></span><span class=line><span class=cl>mkdir memorydemo
+</span></span><span class=line><span class=cl><span class=nb>cd</span> memorydemo
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>ls -la
+</span></span><span class=line><span class=cl>总用量 <span class=m>0</span>
+</span></span><span class=line><span class=cl>drwxr-xr-x <span class=m>2</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:01 .
+</span></span><span class=line><span class=cl>dr-xr-xr-x <span class=m>7</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 07:21 ..
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 cgroup.clone_children
+</span></span><span class=line><span class=cl>--w--w--w- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 cgroup.event_control
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 cgroup.procs <span class=c1># 管控的进程</span>
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.failcnt
+</span></span><span class=line><span class=cl>--w------- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.force_empty
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.kmem.failcnt
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.kmem.limit_in_bytes
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.kmem.max_usage_in_bytes
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.kmem.slabinfo
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.kmem.tcp.failcnt
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.kmem.tcp.limit_in_bytes
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.kmem.tcp.max_usage_in_bytes
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.kmem.tcp.usage_in_bytes
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.kmem.usage_in_bytes
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.limit_in_bytes
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.max_usage_in_bytes
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.move_charge_at_immigrate
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.numa_stat
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.oom_control
+</span></span><span class=line><span class=cl>---------- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.pressure_level
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.soft_limit_in_bytes
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.stat
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.swappiness
+</span></span><span class=line><span class=cl>-r--r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.usage_in_bytes
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 memory.use_hierarchy
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 notify_on_release
+</span></span><span class=line><span class=cl>-rw-r--r-- <span class=m>1</span> root root <span class=m>0</span> 10月  <span class=m>7</span> 21:02 tasks
+</span></span></code></pre></td></tr></table></div></div><p>通过 cgroup 限制 memory</p><p>把进程添加到 cgroup 进程配置组</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>echo</span> &lt;pid&gt; &gt; cgroup.procs
+</span></span></code></pre></td></tr></table></div></div><p>设置 memory.limit_in_bytes</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>echo</span> <span class=m>104960000</span> &gt; memory.limit_in_bytes
+</span></span></code></pre></td></tr></table></div></div><h2 id=overlayfs>OverlayFS</h2></section><footer class=article-footer><section class=article-tags><a href=/tags/kubernetes/>kubernetes</a>
+<a href=/tags/%E4%BA%91%E5%8E%9F%E7%94%9F/>云原生</a></section><section class=article-copyright><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg><span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>相关文章</h2><div class=related-content><div class="flex article-list--tile"><article><a href=/p/k8s-%E9%A9%B1%E9%80%90%E8%8A%82%E7%82%B9/><div class=article-details><h2 class=article-title>k8s 驱逐节点</h2></div></a></article><article><a href=/p/k8s%E5%BC%BA%E5%88%B6%E5%88%A0%E9%99%A4podpvpvc%E5%92%8Cnsnamespace%E6%96%B9%E6%B3%95/><div class=article-details><h2 class=article-title>k8s强制删除pod&amp;pv&amp;pvc和ns&amp;namespace方法</h2></div></a></article><article><a href=/p/k8s%E7%9A%84namespace%E4%B8%80%E7%9B%B4terminating%E7%9A%84%E5%AE%8C%E7%BE%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88/><div class=article-details><h2 class=article-title>k8s的namespace一直Terminating的完美解决方案</h2></div></a></article><article><a href=/p/controller-manager/><div class=article-details><h2 class=article-title>Controller Manager</h2></div></a></article><article><a href=/p/%E5%81%9C%E6%AD%A2deployment%E4%B8%8D%E5%88%A0%E9%99%A4/><div class=article-details><h2 class=article-title>停止deployment不删除</h2></div></a></article></div></div></aside><div class=disqus-container><div id=disqus_thread></div><script type=application/javascript>window.disqus_config=function(){},function(){if(["localhost","127.0.0.1"].indexOf(window.location.hostname)!=-1){document.getElementById("disqus_thread").innerHTML="Disqus comments not available by default when the website is previewed locally.";return}var t=document,e=t.createElement("script");e.async=!0,e.src="//hugo-theme-stack.disqus.com/embed.js",e.setAttribute("data-timestamp",+new Date),(t.head||t.body).appendChild(e)}()</script><noscript>Please enable JavaScript to view the <a href=https://disqus.com/?ref_noscript>comments powered by Disqus.</a></noscript><a href=https://disqus.com class=dsq-brlink>comments powered by <span class=logo-disqus>Disqus</span></a></div><style>.disqus-container{background-color:var(--card-background);border-radius:var(--card-border-radius);box-shadow:var(--shadow-l1);padding:var(--card-padding)}</style><script>window.addEventListener("onColorSchemeChange",e=>{typeof DISQUS=="object"&&DISQUS.reset({reload:!0})})</script><footer class=site-footer><section class=copyright>&copy;
+2020 -
+2026 我的空间</section><section class=powerby>Built with <a href=https://gohugo.io/ target=_blank rel=noopener>Hugo</a><br>主题 <b><a href=https://github.com/CaiJimmy/hugo-theme-stack target=_blank rel=noopener data-version=3.13.0>Stack</a></b> 由 <a href=https://jimmycai.com target=_blank rel=noopener>Jimmy</a> 设计<br><a href=https://beian.miit.gov.cn/ target=_blank>粤ICP备19123935号</a></section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)"></button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main><aside class="sidebar right-sidebar sticky"><section class="widget archives"><div class=widget-icon><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><line x1="5" y1="9" x2="19" y2="9"/><line x1="5" y1="15" x2="19" y2="15"/><line x1="11" y1="4" x2="7" y2="20"/><line x1="17" y1="4" x2="13" y2="20"/></svg></div><h2 class="widget-title section-title">目录</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#云原生>云原生</a></li><li><a href=#kubernetes>kubernetes</a><ol><li><a href=#容器技术>容器技术</a></li><li><a href=#容器技术解决了哪些问题>容器技术解决了哪些问题</a><ol><li><a href=#1-环境一致性问题>1. 环境一致性问题</a></li><li><a href=#2-配置管理问题>2. 配置管理问题</a></li><li><a href=#3-兼容性和依赖问题>3. 兼容性和依赖问题</a></li><li><a href=#4-快速部署和扩展>4. 快速部署和扩展</a></li><li><a href=#5-资源利用和隔离>5. 资源利用和隔离</a></li><li><a href=#6-移植性问题>6. 移植性问题</a></li><li><a href=#7-持续集成和持续交付cicd>7. 持续集成和持续交付（CI/CD）</a></li><li><a href=#8-降低开发与运维devops的障碍>8. 降低开发与运维（DevOps）的障碍</a></li></ol></li></ol></li><li><a href=#docker>docker</a><ol><li><a href=#安装>安装</a></li><li><a href=#操作>操作</a></li><li><a href=#demo>Demo</a></li></ol></li><li><a href=#问题同样的一份代码在不同环境中可以打出完全一样的制品吗>问题：同样的一份代码，在不同环境中可以打出完全一样的制品吗？</a></li><li><a href=#namespace>Namespace</a><ol><li><a href=#接口测试>接口测试</a><ol><li><a href=#进入容器测试>进入容器测试</a></li><li><a href=#宿主机测试>宿主机测试</a></li></ol></li><li><a href=#查看容器信息>查看容器信息</a></li><li><a href=#查看容器-ip>查看容器 ip</a></li><li><a href=#从宿主机通过-namespace-访问容器的网络>从宿主机通过 namespace 访问容器的网络</a></li><li><a href=#测试接口容器内没有安装-curl只能通过这个方法测试否则需要把接口端口开放出来>测试接口(容器内没有安装 curl，只能通过这个方法测试，否则需要把接口端口开放出来)</a></li><li><a href=#将新进程放入独立的网络>将新进程放入独立的网络</a></li></ol></li><li><a href=#cgroup-cpu>cgroup cpu</a><ol><li><a href=#运行-busyloop>运行 busyloop</a></li><li><a href=#善后删除>善后删除</a></li></ol></li><li><a href=#cgroup-memory>cgroup memory</a></li><li><a href=#overlayfs>OverlayFS</a></li></ol></nav></div></section></aside></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.js defer></script>
+<script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
