@@ -200,3 +200,8 @@ menu:
 - 手机：17137621499
 - 博客：[https://chenjinxin.cn](https://chenjinxin.cn)
 - GitHub：[https://github.com/chenjinxin1124](https://github.com/chenjinxin1124)
+
+## 其他特长
+### 体育
+- 田径：400m 57s; 1000m 2min 50s; 5km 30min 以内; 10km 1h 以内。
+- 体能：引体向上 20+ 个; 仰卧起坐 70 个每分钟; 俯卧撑 50 个; 握力：左手 60kg，右手 65kg; 立定跳远 2.5m。
