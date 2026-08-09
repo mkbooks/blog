@@ -46,6 +46,7 @@ spec:
 
 ```bash
 k create job hello-job -n jobs --image=busybox -- sh -c 'echo hello'
+k create job test-job -n jobs --from=cronjob/log-cleaner
 k get job,pod -n jobs
 k logs job/hello-job -n jobs
 k describe job hello-job -n jobs
