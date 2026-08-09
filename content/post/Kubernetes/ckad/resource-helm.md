@@ -36,6 +36,7 @@ helm repo add bitnami https://charts.bitnami.com/bitnami
 helm repo update
 
 helm search repo bitnami/nginx
+helm show values bitnami/nginx
 helm install nginx bitnami/nginx -n web --set replicaCount=2
 helm list -n web
 helm status nginx -n web
