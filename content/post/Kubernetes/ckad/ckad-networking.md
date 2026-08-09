@@ -97,6 +97,8 @@ k run tmp --restart=Never --rm -i --image=busybox -- wget -O- web-service:80
 
 Ingress 只是七层路由，后端必须是 Service。
 
+> k get ingressClass -A
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -104,6 +106,7 @@ metadata:
   name: api-ingress
   namespace: networking
 spec:
+  ingressClassName: nginx # 指定 Ingress Controller, 默认 nginx
   rules:
   - host: api.example.com
     http:
