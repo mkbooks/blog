@@ -17,7 +17,7 @@ categories : [              # 文章所属标签
 
 用 `busybox` 来对比，恰好能揭示与 `nginx` 最核心的一个差异：`busybox` 官方镜像默认没有设置 `ENTRYPOINT`，只设置了 `CMD ["sh"]`。
 
-这就导致 args（对应 CMD）的行为发生了根本性变化——在 nginx 中它只能是“参数”，但在 busybox 中它可以直接变成“完整的可执行命令”。
+这就导致 `args`（对应 `CMD`）的行为发生了根本性变化——在 `nginx` 中它只能是“参数”，但在 `busybox` 中它可以直接变成“完整的可执行命令”。
 
 下面我通过 4 个 `kubectl run` 命令，让你直观感受这种差异。
 
@@ -58,7 +58,7 @@ kubectl run bbox-command --image=busybox --restart=Never --command -- top
 - K8s 字段：`command`: ["top"]，`args` 未设。
 - 实际执行：`top`
 - 运行结果：`top` 进程持续运行（默认刷新间隔 5 秒），容器不会退出。
-- 差异说明：虽然在最终效果上，它跟场景二（`args`: ["top"]）都能运行 `top`，但在 K8s API 语义上完全不同：
+- 差异说明：虽然在最终效果上，它跟场景二（`args: ["top"]`）都能运行 `top`，但在 K8s API 语义上完全不同：
   - 场景二（仅 `args`）是“覆盖默认参数”，只是因为没 `ENTRYPOINT` 才碰巧变成了主程序；
   - 场景三（仅 `command`）是“显式指定可执行文件”，明确告诉 K8s 我要运行什么。
 
