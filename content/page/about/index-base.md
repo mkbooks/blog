@@ -13,9 +13,9 @@ menu:
 
 ## 关于我
 
-我是一名后端研发工程师，黑河学院计算机科学与技术专业 2019 届本科毕业。工作经历覆盖后端服务、大数据平台、云原生平台、AI 中台、隐私计算平台、异构资源纳管与调度、监控告警、网关与日志平台等方向。
+我是一名后端研发工程师，黑河学院计算机科学与技术专业 2019 届本科毕业。工作经历覆盖后端服务、大数据平台、云原生平台、AI 中台、隐私计算平台等方向，长期聚焦平台型系统建设、工程效率提升和基础设施能力沉淀。
 
-近几年主要聚焦平台型系统建设：从早期广告交易与日志分析、数据仓库建设，到 AI 中台、联邦学习 / 隐私计算平台，再到华为数据底座方向的云平台、融合计算、资源高效与数据库管家等项目。日常工作中较多承担后端开发、平台架构设计、数据库设计、Kubernetes 平台建设、CI/CD、监控日志体系、项目文档和跨团队协作等工作。
+近几年主要聚焦平台型系统建设：从早期广告交易与日志分析、数据仓库建设，到 AI 中台、联邦学习 / 隐私计算平台，再到华为数据底座方向的云平台与资源治理，持续在后端开发、云原生、可观测性、大数据与 AI Infra 方向积累实践经验。
 
 ## 基础信息
 
@@ -27,6 +27,7 @@ menu:
 - 手机：17137621499
 - 博客：[https://chenjinxin.cn](https://chenjinxin.cn)
 - GitHub：[https://github.com/chenjinxin1124](https://github.com/chenjinxin1124)
+- 认证：CKAD（Certified Kubernetes Application Developer）
 
 ## 工作经历
 
@@ -110,7 +111,7 @@ menu:
 - 时间：2019 年 12 月至 2020 年 4 月
 - 方向：数据仓库、数据迁移、ETL
 - 项目：供应链数据仓库建设
-- 主要工作：将原 HANA 数据库数据迁移到星环大数据平台，基于 Inceptor、HyperBase、Search 构建新的大数据平台，并定时从 MSSQL、Oracle、HANA 等业务数据库做数据同步。
+- 主要工作：将原 HANA 数据库数据迁移到星环大数据平台，基于 Inceptor、HyperBase、Search 构建新的大数据平台，并定时从 MSSQL、Oracle、HANA 等业务数据库做[...]
 - 职责：设计、验证和对比技术路线可行性，撰写技术文档，设计 ETL 自动化流程。
 - 技术栈：SQL、MSSQL、Oracle、HANA、Inceptor、HyperBase、Search。
 
@@ -131,7 +132,7 @@ menu:
 
 - 设计并实现离线 + 准实时日志分析系统，为运营和商务提供广告位请求、响应、点击、用户活跃和可视化报表等数据支持。
 - 构建 Flume / Kafka 采集、Spark Streaming 准实时计算、Hive / HBase / HDFS 存储、Hue / ECharts 可视化分析链路。
-- 参与 CDH 企业大数据平台搭建，历史版本中记录集群规划为 15 台、60TB 硬盘、32GB 内存、10 核 CPU、万兆网卡，并部署 Zookeeper、HDFS HA、YARN HA、Hive、HBase、Flume、Spark、Sqoop、Oozie、Hue、Impala 等组件。
+- 参与 CDH 企业大数据平台搭建，历史版本中记录集群规划为 15 台、60TB 硬盘、32GB 内存、10 核 CPU、万兆网卡，并部署 Zookeeper、HDFS HA、YARN HA、Hive、HBase 等组件。
 - 技术栈：Hadoop、Zookeeper、Flume、Hive、HBase、Kafka、Spark、YARN、MapReduce、MySQL、Hue、ECharts。
 
 ### 中诚信国际信用评级有限责任公司｜全栈开发工程师｜实习
@@ -179,7 +180,7 @@ menu:
 - [国家奖学金](https://zwfw.moe.gov.cn/xszz/)（证书编号：26070）
 - 省三好学生（证书编号：20194547）
 - [全国软件和信息技术专业人才大赛决赛三等奖（蓝桥杯）](https://dasai.lanqiao.cn/dasai-front/cert-list/?searchType=1&name=%E9%99%88%E9%87%91%E9%91%AB&card=020924658)（证书编号：020924658）
-- [阿里云云计算高级工程师 ACP 认证](https://edu.aliyun.com/clouder/Certificate/search?source=5176.11533457&userCode=r3yteowb&type=2&num=340421199510031230)（证书编号：ACP01240902018261）
+- [阿里云云计算高级工程师 ACP 认证](https://edu.aliyun.com/clouder/Certificate/search?source=5176.11533457&userCode=r3yteowb&type=2&num=340421199510031230)（证书编号：ACP01240902018）
 - [阿里云大模型高级工程师 ACP 认证](https://edu.aliyun.com/clouder/Certificate/search?source=5176.11533457&userCode=r3yteowb&type=2&num=340421199510031230)（证书编号：ACP）
 - 信通院《联邦学习基础能力评测证书》项目参与
 - 中互金认证《联邦学习产品安全认证证书》项目参与
