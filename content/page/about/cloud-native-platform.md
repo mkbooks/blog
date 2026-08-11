@@ -17,7 +17,7 @@ menu:
 - 邮箱：<chenjinxin@chenjinxin.cn>
 - 博客：<https://chenjinxin.cn>
 - 学历：黑河学院｜计算机科学与技术｜本科｜2019届
-- 方向：云原生平台、多云K8s集群管理、中间件运维、IaC、可观测性
+- 方向：云原生平台、多云K8s集群管理
 
 ## 个人简介
 
@@ -134,6 +134,7 @@ menu:
 
 ## 证书与荣誉
 
+- CNCF CKAD 认证
 - 阿里云云计算高级工程师 ACP 认证
 - 阿里云大模型高级工程师 ACP 认证
 - 国家奖学金
@@ -144,7 +145,7 @@ menu:
 
 ## 专业发展 & 技术前瞻
 
-- **K8s 认证方向**：备考 CKAD、CKA、CKS 认证，系统强化应用开发、集群管理、安全加固与云原生安全能力，持续学习 K8s 网络隔离加固、Admission Controller 开发与 OPA/Gatekeeper 策略引擎。
+- **K8s 认证方向**：备考 CKA、CKS 认证，系统强化应用开发、集群管理、安全加固与云原生安全能力，持续学习 K8s 网络隔离加固、Admission Controller 开发与 OPA/Gatekeeper 策略引擎。
 - **中间件与多云方向**：持续加深 Kafka / Pulsar / RocketMQ 等消息中间件的性能调优与容量规划，关注 Consul / Polaris 服务网格技术在异构环境下的落地实践，跟进 Terraform 多云 IaC 自动化编排。
 - **安全合规方向**：关注 KSPM / CSPM 云安全态势管理，学习容器镜像安全扫描（Trivy）、运行时安全（Falco）与网络策略精细化管控。
 - **技术前沿关注**：持续跟踪云原生生态（Istio、Cilium、Kyverno、Crossplane 等），在日常开发中深度使用 Cursor / Copilot / OpenCode 等 AI Coding 工具提升运维自动化水平。
