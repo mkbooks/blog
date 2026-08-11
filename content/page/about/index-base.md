@@ -112,7 +112,7 @@ menu:
 - 方向：数据仓库、数据迁移、ETL
 - 项目：供应链数据仓库建设
 - 主要工作：将原 HANA 数据库数据迁移到星环大数据平台，基于 Inceptor、HyperBase、Search 构建新的大数据平台，并定时从 MSSQL、Oracle、HANA 等业务数据库做[...]
-- 职责：设计、验证和对比技术路线可行性，撰写技术文档，设计 ETL 自动化流程。
+- ���责：设计、验证和对比技术路线可行性，撰写技术文档，设计 ETL 自动化流程。
 - 技术栈：SQL、MSSQL、Oracle、HANA、Inceptor、HyperBase、Search。
 
 ### 深圳掌众智能科技股份有限公司｜高级 Scala / Java 后端开发
@@ -182,6 +182,7 @@ menu:
 - [全国软件和信息技术专业人才大赛决赛三等奖（蓝桥杯）](https://dasai.lanqiao.cn/dasai-front/cert-list/?searchType=1&name=%E9%99%88%E9%87%91%E9%91%AB&card=020924658)（证书编号：020924658）
 - [阿里云云计算高级工程师 ACP 认证](https://edu.aliyun.com/clouder/Certificate/search?source=5176.11533457&userCode=r3yteowb&type=2&num=340421199510031230)（证书编号：ACP01240902018）
 - [阿里云大模型高级工程师 ACP 认证](https://edu.aliyun.com/clouder/Certificate/search?source=5176.11533457&userCode=r3yteowb&type=2&num=340421199510031230)（证书编号：ACP）
+- CKAD（Certified Kubernetes Application Developer）认证
 - 信通院《联邦学习基础能力评测证书》项目参与
 - 中互金认证《联邦学习产品安全认证证书》项目参与
 - 2019 中国金融创新奖“十佳智能风控创新奖”项目参与
