@@ -18,7 +18,6 @@ menu:
 - 博客：<https://chenjinxin.cn>
 - 学历：黑河学院｜计算机科学与技术｜本科｜2019届
 - 方向：AI基础设施平台、异构资源纳管与调度、云原生运维开发、MLOps
-- 认证：CNCF CKAD（Certified Kubernetes Application Developer）
 
 ## 个人简介
 
