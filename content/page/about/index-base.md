@@ -53,9 +53,9 @@ menu:
 
 #### 融合计算中心 / AI 任务调度实践
 
-- 历史版本中记录曾围绕 Ray、KubeRay、RayService、Dask、Volcano 参与分布式 Python 计算、AI 任务提交、编排、调度、监控、弹性伸缩和生命周期管理能力建设。
+- 围绕 Ray、KubeRay、RayService、Dask、Volcano 参与分布式 Python 计算、AI 任务提交、编排、调度、监控、弹性伸缩和生命周期管理能力建设。
 - 参与离线推理加速、模型发布 / 回滚 / 监控 / 灰度发布 / A/B 测试等 MLOps 能力建设，并对接 Prometheus、Grafana 和内部日志告警平台。
-- 历史版本中还记录过 V100 / IB GPU Kubernetes 集群纳管、Dask on Ray 与 RDMA 加速实践；这部分更偏 AI Infra 岗位定制表达，主 About 页保留为近期技术实践方向。
+- 曾参与 V100 / IB GPU Kubernetes 集群纳管、Dask on Ray 与 RDMA 加速实践，相关内容更偏 AI Infra 岗位定制表达，主 About 页保留近期技术实践方向。
 - 技术栈：Java、Python、Spring Boot、Kubernetes、Ray、KubeRay、RayService、Dask、Volcano、Prometheus、Grafana。
 
 ### 北京可利邦信息技术股份有限公司｜大数据 & 后台开发工程师
@@ -111,8 +111,8 @@ menu:
 - 时间：2019 年 12 月至 2020 年 4 月
 - 方向：数据仓库、数据迁移、ETL
 - 项目：供应链数据仓库建设
-- 主要工作：将原 HANA 数据库数据迁移到星环大数据平台，基于 Inceptor、HyperBase、Search 构建新的大数据平台，并定时从 MSSQL、Oracle、HANA 等业务数据库做[...]
-- ���责：设计、验证和对比技术路线可行性，撰写技术文档，设计 ETL 自动化流程。
+- 主要工作：将原 HANA 数据库数据迁移到星环大数据平台，基于 Inceptor、HyperBase、Search 构建新的大数据平台，并定时从 MSSQL、Oracle、HANA 等业务数据库做数据抽取。
+- 职责：设计、验证和对比技术路线可行性，撰写技术文档，设计 ETL 自动化流程。
 - 技术栈：SQL、MSSQL、Oracle、HANA、Inceptor、HyperBase、Search。
 
 ### 深圳掌众智能科技股份有限公司｜高级 Scala / Java 后端开发
