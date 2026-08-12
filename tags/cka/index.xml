@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>cka on 我的空间</title><link>https://chenjinxin.cn/tags/cka/</link><description>Recent content in cka on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Tue, 11 Aug 2026 21:25:00 +0800</lastBuildDate><atom:link href="https://chenjinxin.cn/tags/cka/index.xml" rel="self" type="application/rss+xml"/><item><title>🚀 CKA 认证 30 天冲刺备考清单</title><link>https://chenjinxin.cn/p/cka-%E8%AE%A4%E8%AF%81-30-%E5%A4%A9%E5%86%B2%E5%88%BA%E5%A4%87%E8%80%83%E6%B8%85%E5%8D%95/</link><pubDate>Tue, 11 Aug 2026 21:25:00 +0800</pubDate><guid>https://chenjinxin.cn/p/cka-%E8%AE%A4%E8%AF%81-30-%E5%A4%A9%E5%86%B2%E5%88%BA%E5%A4%87%E8%80%83%E6%B8%85%E5%8D%95/</guid><description>&lt;blockquote>
+&lt;p>&lt;strong>适用对象&lt;/strong>：已通过 CKAD 认证的考生&lt;br>
+&lt;strong>备考周期&lt;/strong>：30 天（建议每日 2-3 小时）&lt;br>
+&lt;strong>目标&lt;/strong>：一个月内通过 CKA 认证&lt;/p>
+&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="-核心资源包一次性备齐">📦 核心资源包（一次性备齐）&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th style="text-align:left">资源&lt;/th>
+&lt;th style="text-align:left">类型&lt;/th>
+&lt;th style="text-align:left">用途&lt;/th>
+&lt;th style="text-align:left">直达链接&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>KodeKloud CKA 课程&lt;/strong>&lt;/td>
+&lt;td style="text-align:left">付费&lt;/td>
+&lt;td style="text-align:left">建立完整知识体系&lt;/td>
+&lt;td style="text-align:left">&lt;a class="link" href="https://kodekloud.com/courses/certified-kubernetes-administrator-cka/" target="_blank" rel="noopener"
+>https://kodekloud.com/courses/certified-kubernetes-administrator-cka/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>Killer.sh 模拟器&lt;/strong>&lt;/td>
+&lt;td style="text-align:left">考试附赠&lt;/td>
+&lt;td style="text-align:left">考前全真压力测试&lt;/td>
+&lt;td style="text-align:left">购考后登录 &lt;a class="link" href="https://trainingportal.linuxfoundation.org" target="_blank" rel="noopener"
+>Linux Foundation 培训门户&lt;/a> 进入&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>Killercoda&lt;/strong>&lt;/td>
+&lt;td style="text-align:left">免费&lt;/td>
+&lt;td style="text-align:left">日常碎片化实战练习&lt;/td>
+&lt;td style="text-align:left">&lt;a class="link" href="https://killercoda.com/killer-shell-cka" target="_blank" rel="noopener"
+>https://killercoda.com/killer-shell-cka&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>K8s 官方文档&lt;/strong>&lt;/td>
+&lt;td style="text-align:left">免费（唯一法宝）&lt;/td>
+&lt;td style="text-align:left">考试唯一允许查阅的资料&lt;/td>
+&lt;td style="text-align:left">&lt;a class="link" href="https://kubernetes.io/docs/" target="_blank" rel="noopener"
+>https://kubernetes.io/docs/&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td style="text-align:left">&lt;strong>theplatformlab 笔记&lt;/strong>&lt;/td>
+&lt;td style="text-align:left">免费&lt;/td>
+&lt;td style="text-align:left">考纲笔记与速查表&lt;/td>
+&lt;td style="text-align:left">&lt;a class="link" href="https://github.com/theplatformlab/CKA-Certified-Kubernetes-Administrator" target="_blank" rel="noopener"
+>https://github.com/theplatformlab/CKA-Certified-Kubernetes-Administrator&lt;/a>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="-第-1-周集群架构安装与配置权重-25">📅 第 1 周：集群架构、安装与配置（权重 25%）&lt;/h2>
+&lt;blockquote>
+&lt;p>&lt;strong>核心任务&lt;/strong>：亲手用 &lt;code>kubeadm&lt;/code> 搭建集群，彻底掌握 ETCD 备份与恢复。&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 1 – K8s 架构与安装&lt;/strong>&lt;br>
+理解控制平面组件；用 &lt;code>kubeadm&lt;/code> 搭建单节点集群。&lt;br>
+📖 KodeKloud：集群搭建章节&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 2 – 集群配置与证书&lt;/strong>&lt;br>
+了解 API Server, Scheduler, Controller Manager 配置；查看集群证书。&lt;br>
+📖 KodeKloud：配置章节&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 3 – ETCD 备份与恢复（必考题）&lt;/strong>&lt;br>
+掌握 &lt;code>etcdctl snapshot save/restore&lt;/code> 完整流程。&lt;br>
+📖 KodeKloud：ETCD 章节 + Killercoda ETCD 场景&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 4 – RBAC 权限管理&lt;/strong>&lt;br>
+熟练创建 ServiceAccount, Role, ClusterRole 及各种绑定。&lt;br>
+📖 KodeKloud：RBAC 章节&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 5 – 集群升级&lt;/strong>&lt;br>
+练习 &lt;code>kubeadm upgrade&lt;/code> 升级控制平面和工作节点。&lt;br>
+📖 KodeKloud：升级章节&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 6 – 周巩固（实战）&lt;/strong>&lt;br>
+不参考笔记，搭建 1 master + 2 worker 集群，完成一次 ETCD 备份与恢复。&lt;br>
+📖 官方文档：集群管理指南&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 7 – 查漏补缺&lt;/strong>&lt;br>
+复习本周卡壳的知识点，重做相关练习。&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-第-2-周服务网络与存储权重-30">📅 第 2 周：服务、网络与存储（权重 30%）&lt;/h2>
+&lt;blockquote>
+&lt;p>&lt;strong>核心任务&lt;/strong>：深挖 NetworkPolicy、Ingress 和 PV/PVC 的细节。&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 8 – Service 详解&lt;/strong>&lt;br>
+理解 ClusterIP, NodePort, LoadBalancer；掌握 &lt;code>kubectl expose&lt;/code>。&lt;br>
+📖 KodeKloud：服务章节&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 9 – Ingress 配置&lt;/strong>&lt;br>
+安装 Ingress Controller，创建 Ingress 实现域名访问。&lt;br>
+📖 KodeKloud：Ingress 章节&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 10 – NetworkPolicy&lt;/strong>&lt;br>
+编写网络策略，实现 Pod 间访问控制（Ingress/Egress 方向）。&lt;br>
+📖 KodeKloud：网络策略章节 + Killercoda 网络场景&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 11 – 存储基础（PV/PVC）&lt;/strong>&lt;br>
+静态供给：创建 PV、PVC，并挂载到 Pod。&lt;br>
+📖 KodeKloud：存储章节&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 12 – StorageClass&lt;/strong>&lt;br>
+配置 StorageClass，实现 PVC 动态供给。&lt;br>
+📖 KodeKloud：存储章节&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 13 – 周巩固（实战）&lt;/strong>&lt;br>
+部署带 Ingress 的 Web 应用，配置访问日志，挂载持久化存储。&lt;br>
+📖 官方文档：Ingress, 存储&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 14 – 查漏补缺&lt;/strong>&lt;br>
+复习本周卡壳的知识点，重做相关练习。&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-第-3-周故障排查特训权重-30">📅 第 3 周：故障排查特训（权重 30%）&lt;/h2>
+&lt;blockquote>
+&lt;p>&lt;strong>核心任务&lt;/strong>：建立标准化排障流程，这是 CKA 高分分水岭。&lt;br>
+&lt;strong>流程口诀&lt;/strong>：&lt;code>describe → logs → events → 节点日志&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 15 – Pod 故障排查&lt;/strong>&lt;br>
+排查 ImagePullBackOff, CrashLoopBackOff, Pending 等状态。&lt;br>
+📖 KodeKloud：排障章节 + Killercoda Pod 排障场景&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 16 – 节点排障&lt;/strong>&lt;br>
+排查节点 NotReady、kubelet 未启动等问题。&lt;br>
+📖 Killercoda 节点排障场景&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 17 – 网络排障&lt;/strong>&lt;br>
+排查 Service 无法访问、CoreDNS 解析失败等。&lt;br>
+📖 Killercoda 网络排障场景&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 18 – 控制平面排障&lt;/strong>&lt;br>
+模拟并修复 API Server、Scheduler 等组件异常。&lt;br>
+📖 官方文档：故障排查章节&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 19 – 应用排障&lt;/strong>&lt;br>
+熟练使用 &lt;code>kubectl logs&lt;/code>、&lt;code>describe&lt;/code>、&lt;code>get events&lt;/code> 排查应用问题。&lt;br>
+📖 Gall-oDrone GitHub 仓库练习&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 20 – 周巩固（实战）&lt;/strong>&lt;br>
+在 Killercoda 上完成 2 个综合排障场景，模拟压力环境。&lt;br>
+📖 Killercoda 综合排障场景&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 21 – 查漏补缺&lt;/strong>&lt;br>
+复习本周卡壳的知识点，重做相关练习。&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-第-4-周全真模拟与冲刺">📅 第 4 周：全真模拟与冲刺&lt;/h2>
+&lt;blockquote>
+&lt;p>&lt;strong>核心任务&lt;/strong>：吃透 Killer.sh，查漏补缺，调整到最佳考试状态。&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 22 – 总复习&lt;/strong>&lt;br>
+快速浏览 KodeKloud 课程笔记和 theplatformlab 考纲总结。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 23 – 第一次 Killer.sh 模拟&lt;/strong>&lt;br>
+不计时。熟悉全部题型，做完后深度复盘，搞懂每道题。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 24 – 针对性补强（一）&lt;/strong>&lt;br>
+根据第一次模拟的错题，回到 KodeKloud 或 Killercoda 强化训练。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 25 – 针对性补强（二）&lt;/strong>&lt;br>
+继续补强，确保之前卡壳的知识点已彻底理解。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 26 – 第二次 Killer.sh 模拟&lt;/strong>&lt;br>
+&lt;strong>严格计时 2 小时&lt;/strong>。目标：模拟考得分稳定在 &lt;strong>80% 以上&lt;/strong>。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 27 – 最终查漏补缺&lt;/strong>&lt;br>
+复盘两次 Killer.sh 的所有错题，确保没有盲区。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 28 – 环境准备&lt;/strong>&lt;br>
+运行 PSI 系统检查，确认摄像头、身份证件、网络环境。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 29 – 轻量复习与休息&lt;/strong>&lt;br>
+浏览 &lt;code>kubectl&lt;/code> 速查表和官方文档目录。早睡，保证精力。&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;input disabled="" type="checkbox"> &lt;strong>Day 30 – 🚀 考试日！&lt;/strong>&lt;br>
+提前 30 分钟登录。先做有把握的题，果断跳过难题。相信你的训练！&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-备注考试关键提醒">📝 备注（考试关键提醒）&lt;/h2>
+&lt;ol>
+&lt;li>&lt;strong>考试只有 2 小时&lt;/strong>，模拟考时务必培养时间意识。&lt;/li>
+&lt;li>&lt;strong>官方文档是唯一法宝&lt;/strong>：备考练习时遇到不确定的字段，只查 &lt;code>kubernetes.io&lt;/code>，不要依赖搜索引擎。&lt;/li>
+&lt;li>&lt;strong>&lt;code>--dry-run&lt;/code> 是核心技能&lt;/strong>：像用快捷键一样熟练使用 &lt;code>kubectl run/create ... --dry-run=client -o yaml&lt;/code>。&lt;/li>
+&lt;li>&lt;strong>故障排查标准化流程&lt;/strong>：&lt;code>describe → logs → events → 节点日志&lt;/code>。&lt;/li>
+&lt;li>&lt;strong>完成进度&lt;/strong>：每天开始前标记 &lt;code>- [ ]&lt;/code>，完成后改为 &lt;code>- [x]&lt;/code>。&lt;/li>
+&lt;/ol></description></item></channel></rss>

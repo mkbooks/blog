@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Namespace on 我的空间</title><link>https://chenjinxin.cn/tags/namespace/</link><description>Recent content in Namespace on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 09 Aug 2026 12:00:00 +0800</lastBuildDate><atom:link href="https://chenjinxin.cn/tags/namespace/index.xml" rel="self" type="application/rss+xml"/><item><title>CKAD 常用资源：Namespace</title><link>https://chenjinxin.cn/p/ckad-%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90namespace/</link><pubDate>Sun, 09 Aug 2026 12:00:00 +0800</pubDate><guid>https://chenjinxin.cn/p/ckad-%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90namespace/</guid><description>&lt;p>&lt;code>Namespace&lt;/code> 用来隔离命名空间级资源。CKAD 里常见要求是创建命名空间、在指定命名空间创建资源、列出所有命名空间并写入文件。&lt;/p>
+&lt;h2 id="yaml-模板">YAML 模板&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Namespace&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">dev&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">labels&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">env&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">dev&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="常考字段解析">常考字段解析&lt;/h2>
+&lt;ul>
+&lt;li>&lt;code>metadata.name&lt;/code>：命名空间名称，很多题后续资源都必须放到这里。&lt;/li>
+&lt;li>&lt;code>metadata.labels&lt;/code>：给 &lt;code>NetworkPolicy&lt;/code>、配额或选择器使用，考试偶尔要求补标签。&lt;/li>
+&lt;/ul>
+&lt;h2 id="常用命令">常用命令&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">k create ns dev
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k get ns
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k get ns &amp;gt; /opt/course/1/namespaces
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k config set-context --current --namespace&lt;span class="o">=&lt;/span>dev
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="易错点">易错点&lt;/h2>
+&lt;ul>
+&lt;li>&lt;code>Namespace&lt;/code> 本身不是 namespaced 资源，不能写 &lt;code>metadata.namespace&lt;/code>。&lt;/li>
+&lt;li>创建资源时忘记 &lt;code>-n &amp;lt;namespace&amp;gt;&lt;/code> 是 CKAD 高频失分点。&lt;/li>
+&lt;/ul></description></item></channel></rss>

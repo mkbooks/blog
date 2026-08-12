@@ -1,0 +1,731 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Pod on 我的空间</title><link>https://chenjinxin.cn/tags/pod/</link><description>Recent content in Pod on 我的空间</description><generator>Hugo -- gohugo.io</generator><language>zh-cn</language><lastBuildDate>Sun, 09 Aug 2026 12:43:00 +0800</lastBuildDate><atom:link href="https://chenjinxin.cn/tags/pod/index.xml" rel="self" type="application/rss+xml"/><item><title>pods-基于 busybox 镜像解释启动命令</title><link>https://chenjinxin.cn/p/pods-%E5%9F%BA%E4%BA%8E-busybox-%E9%95%9C%E5%83%8F%E8%A7%A3%E9%87%8A%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4/</link><pubDate>Sun, 09 Aug 2026 12:43:00 +0800</pubDate><guid>https://chenjinxin.cn/p/pods-%E5%9F%BA%E4%BA%8E-busybox-%E9%95%9C%E5%83%8F%E8%A7%A3%E9%87%8A%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4/</guid><description>&lt;p>用 &lt;code>busybox&lt;/code> 来对比，恰好能揭示与 &lt;code>nginx&lt;/code> 最核心的一个差异：&lt;code>busybox&lt;/code> 官方镜像默认没有设置 &lt;code>ENTRYPOINT&lt;/code>，只设置了 &lt;code>CMD [&amp;quot;sh&amp;quot;]&lt;/code>。&lt;/p>
+&lt;p>这就导致 &lt;code>args&lt;/code>（对应 &lt;code>CMD&lt;/code>）的行为发生了根本性变化——在 &lt;code>nginx&lt;/code> 中它只能是“参数”，但在 &lt;code>busybox&lt;/code> 中它可以直接变成“完整的可执行命令”。&lt;/p>
+&lt;p>下面我通过 4 个 &lt;code>kubectl run&lt;/code> 命令，让你直观感受这种差异。&lt;/p>
+&lt;h2 id="场景一默认运行cmd-sh-生效">场景一：默认运行（&lt;code>CMD [&amp;quot;sh&amp;quot;]&lt;/code> 生效）&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl run bbox-default --image&lt;span class="o">=&lt;/span>busybox --restart&lt;span class="o">=&lt;/span>Never
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>K8s 字段：&lt;code>command&lt;/code> 未设，&lt;code>args&lt;/code> 未设。&lt;/li>
+&lt;li>实际执行：&lt;code>sh&lt;/code>&lt;/li>
+&lt;li>运行结果：由于没有交互终端（&lt;code>-it&lt;/code>），&lt;code>sh&lt;/code> 启动后立即退出，Pod 状态很快变成 &lt;code>Completed&lt;/code>。&lt;/li>
+&lt;li>差异说明：这是镜像自带的默认行为，但一般不适合作为常驻服务。&lt;/li>
+&lt;/ul>
+&lt;h2 id="场景二只设置-args覆盖-cmd因为没有-entrypoint所以直接替换了主程序">场景二：只设置 &lt;code>args&lt;/code>（覆盖 &lt;code>CMD&lt;/code>，因为没有 &lt;code>ENTRYPOINT&lt;/code>，所以直接替换了主程序）&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl run bbox-args --image&lt;span class="o">=&lt;/span>busybox --restart&lt;span class="o">=&lt;/span>Never -- sleep &lt;span class="m">30&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>注意：这里没用 &lt;code>--command&lt;/code>，所以 &lt;code>sleep 30&lt;/code> 全被解析为 &lt;code>args&lt;/code>。&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>K8s 字段：&lt;code>command&lt;/code> 未设，&lt;code>args&lt;/code>: [&amp;ldquo;sleep&amp;rdquo;, &amp;ldquo;30&amp;rdquo;]。&lt;/li>
+&lt;li>实际执行：&lt;code>sleep 30&lt;/code>&lt;/li>
+&lt;li>运行结果：容器内 1 号进程是 &lt;code>sleep&lt;/code>，持续运行 30 秒后退出。&lt;/li>
+&lt;li>🔥 与 &lt;code>nginx&lt;/code> 的核心差异：
+在 &lt;code>nginx&lt;/code> 中，&lt;code>args&lt;/code> 只能追加参数（变成 &lt;code>nginx -g daemon off; worker_processes 4&lt;/code>），无法把 &lt;code>nginx&lt;/code> 换成 &lt;code>sleep&lt;/code>。
+但在 &lt;code>busybox&lt;/code> 中，因为缺少 &lt;code>ENTRYPOINT&lt;/code> 这个“骨架”，&lt;code>args&lt;/code> 直接覆盖了整条命令，相当于把 &lt;code>sh&lt;/code> 换成了 &lt;code>sleep&lt;/code>。&lt;/li>
+&lt;/ul>
+&lt;h2 id="场景三只设置-command显式指定主程序语义最清晰">场景三：只设置 &lt;code>command&lt;/code>（显式指定主程序，语义最清晰）&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl run bbox-command --image&lt;span class="o">=&lt;/span>busybox --restart&lt;span class="o">=&lt;/span>Never --command -- top
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>使用 &lt;code>--command&lt;/code>，表示后面的 &lt;code>top&lt;/code> 属于 &lt;code>command&lt;/code> 字段。&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>K8s 字段：&lt;code>command&lt;/code>: [&amp;ldquo;top&amp;rdquo;]，&lt;code>args&lt;/code> 未设。&lt;/li>
+&lt;li>实际执行：&lt;code>top&lt;/code>&lt;/li>
+&lt;li>运行结果：&lt;code>top&lt;/code> 进程持续运行（默认刷新间隔 5 秒），容器不会退出。&lt;/li>
+&lt;li>差异说明：虽然在最终效果上，它跟场景二（&lt;code>args: [&amp;quot;top&amp;quot;]&lt;/code>）都能运行 &lt;code>top&lt;/code>，但在 K8s API 语义上完全不同：
+&lt;ul>
+&lt;li>场景二（仅 &lt;code>args&lt;/code>）是“覆盖默认参数”，只是因为没 &lt;code>ENTRYPOINT&lt;/code> 才碰巧变成了主程序；&lt;/li>
+&lt;li>场景三（仅 &lt;code>command&lt;/code>）是“显式指定可执行文件”，明确告诉 K8s 我要运行什么。&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="场景四同时设置-command-和-args完全自定义最标准">场景四：同时设置 &lt;code>command&lt;/code> 和 &lt;code>args&lt;/code>（完全自定义，最标准）&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl run bbox-both --image&lt;span class="o">=&lt;/span>busybox --restart&lt;span class="o">=&lt;/span>Never --command -- ping 127.0.0.1 -- -c &lt;span class="m">3&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>&lt;code>--command&lt;/code> 后的 &lt;code>ping 127.0.0.1&lt;/code> 是 &lt;code>command&lt;/code>，&lt;code>--&lt;/code> 后面的 &lt;code>-c 3&lt;/code> 是 &lt;code>args&lt;/code>。&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>K8s 字段：&lt;code>command&lt;/code>: [&amp;ldquo;ping&amp;rdquo;, &amp;ldquo;127.0.0.1&amp;rdquo;]，&lt;code>args&lt;/code>: [&amp;quot;-c&amp;quot;, &amp;ldquo;3&amp;rdquo;]&lt;/li>
+&lt;li>实际执行：&lt;code>ping 127.0.0.1 -c 3&lt;/code>&lt;/li>
+&lt;li>运行结果：向本机发 3 个 ping 包，输出结果后容器正常退出。&lt;/li>
+&lt;li>差异说明：这是最彻底的覆盖，镜像里定义的所有启动逻辑都被忽略，完全由用户掌控。&lt;/li>
+&lt;/ul>
+&lt;h2 id="核心结论对比表nginx-vs-busybox">核心结论对比表（&lt;code>nginx&lt;/code> vs &lt;code>busybox&lt;/code>）&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>镜像类型&lt;/th>
+&lt;th>镜像自带字段&lt;/th>
+&lt;th>仅设置 &lt;code>args&lt;/code> 时的效果&lt;/th>
+&lt;th>仅设置 &lt;code>command&lt;/code> 时的效果&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>nginx&lt;/code>&lt;/td>
+&lt;td>&lt;code>ENTRYPOINT [&amp;quot;nginx&amp;quot;]&lt;/code>；&lt;code>CMD [&amp;quot;-g&amp;quot;,&amp;quot;daemon off;&amp;quot;]&lt;/code>&lt;/td>
+&lt;td>给 &lt;code>nginx&lt;/code> 传新参数（程序不变）&lt;/td>
+&lt;td>彻底换掉 &lt;code>nginx&lt;/code>，原参数丢弃&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>busybox&lt;/code>&lt;/td>
+&lt;td>&lt;code>ENTRYPOINT&lt;/code> 未设置；&lt;code>CMD [&amp;quot;sh&amp;quot;]&lt;/code>&lt;/td>
+&lt;td>直接变成新的可执行命令（&lt;code>sh&lt;/code> 被替换）&lt;/td>
+&lt;td>显式指定新的可执行命令（语义更明确）&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="如何快速验证它们的不同">如何快速验证它们的不同？&lt;/h2>
+&lt;p>用 &lt;code>kubectl get pods&lt;/code> 看状态，再用 &lt;code>kubectl logs&lt;/code> 或 &lt;code>kubectl exec&lt;/code> 看进程：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看 bbox-args 的 1 号进程（会是 sleep，而不是 sh）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl &lt;span class="nb">exec&lt;/span> bbox-args -- ps aux
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 查看 bbox-command 的 1 号进程（会是 top）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl &lt;span class="nb">exec&lt;/span> bbox-command -- ps aux
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="一句话总结">一句话总结&lt;/h2>
+&lt;p>&lt;code>busybox&lt;/code> 因为缺少 &lt;code>ENTRYPOINT&lt;/code>，使得 &lt;code>args&lt;/code> 拥有了“变身”能力（可直接换程序），而 &lt;code>nginx&lt;/code> 因为有 &lt;code>ENTRYPOINT&lt;/code>，&lt;code>args&lt;/code> 只能“微调”参数。这提醒我们：写 YAML 时，不能想当然认为 &lt;code>args&lt;/code> 永远只是参数，一定要看镜像本身的 &lt;code>ENTRYPOINT&lt;/code> 是否存在。&lt;/p></description></item><item><title>CKAD 常用资源：Pod</title><link>https://chenjinxin.cn/p/ckad-%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90pod/</link><pubDate>Sun, 09 Aug 2026 12:05:00 +0800</pubDate><guid>https://chenjinxin.cn/p/ckad-%E5%B8%B8%E7%94%A8%E8%B5%84%E6%BA%90pod/</guid><description>&lt;p>&lt;code>Pod&lt;/code> 是 CKAD 最核心资源。大多数题不是单独考 Pod，就是把 Pod 模板嵌在 &lt;code>Deployment&lt;/code>、&lt;code>Job&lt;/code>、&lt;code>CronJob&lt;/code>、&lt;code>StatefulSet&lt;/code> 里。&lt;/p>
+&lt;h2 id="yaml-模板">YAML 模板&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Pod&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx-pod&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">namespace&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">dev&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">labels&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">tier&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">web&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restartPolicy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Always&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">containers&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx:1.25&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">imagePullPolicy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">IfNotPresent&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ports&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">containerPort&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">80&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">env&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">APP_ENV&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">value&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">prod&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">resources&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">requests&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">cpu&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">100m&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">memory&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">128Mi&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">limits&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">cpu&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">200m&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">memory&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">256Mi&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">livenessProbe&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">httpGet&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">path&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">/&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">port&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">80&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">periodSeconds&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">10&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">readinessProbe&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">tcpSocket&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">port&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">80&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">periodSeconds&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">5&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="常考字段解析">常考字段解析&lt;/h2>
+&lt;ul>
+&lt;li>&lt;code>metadata.namespace&lt;/code>：资源所在命名空间，命令里常用 &lt;code>-n&lt;/code> 指定。&lt;/li>
+&lt;li>&lt;code>metadata.labels&lt;/code>：给 &lt;code>Service&lt;/code>、&lt;code>NetworkPolicy&lt;/code>、查询命令选择 Pod。&lt;/li>
+&lt;li>&lt;code>spec.containers[].name&lt;/code>：容器名，&lt;code>logs -c&lt;/code>、&lt;code>exec -c&lt;/code>、&lt;code>set image&lt;/code> 都会用到。&lt;/li>
+&lt;li>&lt;code>spec.containers[].image&lt;/code>：镜像名，排障题常考镜像错误。&lt;/li>
+&lt;li>&lt;code>spec.containers[].ports[].containerPort&lt;/code>：容器监听端口，常和 Service 的 &lt;code>targetPort&lt;/code> 对应。&lt;/li>
+&lt;li>&lt;code>spec.restartPolicy&lt;/code>：Pod 默认 &lt;code>Always&lt;/code>；Job/CronJob 模板里常用 &lt;code>Never&lt;/code> 或 &lt;code>OnFailure&lt;/code>。&lt;/li>
+&lt;li>&lt;code>resources.requests/limits&lt;/code>：调度和限制资源，常考 CPU、内存格式。&lt;/li>
+&lt;li>&lt;code>livenessProbe&lt;/code>：存活检查，失败会重启容器。&lt;/li>
+&lt;li>&lt;code>readinessProbe&lt;/code>：就绪检查，失败时不会接入 Service endpoints。&lt;/li>
+&lt;/ul>
+&lt;h2 id="常用命令">常用命令&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">k run nginx-pod --image&lt;span class="o">=&lt;/span>nginx --restart&lt;span class="o">=&lt;/span>Never -n dev
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k run nginx-pod --image&lt;span class="o">=&lt;/span>nginx --restart&lt;span class="o">=&lt;/span>Never --dry-run&lt;span class="o">=&lt;/span>client -o yaml &amp;gt; pod.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k get pod -n dev --show-labels
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k describe pod nginx-pod -n dev
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k logs nginx-pod -n dev
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k &lt;span class="nb">exec&lt;/span> -it nginx-pod -n dev -- sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="易错点">易错点&lt;/h2>
+&lt;ul>
+&lt;li>单独 Pod 使用 &lt;code>--restart=Never&lt;/code> 生成模板；不加时容易变成默认行为混淆。&lt;/li>
+&lt;li>多容器 Pod 查日志要加 &lt;code>-c &amp;lt;container&amp;gt;&lt;/code>。&lt;/li>
+&lt;li>&lt;code>readinessProbe&lt;/code> 失败会导致 Service 没有可用 endpoint。&lt;/li>
+&lt;/ul></description></item><item><title>CKAD 复习：工作负载题压缩模板</title><link>https://chenjinxin.cn/p/ckad-%E5%A4%8D%E4%B9%A0%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E9%A2%98%E5%8E%8B%E7%BC%A9%E6%A8%A1%E6%9D%BF/</link><pubDate>Sun, 09 Aug 2026 11:20:00 +0800</pubDate><guid>https://chenjinxin.cn/p/ckad-%E5%A4%8D%E4%B9%A0%E5%B7%A5%E4%BD%9C%E8%B4%9F%E8%BD%BD%E9%A2%98%E5%8E%8B%E7%BC%A9%E6%A8%A1%E6%9D%BF/</guid><description>&lt;p>CKAD 的工作负载题不用按题背，核心只记 4 个资源：&lt;code>Pod&lt;/code>、&lt;code>Deployment&lt;/code>、&lt;code>Job&lt;/code>、&lt;code>CronJob&lt;/code>。多数题都是在这 4 个对象上补字段：标签、命令、环境变量、卷、探针、资源限制、滚动更新。&lt;/p>
+&lt;h2 id="1-pod单容器和临时测试">1. Pod：单容器和临时测试&lt;/h2>
+&lt;p>能用命令生成的先用命令，复杂字段再 &lt;code>--dry-run=client -o yaml&lt;/code> 后改。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建带标签、环境变量、端口的 Pod 模板&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k run nginx-pod &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --image&lt;span class="o">=&lt;/span>nginx &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --restart&lt;span class="o">=&lt;/span>Never &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --labels&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;app=web,env=prod&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --env&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;APP_ENV=production&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --port&lt;span class="o">=&lt;/span>&lt;span class="m">80&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --dry-run&lt;span class="o">=&lt;/span>client -o yaml &amp;gt; pod.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k apply -f pod.yaml
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 一次性临时容器：常用于测 Service、DNS、HTTP&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k run tmp &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --restart&lt;span class="o">=&lt;/span>Never &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --rm -i &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --image&lt;span class="o">=&lt;/span>busybox &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -- wget -O- frontend-svc:80
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>常见改法：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">k get pod -n &amp;lt;ns&amp;gt; --show-labels
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k label pod nginx-pod &lt;span class="nv">tier&lt;/span>&lt;span class="o">=&lt;/span>frontend -n &amp;lt;ns&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k annotate pod nginx-pod &lt;span class="nv">owner&lt;/span>&lt;span class="o">=&lt;/span>ckad -n &amp;lt;ns&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k logs nginx-pod -n &amp;lt;ns&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k &lt;span class="nb">exec&lt;/span> -it nginx-pod -n &amp;lt;ns&amp;gt; -- sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="2-多容器-pod共享-emptydir">2. 多容器 Pod：共享 emptyDir&lt;/h2>
+&lt;p>多容器、sidecar logging、initContainer 题都可以从这个结构变形。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Pod&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">sidecar-pod&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">namespace&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">workloads&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">initContainers&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">init&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">busybox&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">command&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;sh&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;-c&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;echo init &amp;gt; /work/app.log&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumeMounts&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">work&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">mountPath&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">/work&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">containers&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">app&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumeMounts&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">work&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">mountPath&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">/var/log/app&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">sidecar&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">busybox&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">command&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;sh&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;-c&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;tail -f /var/log/app/app.log&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumeMounts&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">work&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">mountPath&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">/var/log/app&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">work&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">emptyDir&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>{}&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>记忆点：两个容器要共享数据，只要 &lt;code>volumeMounts[].name&lt;/code> 指向同一个 &lt;code>volumes[].name&lt;/code>。&lt;/p>
+&lt;h2 id="3-deployment副本镜像暴露回滚">3. Deployment：副本、镜像、暴露、回滚&lt;/h2>
+&lt;p>Deployment 是 Pod 模板外面套一层副本控制，考试里经常要求创建、修镜像、看 rollout、暴露 Service。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建 3 副本 Deployment&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k create ns dev
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k create deployment nginx-deployment -n dev --image&lt;span class="o">=&lt;/span>nginx:latest --replicas&lt;span class="o">=&lt;/span>&lt;span class="m">3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 改镜像并观察滚动更新&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k &lt;span class="nb">set&lt;/span> image deployment/nginx-deployment &lt;span class="nv">nginx&lt;/span>&lt;span class="o">=&lt;/span>nginx:1.25 -n dev
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k rollout status deployment/nginx-deployment -n dev
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k rollout &lt;span class="nb">history&lt;/span> deployment/nginx-deployment -n dev
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 回滚&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k rollout undo deployment/nginx-deployment -n dev
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 暴露成 ClusterIP Service&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k expose deployment nginx-deployment -n dev --name&lt;span class="o">=&lt;/span>nginx-svc --port&lt;span class="o">=&lt;/span>&lt;span class="m">80&lt;/span> --target-port&lt;span class="o">=&lt;/span>&lt;span class="m">80&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>如果题目从 Pod 改成 Deployment：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">k get pod old-pod -o yaml &amp;gt; deploy.yaml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>然后把 &lt;code>kind: Pod&lt;/code> 改成 &lt;code>kind: Deployment&lt;/code>，补 &lt;code>spec.replicas&lt;/code>、&lt;code>spec.selector.matchLabels&lt;/code>、&lt;code>spec.template.metadata.labels&lt;/code>、&lt;code>spec.template.spec&lt;/code>。最容易错的是 selector 和 template labels 不一致。&lt;/p>
+&lt;h2 id="4-探针和资源限制只补容器字段">4. 探针和资源限制：只补容器字段&lt;/h2>
+&lt;p>探针、requests、limits 都在 &lt;code>spec.containers[]&lt;/code> 下面。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Pod&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">health-pod&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">namespace&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">workloads&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">containers&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ports&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">containerPort&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">80&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">resources&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">requests&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">cpu&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">100m&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">memory&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">128Mi&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">limits&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">cpu&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">200m&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">memory&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">256Mi&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">livenessProbe&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">httpGet&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">path&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">/healthz&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">port&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">80&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">periodSeconds&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">15&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">readinessProbe&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">tcpSocket&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">port&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">80&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">periodSeconds&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">10&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>快速 patch Deployment 里的资源限制：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">k patch deployment broken-deployment -n troubleshooting --type&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;json&amp;#39;&lt;/span> -p&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;[
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> {&amp;#34;op&amp;#34;:&amp;#34;add&amp;#34;,&amp;#34;path&amp;#34;:&amp;#34;/spec/template/spec/containers/0/resources&amp;#34;,&amp;#34;value&amp;#34;:{&amp;#34;requests&amp;#34;:{&amp;#34;cpu&amp;#34;:&amp;#34;100m&amp;#34;,&amp;#34;memory&amp;#34;:&amp;#34;128Mi&amp;#34;},&amp;#34;limits&amp;#34;:{&amp;#34;cpu&amp;#34;:&amp;#34;200m&amp;#34;,&amp;#34;memory&amp;#34;:&amp;#34;256Mi&amp;#34;}}}
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">]&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="5-job-和-cronjob一次执行与定时执行">5. Job 和 CronJob：一次执行与定时执行&lt;/h2>
+&lt;p>&lt;code>Job&lt;/code> 负责完成一次，&lt;code>CronJob&lt;/code> 负责按时间创建 Job。命令字段背一个形式就够了。&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">batch/v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Job&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">hello-job&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">namespace&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">workloads&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">activeDeadlineSeconds&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">30&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restartPolicy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Never&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">containers&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">hello&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">busybox&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">command&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;sh&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;-c&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;echo hello &amp;amp;&amp;amp; sleep 5&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">batch/v1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">CronJob&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">log-cleaner&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">namespace&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">workloads&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">schedule&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;0 * * * *&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">concurrencyPolicy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Forbid&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">jobTemplate&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">template&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restartPolicy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">OnFailure&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">containers&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">cleaner&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">busybox&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">command&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;sh&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;-c&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;rm -rf /var/log/*.log&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="高频检查命令">高频检查命令&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">k get pod,deploy,job,cronjob -n &amp;lt;ns&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k describe pod &amp;lt;pod&amp;gt; -n &amp;lt;ns&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k logs &amp;lt;pod&amp;gt; -n &amp;lt;ns&amp;gt; &lt;span class="o">[&lt;/span>-c &amp;lt;container&amp;gt;&lt;span class="o">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k get events -n &amp;lt;ns&amp;gt; --sort-by&lt;span class="o">=&lt;/span>.lastTimestamp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k rollout status deployment/&amp;lt;deploy&amp;gt; -n &amp;lt;ns&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="考场压缩记忆">考场压缩记忆&lt;/h2>
+&lt;ul>
+&lt;li>Pod：容器本体，背 &lt;code>containers / volumeMounts / volumes&lt;/code>。&lt;/li>
+&lt;li>Deployment：Pod 外面加 &lt;code>replicas / selector / template&lt;/code>。&lt;/li>
+&lt;li>Job：Pod 外面加 &lt;code>template&lt;/code>，必须有 &lt;code>restartPolicy&lt;/code>。&lt;/li>
+&lt;li>CronJob：Job 外面加 &lt;code>schedule / jobTemplate&lt;/code>。&lt;/li>
+&lt;li>探针、资源限制、env、securityContext 都贴在 &lt;code>containers[]&lt;/code> 上。&lt;/li>
+&lt;/ul></description></item><item><title>pods</title><link>https://chenjinxin.cn/p/pods/</link><pubDate>Sun, 09 Aug 2026 10:39:00 +0800</pubDate><guid>https://chenjinxin.cn/p/pods/</guid><description>&lt;h2 id="创建-pod-模版">创建 Pod 模版&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建 Pod 模版: 启动 nginx 容器，设置 镜像、标签、环境变量、端口，使用 --dry-run=client 生成 yaml 文件&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k run nginx --image&lt;span class="o">=&lt;/span>nginx --restart&lt;span class="o">=&lt;/span>Never --labels&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;version=v1,env=prod&amp;#34;&lt;/span> --env&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;DNS_DOMAIN=example.com&amp;#34;&lt;/span> --env&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;POD_NAMESPACE=default&amp;#34;&lt;/span> --port&lt;span class="o">=&lt;/span>&lt;span class="m">80&lt;/span> --dry-run&lt;span class="o">=&lt;/span>client -o yaml &amp;gt; pod.yaml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 创建临时容器：用 busybox 镜像，访问 frontend 服务的 80 端口，使用 wget 命令获取内容，容器运行结束后自动删除&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">k run tmp --restart&lt;span class="o">=&lt;/span>Never --rm -i --image&lt;span class="o">=&lt;/span>busybox -i -- wget -O- frontend:80
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div></description></item><item><title>pods-基于 nginx 镜像解释启动命令</title><link>https://chenjinxin.cn/p/pods-%E5%9F%BA%E4%BA%8E-nginx-%E9%95%9C%E5%83%8F%E8%A7%A3%E9%87%8A%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4/</link><pubDate>Sun, 09 Aug 2026 10:39:00 +0800</pubDate><guid>https://chenjinxin.cn/p/pods-%E5%9F%BA%E4%BA%8E-nginx-%E9%95%9C%E5%83%8F%E8%A7%A3%E9%87%8A%E5%90%AF%E5%8A%A8%E5%91%BD%E4%BB%A4/</guid><description>&lt;p>用实际运行的 Pod 来直观验证。下面的 4 个示例都基于 &lt;code>nginx&lt;/code> 官方镜像（它的 Dockerfile 明确写了 &lt;code>ENTRYPOINT [&amp;quot;nginx&amp;quot;]&lt;/code> 和 &lt;code>CMD [&amp;quot;-g&amp;quot;, &amp;quot;daemon off;&amp;quot;]&lt;/code>）。&lt;/p>
+&lt;p>我会用 &lt;code>kubectl run&lt;/code> 命令创建 4 个 Pod，并同步给出它们在 K8s 中对应的 &lt;code>command&lt;/code> 和 &lt;code>args&lt;/code> 字段含义。&lt;/p>
+&lt;h2 id="场景一什么都不设置使用镜像默认值">场景一：什么都不设置（使用镜像默认值）&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl run demo-default --image&lt;span class="o">=&lt;/span>nginx --restart&lt;span class="o">=&lt;/span>Never
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>K8s 字段：&lt;code>command&lt;/code> 未设置，&lt;code>args&lt;/code> 未设置。&lt;/li>
+&lt;li>实际执行：&lt;code>nginx -g &amp;quot;daemon off;&amp;quot;&lt;/code>&lt;/li>
+&lt;li>运行差异：1 号进程是 &lt;code>nginx&lt;/code>，参数是默认的 &lt;code>daemon off&lt;/code>。这是最标准的 Web 容器启动方式。&lt;/li>
+&lt;/ul>
+&lt;h2 id="场景二只设置-args覆盖-cmd保留-entrypoint">场景二：只设置 &lt;code>args&lt;/code>（覆盖 CMD，保留 ENTRYPOINT）&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl run demo-args --image&lt;span class="o">=&lt;/span>nginx --restart&lt;span class="o">=&lt;/span>never -- -g &lt;span class="s2">&amp;#34;daemon off; worker_processes 4;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>注意：&lt;code>--&lt;/code> 后面的内容在 K8s 中会被解析为 &lt;code>args&lt;/code>。&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>K8s 字段：&lt;code>command&lt;/code> 未设置，&lt;code>args: [&amp;quot;-g&amp;quot;, &amp;quot;daemon off; worker_processes 4;&amp;quot;]&lt;/code>&lt;/li>
+&lt;li>实际执行：&lt;code>nginx -g &amp;quot;daemon off; worker_processes 4;&amp;quot;&lt;/code>&lt;/li>
+&lt;li>运行差异：程序骨架没变（仍是 &lt;code>nginx&lt;/code>），但启动参数变了（&lt;code>worker_processes&lt;/code> 从默认的 1 变成了 4）。这在调整运行配置时非常有用。&lt;/li>
+&lt;/ul>
+&lt;h2 id="场景三只设置-command覆盖-entrypoint原-cmd-被丢弃">场景三：只设置 &lt;code>command&lt;/code>（覆盖 ENTRYPOINT，原 CMD 被丢弃）&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl run demo-command --image&lt;span class="o">=&lt;/span>nginx --restart&lt;span class="o">=&lt;/span>Never --command -- /bin/sh -c &lt;span class="s2">&amp;#34;sleep 8888&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>注意：&lt;code>--command&lt;/code> 后面的内容在 K8s 中会被解析为 &lt;code>command&lt;/code>。&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>K8s 字段：&lt;code>command: [&amp;quot;/bin/sh&amp;quot;, &amp;quot;-c&amp;quot;, &amp;quot;sleep 8888&amp;quot;]&lt;/code>，&lt;code>args&lt;/code> 未设置。&lt;/li>
+&lt;li>实际执行：&lt;code>/bin/sh -c &amp;quot;sleep 8888&amp;quot;&lt;/code>&lt;/li>
+&lt;li>运行差异：完全替换了可执行程序。容器里根本没有 &lt;code>nginx&lt;/code> 进程，且镜像自带的 &lt;code>-g daemon off&lt;/code> 参数被彻底丢弃。此时容器变成了一个单纯的“休眠器”。&lt;/li>
+&lt;/ul>
+&lt;h2 id="场景四同时设置-command-和-args完全自定义">场景四：同时设置 &lt;code>command&lt;/code> 和 &lt;code>args&lt;/code>（完全自定义）&lt;/h2>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">kubectl run demo-both --image&lt;span class="o">=&lt;/span>nginx --restart&lt;span class="o">=&lt;/span>Never --command -- /bin/sh -c &lt;span class="s2">&amp;#34;echo &lt;/span>&lt;span class="nv">$*&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -- arg1 arg2
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>K8s 字段：&lt;code>command: [&amp;quot;/bin/sh&amp;quot;, &amp;quot;-c&amp;quot;, &amp;quot;echo $*&amp;quot;]&lt;/code>，&lt;code>args: [&amp;quot;arg1&amp;quot;, &amp;quot;arg2&amp;quot;]&lt;/code>&lt;/li>
+&lt;li>实际执行：&lt;code>/bin/sh -c &amp;quot;echo $* arg1 arg2&amp;quot;&lt;/code>（终端会输出 &lt;code>arg1 arg2&lt;/code> 后容器退出，这里仅做演示）&lt;/li>
+&lt;li>运行差异：启动程序和参数完全由用户操控，与原镜像定义的 &lt;code>ENTRYPOINT&lt;/code> 和 &lt;code>CMD&lt;/code> 毫无关系。&lt;/li>
+&lt;/ul>
+&lt;h2 id="直观对比表">直观对比表&lt;/h2>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Pod 名称&lt;/th>
+&lt;th>K8s &lt;code>command&lt;/code>&lt;/th>
+&lt;th>K8s &lt;code>args&lt;/code>&lt;/th>
+&lt;th>最终运行的命令&lt;/th>
+&lt;th>核心差异点&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>demo-default&lt;/td>
+&lt;td>未设置&lt;/td>
+&lt;td>未设置&lt;/td>
+&lt;td>&lt;code>nginx -g &amp;quot;daemon off;&amp;quot;&lt;/code>&lt;/td>
+&lt;td>原汁原味的镜像默认行为&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>demo-args&lt;/td>
+&lt;td>未设置&lt;/td>
+&lt;td>覆盖了 &lt;code>CMD&lt;/code>&lt;/td>
+&lt;td>&lt;code>nginx -g &amp;quot;daemon off; worker_processes 4;&amp;quot;&lt;/code>&lt;/td>
+&lt;td>只改参数，保留原程序&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>demo-command&lt;/td>
+&lt;td>覆盖了 &lt;code>ENTRYPOINT&lt;/code>&lt;/td>
+&lt;td>未设置（被忽略）&lt;/td>
+&lt;td>&lt;code>/bin/sh -c &amp;quot;sleep 8888&amp;quot;&lt;/code>&lt;/td>
+&lt;td>彻底换程序，丢掉了镜像自带参数&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>demo-both&lt;/td>
+&lt;td>覆盖了 &lt;code>ENTRYPOINT&lt;/code>&lt;/td>
+&lt;td>覆盖了 &lt;code>CMD&lt;/code>&lt;/td>
+&lt;td>&lt;code>/bin/sh -c &amp;quot;echo $* arg1 arg2&amp;quot;&lt;/code>&lt;/td>
+&lt;td>完全自定义，镜像只提供文件系统&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h2 id="如何肉眼验证差异">如何肉眼验证差异？&lt;/h2>
+&lt;p>创建 Pod 后，可以用下面命令进入容器查看 1 号进程：&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 查看 demo-default 的进程&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl &lt;span class="nb">exec&lt;/span> demo-default -- ps aux &lt;span class="p">|&lt;/span> grep nginx
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">## 查看 demo-command 的进程（你会发现根本找不到 nginx）&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">kubectl &lt;span class="nb">exec&lt;/span> demo-command -- ps aux &lt;span class="p">|&lt;/span> grep sleep
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="核心结论">核心结论&lt;/h2>
+&lt;p>&lt;code>command&lt;/code> 是“谁是老大”，一旦设置，镜像的 &lt;code>ENTRYPOINT&lt;/code> 就作废了。&lt;/p>
+&lt;p>&lt;code>args&lt;/code> 是“给老大传啥话”，如果没设置 &lt;code>command&lt;/code>，它就替换镜像的 &lt;code>CMD&lt;/code> 传给原有的老大。&lt;/p></description></item><item><title>资源清单文件与Pod</title><link>https://chenjinxin.cn/p/%E8%B5%84%E6%BA%90%E6%B8%85%E5%8D%95%E6%96%87%E4%BB%B6%E4%B8%8Epod/</link><pubDate>Thu, 23 Feb 2023 20:20:00 +0800</pubDate><guid>https://chenjinxin.cn/p/%E8%B5%84%E6%BA%90%E6%B8%85%E5%8D%95%E6%96%87%E4%BB%B6%E4%B8%8Epod/</guid><description/></item></channel></rss>

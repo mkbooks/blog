@@ -1,0 +1,22 @@
+apiVersion: apps/v1 # API版本
+kind: Deployment # API对象类型
+metadata:
+  name: nginx-deploy
+  namespace: default # namespace 是 k8s 中的一个逻辑上的分组，和容器运行时中的 namespace 没有任何关系，只是都叫 namespace。
+  labels: # 只是 deployment 这个对象的标识
+    chapter: first-app
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2 # Pod 副本数量
+  template: # Pod 模板
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:1.7.9
+          ports:
+             - containerPort: 80
