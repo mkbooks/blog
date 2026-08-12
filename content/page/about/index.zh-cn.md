@@ -134,7 +134,8 @@ menu:
 
 ## 证书与荣誉
 
-- CNCF CKAD 认证<div data-iframe-width="150" data-iframe-height="270" data-share-badge-id="75e7e14f-54de-40c5-b304-b8b12602faa8" data-share-badge-host="https://www.credly.com"></div><script type="text/javascript" async src="//cdn.credly.com/assets/utilities/embed.js"></script>
+- <script type="text/javascript" async src="https://cdn.credly.com/assets/utilities/embed.js"></script>
+ CNCF CKAD 认证
 - 阿里云云计算高级工程师 ACP 认证
 - 阿里云大模型高级工程师 ACP 认证
 - 国家奖学金
